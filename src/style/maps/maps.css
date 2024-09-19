@@ -1,0 +1,403 @@
+/* ------------------------------
+    VARIABLES GLOBALS
+   ------------------------------ */
+   :root {
+    --red-heart: #EB2333;  /* Light red */
+    --red-botons: #C03D4A;  /* Dark red */
+    --color-3: #964850;  /* Deep red-brown */
+    --color-4: #6B4649;  /* Dark brown */
+    --font-color-secundary: #5a4a4b;  /* Dark gray */
+    --font-color-primary: #332A2B;  /* Black */
+    --boton-fondo-oscuro: #918788;
+    --fondo-claro: #e9eaee;
+}
+
+/* ------------------------------
+    RESET Y ESTILOS GENERALES
+   ------------------------------ */
+
+*{
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ------------------------------
+    CONTENEDOR DE IMAGEN
+   ------------------------------ */
+
+.container-img {
+    width: 100%;
+    height: 75vh;
+    position: fixed;
+    overflow: hidden;
+}
+#map {
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.container-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.514), transparent);
+    z-index: 2;
+}
+.container-info {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    position: absolute;
+    top: 65vh;
+    background-clip: padding-box
+}
+
+/* Container con la deswcripcion detallada de la ruta */
+
+/* Recuadro de infromación descriptiva */
+.container-info-descrip {
+    width: 100vw;
+    height: auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+.container-recuadro-info-title {
+    width: 100%;
+    height: auto;
+    margin-top: 7%;
+    align-items: center;
+    text-align: center;
+}
+.container-recuadro-info-title h4 {
+    font-size: 1.8em;
+}
+.container-dificultad-distancia-timpo {
+    width: 100%;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.container-dificultad-distancia-timpo .h5 {
+    color: var(--font-color-primary);
+    font-weight: 800;
+}
+.container-dificultad-distancia-timpo .span {
+    color: var(--font-color-secundary);
+    font-weight: 500;
+}
+
+.separador {
+    width: 90%;
+    margin: 0 auto;
+    height: 1px;
+    background-color: rgba(105, 105, 105, 0.295);
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+/*  Container donde se muestra los atajos y las estaciones */
+.container-mapa-atajos-estaciones {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+}
+#container-mapa-interactivo-example {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+#container-mapa-interactivo-example svg {
+    width: 100%;
+    background-image: url('/src/static/utils/mapa-ilustrativo.JPG');
+    background-size: contain;
+    border-radius: 1em;
+}
+.container-leyenda-mapa-interactivo-arriba {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    padding-left: 9%;
+    margin-top: 3%;
+}
+.container-leyenda {
+    width: 35%;
+    height: auto;
+    display: flex;
+    align-items: center;
+}
+.circulo {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5%;
+}
+
+/* Seccion de calificación de la ruta  */
+.container-calificativo {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 5%;
+
+}
+.container-estrellas {
+    width: 50%;
+    height: auto;
+    display: flex;               /* Usar flexbox para la alineación */
+    flex-direction: column;      /* Alinear el contenido verticalmente */
+    align-items: center;         /* Centrar el contenido horizontalmente */
+    text-align: center;  
+}
+.container-estrellas-pequeñas-iconos {
+    display: flex;
+}
+.container-estrellas-pequeñas-iconos img {
+    width: 15px;
+    height: 15px;
+}
+.container-comentarios {
+    width: 50%;
+    height: auto;
+}
+.container-estrellas p {
+    font-size: 2.5em;
+    font-weight: 400;
+}
+.container-comentarios span {
+    font-size: 0.8em;
+}
+
+/* Seccion de accordeon */
+
+.accordion {
+    width: 100%;
+    height: auto;
+    display: flex;               /* Usar flexbox para la alineación */
+    flex-direction: column;      /* Alinear el contenido verticalmente */
+    align-items: center;         /* Centrar el contenido horizontalmente */
+}
+
+.accordion-item {
+    width: 90%;
+    margin-bottom: 5px;
+}
+  
+.accordion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 3%;
+    background-color: var(--fondo-claro);
+    border-radius: 0.5em;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+  
+.accordion-content {
+    display: none;
+    padding: 10px;
+    font-size: 0.8em;
+    text-align: justify;
+}
+  
+.icon {
+    transition: transform 0.3s ease;
+}
+  
+.active .icon {
+    transform: rotate(90deg);
+}
+.emergencias-numeros {
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.emergencia-item {
+    text-align: left;
+    font-size: 0.8em;
+    margin-left: 3%;
+    font-weight: bold;
+}
+.emergencias-numeros a {
+    font-weight: 500;
+    
+}
+
+/* Previa del mapa bloqueado por capa opaca */
+
+.map-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+
+}
+.blur-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.158);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.overlay-text {
+    font-size: 1.1em;
+    color: var(--font-color-primary);
+    margin-bottom: 7%;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+.unlock-button {
+    padding: 10px 20px;
+    background-color: var(--red-botons);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+.unlock-button:hover {
+    background-color: #a0323d;
+}
+.volver-mapa {
+    display: none;
+    padding: 10px 20px;
+    background-color: var(--red-botons);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+.volver-mapa:hover {
+    background-color: #a0323d;
+}
+
+/* Seccion del container de la ruta con funcionalidades */
+
+/* Primer cuadro de funcionalidades km recorridos y tiempo restante */
+.container-cuadro-funcionalidades {
+    width: 100%;
+    height: auto;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+.container-interno {
+    width: 45%;
+    height: auto;
+    background-color: var(--fondo-claro);
+    text-align: center;
+    padding-top: 5%;
+    border-radius: 1em;
+    padding-bottom: 5%;
+}
+.container-interno .container-title-funcionalidades {
+    font-size: 1em;
+    color: var(--font-color-primary);
+}
+.container-interno .container-funcionalidad {
+    font-size: 1.8em;
+    font-weight: 300;
+    color: var(--font-color-secundary);
+}
+
+/* Seccion del grafico de elevacion  */
+.container-ruta-funciones {
+    display: none;
+    width: 100%;
+    height: auto;
+}
+
+.container-canvas-chart {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+
+
+/*  LOADER */
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/*  Ruta no disponible */
+.ruta-no-disponible {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.158);
+    backdrop-filter: blur(5px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.container-text-no-disponible {
+    font-size: 1.5em;
+    color: var(--font-color-primary);
+    margin-bottom: 7%;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+.container-overlay-no-disponible {
+    display: none;
+    width: 100%;
+    height: 100vh;
+}
+.container-overlay-no-disponible img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantiene la proporción de la imagen y la ajusta al contenedor */
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Configuración de caracteres y vista -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Titulo de la pagina -->
+    <title>Suesca</title>
+    
+    <!-- Favicon de la pagina -->
+    <link rel="shortcut icon" href="/src/static/utils/tree suesca.png" type="image/x-icon">
+    
+    <!-- Enlace hoja de estilos -->
+    <link rel="stylesheet" href="/src/static/style/Modulo ruta/mobile-first.css" media="only screen and (max-width: 450px)">
+
+
+    <!-- Conexión previa para optimizar la carga de fuentes de Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Contenedor para la imagen de fondo y botón de retroceso -->
+    <div class="container-img">
+        <div class="boton-atras"></div>
+    </div>
+
+    <!-- Contenedor principal de la información -->
+    <div class="container-info">
+        <!-- Contenedor para el botón de "me gusta" -->
+        <div class="container-like">
+            <img class="img-like" src="/src/static/utils/icons8-corazones-32.png" alt="">
+        </div>
+        <!-- Container para el carrusel de imagenes -->
+        <div class="container-carrusel">
+            <div class="carrusel">
+                <!-- Imagenes del carrusel -->
+                <img class="carrusel-img" src="/src/static/utils/Paisaje//Panoramica_Virgen3.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Crucez.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Daniela.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Lucas.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Mirador.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Mirador_cruz.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Mirador_Virgen.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Panoramica virgen2.jpeg" alt="">
+                <img class="carrusel-img" src="/src/static/utils/Paisaje/Mirador_Virgen2.jpeg" alt="">
+            </div>
+        </div>
+
+        <!-- Container para el nombre de la ruta y clasificación -->
+        <div class="container-name-ruta">
+            <h4>Alto de la Virgen</h4>
+            <div class="container-clasificacion">
+                <p>4.5</p>
+                <img src="/src/static/utils/icons8-estrella-48.png" alt="">
+            </div>
+        </div>
+
+        <!-- Contenedor para la distancia de la ruta -->
+        <div  class="container-distancia">
+            <p class="distancia">
+                4.5 Km
+            </p>
+        </div>
+
+        <div class="separador"></div>
+        
+        <!-- Botones de información adicional (tiempo, estaciones, dificultad, tiendas) -->
+        <div class="container-info-iconos">
+            <!-- Tiempo  -->
+            <div class="contaner-iconos-text">
+                <div class="iconos">
+                    <img src="/src/static/utils/iconos-info/icons8-tiempo-48.png" alt="" id="tiempo">
+                </div>
+                <p class="text-iconos">
+                    Tiempo
+                </p>
+            </div>
+            <!-- Estaciones -->
+            <div class="contaner-iconos-text">
+                <div class="iconos">
+                    <img src="/src/static/utils/iconos-info/icons8-marcador-48.png" alt="" id="estaciones">
+                </div>
+                <p class="text-iconos">
+                    Estaciones
+                </p>
+            </div>  
+            <div class="contaner-iconos-text">
+                <div class="iconos">
+                    <img src="/src/static/utils/iconos-info/icons8-flexión-de-bíceps-48.png" alt="" id="dificultad">
+                </div>
+                <p class="text-iconos"> 
+                    Dificultad
+                </p>
+            </div>
+            <div class="contaner-iconos-text"> 
+                <div class="iconos">
+                    <img src="/src/static/utils/iconos-info/icons8-tienda-48.png" alt="" id="tiendas">
+                </div>
+                <p class="text-iconos">
+                    Tiendas
+                </p>
+            </div>
+        </div>
+
+        <!-- Ventana emergente para más información -->        
+        <div id="miVentanaEmergente" class="cerrar">
+            <div class="container-header-emergente">
+                <div class="container-title">
+                    <h4 class="title" id="title-contenedor-ventana-emergente"></h4>
+                </div>
+                <div class="container-button">
+                    <button id="cerrarVentana">
+                        <img src="/src/static/utils/icons8-xbox-x-64.png" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="containter-article-info" id="containter-article-info">
+
+            </div>
+        </div>
+
+        <!--  Container para etiquetas de clasificación de ruta -->
+        <div class="container-info-adicional">
+            <div class="actividades">Montaña</div>
+            <div class="actividades">Bosque</div>
+            <div class="actividades">Paisajes</div>
+            <div class="actividades">Monumentos</div>
+            <div class="actividades">Camino irregular</div>
+            <div class="actividades">Pet Friendly</div>
+        </div>
+
+        <div class="separador"></div>
+
+        <!-- Descripción de la ruta -->
+        <div class="container-descripcion">
+            <p class="descripcion" id="descripcion-texto">
+                El Alto de la Virgen es un lugar sagrado en la cima de una montaña, ofreciendo vistas impresionantes de la sabana. Es perfecto para locales y turistas que buscan una experiencia espiritual, reflexionar, tomar fotos y relajarse en un entorno sereno.
+            </p>
+        </div>
+
+        <div class="separador"></div>
+
+        <!-- Opciones de recorrido -->
+        <div class="container-seleccion">
+            <div class="opcion">
+                <div class="opcion">
+                    <img src="/src/static/utils/Option - Route/icons8-trekking-50.png" alt="">
+                    <p>Explorar a pie</p>
+                </div>
+                <img src="/src/static/utils/Option - Route/icons8-flecha-48.png" alt="" class="flecha" id="explorandoPie">
+            </div>
+            <div class="opcion">
+                <div class="opcion">
+                    <img src="/src/static/utils/Option - Route/icons8-el-ciclismo-de-montaña-32.png" alt="">
+                    <p>Hacer bici - tour</p>
+                </div>
+                <img src="/src/static/utils/Option - Route/icons8-flecha-48.png" alt="" class="flecha" id="biciTour">
+            </div>
+            <div class="opcion">
+                <div class="opcion">
+                    <img src="/src/static/utils/Option - Route/icons8-casco-de-la-moto-32.png" alt="">
+                    <p>Ruta motera</p>
+                </div>
+                <img src="/src/static/utils/Option - Route/icons8-flecha-48.png" alt="" class="flecha" id="rutaMotera">
+            </div>
+            <div class="opcion">
+                <div class="opcion">
+                    <img src="/src/static/utils/Option - Route/icons8-cofre-de-techo-de-automóvil-48.png" alt="">
+                    <p>Explorar en Auto</p>
+                </div>
+                <img src="/src/static/utils/Option - Route/icons8-flecha-48.png" alt="" class="flecha" id="explorandoAuto">
+            </div>
+        </div>        
+
+        <div class="separador"></div>
+
+        <footer class="footer">
+                <p>Tree - Suesca</p>
+                <img src="/src/static/utils/icons8-colombia-48.png" alt="">
+        </footer>
+    </div>
+
+    <!-- Script para la funcionalidad de la ventana emergente -->
+    <script type="module" src="/src/static/scripts/index.js"></script>
+</body>
+</html>

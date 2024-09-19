@@ -1,0 +1,467 @@
+/* ------------------------------
+    VARIABLES GLOBALS
+   ------------------------------ */
+   :root {
+    --red-heart: #EB2333;  /* Light red */
+    --red-botons: #C03D4A;  /* Dark red */
+    --color-3: #964850;  /* Deep red-brown */
+    --color-4: #6B4649;  /* Dark brown */
+    --font-color-secundary: #5a4a4b;  /* Dark gray */
+    --font-color-primary: #332A2B;  /* Black */
+    --boton-fondo-oscuro: #918788;
+    --fondo-claro: #ffffff;
+}
+
+/* ------------------------------
+    RESET Y ESTILOS GENERALES
+   ------------------------------ */
+
+*{
+    padding: 0;
+    box-sizing: border-box;
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+body {
+    background-color: var(--fondo-claro);
+}
+
+/* Header */
+
+.header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8%;
+    padding-bottom: 3%;
+}
+
+.title-header {
+    width: 70%;
+    height: auto;
+    display: flex;
+    align-items: center; /* Cambiado para alinear el texto verticalmente */
+    margin-left: 7%;
+    white-space: nowrap; /* Asegura que el texto no se rompa en líneas */
+    overflow: hidden; /* Oculta cualquier texto que se desborde */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si el texto es demasiado largo */
+}
+
+.title-header h5 {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--font-color-primary);
+    margin: 0; /* Elimina márgenes que puedan causar separación */
+}
+
+.back-home {
+    width: 20%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 8%;
+}
+
+.back-home img {
+    width: 70%;
+}
+
+
+/* Buscador */
+.search-box {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    margin-top: 4%;
+}
+
+.search-input {
+    width: 90%;
+    height: 2.5em;
+    padding-left: 5%;
+    font-size: 1.2em;
+    border: 1px solid rgba(250, 247, 247, 0.103);
+    outline: none;
+    border-radius: 1em;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075); /* Sombra ajustada */
+}
+
+.search-btn {
+    width: 30px;
+    position: absolute;
+    right: 10%;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon {
+    fill:var(--font-color-primary);
+}
+.icon:active {
+    transform: scale(1.2);
+}
+
+/* Carrusel container categorias  */
+.carrusel {
+    width: 100%;
+    height: 6em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 7%;
+}
+
+.container-carrusel-categorias {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around; /* Cambiado de space-around a flex-start */
+    overflow-x: auto;
+    gap: 10px; /* Añadido para separar los elementos */
+}
+
+.container-icono-title-categoria {
+    min-width: 75px;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-p {
+    width: 100%;
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.container-img {
+    width: 85%;
+    height: 75%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 0.8em;
+    margin-bottom: 10%;
+    background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    overflow: hidden;
+}
+
+/* Container actividades populares */
+.container-mas-populares {
+    width: 100%;
+    height: auto;
+    margin-top: 4%;
+}
+.container-title-mas-popular {
+    width: 85%;
+    height: auto;
+    padding-left: 8%;
+}
+.container-title-mas-popular h5 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--font-color-secundary);
+}
+
+/* Container actividades carrusel */
+.container-carrusel-actividades-populares {
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container-carrusel-categorias-actividades {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0% 7%;
+    justify-content: flex-start; /* Cambiado de space-around a flex-start */
+    overflow-x: auto;
+    gap: 20px; /* Añadido para separar los elementos */
+    display: flex;
+    justify-content: first baseline;
+    align-items: center;
+}
+.contenido {
+    min-width: 57vh;
+    height: 90%;
+    border-radius: 1.5em;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+/*  Container categorias restaurante */
+.container-descripcion-destino-restaurantes {
+    width: 100%;
+    height: auto;
+    margin-top: 4%;
+}
+.container-title-mas-popular-restaurantes {
+    margin: 0 auto;
+    width: 85%;
+    height: auto;
+    padding: 0%, 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-title-mas-popular-restaurantes h5 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--font-color-secundary);
+}
+.icon-ver-mas {
+    font-size: 1.6em;
+    fill: var(--font-color-primary);
+}
+.icon-ver-mas:active {
+    transform: scale(1.3);
+}
+.icon-ver-mas:focus {
+    transform: scale(1.3);
+}
+.container-categoria-restaurantes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+    padding: 0% 8%;
+    margin: 8% 0%;
+}
+.restaurantes {
+    width: 100%;
+    height: 15em;
+    background-color: #ffffff;
+    border-radius: 0.8em;
+    margin-bottom: 5%;
+
+}
+.contaniner-img-principal-restaurante {
+    width: 100%;
+    height: 70%;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    border-top-left-radius: 0.8em;
+    border-top-right-radius: 0.8em;
+    overflow: hidden;
+}
+.container-descripcion-restaurante {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    padding: 0% 3%; 
+}
+.container-logo-restaurante {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-restaurante {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-logo-restaurante img {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+}
+.container-info-breve-restaurante {
+    width: 80%;
+    height: 100%;
+    padding-left: 1.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;    
+}
+.container-info-breve-restaurante h5 {
+    font-size: 15px;
+    text-align: left;
+}
+.container-info-breve-restaurante p {
+    font-size: 12px;
+    text-align: left;
+}
+.container-calificacion-restaurante {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    font-size: 0.8em;
+    padding-top: 0.9em;
+}
+.container-calificacion-restaurante img {
+    width: 1.1em;
+    height: 1.1em;
+    margin-left: 0.2em;
+}
+.container-calificacion-restaurante p {
+    font-size: 12px;
+    text-align: left;
+}
+
+/*  Container categoria Actividades */
+.container-actividades {
+    width: 100%;
+    height: auto;
+}
+.container-title-actividades {
+    margin: 0 auto;
+    width: 85%;
+    height: auto;
+    padding: 0%, 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.container-title-actividades h5 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: var(--font-color-secundary);
+}
+/* Container actividades individuales */
+.container-carrusel-actividades {
+    width: 100%;
+    height: 75vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 4% 0;
+}
+.container-carrusel-categorias-actividades-2 {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 0% 7%;
+    justify-content: flex-start; /* Cambiado de space-around a flex-start */
+    overflow-x: auto;
+    gap: 20px; /* Añadido para separar los elementos */
+    display: flex;
+    justify-content: first baseline;
+    align-items: center;
+}
+.container-categoria-actividades {
+    min-width: 57vh;
+    height: 95%;
+    background-color: white;
+    border-radius: 1.5em;
+}
+.contianer-img-actividad {
+    width: 100%;
+    height: 75%;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    border-top-left-radius: 1.5em;
+    border-top-right-radius: 1.5em;
+    overflow: hidden;
+}
+.container-info-actividad {
+    width: 100%;
+    height: 25%;
+    padding: 3% 3%;
+}
+.container-descripcion-breve-activida {
+    width: 100%;
+    height: 50%;
+}
+.container-descripcion-breve-activida h5 {
+    font-size: 15px;
+    text-align: left;
+    line-height: 1;
+}
+.continer-info-oferente-actividad {
+    width: 100%;
+    height: 50%;
+    display: flex;
+}
+.container-logo-oferente-actividad {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container-logo-oferente-actividad img {
+    width: 1.1em;
+    height: 1.1em;
+    border-radius: 50%;
+}
+.container-nombre-oferente-actividades {
+    width: 80%;
+    height: 100%;
+    padding-left: 3%;
+}
+.container-nombre-oferente-actividades p {
+    font-size: 12px;
+}
+.container-calificacion-activida {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.container-calificacion-activida img {
+    width: 0.7em;
+    height: 0.7em;
+    margin-left: 3%;
+}
+.container-calificacion-activida p {
+    font-size: 12px;
+}
+
+/* Footer */
+.footer {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10%;
+    padding-right: 10%;
+    margin-top: 3%;
+    margin-bottom: 2%;
+}
+.footer img {
+    width: 25px;
+    height: 25px;
+}
+.footer p {
+    font-size: 1em;
+    font-weight: 700;
+}
+
+/* Separador */
+
+.separador {
+    width: 90%;
+    margin: 0 auto;
+    height: 1px;
+    background-color: rgba(105, 105, 105, 0.295);
+    margin-top: 10%;
+    margin-bottom: 3%;
+}
