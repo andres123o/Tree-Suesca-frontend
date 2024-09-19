@@ -181,7 +181,7 @@ body {
 /* Container actividades carrusel */
 .container-carrusel-actividades-populares {
     width: 100%;
-    height: 75vh;
+    height: 45vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,7 +200,7 @@ body {
     align-items: center;
 }
 .contenido {
-    min-width: 57vh;
+    min-width: 30vh;
     height: 90%;
     border-radius: 1.5em;
     background-size: cover; 
@@ -346,7 +346,7 @@ body {
 /* Container actividades individuales */
 .container-carrusel-actividades {
     width: 100%;
-    height: 75vh;
+    height: 45vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -365,7 +365,7 @@ body {
     align-items: center;
 }
 .container-categoria-actividades {
-    min-width: 57vh;
+    min-width: 35vh;
     height: 95%;
     background-color: white;
     border-radius: 1.5em;
