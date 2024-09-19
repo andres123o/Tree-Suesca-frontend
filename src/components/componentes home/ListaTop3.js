@@ -52,10 +52,10 @@ const ListaTop3 = ( {rest, titulo} ) => {
                                             {item.description}
                                         </h5>
                                         <p>
-                                            {item.name}
+                                            Precio promedio: {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
                                         </p>
                                         <p>
-                                            Precio promedio: {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                                            {item.name} - Suesca, Cundinamarca
                                         </p>
                                     </div>
                                     <div className="container-calificacion-restaurante">

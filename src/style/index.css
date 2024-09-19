@@ -382,12 +382,15 @@ body {
 }
 .container-info-actividad {
     width: 100%;
-    height: 25%;
+    height: 22%;
     padding: 3% 3%;
 }
 .container-descripcion-breve-activida {
     width: 100%;
     height: 50%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .container-descripcion-breve-activida h5 {
     font-size: 15px;
@@ -407,12 +410,12 @@ body {
     align-items: center;
 }
 .container-logo-oferente-actividad img {
-    width: 1.1em;
-    height: 1.1em;
+    width: 2em;
+    height: 2em;
     border-radius: 50%;
 }
 .container-nombre-oferente-actividades {
-    width: 80%;
+    width: 90%;
     height: 100%;
     padding-left: 3%;
 }
@@ -424,6 +427,7 @@ body {
     height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .container-calificacion-activida img {
     width: 0.7em;

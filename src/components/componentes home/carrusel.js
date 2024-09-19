@@ -27,6 +27,12 @@ const Carrusel = ( {actividadesDestino, titulo} ) => {
                                                 <h5>
                                                     {item.description}
                                                 </h5>
+                                                <div className="container-calificacion-activida">
+                                                    <p>
+                                                        {item.calificacion}
+                                                    </p>
+                                                    <img src="/utils/icons8-estrella-48.png" alt= {item.name} />
+                                                </div>
                                             </div>
                                             <div className="continer-info-oferente-actividad">
                                                 <div className="container-logo-oferente-actividad">
@@ -37,14 +43,8 @@ const Carrusel = ( {actividadesDestino, titulo} ) => {
                                                         {item.name}
                                                     </p>
                                                     <p>
-                                                        {item.oferente}
+                                                        {item.oferente} - Suesca, Cundinamarca
                                                     </p>
-                                                </div>
-                                                <div className="container-calificacion-activida">
-                                                    <p>
-                                                        {item.calificacion}
-                                                    </p>
-                                                    <img src="/utils/icons8-estrella-48.png" alt= {item.name} />
                                                 </div>
                                             </div>
                                         </div>
