@@ -1,8 +1,9 @@
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import React, { useState, useEffect } from 'react'
+import { IoLocationOutline } from "react-icons/io5";
 
 
-const ListaTop3 = ( {rest, titulo} ) => {
+const ListaTop3 = ( {rest, titulo, icono} ) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemsPerPage = 3
 
@@ -12,7 +13,7 @@ const ListaTop3 = ( {rest, titulo} ) => {
                 // Si llegamos al final de la lista, volvemos al principio
                 return (prevIndex + itemsPerPage) % rest.length;
             });
-        }, 3000); // Cambia cada 2 segundos
+        }, 5000); // Cambia cada 2 segundos
 
         // Limpiar el intervalo cuando el componente se desmonte
         return () => clearInterval(interval);     
@@ -48,22 +49,18 @@ const ListaTop3 = ( {rest, titulo} ) => {
                                         </div>
                                     </div>
                                     <div className="container-info-breve-restaurante">
-                                        <h5>
-                                            {item.description}
-                                        </h5>
+                                        <div className="container-descripcion-calificacion">
+                                            <h5>
+                                                {item.description}
+                                            </h5>
+                                        </div>
                                         <p>
-                                            Precio promedio: {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                                            {icono} {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
                                         </p>
                                         <p>
-                                            {item.name} - Suesca, Cundinamarca
+                                            <IoLocationOutline className="IoLocationOutline" /> Suesca, Cundinamarca
                                         </p>
                                     </div>
-                                    <div className="container-calificacion-restaurante">
-                                        <p>
-                                            {item.calificacion}
-                                        </p>
-                                        <img src="/utils/icons8-estrella-48.png" alt= {item.name} />
-                                    </div> 
                                 </div>       
                             </div>
                         ))

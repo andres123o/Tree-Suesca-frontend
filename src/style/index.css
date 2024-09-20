@@ -6,8 +6,8 @@
     --red-botons: #C03D4A;  /* Dark red */
     --color-3: #964850;  /* Deep red-brown */
     --color-4: #6B4649;  /* Dark brown */
-    --font-color-secundary: #5a4a4b;  /* Dark gray */
-    --font-color-primary: #332A2B;  /* Black */
+    --font-color-secundary: #111010c5;  /* Dark gray */
+    --font-color-primary: #000000;  /* Black */
     --boton-fondo-oscuro: #918788;
     --fondo-claro: #ffffff;
 }
@@ -175,7 +175,7 @@ body {
 .container-title-mas-popular h5 {
     font-size: 1.5em;
     font-weight: 600;
-    color: var(--font-color-secundary);
+    color: var(--font-color-primary);
 }
 
 /* Container actividades carrusel */
@@ -227,7 +227,7 @@ body {
 .container-title-mas-popular-restaurantes h5 {
     font-size: 1.5em;
     font-weight: 600;
-    color: var(--font-color-secundary);
+    color: var(--font-color-primary);
 }
 .icon-ver-mas {
     font-size: 1.6em;
@@ -254,6 +254,7 @@ body {
     background-color: #ffffff;
     border-radius: 0.8em;
     margin-bottom: 5%;
+    position: relative;
 
 }
 .contaniner-img-principal-restaurante {
@@ -299,28 +300,34 @@ body {
     text-align: left;    
 }
 .container-info-breve-restaurante h5 {
-    font-size: 15px;
+    font-size: 1em;
     text-align: left;
 }
 .container-info-breve-restaurante p {
-    font-size: 12px;
+    font-size: 0.7em;
+    opacity: 0.8;
+    font-weight: 600;
     text-align: left;
 }
 .container-calificacion-restaurante {
-    width: 10%;
-    height: 100%;
+    width: 2.5em;
+    height: 1.3em;
     display: flex;
     justify-content: center;
-    font-size: 0.8em;
-    padding-top: 0.9em;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 1em;
+    right: 1em; 
 }
 .container-calificacion-restaurante img {
-    width: 1.1em;
-    height: 1.1em;
+    width: 0.5em;
+    height: 0.5em;
     margin-left: 0.2em;
 }
 .container-calificacion-restaurante p {
-    font-size: 12px;
+    font-size: 10px;
     text-align: left;
 }
 
@@ -341,7 +348,7 @@ body {
 .container-title-actividades h5 {
     font-size: 1.5em;
     font-weight: 600;
-    color: var(--font-color-secundary);
+    color: var(--font-color-primary);
 }
 /* Container actividades individuales */
 .container-carrusel-actividades {
@@ -369,6 +376,7 @@ body {
     height: 95%;
     background-color: white;
     border-radius: 1.5em;
+    position: relative;
 }
 .contianer-img-actividad {
     width: 100%;
@@ -383,59 +391,83 @@ body {
 .container-info-actividad {
     width: 100%;
     height: 22%;
-    padding: 3% 3%;
 }
-.container-descripcion-breve-activida {
+.container-descripcion-calificacion {
     width: 100%;
-    height: 50%;
+    height: auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-}
-.container-descripcion-breve-activida h5 {
-    font-size: 15px;
-    text-align: left;
-    line-height: 1;
 }
 .continer-info-oferente-actividad {
     width: 100%;
-    height: 50%;
+    height: 100%;
     display: flex;
 }
 .container-logo-oferente-actividad {
-    width: 10%;
+    width: 18%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .container-logo-oferente-actividad img {
-    width: 2em;
-    height: 2em;
+    width: 2.5em;
+    height: 2.5em;
     border-radius: 50%;
 }
 .container-nombre-oferente-actividades {
     width: 90%;
     height: 100%;
-    padding-left: 3%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2%;
+}
+.container-nombre-oferente-actividades h5 {
+    font-size: 1em;
+    color: var(--font-color-primary);
+}
+.container-nombre-oferente-actividades h6 {
+    display: flex;
+    align-items: center;
+    font-size: 0.9em;
+    color: var(--font-color-secundary);
+    font-weight: 500;
 }
 .container-nombre-oferente-actividades p {
-    font-size: 12px;
+    font-size: 0.7em;
+    display: flex;
+    align-items: center;
+    opacity: 0.8;
+    font-weight: 600;
+}
+.Faperson {
+    margin-right: 2%;
+    color: var(--font-color-primary);
+}
+.IoLocationOutline {
+    margin-right: 2%;
+    color: var(--font-color-primary);
 }
 .container-calificacion-activida {
-    width: 10%;
-    height: 100%;
+    width: 2.5em;
+    height: 1.3em;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    position: absolute;
+    top: 1em;
+    right: 1em;   
 }
 .container-calificacion-activida img {
-    width: 0.7em;
-    height: 0.7em;
+    width: 0.5em;
+    height: 0.5em;
     margin-left: 3%;
 }
 .container-calificacion-activida p {
-    font-size: 12px;
+    font-size: 10px;
 }
 
 /* Footer */

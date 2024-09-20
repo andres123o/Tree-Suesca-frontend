@@ -7,6 +7,10 @@ import PopularActivities from './components/componentes home/Tendencias'
 import ListaTop3 from './components/componentes home/ListaTop3';
 import Carrusel from './components/componentes home/carrusel';
 
+//  Iconos
+import { IoFastFoodOutline } from "react-icons/io5";
+import { FaWineBottle } from "react-icons/fa";
+
 
 // Estilos
 import './style/index.css';
@@ -197,7 +201,7 @@ const ejemploEventos = [
         id: 5,
         oferente: 'Alcaldia local',
         name: 'Bici Tour',
-        description: 'Recorrido en bicicleta por la Laguna',
+        description: 'Bici tour por la laguna',
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
         img: '/utils/ejemplo-eventos-destino/bici.jpg',
         calificacion: 4.9,
@@ -320,7 +324,8 @@ function App() {
             <PopularActivities contenido = {ejemploContenidoPopular} />
             <ListaTop3 
                 rest = {ejemploRestaurantes}
-                titulo = 'Restaureantes'     
+                titulo = 'Restaureantes'
+                icono = {<IoFastFoodOutline className='Faperson'/>}     
             />
             <Carrusel 
                 actividadesDestino = {ejemploActividades}
@@ -333,6 +338,7 @@ function App() {
             <ListaTop3 
                 rest = {ejemploBares}
                 titulo = 'Fiesta y Amigos'
+                icono = {<FaWineBottle  className='Faperson'/>}
             />
             <Carrusel 
                 actividadesDestino= {ejemploHoteles}

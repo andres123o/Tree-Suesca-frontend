@@ -1,4 +1,9 @@
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
+import { FaPerson } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
+
+
+
 
 const Carrusel = ( {actividadesDestino, titulo} ) => {
     return  (
@@ -24,9 +29,6 @@ const Carrusel = ( {actividadesDestino, titulo} ) => {
                                         </div> 
                                         <div  className="container-info-actividad">
                                             <div className="container-descripcion-breve-activida">
-                                                <h5>
-                                                    {item.description}
-                                                </h5>
                                                 <div className="container-calificacion-activida">
                                                     <p>
                                                         {item.calificacion}
@@ -39,11 +41,14 @@ const Carrusel = ( {actividadesDestino, titulo} ) => {
                                                     <img src={item.logo} />
                                                 </div>
                                                 <div className="container-nombre-oferente-actividades">
+                                                    <h5>
+                                                        {item.description}
+                                                    </h5>
+                                                    <h6>
+                                                        <FaPerson className="Faperson"/>  $30.000 
+                                                    </h6>
                                                     <p>
-                                                        {item.name}
-                                                    </p>
-                                                    <p>
-                                                        {item.oferente} - Suesca, Cundinamarca
+                                                        <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
                                                     </p>
                                                 </div>
                                             </div>
