@@ -12,6 +12,8 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import { FaWineBottle } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { MdHotel } from "react-icons/md";
+import { IoCalendarOutline } from "react-icons/io5";
+
 
 
 // Estilos
@@ -171,6 +173,7 @@ const ejemploEventos = [
         logo: '/utils/ejemplo-eventos-destino/1.jpg',
         img: '/utils/ejemplo-eventos-destino/Crucez.jpeg',
         calificacion: 4.8,
+        fecha: '12 Oct'
     },
     {
         id: 2,
@@ -180,6 +183,7 @@ const ejemploEventos = [
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
         img: '/utils/ejemplo-eventos-destino/concierto.jpg',
         calificacion: 4.9,
+        fecha: '20 Oct'
     },
     {
         id: 3,
@@ -189,6 +193,7 @@ const ejemploEventos = [
         logo: '/utils/ejemplo-eventos-destino/3.jpg',
         img: '/utils/ejemplo-eventos-destino/mercado-campesino.jpg',
         calificacion: 4.7,
+        fecha: '12 Oct'
     },
     {
         id: 4,
@@ -198,6 +203,7 @@ const ejemploEventos = [
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
         img: '/utils/ejemplo-eventos-destino/semana-cultural.jpg',
         calificacion: 4.6,
+        fecha: '20 Oct'
     },
     {
         id: 5,
@@ -207,6 +213,7 @@ const ejemploEventos = [
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
         img: '/utils/ejemplo-eventos-destino/bici.jpg',
         calificacion: 4.9,
+        fecha: '12 Oct'
     }
 ];
 const ejemploBares = [
@@ -329,12 +336,17 @@ function App() {
             />
             <Carrusel 
                 actividadesDestino = {ejemploActividades}
-                titulo = 'Actividades' 
+                titulo = 'Actividades'
+                iconPerson={<FaPerson className="Faperson"/>}
+                tipo = 'Por persona' 
             />
             <Carrusel 
                 actividadesDestino = {ejemploEventos}
                 titulo = 'Eventos'
                 iconPerson={<FaPerson className="Faperson"/>}
+                iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
+                fecha = '30 Oct'
+                tipo = 'Desde'
             />
             <ListaTop3 
                 rest = {ejemploBares}

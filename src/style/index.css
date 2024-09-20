@@ -440,6 +440,11 @@ body {
     margin-right: 2%;
     color: var(--font-color-primary);
 }
+.FaCalendar {
+    margin-right: 2%;
+    margin-left: 2%;
+    color: var(--font-color-primary);
+}
 .IoLocationOutline {
     margin-right: 2%;
     color: var(--font-color-primary);

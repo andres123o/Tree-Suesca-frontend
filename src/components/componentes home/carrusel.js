@@ -5,7 +5,7 @@ import { IoLocationOutline } from "react-icons/io5";
 
 
 
-const Carrusel = ( {actividadesDestino, titulo, iconPerson} ) => {
+const Carrusel = ( {actividadesDestino, titulo, iconPerson, iconCalendar, fecha, tipo} ) => {
     return  (
         <>
             <div className="container-actividades">
@@ -45,7 +45,7 @@ const Carrusel = ( {actividadesDestino, titulo, iconPerson} ) => {
                                                         {item.description}
                                                     </h5>
                                                     <p>
-                                                        {iconPerson} $30.000 
+                                                        {iconPerson} {tipo}: $30.000 {iconCalendar} {fecha}
                                                     </p>
                                                     <p>
                                                         <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
