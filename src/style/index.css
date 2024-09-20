@@ -300,11 +300,11 @@ body {
     text-align: left;    
 }
 .container-info-breve-restaurante h5 {
-    font-size: 1em;
+    font-size: 16px;
     text-align: left;
 }
 .container-info-breve-restaurante p {
-    font-size: 0.7em;
+    font-size: 11.2px;
     opacity: 0.8;
     font-weight: 600;
     text-align: left;
@@ -424,18 +424,11 @@ body {
     padding-left: 2%;
 }
 .container-nombre-oferente-actividades h5 {
-    font-size: 0.8em;
+    font-size: 16px;
     color: var(--font-color-primary);
 }
-.container-nombre-oferente-actividades h6 {
-    display: flex;
-    align-items: center;
-    font-size: 0.7em;
-    color: var(--font-color-secundary);
-    font-weight: 500;
-}
 .container-nombre-oferente-actividades p {
-    font-size: 0.5em;
+    font-size: 11.2px;
     display: flex;
     align-items: center;
     opacity: 0.8;

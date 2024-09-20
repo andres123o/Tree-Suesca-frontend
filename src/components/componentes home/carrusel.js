@@ -44,9 +44,9 @@ const Carrusel = ( {actividadesDestino, titulo} ) => {
                                                     <h5>
                                                         {item.description}
                                                     </h5>
-                                                    <h6>
+                                                    <p>
                                                         <FaPerson className="Faperson"/>  $30.000 
-                                                    </h6>
+                                                    </p>
                                                     <p>
                                                         <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
                                                     </p>

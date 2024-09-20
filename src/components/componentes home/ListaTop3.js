@@ -43,6 +43,12 @@ const ListaTop3 = ( {rest, titulo, icono} ) => {
                                 >
                                 </div>
                                 <div className="container-descripcion-restaurante">
+                                     <div className="container-calificacion-restaurante">
+                                        <p>
+                                            {item.calificacion}
+                                        </p>
+                                         <img src="/utils/icons8-estrella-48.png" alt= {item.name} />
+                                    </div>
                                     <div className="container-logo-restaurante">
                                         <div className="logo-restaurante">
                                             <img src={item.logo} alt="Logo del restaurante"/>
