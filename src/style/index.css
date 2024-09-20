@@ -394,7 +394,11 @@ body {
     width: 100%;
     height: auto;
     display: flex;
-    justify-content: space-between;
+}
+.container-descripcion-calificacion p {
+    font-size: 16px;
+    margin-left: 2%;
+    opacity: 0.5;
 }
 .continer-info-oferente-actividad {
     width: 100%;

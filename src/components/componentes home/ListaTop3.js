@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { IoLocationOutline } from "react-icons/io5";
 
 
-const ListaTop3 = ( {rest, titulo, icono} ) => {
+const ListaTop3 = ( {rest, titulo, icono, tipo} ) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemsPerPage = 3
 
@@ -13,7 +13,7 @@ const ListaTop3 = ( {rest, titulo, icono} ) => {
                 // Si llegamos al final de la lista, volvemos al principio
                 return (prevIndex + itemsPerPage) % rest.length;
             });
-        }, 5000); // Cambia cada 2 segundos
+        }, 3000); // Cambia cada 2 segundos
 
         // Limpiar el intervalo cuando el componente se desmonte
         return () => clearInterval(interval);     
@@ -57,11 +57,14 @@ const ListaTop3 = ( {rest, titulo, icono} ) => {
                                     <div className="container-info-breve-restaurante">
                                         <div className="container-descripcion-calificacion">
                                             <h5>
-                                                {item.description}
+                                                {item.name} 
                                             </h5>
+                                            <p>
+                                                {item.description}
+                                            </p>
                                         </div>
                                         <p>
-                                            {icono} {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                                            {icono} {tipo}: {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
                                         </p>
                                         <p>
                                             <IoLocationOutline className="IoLocationOutline" /> Suesca, Cundinamarca

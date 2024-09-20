@@ -61,7 +61,7 @@ const ejemploRestaurantes = [
     {
         id: 1,
         name: 'Burguer Texas',
-        description: 'Al estilo ranchero',
+        description: 'Parrilla',
         calificacion: 4.2,
         logo: '/utils/logo-restaurantes/1.jpg',
         img: '/utils/logo-restaurantes/comida1.jpg',
@@ -70,7 +70,7 @@ const ejemploRestaurantes = [
     {
         id: 2,
         name: 'Colombian Food',
-        description: 'Al mejor estilo colombiano',
+        description: 'Tipica',
         calificacion: 4.8,
         logo: '/utils/logo-restaurantes/2.jpg',
         img: '/utils/logo-restaurantes/comida2.jpg',
@@ -79,7 +79,7 @@ const ejemploRestaurantes = [
     {
         id: 3,
         name: 'Suehica',
-        description: 'Comida artesanal',
+        description: 'Artesanal',
         calificacion: 4.5,
         logo: '/utils/logo-restaurantes/3.jpg',
         img: '/utils/logo-restaurantes/comida3.jpg',
@@ -88,7 +88,7 @@ const ejemploRestaurantes = [
     {
         id: 4,
         name: 'Burguer California',
-        description: 'Al estilo ranchero',
+        description: 'Ranchero',
         calificacion: 4.2,
         logo: '/utils/logo-restaurantes/4.jpg',
         img: '/utils/logo-restaurantes/comida4.jpg',
@@ -97,7 +97,7 @@ const ejemploRestaurantes = [
     {
         id: 5,
         name: 'Donde ma',
-        description: 'Al mejor estilo colombiano',
+        description: 'Tipico',
         calificacion: 4.8,
         logo: '/utils/logo-restaurantes/5.jpg',
         img: '/utils/logo-restaurantes/comida5.jpg',
@@ -106,7 +106,7 @@ const ejemploRestaurantes = [
     {
         id: 6,
         name: 'Mauros',
-        description: 'Comida artesanal',
+        description: 'Parrila',
         calificacion: 4.5,
         logo: '/utils/logo-restaurantes/6.jpg',
         img: '/utils/logo-restaurantes/comida6.jpg',
@@ -211,7 +211,7 @@ const ejemploBares = [
     {
         id: 1,
         name: 'Bar Texas',
-        description: 'Musica en vivo',
+        description: 'Shows',
         calificacion: 4.2,
         logo: '/utils/logo-bares/1.jpg',
         img: '/utils/logo-bares/bar-texas.jpg',
@@ -220,7 +220,7 @@ const ejemploBares = [
     {
         id: 2,
         name: 'La Movida Colombiana',
-        description: 'Rumba tropical',
+        description: 'Tropical',
         calificacion: 4.8,
         logo: '/utils/logo-bares/2.jpg',
         img: '/utils/logo-bares/la-movida.jpg',
@@ -229,7 +229,7 @@ const ejemploBares = [
     {
         id: 3,
         name: 'El Sótano',
-        description: 'Bar underground',
+        description: 'Underground',
         calificacion: 4.5,
         logo: '/utils/logo-bares/3.jpg',
         img: '/utils/logo-bares/el-sotano.jpg',
@@ -238,7 +238,7 @@ const ejemploBares = [
     {
         id: 4,
         name: 'California Lounge',
-        description: 'Cocktails y ambiente fresco',
+        description: 'Discoteca',
         calificacion: 4.2,
         logo: '/utils/logo-bares/4.jpg',
         img: '/utils/logo-bares/california-lounge.jpg',
@@ -247,7 +247,7 @@ const ejemploBares = [
     {
         id: 5,
         name: 'La Cueva del Jazz',
-        description: 'Jazz en vivo',
+        description: 'Shows',
         calificacion: 4.8,
         logo: '/utils/logo-bares/5.jpg',
         img: '/utils/logo-bares/cueva-jazz.jpg',
@@ -256,7 +256,7 @@ const ejemploBares = [
     {
         id: 6,
         name: 'Mauros Pub',
-        description: 'Musica Alternativa',
+        description: 'Undeground',
         calificacion: 4.5,
         logo: '/utils/logo-bares/6.jpg',
         img: '/utils/logo-bares/mauros-pub.jpg',
@@ -312,9 +312,6 @@ const ejemploHoteles = [
 ];
 
 
-
-
-
 function App() {
     return (
         <>
@@ -325,7 +322,8 @@ function App() {
             <ListaTop3 
                 rest = {ejemploRestaurantes}
                 titulo = 'Restaureantes'
-                icono = {<IoFastFoodOutline className='Faperson'/>}     
+                icono = {<IoFastFoodOutline className='Faperson'/>} 
+                tipo = 'Platos desde'    
             />
             <Carrusel 
                 actividadesDestino = {ejemploActividades}
@@ -339,6 +337,7 @@ function App() {
                 rest = {ejemploBares}
                 titulo = 'Fiesta y Amigos'
                 icono = {<FaWineBottle  className='Faperson'/>}
+                tipo = 'Botellas desde'
             />
             <Carrusel 
                 actividadesDestino= {ejemploHoteles}
