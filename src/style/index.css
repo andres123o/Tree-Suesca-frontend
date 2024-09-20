@@ -263,8 +263,7 @@ body {
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat;
-    border-top-left-radius: 0.8em;
-    border-top-right-radius: 0.8em;
+    border-radius: 0.8em;
     overflow: hidden;
 }
 .container-descripcion-restaurante {
@@ -384,8 +383,7 @@ body {
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat;
-    border-top-left-radius: 1.5em;
-    border-top-right-radius: 1.5em;
+    border-radius: 1.5em;
     overflow: hidden;
 }
 .container-info-actividad {
