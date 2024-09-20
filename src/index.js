@@ -10,6 +10,8 @@ import Carrusel from './components/componentes home/carrusel';
 //  Iconos
 import { IoFastFoodOutline } from "react-icons/io5";
 import { FaWineBottle } from "react-icons/fa";
+import { FaPerson } from "react-icons/fa6";
+import { MdHotel } from "react-icons/md";
 
 
 // Estilos
@@ -332,6 +334,7 @@ function App() {
             <Carrusel 
                 actividadesDestino = {ejemploEventos}
                 titulo = 'Eventos'
+                iconPerson={<FaPerson className="Faperson"/>}
             />
             <ListaTop3 
                 rest = {ejemploBares}
@@ -342,6 +345,7 @@ function App() {
             <Carrusel 
                 actividadesDestino= {ejemploHoteles}
                 titulo= 'Alojamientos'
+                iconPerson={ <MdHotel className="Faperson" />}
             />
         </>
     )
