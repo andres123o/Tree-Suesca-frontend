@@ -1,4 +1,3 @@
-import { icons } from "lucide-react";
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
