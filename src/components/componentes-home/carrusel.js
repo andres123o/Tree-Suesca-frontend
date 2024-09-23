@@ -45,7 +45,7 @@ const Carrusel = ( {actividadesDestino, titulo, iconPerson, iconCalendar, fecha,
                                                         {item.description}
                                                     </h5>
                                                     <p>
-                                                        {iconPerson} {tipo}: $30.000 {iconCalendar} {fecha}
+                                                        {iconPerson} {tipo}  $30.000 {iconCalendar} {fecha}
                                                     </p>
                                                     <p>
                                                         <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca

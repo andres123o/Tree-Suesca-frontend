@@ -1,0 +1,136 @@
+
+/* Seccion del header */
+.container-titulo-categoria-filtro {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 8%;
+    padding-bottom: 3%;
+    padding-left: 7%;
+    padding-right: 2%;
+}
+
+/* Seccion de titulo  */
+.container-nombre-categoria {
+    width: 100%;
+    height: auto;
+    margin-bottom: 3%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 7%;
+}
+.container-nombre-categoria h5 {
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--font-color-primary);
+    margin: 0; /* Elimina márgenes que puedan causar separación */
+}
+.container-nombre-categoria img {
+    width: 10%;
+    height: auto;
+}
+
+/* Seccion de los filtros */
+.container-filtros-general {
+    width: 100%;
+    height: auto;
+}
+/* Seccion interna filtros */
+.cotainer-valores-duracion {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 3%;
+}
+.cotainer-valores-duracion h5 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--font-color-primary);
+    margin-right: 2%;
+}
+
+.container-valores-filto-duracion {
+    width: 85%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+}
+.container-valores-filto-duracion p {
+    font-size: 16px;
+    margin: 0% 2%;
+    border-radius: 0.5em;
+    padding: 0 2%;
+}
+.filtro-seleccionado {  
+    color: var(--font-color-primary);
+    border: 1px solid rgba(0, 0, 0, 0.082);
+    font-weight: 700;
+    background-color: aliceblue;
+}
+
+/* Seccion de rutas individuales */
+.container-seccion-lista-rutas {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5%;
+}
+.container-item-lista-rutas {
+    width: 85%;
+    height: 30vh;
+    margin-bottom: 1.5em;
+}
+.container-img-ruta {
+    width: 100%;
+    height: 75%;
+    background-size: cover; /* Ajusta la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen dentro del contenedor */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    overflow: hidden;
+    border-radius: 1em;
+}
+.container-info-ruta {
+    width: 100%;
+    height: 22%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.container-nombre-titulo {
+    width: 100%;
+    height: auto;
+    padding-left: 5%;
+}
+.container-nombre-titulo h5 {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 2%;
+}
+.container-descripcion-caracteristicas {
+    width: 100%;
+    height: auto;
+    padding-left: 5%;
+    display: flex;
+    align-items: center;
+}
+.container-descripcion-caracteristicas p {
+    font-size: 11.2px;
+    opacity: 0.8;
+    font-weight: 600;
+    text-align: left;
+    margin-left: 1.5%;
+    margin-right: 3%;
+}
+.icon2 {
+    font-size: 14px;
+}
+
+
+
+
+
