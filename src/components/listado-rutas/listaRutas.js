@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import FiltrosTitulo from '../common/titulo-filtro'
 
 const ListaRutas = ({ rutas, iconos }) => {
     const { nombre } = useParams();
@@ -38,36 +39,12 @@ const ListaRutas = ({ rutas, iconos }) => {
 
     return (
         <>
-            <div className="container-titulo-categoria-filtro">
-                <div className="container-nombre-categoria">
-                    <h5>{actividadesTitulo[nombre]}</h5>
-                    <img src="/utils/tree suesca.png"></img>
-                </div>
-                <div className="container-filtros-general">
-                  {
-                    Object.entries(filtros).map(([key, values]) => (
-                      <div className="cotainer-valores-duracion" key={key}>
-                        <h5>
-                          {key}: 
-                        </h5>
-                        <div className="container-valores-filto-duracion">
-                          {
-                            Array.from(values).map((value, index) => (
-                              <p 
-                                key={index} 
-                                onClick={() => manejarClick(key, value)}
-                                className = {filtroSeleccionado === value.value ? 'filtro-seleccionado' : ''}
-                              >
-                                {value.value}
-                              </p>
-                            ))
-                          }
-                        </div>
-                      </div>
-                    ))
-                  }
-                </div>
-            </div>
+            <FiltrosTitulo 
+              nombre={actividadesTitulo[nombre]}
+              filtros={filtros}
+              filtroSeleccionado={filtroSeleccionado}
+              manejarClick={manejarClick}
+            />
             <div className="container-seccion-lista-rutas">
                 {rutasFiltradas.map((item) => (
                     <div key={item.id} className="container-item-lista-rutas">
@@ -80,8 +57,18 @@ const ListaRutas = ({ rutas, iconos }) => {
                             <h5>
                               {item.nombre}
                             </h5>
+                            <div className="container-clasificacion-ruta">
+                              <p>
+                                {item.calificacion}
+                                <img src="/utils/icons8-estrella-48.png" />
+                              </p>
+                            </div>
                           </div>
                           <div className="container-descripcion-caracteristicas">
+                            {iconos.Dificultad} 
+                            <p>
+                              Dificultad: {item.Dificultad}
+                            </p>
                             {iconos.distancia}
                             <p>
                               {item.distancia}
@@ -93,10 +80,6 @@ const ListaRutas = ({ rutas, iconos }) => {
                             {iconos.terreno}
                             <p>
                               {item.terreno}
-                            </p>
-                            {iconos.Dificultad} 
-                            <p>
-                              {item.Dificultad}
                             </p>
                           </div>
                         </div>

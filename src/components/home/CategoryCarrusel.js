@@ -6,7 +6,7 @@ const CategoryCarousel = ( { actividades } ) => {
 
     const handleClick = (actividad) => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/categoria/${encodeURIComponent(actividad.actividad)}`);
+        navigate(`/rutas/${encodeURIComponent(actividad.actividad)}`);
     }
 
     return (

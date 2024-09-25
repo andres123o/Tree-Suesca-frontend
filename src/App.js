@@ -1,14 +1,31 @@
 import React from 'react';
-import { BrowserRouter as  Router, Route, Routes } from 'react-router-dom';
-
+import { Route, Routes } from 'react-router-dom';
 
 // Componentes de la pagina de inicio
-import Header from './components/componentes-home/header';
-import SearchBox from './components/componentes-home/searchBox'
-import CategoryCarousel from './components/componentes-home/CategoryCarrusel';
-import PopularActivities from './components/componentes-home/Tendencias'
-import ListaTop3 from './components/componentes-home/ListaTop3';
-import Carrusel from './components/componentes-home/carrusel';
+import Header from './components/home/header';
+import SearchBox from './components/home/searchBox'
+import CategoryCarousel from './components/home/CategoryCarrusel';
+import PopularActivities from './components/home/Tendencias'
+import ListaTop3 from './components/home/ListaTop3';
+import Carrusel from './components/home/carrusel';
+
+//  Componentes de la Lista de Rutas
+import ListaRutas from './components/listado-rutas/listaRutas';
+
+// Componentes de la lista de Restaurantes
+import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
+
+// Componentes de Actividades en el destino
+import ListadoActividades from './components/actividades/actividades-destino'
+
+// Componente de Eventos en el destino
+import ListadoEventos from './components/eventos/eventos-destino'
+
+// Componentes de la Lista de Fiesta y amigos
+import ListadoBares from './components/bares/bares-recreacion'
+
+//  Componentes dellistado de alojamientis
+import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -16,32 +33,29 @@ import { FaWineBottle } from "react-icons/fa";
 import { FaPerson } from "react-icons/fa6";
 import { MdHotel } from "react-icons/md";
 import { IoCalendarOutline } from "react-icons/io5";
+import { PiMapPinAreaFill } from "react-icons/pi";
+
 
 // Estilo pagina principal
 import './style/index.css';
-
-//  Componentes de la Lista de Rutas
-import ListaRutas from './components/componentes-listado-rutas/listaRutas';
 
 // Estilos lista de rutas
 import './style/rutas/listadoRutas.css';
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";
-import { FaFire } from "react-icons/fa";
+import { GiMountaintop } from "react-icons/gi";
 import { FaRegClock } from "react-icons/fa6";
-import { LuFlagTriangleRight } from "react-icons/lu";
+import { FaGripfire } from "react-icons/fa";
 
 
 // Los pasamos como Array
 const iconCaraceristicas = {
     distancia: <RiPinDistanceFill className='icon2' />,
     tiempo: <FaRegClock className='icon2' />,
-    terreno: <LuFlagTriangleRight className='icon2' />,
-    Dificultad: <FaFire className='icon2' />
+    terreno: <GiMountaintop className='icon2' />,
+    Dificultad: <FaGripfire className='icon2' />
 }
-
-
 
 // Variables de ejemplo de respuesta a la API
 const destino = 'Suesca'
@@ -89,7 +103,10 @@ const ejemploRestaurantes = [
     {
         id: 1,
         name: 'Burguer Texas',
-        description: 'Parrilla',
+        items: {
+            'Tipo': 'Parrilla'
+        },
+        description: 'Delicioso asado a la parrilla',
         calificacion: 4.2,
         logo: '/utils/logo-restaurantes/1.jpg',
         img: '/utils/logo-restaurantes/comida1.jpg',
@@ -98,7 +115,10 @@ const ejemploRestaurantes = [
     {
         id: 2,
         name: 'Colombian Food',
-        description: 'Tipica',
+        items: {
+            'Tipo': 'Típica'
+        },
+        description: 'Auténtica cocina colombiana tradicional',
         calificacion: 4.8,
         logo: '/utils/logo-restaurantes/2.jpg',
         img: '/utils/logo-restaurantes/comida2.jpg',
@@ -107,7 +127,10 @@ const ejemploRestaurantes = [
     {
         id: 3,
         name: 'Suehica',
-        description: 'Artesanal',
+        items: {
+            'Tipo': 'Artesanal'
+        },
+        description: 'Delicados platos artesanales exclusivos',
         calificacion: 4.5,
         logo: '/utils/logo-restaurantes/3.jpg',
         img: '/utils/logo-restaurantes/comida3.jpg',
@@ -116,7 +139,10 @@ const ejemploRestaurantes = [
     {
         id: 4,
         name: 'Burguer California',
-        description: 'Ranchero',
+        items: {
+            'Tipo': 'Ranchero'
+        },
+        description: 'Auténtica comida de estilo ranchero',
         calificacion: 4.2,
         logo: '/utils/logo-restaurantes/4.jpg',
         img: '/utils/logo-restaurantes/comida4.jpg',
@@ -125,7 +151,10 @@ const ejemploRestaurantes = [
     {
         id: 5,
         name: 'Donde ma',
-        description: 'Tipico',
+        items: {
+           'Tipo': 'Típico'
+        },
+        description: 'Platos típicos de la región',
         calificacion: 4.8,
         logo: '/utils/logo-restaurantes/5.jpg',
         img: '/utils/logo-restaurantes/comida5.jpg',
@@ -134,17 +163,23 @@ const ejemploRestaurantes = [
     {
         id: 6,
         name: 'Mauros',
-        description: 'Parrila',
+        items: {
+            'Tipo': 'Parrilla'
+        },
+        description: 'Deliciosa parrilla a carbón ardiente',
         calificacion: 4.5,
         logo: '/utils/logo-restaurantes/6.jpg',
         img: '/utils/logo-restaurantes/comida6.jpg',
         precioPromedio: 20000
     }
-]
+];
 const ejemploActividades = [
     {
         id: 1,
         oferente: 'Suesca Aventura',
+        items: {
+            'Tipo': 'Cabalgata'
+        },
         name: 'Cabalgata',
         description: 'Cabalgata en las Rocas',
         logo: '/utils/ejemplo-actividades-destino/1.jpg',
@@ -154,6 +189,9 @@ const ejemploActividades = [
     {
         id: 2,
         oferente: 'Suesca Aventura',
+        items: {
+            'Tipo': 'Familiar'
+        },
         name: 'Pasa Día',
         description: 'Pasa día campestre',
         logo: '/utils/ejemplo-actividades-destino/2.jpg',
@@ -163,6 +201,9 @@ const ejemploActividades = [
     {
         id: 3,
         oferente: 'Explora Outdoors',
+        items: {
+            'Tipo': 'Cuevas'
+        },
         name: 'Cuevas',
         description: 'Espeleología en Suesca',
         logo: '/utils/ejemplo-actividades-destino/3.jpg',
@@ -172,6 +213,9 @@ const ejemploActividades = [
     {
         id: 4,
         oferente: 'Suesca Aventura',
+        items: {
+            'Tipo': 'Escalada'
+        },
         name: 'Escalada',
         description: 'Escalada en Rocas',
         logo: '/utils/ejemplo-actividades-destino/4.jpg',
@@ -181,8 +225,11 @@ const ejemploActividades = [
     {
         id: 5,
         oferente: 'Explora Outdoors',
+        items: {
+            'Tipo': 'Kayak'
+        },
         name: 'Kayak',
-        description: 'Aventura en kayak en el cañon',
+        description: 'Aventura en kayak en el cañón',
         logo: '/utils/ejemplo-actividades-destino/3.jpg',
         img: '/utils/ejemplo-actividades-destino/kayak.jpg',
         calificacion: 4.7,
@@ -193,6 +240,9 @@ const ejemploEventos = [
         id: 1,
         oferente: 'Comunidad Católica',
         name: 'Viacrucis',
+        items: {
+            'Tipo': 'Religioso'
+        },
         description: 'Viacrucis de Semana Santa',
         logo: '/utils/ejemplo-eventos-destino/1.jpg',
         img: '/utils/ejemplo-eventos-destino/Crucez.jpeg',
@@ -202,6 +252,9 @@ const ejemploEventos = [
     {
         id: 2,
         oferente: 'Alcaldía Local',
+        items: {
+            'Tipo': 'Concierto'
+        },
         name: 'Concierto',
         description: 'Concierto parque principal',
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
@@ -212,6 +265,9 @@ const ejemploEventos = [
     {
         id: 3,
         oferente: 'Asociación Campesina',
+        items: {
+            'Tipo': 'Mercado'
+        },
         name: 'Mercado Campesino',
         description: 'Feria campesina',
         logo: '/utils/ejemplo-eventos-destino/3.jpg',
@@ -222,6 +278,9 @@ const ejemploEventos = [
     {
         id: 4,
         oferente: 'Casa de la Cultura',
+        items: {
+            'Tipo': 'Cultural'
+        },
         name: 'Semana Cultural',
         description: 'Exposiciones, teatro y música',
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
@@ -232,6 +291,9 @@ const ejemploEventos = [
     {
         id: 5,
         oferente: 'Alcaldia local',
+        items: {
+            'Tipo': 'Deportivo'
+        },
         name: 'Bici Tour',
         description: 'Bici tour por la laguna',
         logo: '/utils/ejemplo-eventos-destino/2.jpg',
@@ -240,11 +302,15 @@ const ejemploEventos = [
         fecha: '12 Oct'
     }
 ];
+
 const ejemploBares = [
     {
         id: 1,
         name: 'Bar Texas',
-        description: 'Shows',
+        items: {
+            'Tipo': 'Shows'
+        },
+        description: 'Shows de música en vivo',
         calificacion: 4.2,
         logo: '/utils/logo-bares/1.jpg',
         img: '/utils/logo-bares/bar-texas.jpg',
@@ -253,7 +319,10 @@ const ejemploBares = [
     {
         id: 2,
         name: 'La Movida Colombiana',
-        description: 'Tropical',
+        items: {
+            'Tipo': 'Tropical'
+        },
+        description: 'Música tropical y ambiente caribeño',
         calificacion: 4.8,
         logo: '/utils/logo-bares/2.jpg',
         img: '/utils/logo-bares/la-movida.jpg',
@@ -262,7 +331,10 @@ const ejemploBares = [
     {
         id: 3,
         name: 'El Sótano',
-        description: 'Underground',
+        items: {
+            'Tipo': 'Underground'
+        },
+        description: 'Música underground y ambiente alternativo',
         calificacion: 4.5,
         logo: '/utils/logo-bares/3.jpg',
         img: '/utils/logo-bares/el-sotano.jpg',
@@ -271,7 +343,10 @@ const ejemploBares = [
     {
         id: 4,
         name: 'California Lounge',
-        description: 'Discoteca',
+        items: {
+            'Tipo': 'Discoteca'
+        },
+        description: 'Discoteca con música variada',
         calificacion: 4.2,
         logo: '/utils/logo-bares/4.jpg',
         img: '/utils/logo-bares/california-lounge.jpg',
@@ -280,7 +355,10 @@ const ejemploBares = [
     {
         id: 5,
         name: 'La Cueva del Jazz',
-        description: 'Shows',
+        items: {
+            'Tipo': 'Shows'
+        },
+        description: 'Espectáculos de jazz en vivo',
         calificacion: 4.8,
         logo: '/utils/logo-bares/5.jpg',
         img: '/utils/logo-bares/cueva-jazz.jpg',
@@ -289,18 +367,25 @@ const ejemploBares = [
     {
         id: 6,
         name: 'Mauros Pub',
-        description: 'Undeground',
+        items: {
+            'Tipo': 'Underground'
+        },
+        description: 'Ambiente underground con música alternativa',
         calificacion: 4.5,
         logo: '/utils/logo-bares/6.jpg',
         img: '/utils/logo-bares/mauros-pub.jpg',
         precioPromedio: 20000
     }
 ];
+
 const ejemploHoteles = [
     {
         id: 1,
         oferente: 'Hotel Las Rocas',
         name: 'Suite Vista al Lago',
+        items: {
+            'Tipo': 'Suite',
+        }, 
         description: 'Habitación con vista al lago',
         logo: '/utils/ejemplo-hoteles-destino/1.jpg',
         img: '/utils/ejemplo-hoteles-destino/suite-vista-lago.jpg',
@@ -310,6 +395,9 @@ const ejemploHoteles = [
         id: 2,
         oferente: 'Hotel Paraíso Natural',
         name: 'Cabaña en el Bosque',
+        items: {
+            'Tipo': 'Cabaña',
+        },
         description: 'Cabaña en el lago',
         logo: '/utils/ejemplo-hoteles-destino/2.jpg',
         img: '/utils/ejemplo-hoteles-destino/cabana-bosque.jpg',
@@ -319,6 +407,9 @@ const ejemploHoteles = [
         id: 3,
         oferente: 'Hotel Suesca Aventura',
         name: 'Habitación Familiar',
+        items: {
+            'Tipo': 'Habitación',
+        },
         description: 'Habitación familiar',
         logo: '/utils/ejemplo-hoteles-destino/3.jpg',
         img: '/utils/ejemplo-hoteles-destino/habitacion-familiar.jpg',
@@ -328,6 +419,9 @@ const ejemploHoteles = [
         id: 4,
         oferente: 'Hotel El Refugio',
         name: 'Loft Moderno',
+        items: {
+            'Tipo': 'Loft',
+        },
         description: 'Alojamiento minimalista',
         logo: '/utils/ejemplo-hoteles-destino/4.jpg',
         img: '/utils/ejemplo-hoteles-destino/loft-moderno.jpg',
@@ -337,12 +431,16 @@ const ejemploHoteles = [
         id: 5,
         oferente: 'Hotel Rústico',
         name: 'Habitación Ecológica',
+        items: {
+            'Tipo': 'Glamping',
+        },
         description: 'Glamping',
         logo: '/utils/ejemplo-hoteles-destino/5.jpg',
         img: '/utils/ejemplo-hoteles-destino/habitacion-ecologica.jpg',
         calificacion: 4.5,
     }
 ];
+
 const rutas = [
     {
         id: 1,
@@ -351,6 +449,7 @@ const rutas = [
         descripcion: "Esta es la descripcion de la ruta 1",
         distancia: '20 Min',
         terreno: "Montañoso",
+        calificacion: 4.5,
         Dificultad: "Alta",
         tiempo: '30 Km',
         items: {
@@ -361,10 +460,11 @@ const rutas = [
     {
         id: 2,
         nombre: "Ruta 2",
-        img: "https://picsum.photos/200/300?random=2",
+        img: "/utils/Virgen-de-la-Z/1.jpg",
         descripcion: "Esta es la descripcion de la ruta 2",
         distancia: '15 Min',
         terreno: "Boscoso",
+        calificacion: 4.5,
         Dificultad: "Media",
         tiempo: '15 Km', // Puedes ajustar el valor según el dato que quieras
         items: {
@@ -375,10 +475,11 @@ const rutas = [
     {
         id: 3,
         nombre: "Ruta 3",
-        img: "https://picsum.photos/200/300?random=3",
+        img: "/utils/Virgen-de-la-Z/2.jpg",
         descripcion: "Esta es la descripcion de la ruta 3",
         distancia: '8 Km',
         terreno: "Llano",
+        calificacion: 4.5,
         Dificultad: "Baja",
         tiempo: '90 Min', // Puedes ajustar el valor según el dato que quieras
         items: {
@@ -389,10 +490,11 @@ const rutas = [
     {
         id: 4,
         nombre: "Ruta 4",
-        img: "https://picsum.photos/200/300?random=4",
+        img: "/utils/Virgen-de-la-Z/3.jpg",
         descripcion: "Esta es la descripcion de la ruta 4",
         distancia: '8 Km',
         terreno: "Pasto",
+        calificacion: 4.5,
         Dificultad: "Baja",
         tiempo: '90 Min', // Puedes ajustar el valor según el dato que quieras
         items: {
@@ -401,8 +503,6 @@ const rutas = [
         }
     }
 ];
-
-
 
 
 function App() {
@@ -418,44 +518,109 @@ function App() {
                         <PopularActivities contenido = {ejemploContenidoPopular} />
                         <ListaTop3 
                             rest = {ejemploRestaurantes}
-                            titulo = 'Restaureantes'
-                            icono = {<IoFastFoodOutline className='Faperson'/>} 
+                            titulo = 'Restaurantes'
+                            icono1 = {<IoFastFoodOutline className='Faperson'/>} 
+                            icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                             tipo = 'Platos desde'    
+                            route= 'restaurantes'
                         />
                         <Carrusel 
                             actividadesDestino = {ejemploActividades}
                             titulo = 'Actividades'
-                            iconPerson={<FaPerson className="Faperson"/>}
-                            tipo = 'Por persona:' 
+                            icon={<FaPerson className="Faperson"/>}
+                            tipo = 'Por persona:'
+                            route= 'actividades' 
                         />
                         <Carrusel 
                             actividadesDestino = {ejemploEventos}
                             titulo = 'Eventos'
-                            iconPerson={<FaPerson className="Faperson"/>}
+                            icon={<FaPerson className="Faperson"/>}
                             iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
                             fecha = '30 Oct'
                             tipo = 'Desde:'
+                            route= 'eventos'
                         />
                         <ListaTop3 
                             rest = {ejemploBares}
                             titulo = 'Fiesta y Amigos'
-                            icono = {<FaWineBottle  className='Faperson'/>}
+                            icono1 = {<FaWineBottle className='Faperson'/>} 
+                            icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                             tipo = 'Botellas desde'
+                            route= 'fiesta-amigos'
                         />
                         <Carrusel 
                             actividadesDestino= {ejemploHoteles}
                             titulo= 'Alojamientos'
-                            iconPerson={ <MdHotel className="Faperson" />}
+                            icon={ <MdHotel className="Faperson" />}
+                            noche = 'noche'
+                            route= 'alojamientos'
                         />
                     </>
                 } 
-            />
+            />    
             <Route 
-                path='/categoria/:nombre' 
+                path='/rutas/:nombre' 
                 element = {
                     <ListaRutas 
                         rutas = { rutas }
                         iconos= {iconCaraceristicas}
+                    />
+                }
+            />
+            <Route
+                path='/restaurantes'
+                element = {
+                    <ListadoRestaurantes 
+                        restaurantes = { ejemploRestaurantes }
+                        icono1 = {<IoFastFoodOutline className='Faperson'/>} 
+                        icono2 = { <PiMapPinAreaFill className='Faperson'/> }
+                        titulo = 'Restaurantes'
+                    />
+                }
+            />
+            <Route
+                path='/fiesta-amigos'
+                element = {
+                    <ListadoBares
+                        bares = {ejemploBares}
+                        icono1 = {<FaWineBottle className='Faperson'/>} 
+                        icono2 = { <PiMapPinAreaFill className='Faperson'/> }
+                        titulo= 'Fiesta y Amigos'
+                    />
+                }
+            />
+            <Route 
+                path='/actividades'
+                element = {
+                    <ListadoActividades 
+                        actividades = {ejemploActividades}
+                        titulo = 'Actividades'
+                        icon = {<FaPerson className="Faperson" />}
+                        tipo = 'Por persona: '
+                    />
+                }
+            />
+            <Route 
+                path='/eventos'
+                element = {
+                    <ListadoEventos 
+                        eventos = {ejemploEventos}
+                        titulo = 'Eventos'
+                        icon={<FaPerson className="Faperson" />}
+                        tipo= 'Por persona: '
+                        iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
+                        fecha = '30 Oct'
+                    />
+                }
+            />
+            <Route 
+                path='/alojamientos'
+                element = {
+                    <ListadoAlojamiewnto 
+                        alojamientos={ejemploHoteles}
+                        titulo= 'Alojamientos'
+                        icon={ <MdHotel className="Faperson" />}
+                        noche = 'noche'
                     />
                 }
             />
