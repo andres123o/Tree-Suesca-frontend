@@ -512,7 +512,7 @@ function App() {
             <ScrollToTop />
             <Routes>
                 <Route 
-                    path = "/home" 
+                    path = "/" 
                     element = {
                         <>
                             <Header destino = {destino}/>
