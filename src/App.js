@@ -12,6 +12,7 @@ import Carrusel from './components/home/carrusel';
 
 //  Componentes de la Lista de Rutas
 import ListaRutas from './components/listado-rutas/listaRutas';
+import DescripcionRuta from './components/listado-rutas/descripcion-ruta-individual'
 
 // Componentes de la lista de Restaurantes
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
@@ -42,6 +43,8 @@ import './style/index.css';
 
 // Estilos lista de rutas
 import './style/rutas/listadoRutas.css';
+import './style/rutas/descripcionRuta.css'
+
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";
@@ -444,66 +447,338 @@ const ejemploHoteles = [
 
 const rutas = [
     {
-        id: 1,
-        nombre: "Virgen de la Z",
-        img: "/utils/Virgen-de-la-Z/Final_Virgen.jpg",
-        descripcion: "Esta es la descripcion de la ruta 1",
-        distancia: '20 Min',
-        terreno: "Montañoso",
-        calificacion: 4.5,
-        Dificultad: "Alta",
-        tiempo: '30 Km',
-        items: {
-            'Duración': 'corta',
-            'Tipo': "Monumento",
+      nombre: "Virgen de la Z",
+      categoria: {
+        senderismo: true,
+        biciTour: true,
+        moto: true,
+        automovil: false
+      },
+      img: "/utils/Paisaje/Panoramica-virgen2.jpeg",
+      imgs: [
+        "/utils/Paisaje/Panoramica_Virgen3.jpeg",
+        "/utils/Paisaje/Crucez.jpeg",
+        "/utils/Paisaje/Daniela.jpeg",
+        "/utils/Paisaje/Lucas.jpeg",
+        "/utils/Paisaje/Mirador.jpeg",
+        "/utils/Paisaje/Mirador_cruz.jpeg",
+        "/utils/Paisaje/Mirador_Virgen.jpeg",
+        "/utils/Paisaje/Panoramica-virgen2.jpeg",
+        "/utils/Paisaje/Mirador_Virgen2.jpeg"
+      ],
+      descripcion: 'El Alto de la Virgen es un lugar sagrado en la cima de una montaña, ofreciendo vistas impresionantes de la sabana. Es perfecto para locales y turistas que buscan una experiencia espiritual, reflexionar, tomar fotos y relajarse en un entorno sereno.',
+      etiquetas: ['Pet Friendly', 'Monumento', 'Bosque', 'Camino Irregular', 'Paisajes', 'Montaña'],
+      distancia: 10,
+      vecesRecomendada: 150,
+      completaronRuta: 160,
+      instrucciones: {
+        recomendaciones: 'Usa un casco y asegúrate de que tu bicicleta esté en buen estado antes de comenzar. Lleva suficiente agua, bloqueador solar y snacks.',
+        accesibilidad: 'La ruta es accesible para ciclistas que sigan el camino principal, pero los atajos presentan mayor dificultad.',
+        conservacion: 'Es fundamental contribuir a la conservación de la ruta y el monumento. Recoge la basura y no alteres la fauna.',
+        emergencias: {
+          'Bomberos': 3015081517,
+          'Policia': 3011234512,
+          'Defensa civil': 3221254578,
+          'Ambulancia': 3112689856
         }
+      },
+      terreno: "Montañoso",
+      calificacion: 4.5,
+      dificultad: "Alta",
+      tiempo: 30,
+      items: {
+        'Duración': 'corta',
+        'Tipo': "Monumento",
+      },
+      estaciones: {
+        1: { nombre: "Parque principal", dificultad: 'Baja' },
+        2: { nombre: 'Empezando la Z', dificultad: 'Alta' },
+        3: { nombre: 'Mirador', dificultad: 'Media' },
+        4: { nombre: 'Virgen de la Z', dificultad: 'Media' }
+      },
+      atajos: {
+        1: { nombre: "Saltando la Z", dificultad: 'Alta', senderismo: true, biciTour: true, moto: true, automovil: false },
+        2: { nombre: "Explorando el bosque", dificultad: 'Media', senderismo: true, biciTour: false, moto: false, automovil: true },
+        3: { nombre: "Directo al monumento", dificultad: 'Baja', senderismo: true, biciTour: false, moto: false, automovil: false }
+      }
     },
     {
-        id: 2,
-        nombre: "Ruta 2",
-        img: "/utils/Virgen-de-la-Z/1.jpg",
-        descripcion: "Esta es la descripcion de la ruta 2",
-        distancia: '15 Min',
-        terreno: "Boscoso",
-        calificacion: 4.5,
-        Dificultad: "Media",
-        tiempo: '15 Km', // Puedes ajustar el valor según el dato que quieras
-        items: {
-            'Duración': 'media',
-            'Tipo': "Bosque",
+      nombre: "Cascada El Chorro",
+      categoria: {
+        senderismo: true,
+        biciTour: false,
+        moto: false,
+        automovil: false
+      },
+      img: "/utils/Paisaje/Cascada_Chorro1.jpeg",
+      imgs: [
+        "/utils/Paisaje/Cascada_Chorro2.jpeg",
+        "/utils/Paisaje/Cascada_Chorro3.jpeg",
+        "/utils/Paisaje/Cascada_Chorro4.jpeg"
+      ],
+      descripcion: 'Un paraíso escondido en medio de la naturaleza. La cascada El Chorro es ideal para quienes buscan una caminata tranquila con un destino refrescante.',
+      etiquetas: ['Cascada', 'Pet Friendly', 'Naturaleza', 'Bosque', 'Camino Rocoso'],
+      distancia: 7,
+      vecesRecomendada: 120,
+      completaronRuta: 130,
+      instrucciones: {
+        recomendaciones: 'Lleva zapatos adecuados para terreno húmedo y resbaladizo. No olvides tu cámara para capturar la majestuosidad de la cascada.',
+        accesibilidad: 'Solo para senderistas. Las bicicletas y motocicletas no pueden acceder debido al terreno irregular.',
+        conservacion: 'Evita nadar en la cascada para preservar el ecosistema natural. Recoge toda la basura al salir.',
+        emergencias: {
+          'Bomberos': 3015081517,
+          'Policia': 3011234512,
+          'Defensa civil': 3221254578,
+          'Ambulancia': 3112689856
         }
+      },
+      terreno: "Rocoso",
+      calificacion: 4.7,
+      dificultad: "Media",
+      tiempo: 20,
+      items: {
+        'Duración': 'corta',
+        'Tipo': "Cascada",
+      },
+      estaciones: {
+        1: { nombre: "Entrada del parque", dificultad: 'Baja' },
+        2: { nombre: 'Camino de piedras', dificultad: 'Media' },
+        3: { nombre: 'Cascada El Chorro', dificultad: 'Media' }
+      },
+      atajos: {
+        1: { nombre: "Camino de rocas", dificultad: 'Media', senderismo: true, biciTour: false, moto: false, automovil: false }
+      }
     },
     {
-        id: 3,
-        nombre: "Ruta 3",
-        img: "/utils/Virgen-de-la-Z/2.jpg",
-        descripcion: "Esta es la descripcion de la ruta 3",
-        distancia: '8 Km',
-        terreno: "Llano",
-        calificacion: 4.5,
-        Dificultad: "Baja",
-        tiempo: '90 Min', // Puedes ajustar el valor según el dato que quieras
-        items: {
-            'Duración': 'media',
-            'Tipo': "Caminata",
+      nombre: "Ruta de los Cañones",
+      categoria: {
+        senderismo: true,
+        biciTour: true,
+        moto: false,
+        automovil: true
+      },
+      img: "/utils/Paisaje/Cañones1.jpeg",
+      imgs: [
+        "/utils/Paisaje/Cañones2.jpeg",
+        "/utils/Paisaje/Cañones3.jpeg"
+      ],
+      descripcion: 'Una ruta panorámica que recorre impresionantes cañones y formaciones rocosas. Ideal para ciclistas y quienes disfrutan de conducir por paisajes únicos.',
+      etiquetas: ['Paisajes', 'Cañones', 'Naturaleza', 'Camino Pavimentado'],
+      distancia: 15,
+      vecesRecomendada: 200,
+      completaronRuta: 180,
+      instrucciones: {
+        recomendaciones: 'Mantén precaución al conducir por los bordes del cañón. Lleva suficiente agua para hidratarte en las zonas más expuestas al sol.',
+        accesibilidad: 'Ruta accesible para senderistas y vehículos, con caminos pavimentados y señalización clara.',
+        conservacion: 'Evita aventurarte fuera de las rutas establecidas para preservar la flora local.',
+        emergencias: {
+          'Bomberos': 3015081517,
+          'Policia': 3011234512,
+          'Defensa civil': 3221254578,
+          'Ambulancia': 3112689856
         }
+      },
+      terreno: "Pavimentado",
+      calificacion: 4.6,
+      dificultad: "Media",
+      tiempo: 40,
+      items: {
+        'Duración': 'larga',
+        'Tipo': "Cañones",
+      },
+      estaciones: {
+        1: { nombre: "Inicio de los Cañones", dificultad: 'Baja' },
+        2: { nombre: 'Zona panorámica', dificultad: 'Media' },
+        3: { nombre: 'Final de los Cañones', dificultad: 'Media' }
+      },
+      atajos: {
+        1: { nombre: "Ruta directa", dificultad: 'Baja', senderismo: true, biciTour: true, moto: false, automovil: true }
+      }
     },
     {
-        id: 4,
-        nombre: "Ruta 4",
-        img: "/utils/Virgen-de-la-Z/3.jpg",
-        descripcion: "Esta es la descripcion de la ruta 4",
-        distancia: '8 Km',
-        terreno: "Pasto",
-        calificacion: 4.5,
-        Dificultad: "Baja",
-        tiempo: '90 Min', // Puedes ajustar el valor según el dato que quieras
-        items: {
-            'Duración': 'larga',
-            'Tipo': "Caminata",
+      nombre: "Cueva del Indio",
+      categoria: {
+        senderismo: true,
+        biciTour: false,
+        moto: false,
+        automovil: false
+      },
+      img: "/utils/Paisaje/Cueva_Indio1.jpeg",
+      imgs: [
+        "/utils/Paisaje/Cueva_Indio2.jpeg",
+        "/utils/Paisaje/Cueva_Indio3.jpeg"
+      ],
+      descripcion: 'Explora las misteriosas formaciones de la Cueva del Indio. Una aventura para los amantes de la espeleología y la historia local.',
+      etiquetas: ['Cueva', 'Historia', 'Exploración', 'Naturaleza'],
+      distancia: 5,
+      vecesRecomendada: 80,
+      completaronRuta: 70,
+      instrucciones: {
+        recomendaciones: 'Lleva una linterna y calzado cómodo para caminar en superficies resbaladizas.',
+        accesibilidad: 'La ruta es únicamente accesible a pie, y se recomienda experiencia en exploración de cuevas.',
+        conservacion: 'Respeta las formaciones dentro de la cueva. No toques las estalactitas y estalagmitas para preservar su crecimiento natural.',
+        emergencias: {
+          'Bomberos': 3015081517,
+          'Policia': 3011234512,
+          'Defensa civil': 3221254578,
+          'Ambulancia': 3112689856
         }
+      },
+      terreno: "Cueva",
+      calificacion: 4.4,
+      dificultad: "Alta",
+      tiempo: 25,
+      items: {
+        'Duración': 'corta',
+        'Tipo': "Cueva",
+      },
+      estaciones: {
+        1: { nombre: "Entrada de la Cueva", dificultad: 'Alta' },
+        2: { nombre: 'Cámara Principal', dificultad: 'Alta' }
+      },
+      atajos: {
+        1: { nombre: "Ruta secundaria", dificultad: 'Alta', senderismo: true, biciTour: false, moto: false, automovil: false }
+      }
+    },
+    {
+      nombre: "Cerro de las Tres Cruces",
+      categoria: {
+        senderismo: true,
+        biciTour: true,
+        moto: false,
+        automovil: false
+      },
+      img: "/utils/Paisaje/Tres_Cruces1.jpeg",
+      imgs: [
+        "/utils/Paisaje/Tres_Cruces2.jpeg",
+        "/utils/Paisaje/Tres_Cruces3.jpeg"
+      ],
+      descripcion: 'El Cerro de las Tres Cruces ofrece una caminata desafiante con una vista espectacular de la ciudad al llegar a la cima. Es un lugar popular entre locales para hacer ejercicio y disfrutar de la naturaleza.',
+      etiquetas: ['Montaña', 'Paisajes', 'Religión', 'Ejercicio'],
+      distancia: 8,
+      vecesRecomendada: 190,
+      completaronRuta: 200,
+      instrucciones: {
+        recomendaciones: 'Lleva agua y protección solar, la subida puede ser intensa y expuesta al sol.',
+        accesibilidad: 'Accesible para senderistas y ciclistas experimentados.',
+        conservacion: 'Respeta las instalaciones religiosas y recoge tu basura.',
+        emergencias: {
+          'Bomberos': 3015081517,
+          'Policia': 3011234512,
+          'Defensa civil': 3221254578,
+          'Ambulancia': 3112689856
+        }
+      },
+      terreno: "Montaña",
+      calificacion: 4.8,
+      dificultad: "Alta",
+      tiempo: 35,
+      items: {
+        'Duración': 'media',
+        'Tipo': "Religión",
+      },
+      estaciones: {
+        1: { nombre: "Inicio de la subida", dificultad: 'Media' },
+        2: { nombre: 'Primera Cruz', dificultad: 'Alta' },
+        3: { nombre: 'Cima', dificultad: 'Alta' }
+      },
+      atajos: {
+        1: { nombre: "Subida directa", dificultad: 'Alta', senderismo: true, biciTour: false, moto: false, automovil: false }
+      }
     }
 ];
+  
+
+const ruta = {
+    nombre: "Virgen de la Z",
+    categoria: {
+        senderismo: true,
+        biciTour: true,
+        moto: true,
+        automovil: false
+    },
+    img: "/utils/Paisaje/Panoramica-virgen2.jpeg",
+    imgs: [
+        "/utils/Paisaje/Panoramica_Virgen3.jpeg",
+        "/utils/Paisaje/Crucez.jpeg",
+        "/utils/Paisaje/Daniela.jpeg",
+        "/utils/Paisaje/Lucas.jpeg",
+        "/utils/Paisaje/Mirador.jpeg",
+        "/utils/Paisaje/Mirador_cruz.jpeg",
+        "/utils/Paisaje/Mirador_Virgen.jpeg",
+        "/utils/Paisaje/Panoramica-virgen2.jpeg",
+        "/utils/Paisaje/Mirador_Virgen2.jpeg"
+    ],
+    descripcion: 'El Alto de la Virgen es un lugar sagrado en la cima de una montaña, ofreciendo vistas impresionantes de la sabana. Es perfecto para locales y turistas que buscan una experiencia espiritual, reflexionar, tomar fotos y relajarse en un entorno sereno.',
+    etiquetas: ['Pet Friendly', 'Monumento', 'Bosque', 'Camino Irregular', 'Paisajes', 'Montaña'],
+    distancia: 10,
+    vecesRecomendada: 150,
+    completaronRuta: 160,
+    instrucciones: {
+        recomendaciones: 'Usa un casco y asegúrate de que tu bicicleta esté en buen estado antes de comenzar. Lleva suficiente agua, bloqueador solar y snacks.',
+        accesibilidad: 'La ruta es accesible para ciclistas que sigan el camino principal, pero los atajos presentan mayor dificultad.',
+        conservacion: 'Es fundamental contribuir a la conservación de la ruta y el monumento. Recoge la basura y no alteres la fauna.',
+        emergencias: {
+            'Bomberos': 3015081517,
+            'Policia': 3011234512,
+            'Defensa civil': 3221254578,
+            'Ambulancia': 3112689856
+        }
+    },
+    terreno: "Montañoso",
+    calificacion:4.5,
+    dificultad: "Alta",
+    tiempo: 30,
+    items: {
+        'Duración': 'corta',
+        'Tipo': "Monumento",
+    },
+    estaciones: {
+        1: {
+            nombre: "Parque principal",
+            dificultad: 'Baja'
+        },
+        2: {
+            nombre: 'Empezando la Z',
+            dificultad: 'Alta'
+        },
+        3: {
+            nombre: 'Mirador',
+            dificultad: 'Media'
+        },
+        4: {
+            nombre: 'Virgen de la Z',
+            dificultad: 'Media'
+        }
+    },
+    atajos: {
+        1: {
+            nombre: "Saltando la Z",
+            dificultad: 'Alta',
+            senderismo: true,
+            biciTour: true,
+            moto: true,
+            automovil: false
+        },
+        2: {
+            nombre: "Explorando el nosque",
+            dificultad: 'Media',
+            senderismo: true,
+            biciTour: false,
+            moto: false,
+            automovil: true
+        },
+        3: {
+            nombre: "Directo al monumento",
+            dificultad: 'Baja',
+            senderismo: true,
+            biciTour: false,
+            moto: false,
+            automovil: false
+        }
+    }
+}
+
 
 
 function App() {
@@ -567,6 +842,7 @@ function App() {
                         <ListaRutas 
                             rutas = { rutas }
                             iconos= {iconCaraceristicas}
+                            route= 'description'
                         />
                     }
                 />
@@ -624,6 +900,14 @@ function App() {
                             titulo= 'Alojamientos'
                             icon={ <MdHotel className="Faperson" />}
                             noche = 'noche'
+                        />
+                    }
+                />
+                <Route 
+                    path='/rutas/:nombre/description'
+                    element = {
+                        <DescripcionRuta 
+                            rutas={ruta}
                         />
                     }
                 />

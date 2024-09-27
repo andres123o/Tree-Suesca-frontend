@@ -1,4 +1,4 @@
-const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion } ) => {
+const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion} ) => {
     return (
         <>
                 <div className="container-categoria-restaurantes">

@@ -87,6 +87,7 @@
     align-items: center;
 }
 .container-dificultad-distancia-timpo .h5 {
+    font-size: 16px;
     color: var(--font-color-primary);
     font-weight: 800;
 }
@@ -118,7 +119,7 @@
 }
 #container-mapa-interactivo-example svg {
     width: 100%;
-    background-image: url('/src/static/utils/mapa-ilustrativo.JPG');
+    background-image: url('../../../public/utils/mapa-ilustrativo.JPG');
     background-size: contain;
     border-radius: 1em;
 }
@@ -182,62 +183,7 @@
 
 /* Seccion de accordeon */
 
-.accordion {
-    width: 100%;
-    height: auto;
-    display: flex;               /* Usar flexbox para la alineación */
-    flex-direction: column;      /* Alinear el contenido verticalmente */
-    align-items: center;         /* Centrar el contenido horizontalmente */
-}
 
-.accordion-item {
-    width: 90%;
-    margin-bottom: 5px;
-}
-  
-.accordion-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 3%;
-    background-color: var(--fondo-claro);
-    border-radius: 0.5em;
-    border: none;
-    text-align: left;
-    cursor: pointer;
-}
-  
-.accordion-content {
-    display: none;
-    padding: 10px;
-    font-size: 0.8em;
-    text-align: justify;
-}
-  
-.icon {
-    transition: transform 0.3s ease;
-}
-  
-.active .icon {
-    transform: rotate(90deg);
-}
-.emergencias-numeros {
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-}
-
-.emergencia-item {
-    text-align: left;
-    font-size: 0.8em;
-    margin-left: 3%;
-    font-weight: bold;
-}
-.emergencias-numeros a {
-    font-weight: 500;
-    
-}
 
 /* Previa del mapa bloqueado por capa opaca */
 
