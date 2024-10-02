@@ -456,7 +456,7 @@ const rutas = [
         moto: true,
         automovil: false
       },
-      img: "/utils/Paisaje/Panoramica_Virgen3.jpeg",
+      img: "/utils/Paisaje/img_personalizada.jpeg",
       imgs: [
         "/utils/Paisaje/Panoramica_Virgen3.jpeg",
         "/utils/Paisaje/Crucez.jpeg",
