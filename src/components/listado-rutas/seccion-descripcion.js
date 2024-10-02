@@ -209,128 +209,130 @@ const InfoDescripcion = ({ rutas, onImageSelect, startMap }) => {
   const visibleText = isExpanded ? rutas.descripcion : `${rutas.descripcion.slice(0, maxTextLength)}...`;
 
   return (
-    <div className='container-info-descrip'>
-      {/* Carrusel imagenes */}
-      <div className='container-carrusel-imgs'>
-        <div className='carrusel-imgs'>
-          {rutas.imgs.map((imgSrc, index) => (
-            <img 
-              key={index}
-              src={imgSrc}
-              alt="Imagen de la ruta"
-              onClick={() => handleImageClick(imgSrc, index)}
-              className={index === selectedImgIndex ? 'selected' : ''}
-            />
+    <>
+      <div className='container-info-descrip'>
+        {/* Carrusel imagenes */}
+        <div className='container-carrusel-imgs'>
+          <div className='carrusel-imgs'>
+            {rutas.imgs.map((imgSrc, index) => (
+              <img 
+                key={index}
+                src={imgSrc}
+                alt="Imagen de la ruta"
+                onClick={() => handleImageClick(imgSrc, index)}
+                className={index === selectedImgIndex ? 'selected' : ''}
+              />
+            ))}
+          </div>
+        </div>
+        {/* Container nombre, y estadisticas */}
+        <div className='container-recuadro-info-title'>
+          <h4>{rutas.nombre}</h4>
+          <div className='container-dificultad-distancia-timpo'>
+            <div className='section'>
+              <h5>Distancia</h5>
+              <p>{rutas.distancia} Km</p>
+            </div>
+            <div className='section'>
+              <h5>Tiempo</h5>
+              <p>{rutas.tiempo} Min</p>
+            </div>
+            <div className='section'>
+              <h5>Dificultad</h5>
+              <p>{rutas.dificultad}</p>
+            </div>
+          </div>
+        </div>
+        <div className='separador'></div>
+        {/* Container del mapa interactivo de atajos y estaciones */}
+        <div className='container-mapa-atajos-estaciones'>
+          <div id='container-mapa-interactivo-example'></div>
+        </div>
+        <div className='container-leyenda-mapa-interactivo-arriba'>
+          <div className='container-leyenda'>
+            <h5>Estaciones</h5>
+            <div className='circulo' style={{ backgroundColor: '#EB2330' }}></div>
+          </div>
+          <div className='container-leyenda'>
+            <h5>Atajos</h5>
+            <div className='circulo' style={{ backgroundColor: '#FFA500' }}></div>
+          </div>  
+        </div>
+        <div className='separador'></div>
+        {/* Container descripcion de la ruta */}
+        <div className='container-descripcion'>
+          <p className='descripcion' id="descripcion-texto">
+            {visibleText}
+            <button onClick={toggleExpand} className='show-more-btn'>
+              {isExpanded ? 'less' : 'more'}
+            </button>
+          </p>
+        </div>
+        <div className='separador'></div>
+
+        {/* Container del boton de inicio de la ruta */}
+        <div className='container-boton'>
+          <button 
+            className="unlock-button" 
+            id="desbloquear"
+            onClick={startMap}
+          >
+            Iniciar Ruta
+          </button>
+        </div>
+
+        <div className='separador'></div>
+
+        {/* container de calificacion de la ruta */}
+        <div className='container-calificativo'>
+          <div className='container-estrellas'>
+            <p>{rutas.calificacion}</p>
+            <StarRating rating={rutas.calificacion} />
+          </div>
+          <div className='container-comentarios'>
+            <div>
+              <h5>Veces recomendada: </h5>
+              <span>{rutas.vecesRecomendada}</span>
+            </div>
+            <div>
+              <h5>Completaron la ruta: </h5>
+              <span>{rutas.completaronRuta}</span>
+            </div>
+          </div> 
+        </div>
+        <div className='separador'></div>
+
+        {/* seccion de accordean, recomendaciones y mas */}
+        <div className='accordion'>
+          {Object.entries(rutas.instrucciones).map(([key, value], index) => (
+            <div key={key} className='accordion-item1'>
+              <button 
+                className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
+                onClick={() => toggleSection(index)}
+              >
+                {key.charAt(0).toUpperCase() + key.slice(1)}
+                <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
+              </button>
+              <div 
+                className='accordion-content'
+                style={{ display: expandedSection === index ? 'block' : 'none' }}
+              >
+                {typeof value === 'string' ? (
+                  <p>{value}</p>
+                ) : typeof value === 'object' ? (
+                  Object.entries(value).map(([subKey, subValue]) => (
+                    <div className='emergencia-item' key={subKey}>
+                      <p>{subKey}: </p>
+                      <a href={subValue}>{subValue}</a>
+                    </div>
+                  ))
+                ) : null}
+              </div>
+            </div>
           ))}
         </div>
       </div>
-      {/* Container nombre, y estadisticas */}
-      <div className='container-recuadro-info-title'>
-        <h4>{rutas.nombre}</h4>
-        <div className='container-dificultad-distancia-timpo'>
-          <div className='section'>
-            <h5>Distancia</h5>
-            <p>{rutas.distancia} Km</p>
-          </div>
-          <div className='section'>
-            <h5>Tiempo</h5>
-            <p>{rutas.tiempo} Min</p>
-          </div>
-          <div className='section'>
-            <h5>Dificultad</h5>
-            <p>{rutas.dificultad}</p>
-          </div>
-        </div>
-      </div>
-      <div className='separador'></div>
-      {/* Container del mapa interactivo de atajos y estaciones */}
-      <div className='container-mapa-atajos-estaciones'>
-        <div id='container-mapa-interactivo-example'></div>
-      </div>
-      <div className='container-leyenda-mapa-interactivo-arriba'>
-        <div className='container-leyenda'>
-          <h5>Estaciones</h5>
-          <div className='circulo' style={{ backgroundColor: '#EB2330' }}></div>
-        </div>
-        <div className='container-leyenda'>
-          <h5>Atajos</h5>
-          <div className='circulo' style={{ backgroundColor: '#FFA500' }}></div>
-        </div>  
-      </div>
-      <div className='separador'></div>
-      {/* Container descripcion de la ruta */}
-      <div className='container-descripcion'>
-        <p className='descripcion' id="descripcion-texto">
-          {visibleText}
-          <button onClick={toggleExpand} className='show-more-btn'>
-            {isExpanded ? 'less' : 'more'}
-          </button>
-        </p>
-      </div>
-      <div className='separador'></div>
-
-      {/* Container del boton de inicio de la ruta */}
-      <div className='container-boton'>
-        <button 
-          className="unlock-button" 
-          id="desbloquear"
-          onClick={startMap}
-        >
-          Iniciar Ruta
-        </button>
-      </div>
-
-      <div className='separador'></div>
-
-      {/* container de calificacion de la ruta */}
-      <div className='container-calificativo'>
-        <div className='container-estrellas'>
-          <p>{rutas.calificacion}</p>
-          <StarRating rating={rutas.calificacion} />
-        </div>
-        <div className='container-comentarios'>
-          <div>
-            <h5>Veces recomendada: </h5>
-            <span>{rutas.vecesRecomendada}</span>
-          </div>
-          <div>
-            <h5>Completaron la ruta: </h5>
-            <span>{rutas.completaronRuta}</span>
-          </div>
-        </div> 
-      </div>
-      <div className='separador'></div>
-
-      {/* seccion de accordean, recomendaciones y mas */}
-      <div className='accordion'>
-        {Object.entries(rutas.instrucciones).map(([key, value], index) => (
-          <div key={key} className='accordion-item1'>
-            <button 
-              className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
-              onClick={() => toggleSection(index)}
-            >
-              {key.charAt(0).toUpperCase() + key.slice(1)}
-              <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
-            </button>
-            <div 
-              className='accordion-content'
-              style={{ display: expandedSection === index ? 'block' : 'none' }}
-            >
-              {typeof value === 'string' ? (
-                <p>{value}</p>
-              ) : typeof value === 'object' ? (
-                Object.entries(value).map(([subKey, subValue]) => (
-                  <div className='emergencia-item' key={subKey}>
-                    <p>{subKey}: </p>
-                    <a href={subValue}>{subValue}</a>
-                  </div>
-                ))
-              ) : null}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 };
 

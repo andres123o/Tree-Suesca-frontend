@@ -13,6 +13,7 @@ import Carrusel from './components/home/carrusel';
 //  Componentes de la Lista de Rutas
 import ListaRutas from './components/listado-rutas/listaRutas';
 import DescripcionRuta from './components/listado-rutas/descripcion-ruta-individual'
+import FuncionalidadesMapa from './components/listado-rutas/seccion-mapa'
 
 // Componentes de la lista de Restaurantes
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
@@ -447,6 +448,7 @@ const ejemploHoteles = [
 
 const rutas = [
     {
+      id:1,  
       nombre: "Virgen de la Z",
       categoria: {
         senderismo: true,
@@ -454,7 +456,7 @@ const rutas = [
         moto: true,
         automovil: false
       },
-      img: "/utils/Paisaje/Panoramica-virgen2.jpeg",
+      img: "/utils/Paisaje/Panoramica_Virgen3.jpeg",
       imgs: [
         "/utils/Paisaje/Panoramica_Virgen3.jpeg",
         "/utils/Paisaje/Crucez.jpeg",
@@ -503,6 +505,7 @@ const rutas = [
       }
     },
     {
+      id:2,
       nombre: "Cascada El Chorro",
       categoria: {
         senderismo: true,
@@ -550,6 +553,7 @@ const rutas = [
       }
     },
     {
+      id:3,
       nombre: "Ruta de los Cañones",
       categoria: {
         senderismo: true,
@@ -595,7 +599,8 @@ const rutas = [
         1: { nombre: "Ruta directa", dificultad: 'Baja', senderismo: true, biciTour: true, moto: false, automovil: true }
       }
     },
-    {
+    { 
+      id:4,
       nombre: "Cueva del Indio",
       categoria: {
         senderismo: true,
@@ -641,6 +646,7 @@ const rutas = [
       }
     },
     {
+      id:5,
       nombre: "Cerro de las Tres Cruces",
       categoria: {
         senderismo: true,
@@ -687,9 +693,8 @@ const rutas = [
       }
     }
 ];
-  
-
 const ruta = {
+    id:1,
     nombre: "Virgen de la Z",
     categoria: {
         senderismo: true,
@@ -736,47 +741,209 @@ const ruta = {
     estaciones: {
         1: {
             nombre: "Parque principal",
-            dificultad: 'Baja'
+            dificultad: 'Baja',
+            position: { lat: 5.103242, lng: -73.798712 },
+            img: '/utils/Virgen-de-la-Z/Parque-principal.jpg'
         },
         2: {
             nombre: 'Empezando la Z',
-            dificultad: 'Alta'
+            dificultad: 'Alta',
+            position: { lat: 5.113875, lng: -73.804139 },
+            img: '/utils/Virgen-de-la-Z/Primer-Atajo.jpg'
         },
         3: {
             nombre: 'Mirador',
-            dificultad: 'Media'
+            dificultad: 'Media',
+            position: { lat: 5.114737, lng: -73.809393 },
+            img: '/utils/Virgen-de-la-Z/Chitiva-Abajo.jpg'
         },
         4: {
             nombre: 'Virgen de la Z',
-            dificultad: 'Media'
+            dificultad: 'Media',
+            position: { lat: 5.116750, lng: -73.806383 },
+            img: '/utils/Paisaje/Final_Virgen.jpg'
         }
     },
     atajos: {
         1: {
             nombre: "Saltando la Z",
             dificultad: 'Alta',
-            senderismo: true,
-            biciTour: true,
-            moto: true,
-            automovil: false
+            disponible: {
+                senderismo: true,
+                biciTour: true,
+                moto: true,
+                automovil: false,
+            },
+            position: { lat: 5.113973, lng: -73.803196 },
+            img: '/utils/Virgen-de-la-Z/Atajo_1.jpg',
+            cordenadas: [
+                { lat: 5.113956, lng: -73.803188 },
+                { lat: 5.114023, lng: -73.803203 },
+                { lat: 5.114040, lng: -73.803288 },
+                { lat: 5.113997, lng: -73.803351 },
+                { lat: 5.114024, lng: -73.803391 },
+                { lat: 5.114017, lng: -73.803445 },
+                { lat: 5.114035, lng: -73.803567 },
+                { lat: 5.114011, lng: -73.803707 },
+                { lat: 5.114008, lng: -73.803915 },
+                { lat: 5.114151, lng: -73.804193 },
+                { lat: 5.114109, lng: -73.804299 },
+                { lat: 5.114192, lng: -73.804551 },
+                { lat: 5.114188, lng: -73.804772 },
+                { lat: 5.114244, lng: -73.804941 },
+                { lat: 5.114262, lng: -73.805090 },
+                { lat: 5.114405, lng: -73.805207 },
+            ]
         },
         2: {
             nombre: "Explorando el nosque",
             dificultad: 'Media',
-            senderismo: true,
-            biciTour: false,
-            moto: false,
-            automovil: true
+            disponible: {
+                senderismo: true,
+                biciTour: false,
+                moto: false,
+                automovil: true,
+            },
+            img: '/utils/Virgen-de-la-Z/Atajo_2_Por_Bosque.jpg',
+            position: { lat: 5.113493, lng: -73.805893 },
+            cordenadas: [
+                { lat: 5.115032, lng: -73.805580 },
+                { lat: 5.115071, lng: -73.805543 },
+                { lat: 5.115105, lng: -73.805554 },
+                { lat: 5.115130, lng: -73.805602 },
+                { lat: 5.115170, lng: -73.805632 },
+                { lat: 5.115217, lng: -73.805646 },
+                { lat: 5.115218, lng: -73.805686 },
+                { lat: 5.115472, lng: -73.805741 },
+                { lat: 5.115579, lng: -73.805758 },
+                { lat: 5.115766, lng: -73.805804 },
+                { lat: 5.115881, lng: -73.805812 },
+                { lat: 5.115945, lng: -73.805821 },
+                { lat: 5.115978, lng: -73.805906 },
+                { lat: 5.116012, lng: -73.805920 },
+                { lat: 5.116037, lng: -73.805953 },
+                { lat: 5.116123, lng: -73.806000 },
+                { lat: 5.116160, lng: -73.806061 },
+                { lat: 5.116215, lng: -73.806061 },
+                { lat: 5.116244, lng: -73.806091 },
+                { lat: 5.116318, lng: -73.806143 },
+                { lat: 5.116354, lng: -73.806186 },
+                { lat: 5.116378, lng: -73.806276 },
+                { lat: 5.116459, lng: -73.806291 },
+                { lat: 5.116509, lng: -73.806351 },
+                { lat: 5.116577, lng: -73.806366 },
+                { lat: 5.116700, lng: -73.806347 },
+                { lat: 5.116740, lng: -73.806350 },
+            ]
         },
         3: {
             nombre: "Directo al monumento",
             dificultad: 'Baja',
-            senderismo: true,
-            biciTour: false,
-            moto: false,
-            automovil: false
+            disponible: {
+                senderismo: true,
+                biciTour: false,
+                moto: false,
+                automovil: false,
+            },
+            img: '/utils/Virgen-de-la-Z/Inicio-de-atajo-Superior.jpg',
+            position: { lat: 5.115032, lng: -73.805580 },
+            cordenadas: [
+                { lat: 5.113500, lng: -73.805889 },
+                { lat: 5.113567, lng: -73.805999 },
+                { lat: 5.113634, lng: -73.806077 },
+                { lat: 5.113722, lng: -73.806256 },
+                { lat: 5.113714, lng: -73.806334 },
+                { lat: 5.113773, lng: -73.806554 },
+                { lat: 5.113794, lng: -73.806664 },
+                { lat: 5.113963, lng: -73.807064 },
+                { lat: 5.114045, lng: -73.807166 },
+                { lat: 5.114367, lng: -73.807575 },
+                { lat: 5.114530, lng: -73.807706 },
+                { lat: 5.114629, lng: -73.807749 },
+                { lat: 5.114704, lng: -73.807907 },
+                { lat: 5.114731, lng: -73.808087 },
+                { lat: 5.114763, lng: -73.808226 },
+                { lat: 5.114773, lng: -73.808430 },
+                { lat: 5.114768, lng: -73.808532 },
+                { lat: 5.114787, lng: -73.808558 }      
+            ]
         }
-    }
+    },
+    cordenadasPrincipales: [
+        { lat: 5.103028, lng: -73.798856},
+        { lat: 5.103041, lng: -73.798649},
+        { lat: 5.103607, lng: -73.798773},
+        { lat: 5.103816, lng: -73.798703},
+        { lat: 5.104358, lng: -73.798719},
+        { lat: 5.104703, lng: -73.798759},
+        { lat: 5.105114, lng: -73.798826},
+        { lat: 5.105595, lng: -73.798923},
+        { lat: 5.106856, lng: -73.799403},
+        { lat: 5.107398, lng: -73.799553},
+        { lat: 5.107738, lng: -73.799674},
+        { lat: 5.108021, lng: -73.799915},
+        { lat: 5.108224, lng: -73.800006},
+        { lat: 5.108507, lng: -73.799843},
+        { lat: 5.108865, lng: -73.800001},
+        { lat: 5.109405, lng: -73.800529},
+        { lat: 5.109784, lng: -73.800757},
+        { lat: 5.109947, lng: -73.800983},
+        { lat: 5.110911, lng: -73.801390},
+        { lat: 5.111026, lng: -73.801530},
+        { lat: 5.110989, lng: -73.801804},
+        { lat: 5.111045, lng: -73.801889},
+        { lat: 5.111240, lng: -73.802005},
+        { lat: 5.111365, lng: -73.802182},
+        { lat: 5.111515, lng: -73.802257},
+        { lat: 5.111822, lng: -73.802218},
+        { lat: 5.112122, lng: -73.802325},
+        { lat: 5.112485, lng: -73.802599},
+        { lat: 5.113581, lng: -73.802883},
+        { lat: 5.113973, lng: -73.803055},
+        { lat: 5.113834, lng: -73.803669},
+        { lat: 5.113866, lng: -73.804160},
+        { lat: 5.113784, lng: -73.804364},
+        { lat: 5.113575, lng: -73.804584},
+        { lat: 5.113487, lng: -73.804694},
+        { lat: 5.113447, lng: -73.804881},
+        { lat: 5.113573, lng: -73.805273},
+        { lat: 5.113500, lng: -73.805804},
+        { lat: 5.113540, lng: -73.805868},
+        { lat: 5.113637, lng: -73.805858},
+        { lat: 5.114067, lng: -73.805421},
+        { lat: 5.114419, lng: -73.805195},
+        { lat: 5.114516, lng: -73.805168},
+        { lat: 5.114593, lng: -73.805260},
+        { lat: 5.114302, lng: -73.805654},
+        { lat: 5.114208, lng: -73.805895},
+        { lat: 5.114003, lng: -73.806338},
+        { lat: 5.114045, lng: -73.806410},
+        { lat: 5.114136, lng: -73.806362},
+        { lat: 5.114224, lng: -73.806236},
+        { lat: 5.114526, lng: -73.805919},
+        { lat: 5.114924, lng: -73.805632},
+        { lat: 5.115042, lng: -73.805614},
+        { lat: 5.115045, lng: -73.805721},
+        { lat: 5.114740, lng: -73.806158},
+        { lat: 5.114681, lng: -73.806579},
+        { lat: 5.114596, lng: -73.806979},
+        { lat: 5.114577, lng: -73.807365},
+        { lat: 5.114815, lng: -73.808049},
+        { lat: 5.114833, lng: -73.808231},
+        { lat: 5.114801, lng: -73.808706},
+        { lat: 5.114836, lng: -73.808969},
+        { lat: 5.114728, lng: -73.809247},
+        { lat: 5.114744, lng: -73.809397},
+        { lat: 5.115030, lng: -73.809116},
+        { lat: 5.115145, lng: -73.808773},
+        { lat: 5.115342, lng: -73.807973},
+        { lat: 5.115533, lng: -73.807511},
+        { lat: 5.115660, lng: -73.807268},
+        { lat: 5.115917, lng: -73.806914},
+        { lat: 5.116275, lng: -73.806667},
+        { lat: 5.116579, lng: -73.806528},
+        { lat: 5.116750, lng: -73.806383}
+    ],
 }
 
 
@@ -835,7 +1002,9 @@ function App() {
                             />
                         </>
                     } 
-                />    
+                /> 
+
+                {/* Seccion de rutas */}
                 <Route 
                     path='/rutas/:nombre' 
                     element = {
@@ -843,6 +1012,22 @@ function App() {
                             rutas = { rutas }
                             iconos= {iconCaraceristicas}
                             route= 'description'
+                        />
+                    }
+                />
+                <Route 
+                    path='/rutas/:nombre/description'
+                    element = {
+                        <DescripcionRuta 
+                            rutas={ruta}
+                        />
+                    }
+                />
+                <Route 
+                    path='ruta/:nombre/'
+                    element= {
+                        <FuncionalidadesMapa 
+                            ruta={ruta}
                         />
                     }
                 />
@@ -900,14 +1085,6 @@ function App() {
                             titulo= 'Alojamientos'
                             icon={ <MdHotel className="Faperson" />}
                             noche = 'noche'
-                        />
-                    }
-                />
-                <Route 
-                    path='/rutas/:nombre/description'
-                    element = {
-                        <DescripcionRuta 
-                            rutas={ruta}
                         />
                     }
                 />

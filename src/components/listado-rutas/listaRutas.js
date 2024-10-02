@@ -72,25 +72,25 @@ const ListaRutas = ({ rutas, iconos, route}) => {
                 <div className="container-clasificacion-ruta">
                   <p>
                     {item.calificacion}
-                    <img src="/utils/icons8-estrella-48.png" />
+                    <img key={`star-${item.id}`} src="/utils/icons8-estrella-48.png" alt="estrella" />
                   </p>
                 </div>
               </div>
               <div className="container-descripcion-caracteristicas">
-                {iconos.Dificultad} 
-                <p>
+                {React.cloneElement(iconos.Dificultad, { key: `dificultad-icon-${item.id}` })}
+                <p key={`dificultad-${item.id}`}>
                   Dificultad: {item.Dificultad}
                 </p>
-                {iconos.distancia}
-                <p>
+                {React.cloneElement(iconos.distancia, { key: `distancia-icon-${item.id}` })}
+                <p key={`distancia-${item.id}`}>
                   {item.distancia}
                 </p>
-                {iconos.tiempo}
-                <p>
+                {React.cloneElement(iconos.tiempo, { key: `tiempo-icon-${item.id}` })}
+                <p key={`tiempo-${item.id}`}>
                   {item.tiempo}
                 </p>
-                {iconos.terreno}
-                <p>
+                {React.cloneElement(iconos.terreno, { key: `terreno-icon-${item.id}` })}
+                <p key={`terreno-${item.id}`}>
                   {item.terreno}
                 </p>
               </div>
