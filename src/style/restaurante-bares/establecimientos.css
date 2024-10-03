@@ -164,7 +164,7 @@
     justify-content: space-around; 
     align-items: center;
     margin-top: 5%; 
-    padding: 0% 15%;
+    padding: 0% 5%;
 
     position: fixed;
     bottom: 0;
@@ -173,8 +173,8 @@
     z-index: 1000; /* Para asegurar que esté por encima de otros elementos */
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Opcional: añade una sombra sutil */
 }
-.container-contacto button {
-    width: 40%;
+.container-contacto .contacto {
+    width: 48%;
     height: 65%;
     background-color: var(--red-botons);
     display: flex;
@@ -182,11 +182,24 @@
     align-items: center;
     border-radius: 1em;
     border: none;
+    color: white;
 }
 .container-contacto button:active {
     background-color: brown;
 }
 .container-contacto button img {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
+    margin-left: 3%;
+}
+.como-llegar {
+    width: 48%;
+    height: 65%;
+    background-color: rgb(233, 233, 233);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    border: none;
+    color: var(--red-botons);
 }
