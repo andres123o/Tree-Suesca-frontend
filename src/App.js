@@ -986,18 +986,6 @@ const restaurante = {
             img: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f",
             costo: 18000,
             descripcion: "Jugoso brisket ahumado por 16 horas, cebollas caramelizadas y pepinillos caseros.",
-        },
-        {
-            nombre: "Cowboy Steak",
-            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
-            costo: 35000,
-            descripcion: "Ribeye de 500g madurado, cocinado a la parrilla con especias texanas.",
-        },
-        {
-            nombre: "Smoked Chicken",
-            img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2",
-            costo: 16000,
-            descripcion: "Alitas ahumadas con madera de mezquite, servidas con aderezo ranch y bastones de apio.",
         }
     ],
     recurrente: [

@@ -109,10 +109,31 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                 {/* Seccion top 5 populares */}
                 <div className='container-top-5'>
                     <div className='container-title'>
-                        <h4>Top 5 platos!</h4>
+                        <h4>Top 3 platos!</h4>
                     </div>
                     {
                         establecimiento.destacados.map((item, index) => (
+                            <div className='popular' key={index}>
+                                <div className='oferta'>
+                                    <img src={item.img} alt={item.nombre} />
+                                </div>
+                                <div className='descripcion-oferta'>
+                                    <h5>{item.nombre}</h5>
+                                    <p>{item.descripcion}</p>
+                                    <h5>${item.costo.toLocaleString()}</h5>
+                                </div>
+                            </div>
+                        ))
+                   }
+                </div>
+
+                {/* Seccion top 5 populares */}
+                <div className='container-top-5'>
+                    <div className='container-title'>
+                        <h4>Recurrentes!</h4>
+                    </div>
+                    {
+                        establecimiento.recurrente.map((item, index) => (
                             <div className='popular' key={index}>
                                 <div className='oferta'>
                                     <img src={item.img} alt={item.nombre} />
