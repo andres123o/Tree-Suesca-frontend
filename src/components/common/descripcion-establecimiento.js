@@ -22,7 +22,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
         setIsExpanded(!isExpanded);
     };
 
-    const maxTextLength = 300;
+    const maxTextLength = 150;
     const visibleText = isExpanded ? establecimiento.concepto : `${establecimiento.concepto.slice(0, maxTextLength)}...`;
     
 
@@ -99,12 +99,18 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
 
                 {/* Seccion de contacto */}
                 <div className='container-contacto'>
-                    <div className='como-llegar'>
+                    <button 
+                        className='como-llegar'
+                        onClick={() => window.open(establecimiento.address, '_blank')}  
+                    >
                         <img src="/utils/icons8-gps-50.png" />
-                    </div>
-                    <div className='contacto'>
+                    </button>
+                    <button 
+                        className='contacto'
+                        onClick={() => window.open(`https://wa.me/${establecimiento.contacto}`, '_blank')}    
+                    >
                         <img src="/utils/icons8-whatsapp-48.png" />
-                    </div>
+                    </button>
                 </div>
 
                 {/* Footer */}
