@@ -15,17 +15,16 @@ import ListaRutas from './components/listado-rutas/listaRutas';
 import DescripcionRuta from './components/listado-rutas/descripcion-ruta-individual'
 import FuncionalidadesMapa from './components/listado-rutas/seccion-mapa'
 
-// Componentes de la lista de Restaurantes
+// Componentes de la lista de Restaurantes y bares
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
+import ListadoBares from './components/bares/bares-recreacion'
+import DescripcionEstablecimientos from './components/common/descripcion-establecimiento';
 
 // Componentes de Actividades en el destino
 import ListadoActividades from './components/actividades/actividades-destino'
 
 // Componente de Eventos en el destino
 import ListadoEventos from './components/eventos/eventos-destino'
-
-// Componentes de la Lista de Fiesta y amigos
-import ListadoBares from './components/bares/bares-recreacion'
 
 //  Componentes dellistado de alojamientis
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
@@ -45,6 +44,7 @@ import './style/index.css';
 // Estilos lista de rutas
 import './style/rutas/listadoRutas.css';
 import './style/rutas/descripcionRuta.css'
+import './style/restaurante-bares/establecimientos.css'
 
 
 // Iconos de la Lista de rutas
@@ -945,6 +945,124 @@ const ruta = {
         { lat: 5.116750, lng: -73.806383}
     ],
 }
+const restaurante = {
+    id:1,
+    img: '/utils/logo-restaurantes/comida1.jpg',
+    imgs: [
+        // Vista general del restaurante
+        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par5.webp",
+        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
+        
+    ],
+    oferta: [
+        {
+            nombre: "Burguer texana",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+        {
+            nombre: "Texas BBQ Ribs",
+            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
+            costo: 28000,
+            descripcion: "Costillas de cerdo ahumadas. Servidas con elote a la parrilla y coleslaw tradicional.",
+        },
+        {
+            nombre: "Brisket Sandwich",
+            img: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f",
+            costo: 18000,
+            descripcion: "Jugoso brisket ahumado por 16 horas, cebollas caramelizadas y pepinillos caseros.",
+        },
+        {
+            nombre: "Cowboy Steak",
+            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
+            costo: 35000,
+            descripcion: "Ribeye de 500g madurado, cocinado a la parrilla con especias texanas.",
+        },
+        {
+            nombre: "Smoked Chicken",
+            img: "https://images.unsplash.com/photo-1527477396000-e27163b481c2",
+            costo: 16000,
+            descripcion: "Alitas ahumadas con madera de mezquite, servidas con aderezo ranch y bastones de apio.",
+        }
+    ],
+    name: 'Burger Texas',
+    items: {
+        'Tipo': 'Parrilla'
+    },
+    description: 'Delicioso asado a la parrilla',
+    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
+    contacto: 3015081517,
+    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad. Nuestro ambiente rústico-moderno, decorado con elementos que evocan los antiguos ranchos texanos, crea el escenario perfecto para disfrutar de nuestras hamburguesas artesanales, costillas ahumadas y cortes premium de carne.',
+    calificacion: 4.2,
+    logo: '/utils/logo-restaurantes/1.jpg',
+    precioPromedio: 50000
+}
+const bar = {
+    id: 1,
+    name: 'Bar Texas',
+    items: {
+        'Tipo': 'Shows'
+    },
+    description: 'Shows de música en vivo',
+    calificacion: 4.2,
+    logo: '/utils/logo-bares/1.jpg',
+    img: '/utils/logo-bares/bar-texas.jpg',
+    precioPromedio: 50000,
+    imgs: [
+        // Vistas del bar
+        "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2", // Área principal del bar
+        "https://images.unsplash.com/photo-1514933651103-005eec06c04b", // Escenario para shows
+        "https://images.unsplash.com/photo-1485686531765-ba63b07845a7", // Barra principal
+        "https://images.unsplash.com/photo-1572116469696-31de0f17cc34", // Área de mesas
+        "https://images.unsplash.com/photo-1597290282695-edc43d0e7129", // Zona lounge
+        "https://images.unsplash.com/photo-1462887749044-b47cb05b83b8", // Área de presentaciones
+        "https://images.unsplash.com/photo-1519214605650-76a613ee3245", // Detalle de decoración
+        "https://images.unsplash.com/photo-1557218825-334e67092c06", // Ambiente nocturno
+        "https://images.unsplash.com/photo-1470337458703-46ad1756a187"  // Área exterior
+    ],
+    oferta: [
+        {
+            nombre: "Texas Rodeo Margarita",
+            img: "https://images.unsplash.com/photo-1556855810-ac404aa91e85",
+            costo: 18000,
+            descripcion: "Nuestro coctel estrella: tequila premium, triple sec, jugo fresco de lima, un toque de jalapeño y un borde de sal ahumada. Servido en un vaso estilo mason jar con decoración western.",
+        },
+        {
+            nombre: "Whiskey Smoke Show",
+            img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b",
+            costo: 22000,
+            descripcion: "Whiskey bourbon ahumado artesanalmente, bitter de naranja, jarabe de maple y una esfera de hielo gigante. Presentado con humo de madera de roble bajo una cúpula de cristal.",
+        },
+        {
+            nombre: "Lone Star Mule",
+            img: "https://images.unsplash.com/photo-1527661591475-527312dd65f5",
+            costo: 16000,
+            descripcion: "Vodka premium, cerveza de jengibre artesanal, jugo de lima fresco y un toque de bitter de angostura. Servido en el tradicional tarro de cobre con decoración de menta y lima.",
+        },
+        {
+            nombre: "Ranch Water Deluxe",
+            img: "https://images.unsplash.com/photo-1536935338788-846bb9981813",
+            costo: 15000,
+            descripcion: "Tequila blanco de alta calidad, agua mineral Topo Chico, jugo fresco de limón y un toque de agave. Servido largo con hielo cristalino y decorado con rodaja de limón deshidratado.",
+        },
+        {
+            nombre: "Frontier Old Fashioned",
+            img: "https://images.unsplash.com/photo-1470337458703-46ad1756a187",
+            costo: 20000,
+            descripcion: "Bourbon añejado en barricas, bitter casero de vainilla y naranja, azúcar moreno ahumado y un toque de agua de cereza. Servido con hielo artesanal y naranja flameada.",
+        }
+    ],
+    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
+    contacto: 3015081517,
+    concepto: 'Bar Texas es el punto de encuentro donde la autenticidad del viejo oeste se fusiona con la modernidad de la mixología contemporánea. Ubicado en un edificio histórico renovado, nuestro establecimiento rinde homenaje a la cultura texana con su decoración rústica, detalles en madera y cuero, y una impresionante barra de roble antiguo. Ofrecemos una experiencia única donde los mejores cócteles artesanales se complementan con shows en vivo de country, rock sureño y blues. Nuestros mixólogos expertos combinan técnicas modernas con espíritus premium para crear bebidas que cuentan historias, mientras que el ambiente acogedor y el escenario vibrante garantizan noches memorables. En Bar Texas, cada noche es una celebración de la hospitalidad sureña, la buena música y la excelente mixología.',
+    
+}
 
 
 
@@ -953,6 +1071,8 @@ function App() {
         <>
             <ScrollToTop />
             <Routes>
+
+                {/* Home */}
                 <Route 
                     path = "/" 
                     element = {
@@ -1011,12 +1131,12 @@ function App() {
                         <ListaRutas 
                             rutas = { rutas }
                             iconos= {iconCaraceristicas}
-                            route= 'description'
+                            route= 'caracteristicas'
                         />
                     }
                 />
                 <Route 
-                    path='/rutas/:nombre/description'
+                    path='/rutas/:nombre/caracteristicas'
                     element = {
                         <DescripcionRuta 
                             rutas={ruta}
@@ -1024,13 +1144,15 @@ function App() {
                     }
                 />
                 <Route 
-                    path='ruta/:nombre/'
+                    path='/ruta/:nombre/'
                     element= {
                         <FuncionalidadesMapa 
                             ruta={ruta}
                         />
                     }
                 />
+                
+                {/* Seccion restaurantes y bares */}
                 <Route
                     path='/restaurantes'
                     element = {
@@ -1053,6 +1175,16 @@ function App() {
                         />
                     }
                 />
+                <Route 
+                    path='/establecimiento/:nombre'
+                    element = {
+                        <DescripcionEstablecimientos 
+                            establecimiento={restaurante}
+                        />
+                    }
+                />
+                
+                {/* Seccion Actividades y eventos */}
                 <Route 
                     path='/actividades'
                     element = {
@@ -1077,6 +1209,8 @@ function App() {
                         />
                     }
                 />
+                
+                {/* Seccion Alojamientos */}
                 <Route 
                     path='/alojamientos'
                     element = {

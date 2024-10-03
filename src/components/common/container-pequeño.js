@@ -1,10 +1,24 @@
+import React from "react"
+import { useNavigate } from "react-router-dom"
+
 const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion} ) => {
+    const navigate = useNavigate();
+
+    const handleClick = (establecimiento) => {
+        // Redirige a listaRutas.html con el nombre de la actividad como query param
+        navigate(`/establecimiento/${encodeURIComponent(establecimiento)}`);
+    }
+
     return (
         <>
                 <div className="container-categoria-restaurantes">
                     {
                         displayedItems.map((item, index) => (
-                            <div key={item.id} className="restaurantes">
+                            <div 
+                                key={item.id} 
+                                className="restaurantes"
+                                onClick={() => handleClick(item.name)}
+                            >
                                 <div 
                                     className="contaniner-img-principal-restaurante"
                                     style={{ 

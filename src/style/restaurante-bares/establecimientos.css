@@ -1,0 +1,130 @@
+/*  Titulo, logo y calificacion del establecimiento */
+.container-logo-nombre-calificacion {
+    width: 100%;
+    height: auto;
+    display: flex;
+    margin-top: 10%;
+    padding: 0% 5%;
+}
+.logo-establecimiento {
+    width: 20%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.logo-establecimiento img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+.nombre-establecimiento {
+    width: 70%;
+    display: flex;
+    justify-content: first baseline;
+    align-items: center;
+}
+.nombre-establecimiento h4 {
+    font-size: 28px;
+    margin-left: 2%;
+}
+.calificacion-establecimiento {
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 4%;
+}
+.calificacion-establecimiento img {
+    width: 18px;
+    height: 18px;
+}
+
+/* Container del concepto del establecimiento */
+.descripcion-establecimiento {
+    width: 100%;
+    height: auto;
+    padding: 0% 8%;
+    margin: 8% 0%;
+
+}
+.descripcion-establecimiento p {
+    text-align: justify;
+}
+
+/* container seccion top 5 */
+.container-title {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: first baseline;
+    align-items: center;
+    padding: 0% 8%;
+    margin-bottom: 7%;
+}
+.container-title h4 {
+    font-size: 24px;
+}
+.container-top-5 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+}
+.popular {
+    width: 90%;
+    height: 18vh;
+    margin-bottom: 10%;
+    display: flex;
+}
+.oferta {
+    width: 50%;
+    height: 100%;
+}
+.oferta img {
+    width: 100%;
+    height: 100%;
+    border-radius: 1em;
+}
+.descripcion-oferta {
+    width: 50%;
+    height: 100%;
+    padding: 2% 0%;
+    padding-left: 5%;
+}
+.descripcion-oferta p {
+    font-size: 14.72px;
+    margin-bottom: 10%;
+    margin-top: 5%;
+    text-align: left;
+}
+.descripcion-oferta h5 {
+    font-size: 16px;
+}
+
+/* Container contacto y como llegar */
+.container-contacto {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    justify-content: space-around; 
+    align-items: center;
+    margin-top: 10%; 
+    padding: 0% 15%;
+}
+.container-contacto div {
+    width: 40%;
+    height: 65%;
+    background-color: var(--red-botons);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+}
+.container-contacto div img {
+    width: 25px;
+    height: 25px;
+}
