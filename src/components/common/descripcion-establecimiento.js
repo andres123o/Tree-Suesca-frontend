@@ -79,7 +79,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                 {/* Seccion top 5 populares */}
                 <div className='container-top-5'>
                     <div className='container-title'>
-                        <h4>Top 5</h4>
+                        <h4>Top 5 platos</h4>
                     </div>
                     {
                         establecimiento.oferta.map((item, index) => (

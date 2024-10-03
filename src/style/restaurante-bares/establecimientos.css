@@ -119,7 +119,7 @@
     margin-top: 5%; 
     padding: 0% 15%;
 }
-.container-contacto div {
+.container-contacto button {
     width: 40%;
     height: 65%;
     background-color: var(--red-botons);
@@ -127,11 +127,12 @@
     justify-content: center;
     align-items: center;
     border-radius: 1em;
+    border: none;
 }
-.container-contacto div:active {
+.container-contacto button:active {
     background-color: brown;
 }
-.container-contacto div img {
+.container-contacto button img {
     width: 25px;
     height: 25px;
 }
