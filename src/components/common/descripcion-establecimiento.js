@@ -69,6 +69,15 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                     </div>
                 </div>
 
+                {/* Desripcion establecimiento */}
+                <div className='descripcion-establecimiento'>
+                    <p className='descripcion' id="descripcion-texto">
+                        {visibleText}   
+                        <button onClick={toggleExpand} className='show-more-btn'>
+                            {isExpanded ? 'less' : 'more'}
+                        </button>
+                    </p>
+                </div>
 
                 {/* Caracteristicas */}
                 <div className='container-caracteristicas'>
@@ -95,16 +104,6 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                             <h5 className='disponibilidad'>{establecimiento.servicios.parking}</h5>
                         </div>
                     </div>
-                </div>
-
-                {/* Desripcion establecimiento */}
-                <div className='descripcion-establecimiento'>
-                    <p className='descripcion' id="descripcion-texto">
-                        {visibleText}   
-                        <button onClick={toggleExpand} className='show-more-btn'>
-                            {isExpanded ? 'less' : 'more'}
-                        </button>
-                    </p>
                 </div>
 
                 {/* Seccion top 5 populares */}
