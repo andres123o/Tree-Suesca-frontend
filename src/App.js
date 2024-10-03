@@ -15,10 +15,12 @@ import ListaRutas from './components/listado-rutas/listaRutas';
 import DescripcionRuta from './components/listado-rutas/descripcion-ruta-individual'
 import FuncionalidadesMapa from './components/listado-rutas/seccion-mapa'
 
-// Componentes de la lista de Restaurantes y bares
+// Componentes de la lista de Restaurantes
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
+import DescripcionRestaurantes from './components/common/descripcion-establecimiento';
+
+// Componente bares
 import ListadoBares from './components/bares/bares-recreacion'
-import DescripcionEstablecimientos from './components/common/descripcion-establecimiento';
 
 // Componentes de Actividades en el destino
 import ListadoActividades from './components/actividades/actividades-destino'
@@ -947,19 +949,26 @@ const ruta = {
 }
 const restaurante = {
     id:1,
-    img: '/utils/logo-restaurantes/comida1.jpg',
-    imgs: [
-        // Vista general del restaurante
-        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par5.webp",
-        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
-        
-    ],
-    oferta: [
+    name: 'Burger Texas',
+    items: {
+        'Tipo': 'Parrilla',
+        'Descripcion': 'Delicioso asado a la parrilla'
+    },
+    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad.',
+    calificacion: 4.2,
+    precioPromedio: 50000,
+    horario: {
+        abren: '8:10 am',
+        cierran: '7:30 pm' 
+    },
+    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
+    contacto: 3015081517,
+    servicios: {
+        delivery: 'Disponible',
+        reservas: 'Disponible',
+        parking: 'No disponible'
+    },
+    destacados: [
         {
             nombre: "Burguer texana",
             img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
@@ -991,17 +1000,33 @@ const restaurante = {
             descripcion: "Alitas ahumadas con madera de mezquite, servidas con aderezo ranch y bastones de apio.",
         }
     ],
-    name: 'Burger Texas',
-    items: {
-        'Tipo': 'Parrilla'
-    },
-    description: 'Delicioso asado a la parrilla',
-    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
-    contacto: 3015081517,
-    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad. Nuestro ambiente rústico-moderno, decorado con elementos que evocan los antiguos ranchos texanos, crea el escenario perfecto para disfrutar de nuestras hamburguesas artesanales, costillas ahumadas y cortes premium de carne.',
-    calificacion: 4.2,
+    recurrente: [
+        {
+            nombre: "Plato del dia",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+        {
+            nombre: "Desayuno",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+    ],
+    img: '/utils/logo-restaurantes/comida1.jpg',
+    imgs: [
+        // Vista general del restaurante
+        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par5.webp",
+        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
+        
+    ],
     logo: '/utils/logo-restaurantes/1.jpg',
-    precioPromedio: 50000
 }
 const bar = {
     id: 1,
@@ -1178,7 +1203,7 @@ function App() {
                 <Route 
                     path='/establecimiento/:nombre'
                     element = {
-                        <DescripcionEstablecimientos 
+                        <DescripcionRestaurantes 
                             establecimiento={restaurante}
                         />
                     }

@@ -22,7 +22,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
         setIsExpanded(!isExpanded);
     };
 
-    const maxTextLength = 150;
+    const maxTextLength = 100;
     const visibleText = isExpanded ? establecimiento.concepto : `${establecimiento.concepto.slice(0, maxTextLength)}...`;
     
 
@@ -59,10 +59,41 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                         <h4>
                             {establecimiento.name}
                         </h4>
+                        <p>
+                            {`Horario: ${establecimiento.horario.abren} - ${establecimiento.horario.cierran}`}
+                        </p>
                     </div>
                     <div className='calificacion-establecimiento'>
                          <p>{establecimiento.calificacion}</p>
                         <img src='/utils/icons8-estrella-48.png' />
+                    </div>
+                </div>
+
+
+                {/* Caracteristicas */}
+                <div className='container-caracteristicas'>
+                    <div className='sub-container'>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Domicilios</h5>
+                                <img src='/utils/icons8-entrega-moto-caja-sola-50.png'/>
+                            </div>
+                            <h5 className='disponibilidad'>{establecimiento.servicios.delivery}</h5>
+                        </div>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Reservas</h5>
+                                <img src='/utils/icons8-reserva-50.png'/>
+                            </div>
+                            <h5 className='disponibilidad'>{establecimiento.servicios.reservas}</h5>
+                        </div>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Parking</h5>
+                                <img src='/utils/icons8-estacionamiento-50.png'/>
+                            </div>
+                            <h5 className='disponibilidad'>{establecimiento.servicios.parking}</h5>
+                        </div>
                     </div>
                 </div>
 
@@ -79,10 +110,10 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                 {/* Seccion top 5 populares */}
                 <div className='container-top-5'>
                     <div className='container-title'>
-                        <h4>Top 5 platos</h4>
+                        <h4>Top 5 platos!</h4>
                     </div>
                     {
-                        establecimiento.oferta.map((item, index) => (
+                        establecimiento.destacados.map((item, index) => (
                             <div className='popular' key={index}>
                                 <div className='oferta'>
                                     <img src={item.img} alt={item.nombre} />
