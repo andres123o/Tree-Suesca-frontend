@@ -201,6 +201,7 @@
 .container-info-bebidas {
     width: 100%;
     display: flex;
+    justify-content: space-between;
     gap: 10px;
     padding-left: 5%;
 }
@@ -209,6 +210,11 @@
 }
 .container-info-bebidas p  {
     opacity: 0.6;
+}
+.descripcion-bebidas-antojos {
+    padding-left: 5%;
+    opacity: 0.6;
+    font-size: 14px;
 }
 /* Container contacto y como llegar */
 .container-contacto {

@@ -165,6 +165,9 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                                             <h5>{item.nombre}</h5>
                                             <p>${item.costo.toLocaleString()}</p>
                                         </div>
+                                        <p className='descripcion-bebidas-antojos'>
+                                            {item.descripcion}
+                                        </p>
                                     </div>
                                 </div>
                             ))
@@ -187,6 +190,9 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                                             <h5>{item.nombre}</h5>
                                             <p>${item.costo.toLocaleString()}</p>
                                         </div>
+                                        <p className='descripcion-bebidas-antojos'>
+                                            {item.descripcion}
+                                        </p>
                                     </div>
                                 </div>
                             ))

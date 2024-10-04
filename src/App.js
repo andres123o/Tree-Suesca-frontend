@@ -1005,11 +1005,13 @@ const restaurante = {
     antojos: [
         {
             nombre: "Chicharrones",
+            descripcion: 'Entrada chicharron carnudo',
             img: "/utils/logo-restaurantes/establecimiento/chicharron.jpeg",
             costo: 14000,
         },
         {
             nombre: "Empanadas",
+            descripcion: 'Canasta x6',
             img: "/utils/logo-restaurantes/establecimiento/empanada.webp",
             costo: 14000,
         },
@@ -1017,31 +1019,25 @@ const restaurante = {
     bebidas: [
         {
             nombre: "Coca cola",
+            descripcion: '250 ml',
             img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
             costo: 14000,
         },
         {
             nombre: "Jugo natural",
+            descripcion: 'En agua o en leche',
             img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
             costo: 14000,
         },
         {
             nombre: "Coca cola",
+            descripcion: '250 ml',
             img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
             costo: 14000,
         },
         {
             nombre: "Jugo natural",
-            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Coca cola",
-            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Jugo natural",
+            descripcion: 'En agua o en leche',
             img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
             costo: 14000,
         },
