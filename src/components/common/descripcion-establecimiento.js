@@ -104,9 +104,32 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                             <h5 className='disponibilidad'>{establecimiento.servicios.parking}</h5>
                         </div>
                     </div>
+                </div> 
+
+                {/* Seccion platos recurrentes*/}
+                <div className='container-top-5'>
+                    <div className='container-title'>
+                        <h4>Recurrentes</h4>
+                    </div>
+                    <div className='container-carrusel-recurrentes'> 
+                        {
+                            establecimiento.recurrente.map((item, index) => (
+                                <div className='recurrente' key={index}>
+                                    <div className='oferta'>
+                                        <img src={item.img} alt={item.nombre} />
+                                    </div>
+                                    <div className='descripcion-oferta'>
+                                        <h5>{item.nombre}</h5>
+                                        <p>{item.descripcion}</p>
+                                        <h5>${item.costo.toLocaleString()}</h5>
+                                    </div>
+                                </div>
+                            ))
+                    }
+                    </div>
                 </div>
 
-                {/* Seccion top 5 populares */}
+                {/* Seccion top 3 populares */}
                 <div className='container-top-5'>
                     <div className='container-title'>
                         <h4>Top 3 platos!</h4>
@@ -127,26 +150,49 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                    }
                 </div>
 
-                {/* Seccion top 5 populares */}
+                {/* Seccion bebidas */}
                 <div className='container-top-5'>
                     <div className='container-title'>
-                        <h4>Recurrentes!</h4>
+                        <h4>Bebidas</h4>
                     </div>
-                    {
-                        establecimiento.recurrente.map((item, index) => (
-                            <div className='popular' key={index}>
-                                <div className='oferta'>
-                                    <img src={item.img} alt={item.nombre} />
+                    <div className='container-carrusel-bebidas'> 
+                        {
+                            establecimiento.bebidas.map((item, index) => (
+                                <div className='bebida' key={index}>
+                                    <div className='ofertaBebida'>
+                                        <img src={item.img} alt={item.nombre} />
+                                        <div className='container-info-bebidas'>
+                                            <h5>{item.nombre}</h5>
+                                            <p>${item.costo.toLocaleString()}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='descripcion-oferta'>
-                                    <h5>{item.nombre}</h5>
-                                    <p>{item.descripcion}</p>
-                                    <h5>${item.costo.toLocaleString()}</h5>
+                            ))
+                    }
+                    </div>
+                </div>  
+
+                {/* Seccion antojos*/}
+                <div className='container-top-5'>
+                    <div className='container-title'>
+                        <h4>Antojos</h4>
+                    </div>
+                    <div className='container-carrusel-bebidas'> 
+                        {
+                            establecimiento.antojos.map((item, index) => (
+                                <div className='bebida' key={index}>
+                                    <div className='ofertaBebida'>
+                                        <img src={item.img} alt={item.nombre} />
+                                        <div className='container-info-bebidas'>
+                                            <h5>{item.nombre}</h5>
+                                            <p>${item.costo.toLocaleString()}</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))
-                   }
-                </div>
+                            ))
+                    }
+                    </div>
+                </div>  
 
                 {/* Seccion de contacto */}
                 <div className='container-contacto'>

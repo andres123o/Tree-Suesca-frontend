@@ -53,7 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 8%;
+    margin: 8% 0%;
 }
 .sub-container {
     width: 85%;
@@ -123,10 +123,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10%;
 }
 .popular {
-    width: 90%;
+    width: 85%;
     height: 18vh;
     margin-bottom: 10%;
     display: flex;
@@ -151,11 +150,64 @@
     margin-bottom: 7%;
     margin-top: 4%;
     text-align: left;
+    opacity: 0.6;
 }
 .descripcion-oferta h5 {
     font-size: 16px;
 }
 
+/* Recurrentes */
+.container-carrusel-recurrentes {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-x: auto;
+    padding: 2% 5%;
+    gap: 20px;
+    margin-bottom: 8%;
+}
+.recurrente {
+    min-width: 330px;
+    display: flex;
+}
+
+/* Bebidas */
+.container-carrusel-bebidas {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 0% 5%;
+    gap: 30px;
+    margin-bottom: 8%;
+}
+.bebida {
+    min-width: 180px;
+    margin: 2% 0%;
+}
+.ofertaBebida {
+    width: 100%;
+    height: 100%;
+}
+.ofertaBebida img {
+    width: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 1em;
+}
+.container-info-bebidas {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    padding-left: 5%;
+}
+.container-info-bebidas h5 {
+    font-size: 16px;
+}
+.container-info-bebidas p  {
+    opacity: 0.6;
+}
 /* Container contacto y como llegar */
 .container-contacto {
     width: 100%;

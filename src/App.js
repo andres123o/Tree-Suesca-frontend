@@ -1002,6 +1002,50 @@ const restaurante = {
             descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
         },
     ],
+    antojos: [
+        {
+            nombre: "Chicharrones",
+            img: "/utils/logo-restaurantes/establecimiento/chicharron.jpeg",
+            costo: 14000,
+        },
+        {
+            nombre: "Empanadas",
+            img: "/utils/logo-restaurantes/establecimiento/empanada.webp",
+            costo: 14000,
+        },
+    ],
+    bebidas: [
+        {
+            nombre: "Coca cola",
+            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Jugo natural",
+            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Coca cola",
+            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Jugo natural",
+            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Coca cola",
+            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Jugo natural",
+            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
+            costo: 14000,
+        },
+    ],
     img: '/utils/logo-restaurantes/comida1.jpg',
     imgs: [
         // Vista general del restaurante
