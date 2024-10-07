@@ -39,12 +39,13 @@ const ListadoActividades = ( {actividades, titulo, icon, tipo} ) => {
                 filtroSeleccionado={filtroSeleccionado}
                 manejarClick={manejarClick}
             />
-            <ContainerMediano 
+            <ContainerMediano
                 actividadesDestino={actividadesFiltradas}
                 icon={icon}
                 tipo={tipo}
                 direccion= 'column'
                 xOverflow = 'none'
+                ancho= '40vh'
             />
         </>
     )

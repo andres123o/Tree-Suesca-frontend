@@ -48,6 +48,7 @@ const ListadoEventos = ( {eventos, titulo, icon, tipo, iconCalendar, fecha} ) =>
                 iconCalendar={iconCalendar}
                 fecha={fecha}
                 oferente= 'item.oferente'
+                ancho= '40vh'
             />
         </>
     )

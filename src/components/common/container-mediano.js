@@ -1,6 +1,14 @@
 import { IoLocationOutline } from "react-icons/io5";
+import { useNavigate } from "react-router-dom"
 
-const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, direccion, xOverflow, noche}) => {
+const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, direccion, xOverflow, noche, ancho}) => {
+    const navigate = useNavigate();
+
+    const handleClick = (actividad) => {
+        // Redirige a listaRutas.html con el nombre de la actividad como query param
+        navigate(`/actividad/${encodeURIComponent(actividad)}`);
+    }
+    
     return (
         <>
             <div className="container-carrusel-actividades">
@@ -14,7 +22,14 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                     {
                         actividadesDestino.map((item) => {
                             return (
-                                <div key={item.id} className="container-categoria-actividades">
+                                <div 
+                                    key={item.id} 
+                                    className="container-categoria-actividades"
+                                    style={{
+                                        minWidth: ancho
+                                    }}
+                                    onClick={() => handleClick(item.name)}
+                                >
                                     <div 
                                         className="contianer-img-actividad"
                                         style= {{

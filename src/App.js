@@ -15,15 +15,14 @@ import ListaRutas from './components/listado-rutas/listaRutas';
 import DescripcionRuta from './components/listado-rutas/descripcion-ruta-individual'
 import FuncionalidadesMapa from './components/listado-rutas/seccion-mapa'
 
-// Componentes de la lista de Restaurantes
+// Componentes de la lista de Restaurantes y Bares
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
-import DescripcionRestaurantes from './components/common/descripcion-establecimiento';
-
-// Componente bares
+import DescripcionEstablecimientos from './components/common/descripcion-establecimiento';
 import ListadoBares from './components/bares/bares-recreacion'
 
 // Componentes de Actividades en el destino
 import ListadoActividades from './components/actividades/actividades-destino'
+import DescripcionActividades from './components/actividades/descripcion-actividades'
 
 // Componente de Eventos en el destino
 import ListadoEventos from './components/eventos/eventos-destino'
@@ -1057,65 +1056,115 @@ const restaurante = {
     logo: '/utils/logo-restaurantes/1.jpg',
 }
 const bar = {
-    id: 1,
-    name: 'Bar Texas',
+    id:1,
+    name: 'Burger Texas',
     items: {
-        'Tipo': 'Shows'
+        'Tipo': 'Parrilla',
+        'Descripcion': 'Delicioso asado a la parrilla'
     },
-    description: 'Shows de música en vivo',
+    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad.',
     calificacion: 4.2,
-    logo: '/utils/logo-bares/1.jpg',
-    img: '/utils/logo-bares/bar-texas.jpg',
     precioPromedio: 50000,
-    imgs: [
-        // Vistas del bar
-        "https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2", // Área principal del bar
-        "https://images.unsplash.com/photo-1514933651103-005eec06c04b", // Escenario para shows
-        "https://images.unsplash.com/photo-1485686531765-ba63b07845a7", // Barra principal
-        "https://images.unsplash.com/photo-1572116469696-31de0f17cc34", // Área de mesas
-        "https://images.unsplash.com/photo-1597290282695-edc43d0e7129", // Zona lounge
-        "https://images.unsplash.com/photo-1462887749044-b47cb05b83b8", // Área de presentaciones
-        "https://images.unsplash.com/photo-1519214605650-76a613ee3245", // Detalle de decoración
-        "https://images.unsplash.com/photo-1557218825-334e67092c06", // Ambiente nocturno
-        "https://images.unsplash.com/photo-1470337458703-46ad1756a187"  // Área exterior
-    ],
-    oferta: [
-        {
-            nombre: "Texas Rodeo Margarita",
-            img: "https://images.unsplash.com/photo-1556855810-ac404aa91e85",
-            costo: 18000,
-            descripcion: "Nuestro coctel estrella: tequila premium, triple sec, jugo fresco de lima, un toque de jalapeño y un borde de sal ahumada. Servido en un vaso estilo mason jar con decoración western.",
-        },
-        {
-            nombre: "Whiskey Smoke Show",
-            img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b",
-            costo: 22000,
-            descripcion: "Whiskey bourbon ahumado artesanalmente, bitter de naranja, jarabe de maple y una esfera de hielo gigante. Presentado con humo de madera de roble bajo una cúpula de cristal.",
-        },
-        {
-            nombre: "Lone Star Mule",
-            img: "https://images.unsplash.com/photo-1527661591475-527312dd65f5",
-            costo: 16000,
-            descripcion: "Vodka premium, cerveza de jengibre artesanal, jugo de lima fresco y un toque de bitter de angostura. Servido en el tradicional tarro de cobre con decoración de menta y lima.",
-        },
-        {
-            nombre: "Ranch Water Deluxe",
-            img: "https://images.unsplash.com/photo-1536935338788-846bb9981813",
-            costo: 15000,
-            descripcion: "Tequila blanco de alta calidad, agua mineral Topo Chico, jugo fresco de limón y un toque de agave. Servido largo con hielo cristalino y decorado con rodaja de limón deshidratado.",
-        },
-        {
-            nombre: "Frontier Old Fashioned",
-            img: "https://images.unsplash.com/photo-1470337458703-46ad1756a187",
-            costo: 20000,
-            descripcion: "Bourbon añejado en barricas, bitter casero de vainilla y naranja, azúcar moreno ahumado y un toque de agua de cereza. Servido con hielo artesanal y naranja flameada.",
-        }
-    ],
+    horario: {
+        abren: '8:10 am',
+        cierran: '7:30 pm' 
+    },
     address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
     contacto: 3015081517,
-    concepto: 'Bar Texas es el punto de encuentro donde la autenticidad del viejo oeste se fusiona con la modernidad de la mixología contemporánea. Ubicado en un edificio histórico renovado, nuestro establecimiento rinde homenaje a la cultura texana con su decoración rústica, detalles en madera y cuero, y una impresionante barra de roble antiguo. Ofrecemos una experiencia única donde los mejores cócteles artesanales se complementan con shows en vivo de country, rock sureño y blues. Nuestros mixólogos expertos combinan técnicas modernas con espíritus premium para crear bebidas que cuentan historias, mientras que el ambiente acogedor y el escenario vibrante garantizan noches memorables. En Bar Texas, cada noche es una celebración de la hospitalidad sureña, la buena música y la excelente mixología.',
-    
+    servicios: {
+        cover: 5000,
+        reservas: 'Disponible',
+        parking: 'No disponible'
+    },
+    destacados: [
+        {
+            nombre: "Burguer texana",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+        {
+            nombre: "Texas BBQ Ribs",
+            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
+            costo: 28000,
+            descripcion: "Costillas de cerdo ahumadas. Servidas con elote a la parrilla y coleslaw tradicional.",
+        },
+        {
+            nombre: "Brisket Sandwich",
+            img: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f",
+            costo: 18000,
+            descripcion: "Jugoso brisket ahumado por 16 horas, cebollas caramelizadas y pepinillos caseros.",
+        }
+    ],
+    recurrente: [
+        {
+            nombre: "Plato del dia",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+        {
+            nombre: "Desayuno",
+            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+            costo: 14000,
+            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
+        },
+    ],
+    antojos: [
+        {
+            nombre: "Chicharrones",
+            descripcion: 'Entrada chicharron carnudo',
+            img: "/utils/logo-restaurantes/establecimiento/chicharron.jpeg",
+            costo: 14000,
+        },
+        {
+            nombre: "Empanadas",
+            descripcion: 'Canasta x6',
+            img: "/utils/logo-restaurantes/establecimiento/empanada.webp",
+            costo: 14000,
+        },
+    ],
+    bebidas: [
+        {
+            nombre: "Coca cola",
+            descripcion: '250 ml',
+            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Jugo natural",
+            descripcion: 'En agua o en leche',
+            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Coca cola",
+            descripcion: '250 ml',
+            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
+            costo: 14000,
+        },
+        {
+            nombre: "Jugo natural",
+            descripcion: 'En agua o en leche',
+            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
+            costo: 14000,
+        },
+    ],
+    img: '/utils/logo-restaurantes/comida1.jpg',
+    imgs: [
+        // Vista general del restaurante
+        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par5.webp",
+        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
+        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
+        
+    ],
+    logo: '/utils/logo-restaurantes/1.jpg',
 }
+
 
 
 
@@ -1136,7 +1185,7 @@ function App() {
                             <PopularActivities contenido = {ejemploContenidoPopular} />
                             <ListaTop3 
                                 rest = {ejemploRestaurantes}
-                                titulo = 'Restaurantes'
+                                titulo = 'Restaurantes!'
                                 icono1 = {<IoFastFoodOutline className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Platos desde'    
@@ -1160,7 +1209,7 @@ function App() {
                             />
                             <ListaTop3 
                                 rest = {ejemploBares}
-                                titulo = 'Fiesta y Amigos'
+                                titulo = 'Bares!'
                                 icono1 = {<FaWineBottle className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Botellas desde'
@@ -1231,13 +1280,13 @@ function App() {
                 <Route 
                     path='/establecimiento/:nombre'
                     element = {
-                        <DescripcionRestaurantes 
+                        <DescripcionEstablecimientos 
                             establecimiento={restaurante}
                         />
                     }
                 />
                 
-                {/* Seccion Actividades y eventos */}
+                {/* Seccion Actividade */}
                 <Route 
                     path='/actividades'
                     element = {
@@ -1249,6 +1298,14 @@ function App() {
                         />
                     }
                 />
+                <Route 
+                    path='/actividad/:nombre'
+                    element = {
+                        <DescripcionActividades />
+                    }
+                />
+
+                {/* Seccion eventos */}
                 <Route 
                     path='/eventos'
                     element = {

@@ -29,6 +29,7 @@ const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo,
                     tipo={tipo}
                     xOverflow = 'auto'
                     noche={noche}
+                    ancho= '35vh'
                 />
             </div>
         </>
