@@ -1,15 +1,15 @@
 const DescripcionActividades = (activida ) => {
-    const [backgroundImage, setBackgroundImg] = useState(rutas.img);
+    // const [backgroundImage, setBackgroundImg] = useState(rutas.img);
 
 
-    useEffect(() => {
-      setBackgroundImg(rutas.img)
-    }, [rutas.img])
+    // useEffect(() => {
+    //   setBackgroundImg(rutas.img)
+    // }, [rutas.img])
   
-    const handleImageClick = (imgSrc, index) => {
-        setSelectedImgIndex(index);
-        onImageSelect(imgSrc);
-      };
+    // const handleImageClick = (imgSrc, index) => {
+    //     setSelectedImgIndex(index);
+    //     onImageSelect(imgSrc);
+    //   };
 
     return (
         <>
