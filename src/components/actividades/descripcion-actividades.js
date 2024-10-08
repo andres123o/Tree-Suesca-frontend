@@ -184,9 +184,6 @@ const DescripcionActividades = ( {actividad} ) => {
                         <img src="/utils/icons8-whatsapp-48.png" />
                     </button>
                 </div>
-
-                {/* Footer */}
-                <Footer />
             </div>
         </>
     )
