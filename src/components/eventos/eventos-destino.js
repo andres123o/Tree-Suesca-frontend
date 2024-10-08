@@ -49,6 +49,7 @@ const ListadoEventos = ( {eventos, titulo, icon, tipo, iconCalendar, fecha} ) =>
                 fecha={fecha}
                 oferente= 'item.oferente'
                 ancho= '40vh'
+                routeInndividual = 'evento'
             />
         </>
     )

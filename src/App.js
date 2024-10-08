@@ -26,6 +26,7 @@ import DescripcionActividades from './components/actividades/descripcion-activid
 
 // Componente de Eventos en el destino
 import ListadoEventos from './components/eventos/eventos-destino'
+import DescripcionEventos from './components/eventos/descripcion-evento';
 
 //  Componentes dellistado de alojamientis
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
@@ -39,11 +40,9 @@ import { IoCalendarOutline } from "react-icons/io5";
 import { PiMapPinAreaFill } from "react-icons/pi";
 
 
-// Estilo pagina principal
-import './style/index.css';
-
-// Estilos lista de rutas
-import './style/rutas/listadoRutas.css';
+// Estilos
+import './style/index.css'
+import './style/rutas/listadoRutas.css'
 import './style/rutas/descripcionRuta.css'
 import './style/restaurante-bares/establecimientos.css'
 import './style/actividades/actividades.css'
@@ -1207,6 +1206,32 @@ const actividad =  {
     metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
    
 }
+const evento = {
+    id: 1,
+    oferente: 'Comunidad',
+    name: 'Viacrucis',
+    items: {
+        'Tipo': 'Religioso'
+    },
+    description: 'Viacrucis de Semana Santa',
+    itinerario: 'El Viacrucis en Suesca, Cundinamarca, es una ceremonia profundamente arraigada en la comunidad católica local. El recorrido inicia en la plaza principal, donde los fieles se congregan para comenzar la procesión. A medida que se avanza por las calles empedradas del pueblo, los participantes hacen paradas en las estaciones que representan las etapas de la Pasión de Cristo.',
+    logo: '/utils/ejemplo-eventos-destino/1.jpg',
+    img: '/utils/ejemplo-eventos-destino/Viacrucis-2023_Post.jpg',
+    calificacion: 4.8,
+    fecha: '12 Oct',
+    hora: '4:00 pm',
+    lugar: 'Parque de la Vida',
+    precio: 0,
+    metodosDePago: 'Sin costo de entrada',
+    duracion: 4,
+    requisitos: {
+        Vestimenta: 'fiesta semaforo',
+        Edad: 'No menores de edad'
+    },
+    cupos: 'Ilimitados',
+    contacto: 3015081517,
+    address: 'https://www.google.com/maps/@5.1032266,-73.7993305,180m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D'
+}
 
 
 
@@ -1364,6 +1389,14 @@ function App() {
                             tipo= 'Por persona: '
                             iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
                             fecha = '30 Oct'
+                        />
+                    }
+                />
+                <Route 
+                    path ='/evento/:nombre'
+                    element = {
+                        <DescripcionEventos 
+                            evento = {evento}
                         />
                     }
                 />

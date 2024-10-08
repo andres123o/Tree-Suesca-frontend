@@ -46,6 +46,7 @@ const ListadoActividades = ( {actividades, titulo, icon, tipo} ) => {
                 direccion= 'column'
                 xOverflow = 'none'
                 ancho= '40vh'
+                routeInndividual = 'actividad'
             />
         </>
     )
