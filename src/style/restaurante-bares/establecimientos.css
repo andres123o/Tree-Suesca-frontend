@@ -4,6 +4,7 @@
     height: auto;
     display: flex;
     margin-top: 10%;
+    margin-bottom: 5%;   
     padding: 0% 5%;
 }
 .logo-establecimiento {
@@ -100,6 +101,7 @@
 }
 .descripcion-establecimiento p {
     text-align: justify;
+    opacity: 0.6;
 
 }
 

@@ -1,12 +1,12 @@
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom"
 
-const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, direccion, xOverflow, noche, ancho}) => {
+const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, direccion, xOverflow, noche, ancho, routeInndividual}) => {
     const navigate = useNavigate();
 
     const handleClick = (actividad) => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/actividad/${encodeURIComponent(actividad)}`);
+        navigate(`/${routeInndividual}/${encodeURIComponent(actividad)}`);
     }
     
     return (

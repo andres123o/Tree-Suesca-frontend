@@ -46,6 +46,7 @@ import './style/index.css';
 import './style/rutas/listadoRutas.css';
 import './style/rutas/descripcionRuta.css'
 import './style/restaurante-bares/establecimientos.css'
+import './style/actividades/actividades.css'
 
 
 // Iconos de la Lista de rutas
@@ -967,6 +968,7 @@ const restaurante = {
         reservas: 'Disponible',
         parking: 'No disponible'
     },
+    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
     destacados: [
         {
             nombre: "Burguer texana",
@@ -1076,6 +1078,7 @@ const bar = {
         reservas: 'Disponible',
         parking: 'No disponible'
     },
+    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
     destacados: [
         {
             nombre: "Burguer texana",
@@ -1164,6 +1167,46 @@ const bar = {
     ],
     logo: '/utils/logo-restaurantes/1.jpg',
 }
+const actividad =  {
+    id: 1,
+    oferente: 'Suesca Aventura',
+    items: {
+        'Tipo': 'Cabalgata'
+    },
+    name: 'Cabalgata',
+    duracion: 45,
+    dificultad: 'facil',
+    capacidad: 5,
+    description: 'Cabalgata en las Rocas',
+    itinerario: 'Disfruta de una emocionante cabalgata por los impresionantes paisajes de Suesca, recorriendo senderos que te llevan a través de montañas y rocas icónicas. A lo largo del trayecto, sentirás la conexión con la naturaleza mientras atraviesas bosques, praderas y miradores naturales que ofrecen vistas espectaculares.',
+    horario: {
+        abren: '8:10 am',
+        cierran: '7:30 pm' 
+    },
+    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
+    contacto: 3015081517,
+    logo: '/utils/ejemplo-actividades-destino/1.jpg',
+    img: '/utils/ejemplo-actividades-destino/cabalgata.jpg',
+    imgs: [
+        '/utils/actividad/1.jpeg',
+        '/utils/actividad/2.jpeg',
+        '/utils/actividad/3.jpeg',
+        '/utils/actividad/4.webp',
+        '/utils/actividad/5.webp',
+        '/utils/actividad/6.jpeg',
+        '/utils/actividad/7.jpeg'
+    ],
+    calificacion: 4.5,
+    requisitosRecomendaciones: {
+        edad: 'Sin limite de edad',
+        experiencia: 'No requiere experiencia previa',
+        incluye: 'Guia, equipo y seguro turistico',
+        recomendaciones: 'Llevar ropa comoda, bloqueador solar e hidratación',
+    },
+    precio: 35000,
+    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
+   
+}
 
 
 
@@ -1196,7 +1239,8 @@ function App() {
                                 titulo = 'Actividades'
                                 icon={<FaPerson className="Faperson"/>}
                                 tipo = 'Por persona:'
-                                route= 'actividades' 
+                                route= 'actividades'
+                                routeIndividual= 'actividad'
                             />
                             <Carrusel 
                                 actividadesDestino = {ejemploEventos}
@@ -1206,6 +1250,7 @@ function App() {
                                 fecha = '30 Oct'
                                 tipo = 'Desde:'
                                 route= 'eventos'
+                                routeIndividual= 'evento'
                             />
                             <ListaTop3 
                                 rest = {ejemploBares}
@@ -1221,6 +1266,7 @@ function App() {
                                 icon={ <MdHotel className="Faperson" />}
                                 noche = 'noche'
                                 route= 'alojamientos'
+                                routeIndividual= 'alojamiento'
                             />
                         </>
                     } 
@@ -1286,7 +1332,7 @@ function App() {
                     }
                 />
                 
-                {/* Seccion Actividade */}
+                {/* Seccion Actividades */}
                 <Route 
                     path='/actividades'
                     element = {
@@ -1301,7 +1347,9 @@ function App() {
                 <Route 
                     path='/actividad/:nombre'
                     element = {
-                        <DescripcionActividades />
+                        <DescripcionActividades 
+                            actividad = { actividad }
+                        />
                     }
                 />
 

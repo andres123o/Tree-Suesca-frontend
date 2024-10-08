@@ -1,6 +1,5 @@
 import Footer from './footer';
 import React, { useState, useEffect } from 'react';
-import { useParams } from "react-router-dom";
 import { FaPerson } from "react-icons/fa6";
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX

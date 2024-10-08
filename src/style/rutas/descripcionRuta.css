@@ -93,11 +93,11 @@
 .container-dificultad-distancia-timpo h5 {
     font-size: 14px;
     color: var(--font-color-primary);
-    font-weight: 800;
+    opacity: 0.6;
 }
 .container-dificultad-distancia-timpo p {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 800;
 }
 /* Separador de secciones */
 .separador {
@@ -151,7 +151,7 @@
     DESCRIPCIÓN
    ------------------------------ */
 
-   .container-descripcion {
+.container-descripcion {
     width: 100%;
     height:auto;
     padding: 3%;
@@ -161,6 +161,7 @@
 
 .descripcion {
     text-align: justify;
+    opacity: 0.6;
     overflow: hidden; /* Oculta el texto desbordante */
     z-index: 2;
     width: 100%;
@@ -215,6 +216,10 @@
 }
 .container-comentarios span {
     font-size: 14px;
+    font-weight: 800;
+}
+.container-comentarios h5 {
+    opacity: 0.6;
 }
 
 /* Seccion de accordeon */
@@ -251,6 +256,7 @@
     padding: 10px;
     font-size: 14px;
     text-align: justify;
+    opacity: 0.6;
 }
   
 .icon {
