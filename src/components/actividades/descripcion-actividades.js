@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import Footer  from '../common/footer'
 import { FaPerson } from "react-icons/fa6";
+import { FaGripfire } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 
 const DescripcionActividades = ( {actividad} ) => {
@@ -73,27 +75,7 @@ const DescripcionActividades = ( {actividad} ) => {
                         <img src='/utils/icons8-estrella-48.png' />
                     </div>
                 </div>
-
-                {/* Caracteriticas  */}
-                <div className='container-caracteristicas-actividad'>
-                    <div className='container-dificultad-distancia-timpo'>
-                        <div className='section'>
-                            <h5>Dificultad</h5>
-                            <p>{actividad.dificultad}</p>
-                        </div>
-                        <div className='section'>
-                            <h5>Duración</h5>
-                            <p>{actividad.duracion} Min</p>
-                        </div>
-                        <div className='section'>
-                            <h5>Capacidad</h5>
-                            <p>{actividad.capacidad} <FaPerson className='person' /></p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className='separador'></div>
-
+                
                 {/* Descripcion */}
                 <div className='container-descripcion'>
                     <p className='descripcion' id="descripcion-texto">
@@ -103,21 +85,32 @@ const DescripcionActividades = ( {actividad} ) => {
                         </button>
                     </p>
                 </div>
-
-                {/* Seccion metodos de pago */}
-                <div className='container-principal-precio-metodo'>
-                    <div className='container-precio-metodo-pago'>
-                        <div className='container-precio'>
+                    
+                {/* Caracteriticas  */}
+                <div className='container-caracteristicas'>
+                    <div className='sub-container'>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Dificultad</h5>
+                                <FaGripfire />
+                            </div>
                             <h5>
-                                {actividad.precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                                {actividad.dificultad}
                             </h5>
-                            <p>Por persona</p>
                         </div>
-                        <div className='container-metodo'>
-                            <h4>Metodos de pago</h4>
-                            <p>
-                                {actividad.metodosDePago}
-                            </p>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Duración</h5>
+                                <FaRegClock />
+                            </div>
+                            <h5>{actividad.duracion} Min</h5>
+                        </div>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Capacidad</h5>
+                                <FaPerson />
+                            </div>
+                            <h5>{actividad.capacidad}</h5>
                         </div>
                     </div>
                 </div>
@@ -152,6 +145,26 @@ const DescripcionActividades = ( {actividad} ) => {
                         </div>
                         </div>
                     ))}
+                </div>
+
+                <div className='separador'></div>
+                
+                {/* Seccion metodos de pago */}
+                <div className='container-principal-precio-metodo'>
+                    <div className='container-precio-metodo-pago'>
+                        <div className='container-precio'>
+                            <h5>
+                                {actividad.precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                            </h5>
+                            <p>Por persona</p>
+                        </div>
+                        <div className='container-metodo'>
+                            <h4>Metodos de pago</h4>
+                            <p>
+                                {actividad.metodosDePago}
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Contacto */}

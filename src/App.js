@@ -488,7 +488,7 @@ const rutas = [
       },
       terreno: "Montañoso",
       calificacion: 4.5,
-      dificultad: "Alta",
+      Dificultad: "Alta",
       tiempo: 30,
       items: {
         'Duración': 'corta',

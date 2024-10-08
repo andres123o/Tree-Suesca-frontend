@@ -1,19 +1,19 @@
 .container-caracteristicas-actividad {
     width: 100%;
-    height: auto;
-    margin-top: 10%;
-    margin-bottom: 5%;
     text-align: center;
-}
-.section p {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.person {
-    width: 12px;
-    height: 12px;
-    margin-left: 5%;
+.sub-container-actividad {
+    width: 85%;
+    height: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075); /* Sombra ajustada */
+    border: 1px solid rgba(250, 247, 247, 0.103);
 }
 
 /*  Seccopm precio, metodo de pago */
