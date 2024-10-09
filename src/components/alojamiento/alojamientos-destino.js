@@ -45,7 +45,8 @@ const ListadoAlojamiewnto = ( {alojamientos, titulo, icon, tipo, iconCalendar, f
                 tipo={tipo}
                 direccion= 'column'
                 xOverflow = 'none'
-                ancho= '40vh'
+                ancho= '42vh'
+                routeInndividual = 'alojamiento'
             />
         </>
     )

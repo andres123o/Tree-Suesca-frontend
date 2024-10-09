@@ -8,6 +8,7 @@ import { IoMdPeople } from "react-icons/io";
 const DescripcionEventos = ( {evento} ) => {
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    
 
     const maxTextLength = 100;
 
@@ -93,7 +94,7 @@ const DescripcionEventos = ( {evento} ) => {
 
                 {/* seccion de accordean, recomendaciones y mas */}
                 <div className='accordion'>
-                    {Object.entries(evento.requisitos).map(([key, value], index) => (
+                    {Object.entries(evento.politicas).map(([key, value], index) => (
                         <div key={key} className='accordion-item1'>
                         <button 
                             className={`accordion-header ${expandedSection === index ? 'active' : ''}`}

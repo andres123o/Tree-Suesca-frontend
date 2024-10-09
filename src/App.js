@@ -30,6 +30,7 @@ import DescripcionEventos from './components/eventos/descripcion-evento';
 
 //  Componentes dellistado de alojamientis
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
+import AlojamientoDescripcion from './components/alojamiento/alojamiento-descripcion'
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -46,6 +47,7 @@ import './style/rutas/listadoRutas.css'
 import './style/rutas/descripcionRuta.css'
 import './style/restaurante-bares/establecimientos.css'
 import './style/actividades/actividades.css'
+import './style/alojamiento/alojamiento.css'
 
 
 // Iconos de la Lista de rutas
@@ -53,6 +55,7 @@ import { RiPinDistanceFill,  } from "react-icons/ri";
 import { GiMountaintop } from "react-icons/gi";
 import { FaRegClock } from "react-icons/fa6";
 import { FaGripfire } from "react-icons/fa";
+import { Check } from 'lucide-react';
 
 
 // Los pasamos como Array
@@ -1232,6 +1235,59 @@ const evento = {
     contacto: 3015081517,
     address: 'https://www.google.com/maps/@5.1032266,-73.7993305,180m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D'
 }
+const alojamiento =  {
+    id: 1,
+    oferente: 'Hotel Las Rocas',
+    name: 'Suite Vista al Lago',
+    logo: '/utils/ejemplo-hoteles-destino/1.jpg',
+    img: '/utils/ejemplo-hoteles-destino/suite-vista-lago.jpg',
+    checkIn: '2:00 pm',
+    checkOut: '12:00 pm',
+    items: {
+        'Tipo': 'Suite',
+    }, 
+    description: 'Habitación con vista al lago.',
+    detalle: 'La Suite Vista al Lago ofrece una cama doble king size, balcón privado con una vista impresionante al lago, y una decoración moderna con un toque rústico. El baño cuenta con jacuzzi y artículos de tocador de lujo. El hospedaje incluye desayuno continental diario y servicio a la habitación disponible 24 horas.',
+    calificacion: 4.7,
+    contacto: 3015081517,
+    address: 'https://www.google.com/maps/@5.1032266,-73.7993305,180m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D',
+    precio: 150000,
+    metodosDePago: 'Efectivo, tarjeta y billeteras digitales',
+    servicios: [
+        'Wi-Fi',
+        'Baño privado',
+        'TV',
+        'Desayuno incluido',
+        'Petfriendly',
+        'Estacionamiento',
+        'Balcón privado',
+        'Jacuzzi'
+    ],
+    equipamento: {
+        habitaciones: 2,
+        camas: 4,
+        baños: 2,
+    },
+    politicas: {
+        'Cancelacion': 'Cancelación gratuita hasta 48 horas antes del check-in.',
+        'Check In': 'Check-in a partir de las 2:00 pm',
+        'Check Out': 'Check-out a las 12:00 pm',
+        'Masctotas': 'Se permiten mascotas con un cargo adicional'
+    },
+    imgs: [
+        '/utils/hotel/1.webp',
+        '/utils/hotel/2.webp',
+        '/utils/hotel/3.webp',
+        '/utils/hotel/4.webp',
+        '/utils/hotel/5.webp',
+        '/utils/hotel/6.webp',
+        '/utils/hotel/7.webp',
+        '/utils/hotel/8.webp',
+        '/utils/hotel/9.webp',
+        '/utils/hotel/10.webp',
+        '/utils/hotel/11.webp'
+    ],
+}
 
 
 
@@ -1410,6 +1466,14 @@ function App() {
                             titulo= 'Alojamientos'
                             icon={ <MdHotel className="Faperson" />}
                             noche = 'noche'
+                        />
+                    }
+                />
+                <Route 
+                    path='/alojamiento/:nombre'
+                    element = {
+                        <AlojamientoDescripcion 
+                            alojamiento={alojamiento}
                         />
                     }
                 />
