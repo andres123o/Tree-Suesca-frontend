@@ -28,7 +28,7 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                                     style={{
                                         minWidth: ancho
                                     }}
-                                    onClick={() => handleClick(item.name)}
+                                    onClick={() => handleClick(item.description)}
                                 >
                                     <div 
                                         className="contianer-img-actividad"

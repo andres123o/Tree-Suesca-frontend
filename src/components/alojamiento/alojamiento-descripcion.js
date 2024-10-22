@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as LucideIcons from 'lucide-react';
 import { IoIosArrowForward } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -21,6 +23,49 @@ const getIconComponent = (serviceName) => {
     // Obtiene el componente del ícono de Lucide
     return LucideIcons[iconName];
 };
+
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+    const { description } = useParams();
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/alojamiento/${description}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+};
+
+const MainComponentAlojamiento = () => {
+    const { content, loading, error } = useDestinoContent();
+    
+    console.log(content)
+    if (loading) return <><div>Cargando...</div></>;
+    if (error) return <><div>Error: {error}</div></>;
+    if (!content) return <><div>No hay contenido disponible</div></>;
+
+    return <AlojamientoDescripcion alojamiento={content} />;
+}
+
+
 
 const AlojamientoDescripcion = ( {alojamiento} ) => {
     const [backgroundImage, setBackgroundImg] = useState(alojamiento.img);
@@ -101,7 +146,7 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
                 {/* Carusel servicios */}
                 <div className='container-carrusel-servicios'>
                     <div className='sub-container-carrusel-servicios'>
-                        {alojamiento.servicios.map((servicio, index) => {
+                        {alojamiento.servicios.servicios.map((servicio, index) => {
                             const IconComponent = getIconComponent(servicio);
                             return (
                                 <p key={index}>
@@ -211,4 +256,4 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
     )
 }
 
-export default AlojamientoDescripcion
+export default MainComponentAlojamiento

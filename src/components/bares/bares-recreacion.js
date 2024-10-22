@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContainerPequeño from "../common/container-pequeño";
 import FiltrosTitulo from "../common/titulo-filtro";
 
-const ListadoBares = ( {bares, icono1, icono2, titulo} ) => {
+const ListadoBares = ( {bares, icono1, icono2, titulo, tipoEstablecimiento} ) => {
     const [filtros, setFiltros] = useState({});
     const [baresFiltrados, setBaresFiltrados] = useState(bares);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
@@ -43,6 +43,7 @@ const ListadoBares = ( {bares, icono1, icono2, titulo} ) => {
                 icono1 = {icono1}
                 icono2= {icono2}
                 tipoDescripcion= 'Botella desde: '
+                tipoEstablecimiento= {tipoEstablecimiento}
             />
         </>
     )

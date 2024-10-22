@@ -4,6 +4,48 @@ import { FaPerson } from "react-icons/fa6";
 import { FaGripfire } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+    const { description } = useParams();
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/actividad/${description}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+};
+
+const MainComponentActivity = () => {
+    const { content, loading, error } = useDestinoContent();
+    
+    console.log(content)
+    if (loading) return <><div>Cargando...</div></>;
+    if (error) return <><div>Error: {error}</div></>;
+    if (!content) return <><div>No hay contenido disponible</div></>;
+
+    return <DescripcionActividades actividad={content} />;
+}
 
 const DescripcionActividades = ( {actividad} ) => {
     const [backgroundImage, setBackgroundImg] = useState(actividad.img);
@@ -49,7 +91,7 @@ const DescripcionActividades = ( {actividad} ) => {
                 {/* Container de carrusel */}
                 <div className='container-carrusel-imgs'>
                     <div className='carrusel-imgs'>
-                        {actividad.imgs.map((imgSrc, index) => (
+                        {actividad.imgs.Imagenes.map((imgSrc, index) => (
                         <img 
                             key={index}
                             src={imgSrc}
@@ -189,4 +231,4 @@ const DescripcionActividades = ( {actividad} ) => {
     )
 }
 
-export default DescripcionActividades;
+export default MainComponentActivity;

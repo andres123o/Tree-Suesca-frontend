@@ -1,12 +1,12 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
 
-const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion} ) => {
+const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion, tipoEstablecimiento} ) => {
     const navigate = useNavigate();
 
     const handleClick = (establecimiento) => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/establecimiento/${encodeURIComponent(establecimiento)}`);
+        navigate(`/establecimiento/${encodeURIComponent(tipoEstablecimiento)}/${encodeURIComponent(establecimiento)}`);
     }
 
     return (
@@ -48,7 +48,11 @@ const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion} ) 
                                             </p>
                                         </div>
                                         <p>
-                                            {icono1} {tipoDescripcion}: {item.precioPromedio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 })}
+                                            {icono1} {tipoDescripcion}: {item.precio_promedio.toLocaleString('es-CO', {
+                                                style: 'currency',
+                                                currency: 'COP',
+                                                maximumFractionDigits: 0 // Opcional, ajusta el número de decimales
+                                            })}
                                         </p>
                                         <p>
                                             {icono2} Suesca, Cundinamarca

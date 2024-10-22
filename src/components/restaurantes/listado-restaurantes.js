@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContainerPequeño from "../common/container-pequeño";
 import FiltrosTitulo from "../common/titulo-filtro";
 
-const ListadoRestaurantes = ( {restaurantes, titulo, icono1, icono2} ) => {
+const ListadoRestaurantes = ( {restaurantes, titulo, icono1, icono2, tipoEstablecimiento}) => {
     const [filtros, setFiltros] = useState({});
     const [restaurantesFiltrados, setRestaurantesFiltrados] = useState(restaurantes);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
@@ -44,6 +44,7 @@ const ListadoRestaurantes = ( {restaurantes, titulo, icono1, icono2} ) => {
                 icono1 = {icono1}
                 icono2={icono2}
                 tipoDescripcion= 'Platos desde: '
+                tipoEstablecimiento= {tipoEstablecimiento}
             />
         </>
     )

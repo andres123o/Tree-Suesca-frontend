@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ScrollToTop  from './components/common/scrollToTop';
+import axios from 'axios'
 
 // Componentes de la pagina de inicio
 import Header from './components/home/header';
@@ -17,20 +18,20 @@ import FuncionalidadesMapa from './components/listado-rutas/seccion-mapa'
 
 // Componentes de la lista de Restaurantes y Bares
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
-import DescripcionEstablecimientos from './components/common/descripcion-establecimiento';
+import MainComponent from './components/common/descripcion-establecimiento';
 import ListadoBares from './components/bares/bares-recreacion'
 
 // Componentes de Actividades en el destino
 import ListadoActividades from './components/actividades/actividades-destino'
-import DescripcionActividades from './components/actividades/descripcion-actividades'
+import MainComponentActivity from './components/actividades/descripcion-actividades'
 
 // Componente de Eventos en el destino
 import ListadoEventos from './components/eventos/eventos-destino'
-import DescripcionEventos from './components/eventos/descripcion-evento';
+import MainComponentEvent from './components/eventos/descripcion-evento';
 
 //  Componentes dellistado de alojamientis
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
-import AlojamientoDescripcion from './components/alojamiento/alojamiento-descripcion'
+import MainComponentAlojamiento from './components/alojamiento/alojamiento-descripcion'
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -68,7 +69,7 @@ const iconCaraceristicas = {
 
 // Variables de ejemplo de respuesta a la API
 const destino = 'Suesca'
-const actividades = [
+const actividadesRuta = [
     {
         id: 1,
         actividad: 'Senderismo',
@@ -90,366 +91,6 @@ const actividades = [
         img: '/utils/vectores-actividades/Auto0.jpg'        
     }
 ]
-const ejemploContenidoPopular = [
-    {
-        id: 1,
-        img: '/utils/contenido-popular/bogota.jpeg'
-    },
-    {
-        id: 2,
-        img: '/utils/contenido-popular/guajita.jpeg'
-    },
-    {
-        id: 3,
-        img: '/utils/contenido-popular/mexico.jpg'
-    },
-    {
-        id: 4,
-        img: '/utils/contenido-popular/nevados.jpeg'
-    },
-]
-const ejemploRestaurantes = [
-    {
-        id: 1,
-        name: 'Burguer Texas',
-        items: {
-            'Tipo': 'Parrilla'
-        },
-        description: 'Delicioso asado a la parrilla',
-        calificacion: 4.2,
-        logo: '/utils/logo-restaurantes/1.jpg',
-        img: '/utils/logo-restaurantes/comida1.jpg',
-        precioPromedio: 50000
-    },
-    {
-        id: 2,
-        name: 'Colombian Food',
-        items: {
-            'Tipo': 'Típica'
-        },
-        description: 'Auténtica cocina colombiana tradicional',
-        calificacion: 4.8,
-        logo: '/utils/logo-restaurantes/2.jpg',
-        img: '/utils/logo-restaurantes/comida2.jpg',
-        precioPromedio: 23000
-    },
-    {
-        id: 3,
-        name: 'Suehica',
-        items: {
-            'Tipo': 'Artesanal'
-        },
-        description: 'Delicados platos artesanales exclusivos',
-        calificacion: 4.5,
-        logo: '/utils/logo-restaurantes/3.jpg',
-        img: '/utils/logo-restaurantes/comida3.jpg',
-        precioPromedio: 35000
-    },
-    {
-        id: 4,
-        name: 'Burguer California',
-        items: {
-            'Tipo': 'Ranchero'
-        },
-        description: 'Auténtica comida de estilo ranchero',
-        calificacion: 4.2,
-        logo: '/utils/logo-restaurantes/4.jpg',
-        img: '/utils/logo-restaurantes/comida4.jpg',
-        precioPromedio: 45000
-    },
-    {
-        id: 5,
-        name: 'Donde ma',
-        items: {
-           'Tipo': 'Típico'
-        },
-        description: 'Platos típicos de la región',
-        calificacion: 4.8,
-        logo: '/utils/logo-restaurantes/5.jpg',
-        img: '/utils/logo-restaurantes/comida5.jpg',
-        precioPromedio: 15000
-    },
-    {
-        id: 6,
-        name: 'Mauros',
-        items: {
-            'Tipo': 'Parrilla'
-        },
-        description: 'Deliciosa parrilla a carbón ardiente',
-        calificacion: 4.5,
-        logo: '/utils/logo-restaurantes/6.jpg',
-        img: '/utils/logo-restaurantes/comida6.jpg',
-        precioPromedio: 20000
-    }
-];
-const ejemploActividades = [
-    {
-        id: 1,
-        oferente: 'Suesca Aventura',
-        items: {
-            'Tipo': 'Cabalgata'
-        },
-        name: 'Cabalgata',
-        description: 'Cabalgata en las Rocas',
-        logo: '/utils/ejemplo-actividades-destino/1.jpg',
-        img: '/utils/ejemplo-actividades-destino/cabalgata.jpg',
-        calificacion: 4.5,
-    },
-    {
-        id: 2,
-        oferente: 'Suesca Aventura',
-        items: {
-            'Tipo': 'Familiar'
-        },
-        name: 'Pasa Día',
-        description: 'Pasa día campestre',
-        logo: '/utils/ejemplo-actividades-destino/2.jpg',
-        img: '/utils/ejemplo-actividades-destino/cabaña-pasa-dia.jpg',
-        calificacion: 4.8,
-    },
-    {
-        id: 3,
-        oferente: 'Explora Outdoors',
-        items: {
-            'Tipo': 'Cuevas'
-        },
-        name: 'Cuevas',
-        description: 'Espeleología en Suesca',
-        logo: '/utils/ejemplo-actividades-destino/3.jpg',
-        img: '/utils/ejemplo-actividades-destino/cueva.jpg',
-        calificacion: 4.6,
-    },
-    {
-        id: 4,
-        oferente: 'Suesca Aventura',
-        items: {
-            'Tipo': 'Escalada'
-        },
-        name: 'Escalada',
-        description: 'Escalada en Rocas',
-        logo: '/utils/ejemplo-actividades-destino/4.jpg',
-        img: '/utils/ejemplo-actividades-destino/escalada.jpg',
-        calificacion: 4.9,
-    },
-    {
-        id: 5,
-        oferente: 'Explora Outdoors',
-        items: {
-            'Tipo': 'Kayak'
-        },
-        name: 'Kayak',
-        description: 'Aventura en kayak en el cañón',
-        logo: '/utils/ejemplo-actividades-destino/3.jpg',
-        img: '/utils/ejemplo-actividades-destino/kayak.jpg',
-        calificacion: 4.7,
-    }
-];
-const ejemploEventos = [
-    {
-        id: 1,
-        oferente: 'Comunidad Católica',
-        name: 'Viacrucis',
-        items: {
-            'Tipo': 'Religioso'
-        },
-        description: 'Viacrucis de Semana Santa',
-        logo: '/utils/ejemplo-eventos-destino/1.jpg',
-        img: '/utils/ejemplo-eventos-destino/Crucez.jpeg',
-        calificacion: 4.8,
-        fecha: '12 Oct'
-    },
-    {
-        id: 2,
-        oferente: 'Alcaldía Local',
-        items: {
-            'Tipo': 'Concierto'
-        },
-        name: 'Concierto',
-        description: 'Concierto parque principal',
-        logo: '/utils/ejemplo-eventos-destino/2.jpg',
-        img: '/utils/ejemplo-eventos-destino/concierto.jpg',
-        calificacion: 4.9,
-        fecha: '20 Oct'
-    },
-    {
-        id: 3,
-        oferente: 'Asociación Campesina',
-        items: {
-            'Tipo': 'Mercado'
-        },
-        name: 'Mercado Campesino',
-        description: 'Feria campesina',
-        logo: '/utils/ejemplo-eventos-destino/3.jpg',
-        img: '/utils/ejemplo-eventos-destino/mercado-campesino.jpg',
-        calificacion: 4.7,
-        fecha: '12 Oct'
-    },
-    {
-        id: 4,
-        oferente: 'Casa de la Cultura',
-        items: {
-            'Tipo': 'Cultural'
-        },
-        name: 'Semana Cultural',
-        description: 'Exposiciones, teatro y música',
-        logo: '/utils/ejemplo-eventos-destino/2.jpg',
-        img: '/utils/ejemplo-eventos-destino/semana-cultural.jpg',
-        calificacion: 4.6,
-        fecha: '20 Oct'
-    },
-    {
-        id: 5,
-        oferente: 'Alcaldia local',
-        items: {
-            'Tipo': 'Deportivo'
-        },
-        name: 'Bici Tour',
-        description: 'Bici tour por la laguna',
-        logo: '/utils/ejemplo-eventos-destino/2.jpg',
-        img: '/utils/ejemplo-eventos-destino/bici.jpg',
-        calificacion: 4.9,
-        fecha: '12 Oct'
-    }
-];
-
-const ejemploBares = [
-    {
-        id: 1,
-        name: 'Bar Texas',
-        items: {
-            'Tipo': 'Shows'
-        },
-        description: 'Shows de música en vivo',
-        calificacion: 4.2,
-        logo: '/utils/logo-bares/1.jpg',
-        img: '/utils/logo-bares/bar-texas.jpg',
-        precioPromedio: 50000
-    },
-    {
-        id: 2,
-        name: 'La Movida Colombiana',
-        items: {
-            'Tipo': 'Tropical'
-        },
-        description: 'Música tropical y ambiente caribeño',
-        calificacion: 4.8,
-        logo: '/utils/logo-bares/2.jpg',
-        img: '/utils/logo-bares/la-movida.jpg',
-        precioPromedio: 23000
-    },
-    {
-        id: 3,
-        name: 'El Sótano',
-        items: {
-            'Tipo': 'Underground'
-        },
-        description: 'Música underground y ambiente alternativo',
-        calificacion: 4.5,
-        logo: '/utils/logo-bares/3.jpg',
-        img: '/utils/logo-bares/el-sotano.jpg',
-        precioPromedio: 35000
-    },
-    {
-        id: 4,
-        name: 'California Lounge',
-        items: {
-            'Tipo': 'Discoteca'
-        },
-        description: 'Discoteca con música variada',
-        calificacion: 4.2,
-        logo: '/utils/logo-bares/4.jpg',
-        img: '/utils/logo-bares/california-lounge.jpg',
-        precioPromedio: 45000
-    },
-    {
-        id: 5,
-        name: 'La Cueva del Jazz',
-        items: {
-            'Tipo': 'Shows'
-        },
-        description: 'Espectáculos de jazz en vivo',
-        calificacion: 4.8,
-        logo: '/utils/logo-bares/5.jpg',
-        img: '/utils/logo-bares/cueva-jazz.jpg',
-        precioPromedio: 15000
-    },
-    {
-        id: 6,
-        name: 'Mauros Pub',
-        items: {
-            'Tipo': 'Underground'
-        },
-        description: 'Ambiente underground con música alternativa',
-        calificacion: 4.5,
-        logo: '/utils/logo-bares/6.jpg',
-        img: '/utils/logo-bares/mauros-pub.jpg',
-        precioPromedio: 20000
-    }
-];
-
-const ejemploHoteles = [
-    {
-        id: 1,
-        oferente: 'Hotel Las Rocas',
-        name: 'Suite Vista al Lago',
-        items: {
-            'Tipo': 'Suite',
-        }, 
-        description: 'Habitación con vista al lago',
-        logo: '/utils/ejemplo-hoteles-destino/1.jpg',
-        img: '/utils/ejemplo-hoteles-destino/suite-vista-lago.jpg',
-        calificacion: 4.7,
-    },
-    {
-        id: 2,
-        oferente: 'Hotel Paraíso Natural',
-        name: 'Cabaña en el Bosque',
-        items: {
-            'Tipo': 'Cabaña',
-        },
-        description: 'Cabaña en el lago',
-        logo: '/utils/ejemplo-hoteles-destino/2.jpg',
-        img: '/utils/ejemplo-hoteles-destino/cabana-bosque.jpg',
-        calificacion: 4.9,
-    },
-    {
-        id: 3,
-        oferente: 'Hotel Suesca Aventura',
-        name: 'Habitación Familiar',
-        items: {
-            'Tipo': 'Habitación',
-        },
-        description: 'Habitación familiar',
-        logo: '/utils/ejemplo-hoteles-destino/3.jpg',
-        img: '/utils/ejemplo-hoteles-destino/habitacion-familiar.jpg',
-        calificacion: 4.6,
-    },
-    {
-        id: 4,
-        oferente: 'Hotel El Refugio',
-        name: 'Loft Moderno',
-        items: {
-            'Tipo': 'Loft',
-        },
-        description: 'Alojamiento minimalista',
-        logo: '/utils/ejemplo-hoteles-destino/4.jpg',
-        img: '/utils/ejemplo-hoteles-destino/loft-moderno.jpg',
-        calificacion: 4.8,
-    },
-    {
-        id: 5,
-        oferente: 'Hotel Rústico',
-        name: 'Habitación Ecológica',
-        items: {
-            'Tipo': 'Glamping',
-        },
-        description: 'Glamping',
-        logo: '/utils/ejemplo-hoteles-destino/5.jpg',
-        img: '/utils/ejemplo-hoteles-destino/habitacion-ecologica.jpg',
-        calificacion: 4.5,
-    }
-];
-
 const rutas = [
     {
       id:1,  
@@ -949,350 +590,55 @@ const ruta = {
         { lat: 5.116750, lng: -73.806383}
     ],
 }
-const restaurante = {
-    id:1,
-    name: 'Burger Texas',
-    items: {
-        'Tipo': 'Parrilla',
-        'Descripcion': 'Delicioso asado a la parrilla'
-    },
-    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad.',
-    calificacion: 4.2,
-    precioPromedio: 50000,
-    horario: {
-        abren: '8:10 am',
-        cierran: '7:30 pm' 
-    },
-    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
-    contacto: 3015081517,
-    servicios: {
-        delivery: 'Disponible',
-        reservas: 'Disponible',
-        parking: 'No disponible'
-    },
-    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
-    destacados: [
-        {
-            nombre: "Burguer texana",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-        {
-            nombre: "Texas BBQ Ribs",
-            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
-            costo: 28000,
-            descripcion: "Costillas de cerdo ahumadas. Servidas con elote a la parrilla y coleslaw tradicional.",
-        },
-        {
-            nombre: "Brisket Sandwich",
-            img: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f",
-            costo: 18000,
-            descripcion: "Jugoso brisket ahumado por 16 horas, cebollas caramelizadas y pepinillos caseros.",
+
+const useDestinoContent = (destinoId = 1) => {
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/${destinoId}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
         }
-    ],
-    recurrente: [
-        {
-            nombre: "Plato del dia",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-        {
-            nombre: "Desayuno",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-    ],
-    antojos: [
-        {
-            nombre: "Chicharrones",
-            descripcion: 'Entrada chicharron carnudo',
-            img: "/utils/logo-restaurantes/establecimiento/chicharron.jpeg",
-            costo: 14000,
-        },
-        {
-            nombre: "Empanadas",
-            descripcion: 'Canasta x6',
-            img: "/utils/logo-restaurantes/establecimiento/empanada.webp",
-            costo: 14000,
-        },
-    ],
-    bebidas: [
-        {
-            nombre: "Coca cola",
-            descripcion: '250 ml',
-            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Jugo natural",
-            descripcion: 'En agua o en leche',
-            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Coca cola",
-            descripcion: '250 ml',
-            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Jugo natural",
-            descripcion: 'En agua o en leche',
-            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
-            costo: 14000,
-        },
-    ],
-    img: '/utils/logo-restaurantes/comida1.jpg',
-    imgs: [
-        // Vista general del restaurante
-        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par5.webp",
-        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
-        
-    ],
-    logo: '/utils/logo-restaurantes/1.jpg',
-}
-const bar = {
-    id:1,
-    name: 'Burger Texas',
-    items: {
-        'Tipo': 'Parrilla',
-        'Descripcion': 'Delicioso asado a la parrilla'
-    },
-    concepto: 'Burger Texas es más que un restaurante; es una auténtica experiencia de sabor texano en el corazón de la ciudad. Fusionamos las técnicas tradicionales de ahumado y parrilla del sur de Estados Unidos con ingredientes locales de primera calidad.',
-    calificacion: 4.2,
-    precioPromedio: 50000,
-    horario: {
-        abren: '8:10 am',
-        cierran: '7:30 pm' 
-    },
-    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
-    contacto: 3015081517,
-    servicios: {
-        cover: 5000,
-        reservas: 'Disponible',
-        parking: 'No disponible'
-    },
-    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
-    destacados: [
-        {
-            nombre: "Burguer texana",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-        {
-            nombre: "Texas BBQ Ribs",
-            img: "https://images.unsplash.com/photo-1544025162-d76694265947",
-            costo: 28000,
-            descripcion: "Costillas de cerdo ahumadas. Servidas con elote a la parrilla y coleslaw tradicional.",
-        },
-        {
-            nombre: "Brisket Sandwich",
-            img: "https://images.unsplash.com/photo-1610440042657-612c34d95e9f",
-            costo: 18000,
-            descripcion: "Jugoso brisket ahumado por 16 horas, cebollas caramelizadas y pepinillos caseros.",
-        }
-    ],
-    recurrente: [
-        {
-            nombre: "Plato del dia",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-        {
-            nombre: "Desayuno",
-            img: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
-            costo: 14000,
-            descripcion: "Carne doble, queso derretido, bacon, vegetales frescos y papas fritas doradas."
-        },
-    ],
-    antojos: [
-        {
-            nombre: "Chicharrones",
-            descripcion: 'Entrada chicharron carnudo',
-            img: "/utils/logo-restaurantes/establecimiento/chicharron.jpeg",
-            costo: 14000,
-        },
-        {
-            nombre: "Empanadas",
-            descripcion: 'Canasta x6',
-            img: "/utils/logo-restaurantes/establecimiento/empanada.webp",
-            costo: 14000,
-        },
-    ],
-    bebidas: [
-        {
-            nombre: "Coca cola",
-            descripcion: '250 ml',
-            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Jugo natural",
-            descripcion: 'En agua o en leche',
-            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Coca cola",
-            descripcion: '250 ml',
-            img: "/utils/logo-restaurantes/establecimiento/bebida1.webp",
-            costo: 14000,
-        },
-        {
-            nombre: "Jugo natural",
-            descripcion: 'En agua o en leche',
-            img: "/utils/logo-restaurantes/establecimiento/bebida2.webp",
-            costo: 14000,
-        },
-    ],
-    img: '/utils/logo-restaurantes/comida1.jpg',
-    imgs: [
-        // Vista general del restaurante
-        "/utils/logo-restaurantes/establecimiento/par1.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par2.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par3.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par4.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par5.webp",
-        "/utils/logo-restaurantes/establecimiento/par6.jpeg",
-        "/utils/logo-restaurantes/establecimiento/par7.jpeg",
-        
-    ],
-    logo: '/utils/logo-restaurantes/1.jpg',
-}
-const actividad =  {
-    id: 1,
-    oferente: 'Suesca Aventura',
-    items: {
-        'Tipo': 'Cabalgata'
-    },
-    name: 'Cabalgata',
-    duracion: 45,
-    dificultad: 'facil',
-    capacidad: 5,
-    description: 'Cabalgata en las Rocas',
-    itinerario: 'Disfruta de una emocionante cabalgata por los impresionantes paisajes de Suesca, recorriendo senderos que te llevan a través de montañas y rocas icónicas. A lo largo del trayecto, sentirás la conexión con la naturaleza mientras atraviesas bosques, praderas y miradores naturales que ofrecen vistas espectaculares.',
-    horario: {
-        abren: '8:10 am',
-        cierran: '7:30 pm' 
-    },
-    address: 'https://maps.app.goo.gl/g976EgJprQZgAfzFA',
-    contacto: 3015081517,
-    logo: '/utils/ejemplo-actividades-destino/1.jpg',
-    img: '/utils/ejemplo-actividades-destino/cabalgata.jpg',
-    imgs: [
-        '/utils/actividad/1.jpeg',
-        '/utils/actividad/2.jpeg',
-        '/utils/actividad/3.jpeg',
-        '/utils/actividad/4.webp',
-        '/utils/actividad/5.webp',
-        '/utils/actividad/6.jpeg',
-        '/utils/actividad/7.jpeg'
-    ],
-    calificacion: 4.5,
-    requisitosRecomendaciones: {
-        edad: 'Sin limite de edad',
-        experiencia: 'No requiere experiencia previa',
-        incluye: 'Guia, equipo y seguro turistico',
-        recomendaciones: 'Llevar ropa comoda, bloqueador solar e hidratación',
-    },
-    precio: 35000,
-    metodosDePago: 'Efectivo, Nequi y Daviplara, no reciben tarjetas',
-   
-}
-const evento = {
-    id: 1,
-    oferente: 'Comunidad',
-    name: 'Viacrucis',
-    items: {
-        'Tipo': 'Religioso'
-    },
-    description: 'Viacrucis de Semana Santa',
-    itinerario: 'El Viacrucis en Suesca, Cundinamarca, es una ceremonia profundamente arraigada en la comunidad católica local. El recorrido inicia en la plaza principal, donde los fieles se congregan para comenzar la procesión. A medida que se avanza por las calles empedradas del pueblo, los participantes hacen paradas en las estaciones que representan las etapas de la Pasión de Cristo.',
-    logo: '/utils/ejemplo-eventos-destino/1.jpg',
-    img: '/utils/ejemplo-eventos-destino/Viacrucis-2023_Post.jpg',
-    calificacion: 4.8,
-    fecha: '12 Oct',
-    hora: '4:00 pm',
-    lugar: 'Parque de la Vida',
-    precio: 0,
-    metodosDePago: 'Sin costo de entrada',
-    duracion: 4,
-    requisitos: {
-        Vestimenta: 'fiesta semaforo',
-        Edad: 'No menores de edad'
-    },
-    cupos: 'Ilimitados',
-    contacto: 3015081517,
-    address: 'https://www.google.com/maps/@5.1032266,-73.7993305,180m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D'
-}
-const alojamiento =  {
-    id: 1,
-    oferente: 'Hotel Las Rocas',
-    name: 'Suite Vista al Lago',
-    logo: '/utils/ejemplo-hoteles-destino/1.jpg',
-    img: '/utils/ejemplo-hoteles-destino/suite-vista-lago.jpg',
-    checkIn: '2:00 pm',
-    checkOut: '12:00 pm',
-    items: {
-        'Tipo': 'Suite',
-    }, 
-    description: 'Habitación con vista al lago.',
-    detalle: 'La Suite Vista al Lago ofrece una cama doble king size, balcón privado con una vista impresionante al lago, y una decoración moderna con un toque rústico. El baño cuenta con jacuzzi y artículos de tocador de lujo. El hospedaje incluye desayuno continental diario y servicio a la habitación disponible 24 horas.',
-    calificacion: 4.7,
-    contacto: 3015081517,
-    address: 'https://www.google.com/maps/@5.1032266,-73.7993305,180m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI0MTAwMi4xIKXMDSoASAFQAw%3D%3D',
-    precio: 150000,
-    metodosDePago: 'Efectivo, tarjeta y billeteras digitales',
-    servicios: [
-        'Wi-Fi',
-        'Baño privado',
-        'TV',
-        'Desayuno incluido',
-        'Petfriendly',
-        'Estacionamiento',
-        'Balcón privado',
-        'Jacuzzi'
-    ],
-    equipamento: {
-        habitaciones: 2,
-        camas: 4,
-        baños: 2,
-    },
-    politicas: {
-        'Cancelacion': 'Cancelación gratuita hasta 48 horas antes del check-in.',
-        'Check In': 'Check-in a partir de las 2:00 pm',
-        'Check Out': 'Check-out a las 12:00 pm',
-        'Masctotas': 'Se permiten mascotas con un cargo adicional'
-    },
-    imgs: [
-        '/utils/hotel/1.webp',
-        '/utils/hotel/2.webp',
-        '/utils/hotel/3.webp',
-        '/utils/hotel/4.webp',
-        '/utils/hotel/5.webp',
-        '/utils/hotel/6.webp',
-        '/utils/hotel/7.webp',
-        '/utils/hotel/8.webp',
-        '/utils/hotel/9.webp',
-        '/utils/hotel/10.webp',
-        '/utils/hotel/11.webp'
-    ],
-}
-
-
-
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+};
 
 function App() {
+    const { content, loading, error } = useDestinoContent();
+
+    if (loading) {
+        return <><div>Cargando...</div></>;
+    }
+
+    if (error) {
+        return <><div>Error: {error}</div></>;
+    }
+
+    if (!content) {
+        return <><div>No hay contenido disponible</div></>;
+    }
+
+    const { restaurantes } = content
+    const { bares } = content
+    const { tendencias } = content
+    const { actividades } = content
+    const { eventos } = content
+    const { alojamientos } = content 
+
     return (
         <>
             <ScrollToTop />
@@ -1305,18 +651,19 @@ function App() {
                         <>
                             <Header destino = {destino}/>
                             <SearchBox />
-                            <CategoryCarousel actividades = {actividades} />
-                            <PopularActivities contenido = {ejemploContenidoPopular} />
+                            <CategoryCarousel actividades = {actividadesRuta} />
+                            <PopularActivities contenido = { tendencias } />
                             <ListaTop3 
-                                rest = {ejemploRestaurantes}
+                                rest = {restaurantes}
                                 titulo = 'Restaurantes!'
                                 icono1 = {<IoFastFoodOutline className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Platos desde'    
                                 route= 'restaurantes'
+                                tipoEstablecimiento= 'restaurante'
                             />
                             <Carrusel 
-                                actividadesDestino = {ejemploActividades}
+                                actividadesDestino = { actividades }
                                 titulo = 'Actividades'
                                 icon={<FaPerson className="Faperson"/>}
                                 tipo = 'Por persona:'
@@ -1324,7 +671,7 @@ function App() {
                                 routeIndividual= 'actividad'
                             />
                             <Carrusel 
-                                actividadesDestino = {ejemploEventos}
+                                actividadesDestino = { eventos }
                                 titulo = 'Eventos'
                                 icon={<FaPerson className="Faperson"/>}
                                 iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
@@ -1334,15 +681,16 @@ function App() {
                                 routeIndividual= 'evento'
                             />
                             <ListaTop3 
-                                rest = {ejemploBares}
+                                rest = {bares}
                                 titulo = 'Bares!'
                                 icono1 = {<FaWineBottle className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Botellas desde'
                                 route= 'fiesta-amigos'
+                                tipoEstablecimiento= 'bares'
                             />
                             <Carrusel 
-                                actividadesDestino= {ejemploHoteles}
+                                actividadesDestino= { alojamientos }
                                 titulo= 'Alojamientos'
                                 icon={ <MdHotel className="Faperson" />}
                                 noche = 'noche'
@@ -1386,10 +734,11 @@ function App() {
                     path='/restaurantes'
                     element = {
                         <ListadoRestaurantes 
-                            restaurantes = { ejemploRestaurantes }
+                            restaurantes = { restaurantes }
                             icono1 = {<IoFastFoodOutline className='Faperson'/>} 
                             icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                             titulo = 'Restaurantes'
+                            tipoEstablecimiento= 'restaurante'
                         />
                     }
                 />
@@ -1397,19 +746,24 @@ function App() {
                     path='/fiesta-amigos'
                     element = {
                         <ListadoBares
-                            bares = {ejemploBares}
+                            bares = {bares}
                             icono1 = {<FaWineBottle className='Faperson'/>} 
                             icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                             titulo= 'Fiesta y Amigos'
+                            tipoEstablecimiento= 'bares'
                         />
                     }
                 />
                 <Route 
-                    path='/establecimiento/:nombre'
+                    path='/establecimiento/:tipo/:nombre'
                     element = {
-                        <DescripcionEstablecimientos 
-                            establecimiento={restaurante}
-                        />
+                        <MainComponent/>
+                    }
+                />
+                <Route 
+                    path='/establecimiento/:tipo/:nombre'
+                    element = {
+                        <MainComponent/>
                     }
                 />
                 
@@ -1418,7 +772,7 @@ function App() {
                     path='/actividades'
                     element = {
                         <ListadoActividades 
-                            actividades = {ejemploActividades}
+                            actividades = {actividades}
                             titulo = 'Actividades'
                             icon = {<FaPerson className="Faperson" />}
                             tipo = 'Por persona: '
@@ -1426,20 +780,19 @@ function App() {
                     }
                 />
                 <Route 
-                    path='/actividad/:nombre'
+                    path='/actividad/:description'
                     element = {
-                        <DescripcionActividades 
-                            actividad = { actividad }
-                        />
+                        <MainComponentActivity/>
                     }
                 />
+
 
                 {/* Seccion eventos */}
                 <Route 
                     path='/eventos'
                     element = {
                         <ListadoEventos 
-                            eventos = {ejemploEventos}
+                            eventos = {eventos}
                             titulo = 'Eventos'
                             icon={<FaPerson className="Faperson" />}
                             tipo= 'Por persona: '
@@ -1449,11 +802,9 @@ function App() {
                     }
                 />
                 <Route 
-                    path ='/evento/:nombre'
+                    path ='/evento/:description'
                     element = {
-                        <DescripcionEventos 
-                            evento = {evento}
-                        />
+                        <MainComponentEvent/>
                     }
                 />
                 
@@ -1462,7 +813,7 @@ function App() {
                     path='/alojamientos'
                     element = {
                         <ListadoAlojamiewnto 
-                            alojamientos={ejemploHoteles}
+                            alojamientos={alojamientos}
                             titulo= 'Alojamientos'
                             icon={ <MdHotel className="Faperson" />}
                             noche = 'noche'
@@ -1470,11 +821,9 @@ function App() {
                     }
                 />
                 <Route 
-                    path='/alojamiento/:nombre'
+                    path='/alojamiento/:description'
                     element = {
-                        <AlojamientoDescripcion 
-                            alojamiento={alojamiento}
-                        />
+                        <MainComponentAlojamiento/>
                     }
                 />
             </Routes>

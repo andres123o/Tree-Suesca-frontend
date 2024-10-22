@@ -3,6 +3,48 @@ import { FaPerson } from "react-icons/fa6";
 import { FaRegClock } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoMdPeople } from "react-icons/io";
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+    const { description } = useParams();
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/evento/${description}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+};
+
+const MainComponentEvent = () => {
+    const { content, loading, error } = useDestinoContent();
+    
+    console.log(content)
+    if (loading) return <><div>Cargando...</div></>;
+    if (error) return <><div>Error: {error}</div></>;
+    if (!content) return <><div>No hay contenido disponible</div></>;
+
+    return <DescripcionEventos evento={content} />;
+}
 
 
 const DescripcionEventos = ( {evento} ) => {
@@ -164,4 +206,4 @@ const DescripcionEventos = ( {evento} ) => {
     )
 }
 
-export default DescripcionEventos;
+export default MainComponentEvent;

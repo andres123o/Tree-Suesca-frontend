@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContainerMediano from "../common/container-mediano";
 import FiltrosTitulo from "../common/titulo-filtro";
 
+
 const ListadoActividades = ( {actividades, titulo, icon, tipo} ) => {
     const [filtros, setFiltros] = useState({});
     const [actividadesFiltradas, setActividadesFiltradas] = useState(actividades);

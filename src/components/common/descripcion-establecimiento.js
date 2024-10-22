@@ -1,6 +1,8 @@
 import Footer from './footer';
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { FaPerson } from "react-icons/fa6";
+import axios from 'axios'
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
 const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
@@ -112,7 +114,47 @@ const ContactButtons = ({ establecimiento }) => (
     </div>
 );
 
-const DescripcionEstablecimientos = ({ establecimiento }) => {
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+    const { tipo, nombre } = useParams();
+
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/${tipo}/${nombre}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+};
+
+const MainComponent = () => {
+    const { content, loading, error } = useDestinoContent();
+    
+    console.log(content)
+    if (loading) return <><div>Cargando...</div></>;
+    if (error) return <><div>Error: {error}</div></>;
+    if (!content) return <><div>No hay contenido disponible</div></>;
+
+    return <DescripcionEstablecimientos establecimiento={content} />;
+}
+
+const DescripcionEstablecimientos = ({establecimiento}) => {
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [backgroundImage, setBackgroundImage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
@@ -136,7 +178,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                     />
                     <div className="container-info">
                         <ImageCarousel 
-                            images={establecimiento.imgs}
+                            images={establecimiento.imgs.imagenes}
                             selectedIndex={selectedImgIndex}
                             onImageClick={handleImageClick}
                         />
@@ -198,7 +240,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                     />
                     <div className="container-info">
                         <ImageCarousel 
-                            images={establecimiento.imgs}
+                            images={establecimiento.imgs.imagenes}
                             selectedIndex={selectedImgIndex}
                             onImageClick={handleImageClick}
                         />
@@ -242,7 +284,7 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
                                 <h4>Recurrentes</h4>
                             </div>
                             <div className='container-carrusel-recurrentes'> 
-                                {establecimiento.recurrente.map((item, index) => (
+                                {establecimiento.recurrentes.map((item, index) => (
                                     <div className='recurrente' key={index}>
                                         <div className='oferta'>
                                             <img src={item.img} alt={item.nombre} />
@@ -270,4 +312,5 @@ const DescripcionEstablecimientos = ({ establecimiento }) => {
     );
 };
 
-export default DescripcionEstablecimientos;
+
+export default MainComponent;

@@ -6,7 +6,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useState, useEffect } from 'react'
 
 
-const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route} ) => {
+const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route, tipoEstablecimiento} ) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemsPerPage = 3;
     const navigate = useNavigate();
@@ -49,6 +49,7 @@ const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route} ) => {
                     icono1={icono1}
                     icono2={icono2}
                     tipoDescripcion={tipo}
+                    tipoEstablecimiento={tipoEstablecimiento}
                 />
             </div>
         </>
