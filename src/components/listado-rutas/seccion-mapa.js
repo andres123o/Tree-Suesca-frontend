@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { initializeMap } from '../../service/googleAPI';
 import { ClipLoader } from 'react-spinners';
+import { IoIosArrowForward } from "react-icons/io";
 import axios from 'axios'
 
 // Obtener datos
@@ -55,6 +56,11 @@ const FuncionalidadesMapa = ( {ruta} ) => {
     const containerKmRestantes = useRef(null);
     const [map, setMap] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    const toggleSection = () => {
+        setIsExpanded(!isExpanded);
+    };
 
     useEffect(() => {
         let isMounted = true;
@@ -191,6 +197,30 @@ const FuncionalidadesMapa = ( {ruta} ) => {
                         ref={containerChart}
                     >
                     </canvas>
+                </div>
+
+                <div className='separador'></div>
+
+                <div className='accordion'>
+                    <div className='accordion-item1'>
+                        <button 
+                            className={`accordion-header ${isExpanded ? 'active' : ''}`}
+                            onClick={toggleSection}
+                        >
+                            Emergencias
+                            <IoIosArrowForward className={`icon ${isExpanded ? 'rotated' : ''}`} />
+                        </button>
+                        <div 
+                            className='accordion-content'
+                            style={{ display: isExpanded ? 'block' : 'none' }}
+                        >
+                            {ruta.emergencias.map(emergencia => (
+                                <div key={emergencia.id} className="emergency-contact">
+                                    <p><strong>{emergencia.tipo}:</strong> {emergencia.numero}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </>
