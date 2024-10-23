@@ -178,7 +178,7 @@ const DescripcionEventos = ( {evento} ) => {
                         <div className='container-metodo'>
                             <h4>Metodos de pago</h4>
                             <p>
-                                {evento.metodosDePago}
+                                {evento.metodosdepago}
                             </p>
                         </div>
                     </div>

@@ -31,11 +31,35 @@ export const initializeMap = async (
     containerChart, 
     containerElevacionActual, 
     containerKmRestantes,
-    rutaPrincipal, 
-    atajos, 
-    estaciones
+    data
 ) => {
     try {
+        // Extraer los datos necesarios del objeto data
+        const rutaPrincipal = data.coordenadas_principales[0]?.cordenadas || [];
+        const atajos = data.atajos || [];
+        const estaciones = data.estaciones || [];
+
+        // Formatear las estaciones para incluir position
+        const formattedEstaciones = estaciones.map(station => ({
+            ...station,
+            position: { lat: station.lat, lng: station.lng }
+        }));
+        console.log(formattedEstaciones[0])
+
+        // Formatear los atajos para el formato correcto
+        const formattedAtajos = atajos.map(atajo => ({
+            ...atajo,
+            position: { lat: atajo.lat, lng: atajo.lng }
+        }));
+        console.log(formattedAtajos)
+
+        // Validar y formatear las coordenadas principales
+        const validatedRutaPrincipal = rutaPrincipal.map(coord => ({
+            lat: parseFloat(coord.lat),
+            lng: parseFloat(coord.lng)
+        }));
+
+
         // Cargar el API de Google Maps
         const google = await loadGoogleMapsApi();
 
@@ -65,7 +89,7 @@ export const initializeMap = async (
 
         // Creamos el mapa
         map = new Map(mapContainer, {
-            center: { lat: 5.1033413, lng: -73.7990059 },
+            center: { lat: formattedEstaciones[0].lat, lng: formattedEstaciones[0].lng },
             zoom: 14,
             mapId: '72c6daf722593ece',
             mapTypeId: 'satellite',
@@ -93,54 +117,68 @@ export const initializeMap = async (
             }); 
         }
 
-        // Creamos la ruta principal
-        newPolyline(rutaPrincipal, '#4190df')
+        // Crear la ruta principal
+        if (validatedRutaPrincipal.length > 0) {
+            newPolyline(validatedRutaPrincipal, '#4190df');
+        }
 
+        // Crear los atajos
+        formattedAtajos.forEach(atajo => {
+            // Verifica si existe el array de coordenadas y tiene elementos
+            if (atajo.coordenadas && 
+                atajo.coordenadas[0] && 
+                atajo.coordenadas[0].cordenadas) {
+                
+                // Accede directamente al array de coordenadas
+                const atajoCoordenadas = atajo.coordenadas[0].cordenadas;
+                
+                // Como las coordenadas ya vienen con lat y lng, no necesitas transformarlas
+                newPolyline(atajoCoordenadas, '#FFA500');
+            }
+        });
 
-        // Creamos los atajos
-        Object.values(atajos).forEach(atajo => {
-            newPolyline(atajo.cordenadas, '#FFA500')
-        })
-
-        
-        //  Funcion para crear los marcadores y as ventanas emergetes
+        // Función para crear marcadores y ventanas emergentes
         function markerWindow(items, color, escala) {
             const infoWindow = new InfoWindow();
-            Object.values(items).forEach((item, i) => {
+            items.forEach((item, i) => {
+                if (!item.lat || !item.lng) {
+                    console.error('Invalid marker position:', item);
+                    return;
+                }
+
                 const pin = new PinElement({
                     glyph: `${i + 1}`,
                     glyphColor: "white",
                     scale: escala,
-                    background: color               
+                    background: color
                 });
+
                 const marker = new AdvancedMarkerElement({
-                    position: item.position,
+                    position: { lat: item.lat, lng: item.lng },
                     map: map,
                     title: `${i + 1}. ${item.nombre}`,
                     content: pin.element,
                     gmpClickable: true
                 });
+
                 marker.addListener('click', ({domEvent}) => {
                     const { target } = domEvent;
-    
                     infoWindow.close();
                     infoWindow.setContent(
                         `<div class="info-window-content">
-                            <img src=${item.img} alt=${item.nombre} style="width:100%;max-width:200px;">
+                            <img src="${item.img}" alt="${item.nombre}" style="width:100%;max-width:200px;">
                             <h3>${item.nombre}</h3>
-                            <p>Es un espacio acogedor rodeado de naturaleza, con áreas verdes, una fuente central y una iglesia colonial</p>
+                            <p>${item.description || ''}</p>
                         </div>`
-                    )
+                    );
                     infoWindow.open(marker.map, marker);
-                })
-            })    
+                });
+            });
         }
 
-        // Creamos los markers y ventanas de los atajos
-        markerWindow(atajos, '#FFA500', 0.8)
-        
-        // Creamos los markers y ventanas de estaciones
-        markerWindow(estaciones, '#EB2330', 1)
+        // Crear marcadores para atajos y estaciones
+        markerWindow(formattedAtajos, '#FFA500', 1.0);
+        markerWindow(formattedEstaciones, '#EB2330', 1.2);
 
 
         // Sacamos la posicion incial del usuario
@@ -182,7 +220,7 @@ export const initializeMap = async (
                 if (!hasReachedStartPoint) {
                     const request = {
                         origin: pos,
-                        destination: estaciones[1].position,
+                        destination: formattedEstaciones[0].position,
                         travelMode: 'WALKING'
                     };
 
@@ -258,8 +296,7 @@ export const initializeMap = async (
 
             //  Funcion para calcular la distancia restante al final de la ruta
             function calculateRemainingDistance(pos) {
-                const estacionesKeys = Object.keys(estaciones);
-                const ultimaEstacion = estaciones[estacionesKeys[estacionesKeys.length - 1]];
+                const ultimaEstacion = formattedEstaciones[formattedEstaciones.length - 1];
 
                 return calculateDistance(
                     pos.lat, pos.lng,
@@ -295,7 +332,7 @@ export const initializeMap = async (
                 // Iniciamos el cronometro
                 if (!isMoving) {
                     const distanceFromStart = calculateDistance(
-                        estaciones[1].position.lat, estaciones[1].position.lng,
+                        formattedEstaciones[0].position.lat, formattedEstaciones[0].position.lng,
                         pos.lat, pos.lng
                     );
                     if (distanceFromStart > 0.005) {
@@ -303,8 +340,7 @@ export const initializeMap = async (
                     }
                 };
 
-                const estacionesKeys = Object.keys(estaciones);
-                const ultimaEstacion = estaciones[estacionesKeys[estacionesKeys.length - 1]];
+                const ultimaEstacion = formattedEstaciones[formattedEstaciones.length - 1]
 
                 // Verificar si el usuario ha llegado al destino
                 const distanceToEnd = calculateDistance(
@@ -331,7 +367,7 @@ export const initializeMap = async (
 
                 const distanceToStart = calculateDistance(
                     pos.lat, pos.lng, 
-                    estaciones[1].position.lat, estaciones[1].position.lng
+                    formattedEstaciones[0].position.lat, formattedEstaciones[0].position.lng
                 )
 
                 const toleranceRange = 0.05;
@@ -423,12 +459,12 @@ export const initializeMap = async (
             const elevationService = new ElevationService();
             try {
 
-                if (!Array.isArray(rutaPrincipal) || rutaPrincipal.length === 0) {
+                if (!Array.isArray(validatedRutaPrincipal) || validatedRutaPrincipal.length === 0) {
                     throw new Error('rutaPrincipal is not a valid array');
                 }
                 
-                const path = rutaPrincipal.map(point => new google.maps.LatLng(point.lat, point.lng));
-                const samples = rutaPrincipal.length;
+                const path = validatedRutaPrincipal.map(point => new google.maps.LatLng(point.lat, point.lng));
+                const samples = validatedRutaPrincipal.length;
 
                 //  Obtenemos la elevacion pro cada punto
                 const response = await elevationService.getElevationAlongPath({
@@ -457,7 +493,7 @@ export const initializeMap = async (
                     y.push(Math.floor(point.elevation)); // Agregamos la elevacion
                 });
 
-                const numpPoints = rutaPrincipal.length;
+                const numpPoints = validatedRutaPrincipal.length;
 
                 // Generar los valores de x desde 0 hasta numero de numPoints
                 const xIndex = Array.from({ length: numpPoints }, (_, i) => i);
@@ -621,3 +657,6 @@ export const initializeMap = async (
     
 
 };
+
+
+

@@ -2,6 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import FiltrosTitulo from '../common/titulo-filtro'
 import { useNavigate } from "react-router-dom"
+import axios from 'axios'
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+  const { nombre } = useParams();
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const fetchDestinoContent = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `https://tree-suesca-backend-production.up.railway.app/api/v1/rutas/${nombre}/content`
+        );
+        setContent(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDestinoContent();
+  }, [destinoId]);
+
+  return { content, loading, error };
+};
+
+const MainComponentListadoRutas = ({iconos, route}) => {
+  const { content, loading, error } = useDestinoContent();
+  
+  console.log(content)
+  if (loading) return <><div>Cargando...</div></>;
+  if (error) return <><div>Error: {error}</div></>;
+  if (!content) return <><div>No hay contenido disponible</div></>;
+
+  return <ListaRutas rutas={content} iconos={iconos} route={route}/>;
+}
 
 const ListaRutas = ({ rutas, iconos, route}) => {
   const navigate = useNavigate();
@@ -12,14 +53,13 @@ const ListaRutas = ({ rutas, iconos, route}) => {
 
   const actividadesTitulo = {
       'Senderismo': 'Explorando a pie',
-      'Bici Tour': 'Bici tour',
+      'BiciTour': 'Bici tour',
       'Moteros': 'Rutas moteras',
       'Automovil': 'Explorando en auto'
   };
 
-  const handle = () => {
-    // Redirige a listaRutas.html con el nombre de la actividad como query param
-    navigate(`/rutas/${nombre}/${route}`);
+  const handle = (nombreRuta) => {
+    navigate(`/rutas/caracteristicas/${nombreRuta}/`);
   }
 
   // Inicializa los filtros según los datos de las rutas
@@ -57,7 +97,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
           <div 
             key={item.id} 
             className="container-item-lista-rutas"
-            onClick={handle}
+            onClick={() => {handle(item.nombre)}}
           >
             <div
                 className="container-img-ruta"
@@ -102,4 +142,4 @@ const ListaRutas = ({ rutas, iconos, route}) => {
   );
 };
 
-export default ListaRutas;
+export default MainComponentListadoRutas;

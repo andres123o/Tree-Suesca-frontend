@@ -2,7 +2,49 @@ import React, { useState, useEffect, useRef } from 'react';
 import InfoDescripcion from './seccion-descripcion'; 
 import Footer from '../common/footer';
 import { useNavigate } from "react-router-dom"
+import { useParams } from 'react-router-dom';
+import axios from 'axios'
 
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+  const { nombre } = useParams();
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [content, setContent] = useState(null);
+
+  useEffect(() => {
+    const fetchDestinoContent = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `https://tree-suesca-backend-production.up.railway.app/api/v1/caracteristicas/${nombre}/content`
+        );
+        setContent(response.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDestinoContent();
+  }, [destinoId]);
+
+  return { content, loading, error };
+};
+
+const MainComponentRuta = () => {
+  const { content, loading, error } = useDestinoContent();
+  
+  console.log(content)
+  if (loading) return <><div>Cargando...</div></>;
+  if (error) return <><div>Error: {error}</div></>;
+  if (!content) return <><div>No hay contenido disponible</div></>;
+
+  return <DescripcionRuta rutas={content} />;
+}
 
 const DescripcionRuta = ({ rutas }) => {
   const navigate = useNavigate()
@@ -34,11 +76,11 @@ const DescripcionRuta = ({ rutas }) => {
 
         {/* Container con la descripcion de la ruta  */}
         <InfoDescripcion 
-          rutas={rutas} 
-          onImageSelect={handleImageSelect}
+          ruta={rutas} 
+          onImageSelect ={handleImageSelect}
           startMap={() => {
               // Redirige a listaRutas.html con el nombre de la actividad como query param
-              navigate(`/ruta/${rutas.nombre}`);
+              navigate(`/ruta/mapa/${rutas.nombre}`);
           }} // aqui va la funcion donde se hace click y se muestra el mapa en mapaFuncionalidades 
         />
         
@@ -49,4 +91,4 @@ const DescripcionRuta = ({ rutas }) => {
   );
 };
 
-export default DescripcionRuta;
+export default MainComponentRuta;

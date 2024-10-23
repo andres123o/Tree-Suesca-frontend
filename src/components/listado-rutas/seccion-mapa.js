@@ -2,6 +2,48 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { initializeMap } from '../../service/googleAPI';
 import { ClipLoader } from 'react-spinners';
+import axios from 'axios'
+
+// Obtener datos
+const useDestinoContent = (destinoId = 1) => {
+    const { nombre } = useParams();
+  
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [content, setContent] = useState(null);
+  
+    useEffect(() => {
+      const fetchDestinoContent = async () => {
+        try {
+          setLoading(true);
+          const response = await axios.get(
+            `https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/mapa/${nombre}/content`
+          );
+          setContent(response.data);
+        } catch (err) {
+          setError(err.message);
+        } finally {
+          setLoading(false);
+        }
+      };
+  
+      fetchDestinoContent();
+    }, [destinoId]);
+  
+    return { content, loading, error };
+  };
+  
+  const MainComponentCoordenada = () => {
+    const { content, loading, error } = useDestinoContent();
+    
+    console.log(content)
+    if (loading) return <><div>Cargando...</div></>;
+    if (error) return <><div>Error: {error}</div></>;
+    if (!content) return <><div>No hay contenido disponible</div></>;
+  
+    return <FuncionalidadesMapa ruta={content} />;
+  }
+  
 
 const FuncionalidadesMapa = ( {ruta} ) => {
     const { nombre } = useParams();
@@ -29,10 +71,7 @@ const FuncionalidadesMapa = ( {ruta} ) => {
                     containerChart.current,
                     containerElevacionActual.current,
                     containerKmRestantes.current,
-                    ruta.cordenadasPrincipales, 
-                    ruta.atajos, 
-                    ruta.estaciones
-                    
+                    ruta
                 );
                 setMap(newMap);
 
@@ -158,4 +197,4 @@ const FuncionalidadesMapa = ( {ruta} ) => {
     )
 }
 
-export default FuncionalidadesMapa;
+export default MainComponentCoordenada;
