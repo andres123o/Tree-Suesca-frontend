@@ -119,7 +119,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
               <div className="container-descripcion-caracteristicas">
                 {React.cloneElement(iconos.Dificultad, { key: `dificultad-icon-${item.id}` })}
                 <p key={`dificultad-${item.id}`}>
-                  Dificultad: {item.Dificultad}
+                  Dificultad: {item.dificultad}
                 </p>
                 {React.cloneElement(iconos.distancia, { key: `distancia-icon-${item.id}` })}
                 <p key={`distancia-${item.id}`}>
