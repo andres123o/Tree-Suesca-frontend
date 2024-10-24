@@ -54,7 +54,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
   const actividadesTitulo = {
       'Senderismo': 'Explorando a pie',
       'BiciTour': 'Bici tour',
-      'Moteros': 'Rutas moteras',
+      'Moto': 'Rutas moteras',
       'Automovil': 'Explorando en auto'
   };
 
