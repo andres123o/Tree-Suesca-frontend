@@ -10,6 +10,7 @@ import CategoryCarousel from './components/home/CategoryCarrusel';
 import PopularActivities from './components/home/Tendencias'
 import ListaTop3 from './components/home/ListaTop3';
 import Carrusel from './components/home/carrusel';
+import CreateRoute  from './components/listado-rutas/crear-ruta';
 
 //  Componentes de la Lista de Rutas
 import MainComponentListadoRutas from './components/listado-rutas/listaRutas';

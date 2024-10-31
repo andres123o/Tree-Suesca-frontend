@@ -88,7 +88,7 @@ const PopularSection = ({ title, items }) => (
                 <div className='descripcion-oferta'>
                     <h5>{item.nombre}</h5>
                     <p>{item.descripcion}</p>
-                    <h5>${item.costo.toLocaleString()}</h5>
+                    <h5 className='precio-top'>${item.costo.toLocaleString()}</h5>
                 </div>
             </div>
         ))}
