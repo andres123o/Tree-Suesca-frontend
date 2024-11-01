@@ -157,7 +157,7 @@ function App() {
                             <PopularActivities contenido = { tendencias } />
                             <ListaTop3 
                                 rest = {restaurantes}
-                                titulo = 'Restaurantes!'
+                                titulo = 'Restaurantes'
                                 icono1 = {<IoFastFoodOutline className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Platos desde'    
@@ -184,7 +184,7 @@ function App() {
                             />
                             <ListaTop3 
                                 rest = {bares}
-                                titulo = 'Bares!'
+                                titulo = 'Bares y Cafes'
                                 icono1 = {<FaWineBottle className='Faperson'/>} 
                                 icono2 = { <PiMapPinAreaFill className='Faperson'/> }
                                 tipo = 'Botellas desde'
