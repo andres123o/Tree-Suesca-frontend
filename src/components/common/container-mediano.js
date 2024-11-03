@@ -56,7 +56,11 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                                                     {item.description}
                                                 </h5>
                                                 <p>
-                                                    {icon} {tipo}  {item.precio} {iconCalendar} {fecha} {noche}
+                                                    {icon} {tipo}  {item.precio.toLocaleString('es-CO', {
+                                                                        style: 'currency',
+                                                                        currency: 'COP',
+                                                                        maximumFractionDigits: 0 // Opcional, ajusta el número de decimales
+                                                                    })} {iconCalendar} {fecha} {noche}
                                                 </p>
                                                 <p>
                                                     <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
