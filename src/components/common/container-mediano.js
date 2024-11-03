@@ -1,7 +1,7 @@
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom"
 
-const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, direccion, xOverflow, noche, ancho, routeInndividual}) => {
+const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, precio, direccion, xOverflow, noche, ancho, routeInndividual}) => {
     const navigate = useNavigate();
 
     const handleClick = (actividad) => {
@@ -56,7 +56,7 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                                                     {item.description}
                                                 </h5>
                                                 <p>
-                                                    {icon} {tipo}  $30.000 {iconCalendar} {fecha} {noche}
+                                                    {icon} {tipo}  {item.precio} {iconCalendar} {fecha} {noche}
                                                 </p>
                                                 <p>
                                                     <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
