@@ -5,7 +5,7 @@
     overflow: hidden;
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: 100% 50%;
+    background-position: center
 }
 
 .container-img-principal::before {
