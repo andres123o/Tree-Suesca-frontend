@@ -4,6 +4,7 @@ import axios from 'axios'
 
 // Componente home destino
 import Header from './header';
+import Descripcion from './descripcion';
 import SearchBox from './searchBox'
 import CategoryCarousel from './CategoryCarrusel';
 import PopularActivities from './Tendencias'
@@ -51,6 +52,7 @@ const Homedestino = ({restaurantes, bares, tendencias, actividades, eventos, alo
         <>
             <ScrollToTop />
             <Header destino = {destino}/>
+            <Descripcion />
             <SearchBox 
                 placeholder='Que quieres hacer...'
             />

@@ -36,8 +36,6 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 8%;
-    padding-bottom: 3%;
 }
 
 .title-header {
