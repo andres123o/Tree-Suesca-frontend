@@ -150,7 +150,7 @@ function App() {
 
                 {/* Home - destinos*/}
                 <Route 
-                    path = "/home/destino" 
+                    path = "/home/destino/:nombre" 
                     element = {<Homedestino
                         restaurantes={restaurantes}
                         bares={bares}

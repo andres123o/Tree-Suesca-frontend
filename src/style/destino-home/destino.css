@@ -1,8 +1,14 @@
 .container-landing {
     width: 100%;
     height: auto;
-    padding: 0% 8%;
-    margin-top: 8%;
+    padding: 0% 7%;
+    margin-top: 4%;
+    margin-bottom: 8%;
+}
+.mas {
+    color: #00cd70;
+    font-weight: 800;
+    font-size: 30px;
 }
 .titulo-landing {
     width: 90%;
@@ -24,4 +30,59 @@
 .img-landing img {
     width: 100%;
     height: 100%;
+}
+
+/* Filtros */
+
+.filtros-dropdown {
+    width: 100%;
+    height: auto;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+}
+  
+.filtro-item {
+    position: relative;
+}
+  
+.filtro-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+  
+.filtro-opciones {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #dfdfdf;
+    border-radius: 7px;
+    min-width: 150px;
+    z-index: 10;
+}
+  
+.filtro-opciones div {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+  
+.filtro-opciones div:hover {
+    background: #f5f5f5;
+}
+  
+.opcion-seleccionada {
+    background: #e0e0e0;
+}
+.icono-arrow-down {
+    width: 26px;
+    height: 26px;
 }

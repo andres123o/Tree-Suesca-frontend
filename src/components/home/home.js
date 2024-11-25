@@ -1,9 +1,10 @@
 import SearchBox from '../home-destino/searchBox'
 import FiltrosTitulo from '../common/titulo-filtro'
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"
 import { MdOutlineAttachMoney } from "react-icons/md";
 import { MdExplore } from "react-icons/md";
-import Header from '../home-destino/header'
+import { IoMdArrowDropdown } from "react-icons/io";
 
 
 // Ejemplo de respuesta de la api placeholder
@@ -142,9 +143,11 @@ const respuestaAPIdestinos = [
 ];
 
 const Home = () => {
+    const navigate = useNavigate();
     const [filtros, setFiltros] = useState({});
     const [rutasFiltradas, setRutasFiltradas] = useState(respuestaAPIdestinos);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
+    const [filtroAbierto, setFiltroAbierto] = useState(null);
 
     // Inicializa los filtros según los datos de las rutas
     useEffect(() => {
@@ -168,8 +171,8 @@ const Home = () => {
         setRutasFiltradas(nuevasRutas);
     }
     
-    const handle = (nombreRuta) => {
-        console.log('Hello World');
+    const handle = (nombreDestino) => {
+        navigate(`/home/destino/${nombreDestino}`);
     }
 
     return (
@@ -177,7 +180,7 @@ const Home = () => {
             {/* Header */}
             <div className="header">
                 <div className="title-header">
-                    <h5>Destino +</h5>
+                    <h5>Destino <span className="mas">+</span></h5>
                 </div>
                 <div className="back-home">   
                     <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="Tree Suesca" />
@@ -194,9 +197,6 @@ const Home = () => {
                         Toda la información que necesitas, en un solo lugar.
                     </h5>
                 </div>
-                <div className='img-landing'>
-                    <img src='https://res.cloudinary.com/destinoplus/image/upload/v1732561540/22db8ca7bd905cf020ffe7b4109883bb_ajmpg8.jpg'/>
-                </div>
             </div>
 
             {/* Buscadores */}
@@ -205,13 +205,33 @@ const Home = () => {
             />
 
             {/* Filtros */}
-            <FiltrosTitulo 
-                nombre={'Filtra por intereses'}
-                urlImg={'https://res.cloudinary.com/destinoplus/image/upload/v1732555188/tourist-couple-enjoying-vacation-time-illustration-concept-free-vector_ehkvpx.jpg'}
-                filtros={filtros}
-                filtroSeleccionado={filtroSeleccionado}
-                manejarClick={manejarClick}
-            />
+            <div className="filtros-dropdown">
+                {Object.entries(filtros).map(([key, values]) => (
+                    <div className="filtro-item" key={key}>
+                        <button 
+                        className="filtro-button"
+                        onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
+                        >
+                        {key} <IoMdArrowDropdown className='icono-arrow-down'/>
+                        </button>
+                        {filtroAbierto === key && (
+                        <div className="filtro-opciones">
+                            {Array.from(values).map((value, index) => (
+                            <div
+                                key={index}
+                                onClick={() => manejarClick(key, value)}
+                                className={filtroSeleccionado === value.value ? 'opcion-seleccionada' : ''}
+                            >
+                                {value.value}
+                            </div>
+                            ))}
+                        </div>
+                        )}
+                    </div>
+                ))}
+            </div>
+
+            {/* Contenido */}
             <div className="container-seccion-lista-rutas">
                 {rutasFiltradas.map((item) => (
                 <div 
@@ -227,7 +247,7 @@ const Home = () => {
                     <div className="container-info-ruta">
                     <div className="container-nombre-titulo">
                         <h5>
-                        {item.municipio}, {item.departamento}.
+                        {item.frase}.
                         </h5>
                         <div className="container-clasificacion-ruta">
                         <p>
@@ -239,11 +259,7 @@ const Home = () => {
                     <div className="container-descripcion-caracteristicas">
                         <MdExplore />
                         <p key={`dificultad-${item.id}`}>
-                            {item.frase}
-                        </p>
-                        <MdOutlineAttachMoney />
-                        <p key={`dificultad-${item.id}`}>
-                            {item.items.Presupuesto}
+                            {item.municipio}, {item.departamento}.
                         </p>
                     </div>
                     </div>
