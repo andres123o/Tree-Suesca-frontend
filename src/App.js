@@ -4,13 +4,10 @@ import ScrollToTop  from './components/common/scrollToTop';
 import axios from 'axios'
 
 // Componentes de la pagina de inicio
-import Header from './components/home/header';
-import SearchBox from './components/home/searchBox'
-import CategoryCarousel from './components/home/CategoryCarrusel';
-import PopularActivities from './components/home/Tendencias'
-import ListaTop3 from './components/home/ListaTop3';
-import Carrusel from './components/home/carrusel';
-import CreateRoute  from './components/listado-rutas/crear-ruta';
+import Home from './components/home/home'
+
+// Componentes del Home por destino
+import Homedestino from './components/home-destino/home-destino'
 
 //  Componentes de la Lista de Rutas
 import MainComponentListadoRutas from './components/listado-rutas/listaRutas';
@@ -50,6 +47,7 @@ import './style/rutas/descripcionRuta.css'
 import './style/restaurante-bares/establecimientos.css'
 import './style/actividades/actividades.css'
 import './style/alojamiento/alojamiento.css'
+import './style/destino-home/destino.css'
 
 
 // Iconos de la Lista de rutas
@@ -68,8 +66,7 @@ const iconCaraceristicas = {
     Dificultad: <FaGripfire className='icon2' />
 }
 
-// Variables de ejemplo de respuesta a la API
-const destino = 'Suesca'
+
 const actividadesRuta = [
     {
         id: 1,
@@ -145,62 +142,23 @@ function App() {
         <>
             <ScrollToTop />
             <Routes>
-
                 {/* Home */}
                 <Route 
-                    path = "/" 
-                    element = {
-                        <>
-                            <Header destino = {destino}/>
-                            <SearchBox />
-                            <CategoryCarousel actividades = {actividadesRuta} />
-                            <PopularActivities contenido = { tendencias } />
-                            <ListaTop3 
-                                rest = {restaurantes}
-                                titulo = 'Restaurantes'
-                                icono1 = {<IoFastFoodOutline className='Faperson'/>} 
-                                icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                                tipo = 'Platos desde'    
-                                route= 'restaurantes'
-                                tipoEstablecimiento= 'restaurante'
-                            />
-                            <Carrusel 
-                                actividadesDestino = { actividades }
-                                titulo = 'Actividades'
-                                icon={<FaPerson className="Faperson"/>}
-                                tipo = 'Por persona:'
-                                route= 'actividades'
-                                routeIndividual= 'actividad'
-                            />
-                            <Carrusel 
-                                actividadesDestino = { eventos }
-                                titulo = 'Eventos'
-                                icon={<FaPerson className="Faperson"/>}
-                                iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
-                                fecha = '30 Oct'
-                                tipo = 'Desde:'
-                                route= 'eventos'
-                                routeIndividual= 'evento'
-                            />
-                            <ListaTop3 
-                                rest = {bares}
-                                titulo = 'Bares y Cafes'
-                                icono1 = {<FaWineBottle className='Faperson'/>} 
-                                icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                                tipo = 'Botellas desde'
-                                route= 'fiesta-amigos'
-                                tipoEstablecimiento= 'bares'
-                            />
-                            <Carrusel 
-                                actividadesDestino= { alojamientos }
-                                titulo= 'Alojamientos'
-                                icon={ <MdHotel className="Faperson" />}
-                                noche = 'noche'
-                                route= 'alojamientos'
-                                routeIndividual= 'alojamiento'
-                            />
-                        </>
-                    } 
+                    path='/'
+                    element={<Home />}
+                />
+
+                {/* Home - destinos*/}
+                <Route 
+                    path = "/home/destino" 
+                    element = {<Homedestino
+                        restaurantes={restaurantes}
+                        bares={bares}
+                        tendencias={tendencias}
+                        actividades={actividades}
+                        eventos={eventos}
+                        alojamientos={alojamientos}
+                    />} 
                 /> 
 
                 {/* Seccion de rutas */}

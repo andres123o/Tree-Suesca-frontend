@@ -6,7 +6,7 @@ const Header = (props) => {
                     <h5>Explorando {props.destino}</h5>
                 </div>
                 <div className="back-home">   
-                    <img src="/utils/tree suesca.png" alt="Tree Suesca" />
+                    <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="Tree Suesca" />
                 </div>
             </div>
         </>

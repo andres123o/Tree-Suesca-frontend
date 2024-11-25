@@ -1,6 +1,6 @@
 
 
-const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado}) => {
+const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado, urlImg}) => {
     return (
         <>
             <div className="container-titulo-categoria-filtro">
@@ -8,7 +8,7 @@ const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado}) => {
                     <h5>
                         {nombre}
                     </h5>
-                    <img src="/utils/tree suesca.png" />
+                    <img src={urlImg}/>
                 </div>
                 <div className="container-filtros-general">
                     {
