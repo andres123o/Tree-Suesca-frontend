@@ -26,25 +26,53 @@ const actividadesRuta = [
     {
         id: 1,
         actividad: 'Senderismo',
+        frase:'Lugares imperdibles',
+        descripcion: 'Descrubre paisajes increibles',
         img: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1729024921/7185cd4dab74597c497c2a4d24f81fbb_rt3kne.jpg'
     },
     {
         id: 2,
-        actividad: 'BiciTour',
-        img: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1729024921/2fa269f55809f5c403c1f9014ce7efe9_mssuak.jpg'
+        actividad: '',
+        frase:'Planea tu día ideal',
+        descripcion: 'Te ayudamos con tu itinerario',
+        img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732645218/df3dd120c6b3f9d0daaf6292ab9a1871_yq4syk.jpg'
     },
-    {
-        id: 3,
-        actividad: 'Moto',
-        img: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1729024921/moto_x6irw4.jpg'        
-    },
-    {
-        id: 4,
-        actividad: 'Automovil',
-        img: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1729024921/Auto0_d5fovj.jpg'        
-    }
 ]
 
+const descripcionDestino = {
+    imagenes: [
+        {
+            id: 1,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732581775/DSCN0050_qriko8.jpg'
+        },
+        {
+            id: 2,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732581769/DSCN0075_maagyr.jpg'
+        },
+        {
+            id: 3,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732581759/DSCN0080_eg8zl9.jpg'
+        },
+        {
+            id: 4,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732581727/WhatsApp_Image_2024-09-03_at_2.32.02_PM_kppziv.jpg'
+        },
+        {
+            id: 5,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732581626/20241014_165511_j36q56.jpg'
+        },
+        {
+            id: 6,
+            img: 'https://res.cloudinary.com/destinoplus/image/upload/v1730385491/tendencias/zz07pty30dcina1iwgut.jpg'
+        }
+    ],
+    id: 1,
+    descripcion: 'Suesca, a 45 minutos de Bogotá, es la capital colombiana de la escalada en roca, con más de 400 rutas en sus majestuosos farallones. Este pueblo mágico, donde pasó Gonzalo Jiménez de Quesada buscando El Dorado, combina historia colonial con adrenalina pura. Sus calles conservan tesoros como la casa del conquistador español y la residencia Cantini, mientras sus rocas guardan antiguas pictografías muiscas. Es el destino perfecto para quienes buscan escalada al amanecer y exploración histórica al atardecer.',
+    epocas: 'Suesca brinda experiencias únicas todo el año, destacando especialmente de diciembre a marzo con su clima seco y soleado, perfecto para escalada y senderismo, con temperaturas entre 8°C y 20°C. Un segundo periodo ideal es julio-agosto, excelente para actividades al aire libre y atardeceres espectaculares. Durante abril-mayo y octubre-noviembre, las lluvias pintan el paisaje de verde intenso, aunque los escaladores prefieren evitar estos meses. ¡Consejo local: visita entre semana para una experiencia más tranquila!',
+    clima: 'Suesca te recibe con un clima perfecto para la aventura: despierta con el místico frío de montaña, disfruta días soleados ideales para escalar y maravíllate con atardeceres frescos. ¡Prepárate como un local! Imprescindibles: chaqueta rompevientos para las mañanas, ropa cómoda en capas que puedas quitar o poner, zapatos comodos, bloqueador solar (¡el sol de montaña no perdona!), gorra, snacks  y mucha agua. ¡Bonus tip: una cámara para presumir tus hazañas!',
+    seguridad: '¡Aventúrate en Suesca con la seguridad de un experto local! Aunque es un destino tranquilo, cuida tus pertenencias en zonas concurridas. Si vas a realizar actividades, siempre hazlo con guías certificados. Camina en grupo por los senderos señalizados y avisa a alguien sobre tu ruta. Ten a mano los contactos de emergencia: Policía local y Centro de Salud. Lleva efectivo, pero no de más - hay cajeros en el pueblo. ¡Bonus tip: los locales son super amables, no dudes en pedir ayuda!',
+    transporte: '¡Llegar a Suesca es parte de la aventura! Desde Bogotá, toma la Autopista Norte hasta la salida a Tocancipá, siguiendo señales a Suesca (¡solo 45 minutos en carro!). Si prefieres transporte público, los buses salen cada hora desde la Terminal del Norte: busca "Alianza" - ¡tip de local: siéntate del lado derecho para vistas espectaculares! Ya en el pueblo, todo queda caminando, pero si te da pereza, los taxis locales conocen todos los sectores.',
+}
 
 const Homedestino = ({restaurantes, bares, tendencias, actividades, eventos, alojamientos}) => {
 
@@ -52,12 +80,22 @@ const Homedestino = ({restaurantes, bares, tendencias, actividades, eventos, alo
         <>
             <ScrollToTop />
             <Header destino = {destino}/>
-            <Descripcion />
             <SearchBox 
                 placeholder='Que quieres hacer...'
             />
-            <CategoryCarousel actividades = {actividadesRuta} />
+            <Descripcion 
+                destino={descripcionDestino}
+            />
             <PopularActivities contenido = { tendencias } />
+            <CategoryCarousel actividades = {actividadesRuta} />
+            <Carrusel 
+                actividadesDestino = { actividades }
+                titulo = 'Actividades'
+                icon={<FaPerson className="Faperson"/>}
+                tipo = 'Por persona:'
+                route= 'actividades'
+                routeIndividual= 'actividad'
+            />
             <ListaTop3 
                 rest = {restaurantes}
                 titulo = 'Restaurantes'
@@ -66,14 +104,6 @@ const Homedestino = ({restaurantes, bares, tendencias, actividades, eventos, alo
                 tipo = 'Platos desde'    
                 route= 'restaurantes'
                 tipoEstablecimiento= 'restaurante'
-            />
-            <Carrusel 
-                actividadesDestino = { actividades }
-                titulo = 'Actividades'
-                icon={<FaPerson className="Faperson"/>}
-                tipo = 'Por persona:'
-                route= 'actividades'
-                routeIndividual= 'actividad'
             />
             <Carrusel 
                 actividadesDestino = { eventos }

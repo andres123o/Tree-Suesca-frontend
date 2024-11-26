@@ -1,5 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import { IoIosArrowForward } from "react-icons/io";
+
 
 const CategoryCarousel = ( { actividades } ) => {
     const navigate = useNavigate();
@@ -11,6 +13,9 @@ const CategoryCarousel = ( { actividades } ) => {
 
     return (
         <>
+            <div className="container-title-mas-popular">
+                    <h5>¿Que hay para hacer?</h5>
+            </div>
             <div className="carrusel">
                 <div className="container-carrusel-categorias">
                     {
@@ -20,14 +25,19 @@ const CategoryCarousel = ( { actividades } ) => {
                                 onClick = {() =>  handleClick(actividad)}
                                 className="container-icono-title-categoria"
                             >
-                                <div className="container-img"  style={ { backgroundImage: `url(${actividad.img})` } }>
-
+                                <div className="container-des-p">
+                                    <div className="container-img"  style={ { backgroundImage: `url(${actividad.img})` } }>
+                                    </div>
+                                    <div className="container-p">
+                                        <p>
+                                            {actividad.frase}
+                                        </p>
+                                        <p className='p-des'>
+                                            {actividad.descripcion}
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="container-p">
-                                    <p>
-                                        {actividad.actividad}
-                                    </p>
-                                </div>
+                                <IoIosArrowForward />
                             </div>
                         ))
                     }

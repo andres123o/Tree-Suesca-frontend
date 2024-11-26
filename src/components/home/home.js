@@ -199,6 +199,8 @@ const Home = () => {
                 </div>
             </div>
 
+            <div className='separador'></div>
+            
             {/* Buscadores */}
             <SearchBox 
                 placeholder={respuestaApiPlaceholder}

@@ -41,7 +41,7 @@ import { PiMapPinAreaFill } from "react-icons/pi";
 
 
 // Estilos
-import './style/index.css'
+import './components/home-destino/index.css'
 import './style/rutas/listadoRutas.css'
 import './style/rutas/descripcionRuta.css'
 import './style/restaurante-bares/establecimientos.css'
