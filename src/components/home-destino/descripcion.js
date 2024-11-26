@@ -50,6 +50,9 @@ const Descripcion = ({destino}) => {
             </div>  
 
             {/* Descripcion */}
+            <div className="container-title-destino">
+                <h5>{destino.frase}</h5>
+            </div>
 
             <div className='container-descripcion-destino'>
                 <p className='descripcion-destino' id="descripcion-texto">
