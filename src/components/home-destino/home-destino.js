@@ -26,14 +26,14 @@ const actividadesRuta = [
     {
         id: 1,
         actividad: 'Senderismo',
-        frase:'Lugares imperdibles',
+        frase:'Paisajes & Miradores',
         descripcion: 'Descrubre paisajes increibles',
         img: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1729024921/7185cd4dab74597c497c2a4d24f81fbb_rt3kne.jpg'
     },
     {
         id: 2,
         actividad: '',
-        frase:'Planea tu día ideal',
+        frase:'Tu Día Perfecto',
         descripcion: 'Te ayudamos con tu itinerario',
         img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732655684/f7170e1aaacc0df168e2a76f972431ce_xawmry.jpg'
     },

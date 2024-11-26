@@ -14,7 +14,7 @@ const CategoryCarousel = ( { actividades } ) => {
     return (
         <>
             <div className="container-title-mas-popular">
-                    <h5>¿Que hay para hacer?</h5>
+                    <h5>Planes imperdibles!</h5>
             </div>
             <div className="carrusel">
                 <div className="container-carrusel-categorias">
