@@ -35,7 +35,7 @@ const actividadesRuta = [
         actividad: '',
         frase:'Planea tu día ideal',
         descripcion: 'Te ayudamos con tu itinerario',
-        img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732645218/df3dd120c6b3f9d0daaf6292ab9a1871_yq4syk.jpg'
+        img: 'https://res.cloudinary.com/destinoplus/image/upload/v1732655684/f7170e1aaacc0df168e2a76f972431ce_xawmry.jpg'
     },
 ]
 
