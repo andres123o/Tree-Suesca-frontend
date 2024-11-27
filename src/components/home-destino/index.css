@@ -157,6 +157,7 @@ body {
 .p-des {
     margin-top: 2%;
     opacity: 0.5;
+    font-size: 14px;
 }
 /* Container actividades populares */
 .container-mas-populares {

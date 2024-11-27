@@ -32,9 +32,9 @@ const CategoryCarousel = ( { actividades } ) => {
                                         <h5>
                                             {actividad.frase}
                                         </h5>
-                                        <h5 className='p-des'>
+                                        <p className='p-des'>
                                             {actividad.descripcion}
-                                        </h5>
+                                        </p>
                                     </div>
                                 </div>
                                 <IoIosArrowForward />
