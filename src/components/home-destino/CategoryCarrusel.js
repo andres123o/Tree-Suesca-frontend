@@ -29,12 +29,12 @@ const CategoryCarousel = ( { actividades } ) => {
                                     <div className="container-img"  style={ { backgroundImage: `url(${actividad.img})` } }>
                                     </div>
                                     <div className="container-p">
-                                        <p>
+                                        <h5>
                                             {actividad.frase}
-                                        </p>
-                                        <p className='p-des'>
+                                        </h5>
+                                        <h5 className='p-des'>
                                             {actividad.descripcion}
-                                        </p>
+                                        </h5>
                                     </div>
                                 </div>
                                 <IoIosArrowForward />

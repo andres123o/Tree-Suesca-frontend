@@ -141,6 +141,10 @@ body {
     display: flex;
     align-items: center;
 }
+.container-p h5 {
+    font-size: 16px;
+    color: var(--font-color-primary);
+}
 .container-img {
     width: 7vh;
     height: 100%;
