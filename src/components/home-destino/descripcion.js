@@ -1,5 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { IoIosArrowForward } from "react-icons/io";
+import { BsCalendarDate } from "react-icons/bs";
+import { TiWeatherPartlySunny } from "react-icons/ti";
+import { TbLockCheck } from "react-icons/tb";
+import { FaBus } from "react-icons/fa6";
+
 
 
 const Descripcion = ({destino}) => {
@@ -17,10 +22,26 @@ const Descripcion = ({destino}) => {
     };
 
     const accordionSections = [
-        {   'Épocas para viajar': destino.epocas },
-        {   'Clima y que llevar': destino.clima   },
-        {   'Tips de seguridad': destino.seguridad  },
-        {   'Como llegar': destino.transporte  }
+        {   
+            title: 'Épocas para viajar',
+            content: destino.epocas,
+            icon: <BsCalendarDate className="accordion-icon" />
+        },
+        {   
+            title: 'Clima y que llevar',
+            content: destino.clima,
+            icon: <TiWeatherPartlySunny className="accordion-icon" />
+        },
+        {   
+            title: 'Tips de seguridad',
+            content: destino.seguridad,
+            icon: <TbLockCheck className="accordion-icon" />
+        },
+        {   
+            title: 'Como llegar',
+            content: destino.transporte,
+            icon: <FaBus className="accordion-icon" />
+        }
     ];
     
     const visibleText = isExpanded ? destino.descripcion : `${destino.descripcion.slice(0, maxTextLength)}...`;
@@ -64,34 +85,29 @@ const Descripcion = ({destino}) => {
             </div>
 
             {/* Acordeón de información */}
-            <div className='accordion'>
-                {accordionSections.map((instruccion, index) => (
-                    <div key={instruccion.id} className='accordion-item1'>
-                    {Object.entries(instruccion).map(([key, value]) => {
-                        if (key !== 'id') {
-                        return (
-                            <div key={key}>
-                            <button 
-                                className={`accordion-header ${expandedSection === `${index}-${key}` ? 'active' : ''}`}
-                                onClick={() => toggleSection(`${index}-${key}`)}
-                            >
-                                {key.charAt(0).toUpperCase() + key.slice(1)}
-                                <IoIosArrowForward className={`icon ${expandedSection === `${index}-${key}` ? 'rotated' : ''}`} />
-                            </button>
-                            <div 
-                                className='accordion-content'
-                                style={{ display: expandedSection === `${index}-${key}` ? 'block' : 'none' }}
-                            >
-                                <p>{value}</p>
+            <div className='accordion2'>
+                {accordionSections.map((section, index) => (
+                    <div key={index} className='accordion-item12'>
+                        <button 
+                            className={`accordion-header2 ${expandedSection === section.title ? 'active2' : ''}`}
+                            onClick={() => toggleSection(section.title)}
+                        >
+                            <div className="header-content2">
+                                {section.icon}
+                                <span>{section.title}</span>
                             </div>
-                            </div>
-                        );
-                        }
-                        return null;
-                    })}
+                            <IoIosArrowForward className={`arrow-icon2 ${expandedSection === section.title ? 'rotated' : ''}`} />
+                        </button>
+                        <div 
+                            className='accordion-content2'
+                            style={{ display: expandedSection === section.title ? 'block' : 'none' }}
+                        >
+                            <p>{section.content}</p>
+                        </div>
                     </div>
                 ))}
             </div>
+
             <div className='separador'></div>
         </>
     )
