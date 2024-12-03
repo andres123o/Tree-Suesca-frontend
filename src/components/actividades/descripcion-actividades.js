@@ -44,10 +44,10 @@ const MainComponentActivity = () => {
     if (error) return <><div>Error: {error}</div></>;
     if (!content) return <><div>No hay contenido disponible</div></>;
 
-    return <DescripcionActividades actividad={content} />;
+    return <DescripcionActividades actividad={content.actividad[0]} oferente={content} />;
 }
 
-const DescripcionActividades = ( {actividad} ) => {
+const DescripcionActividades = ( {actividad, oferente} ) => {
     const [backgroundImage, setBackgroundImg] = useState(actividad.img);
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [expandedSection, setExpandedSection] = useState(null);
@@ -106,11 +106,11 @@ const DescripcionActividades = ( {actividad} ) => {
                 {/* Titulo */}
                 <div className='container-logo-nombre-calificacion'>
                     <div className='logo-establecimiento'>
-                        <img src={actividad.logo} />
+                        <img src={oferente.logo} alt={oferente.oferente}/>
                     </div>
                     <div className='nombre-establecimiento'>
                         <h4>{actividad.name}</h4>
-                        <p>{`Horario: ${actividad.horario.abren} - ${actividad.horario.cierran}`}</p>
+                        <p>{`Horario: ${oferente.horario.abren} - ${oferente.horario.cierran}`}</p>
                     </div>
                     <div className='calificacion-establecimiento'>
                         <p>{actividad.calificacion}</p>
@@ -203,7 +203,7 @@ const DescripcionActividades = ( {actividad} ) => {
                         <div className='container-metodo'>
                             <h4>Metodos de pago</h4>
                             <p>
-                                {actividad.metodosDePago}
+                                {oferente.metodosDePago}
                             </p>
                         </div>
                     </div>
@@ -220,7 +220,7 @@ const DescripcionActividades = ( {actividad} ) => {
                     </button>
                     <button 
                         className='contacto'
-                        onClick={() => window.open(`https://wa.me/${actividad.contacto}`, '_blank')}    
+                        onClick={() => window.open(`https://wa.me/${oferente.contacto}`, '_blank')}    
                     >
                         Escribe por Whats
                         <img src="/utils/icons8-whatsapp-48.png" />

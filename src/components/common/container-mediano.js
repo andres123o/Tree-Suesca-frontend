@@ -5,77 +5,64 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
     const navigate = useNavigate();
 
     const handleClick = (actividad) => {
-        // Redirige a listaRutas.html con el nombre de la actividad como query param
         navigate(`/${routeInndividual}/${encodeURIComponent(actividad)}`);
     }
-    
-    return (
-        <>
-            <div className="container-carrusel-actividades">
-                <div 
-                    className="container-carrusel-categorias-actividades-2"
-                    style={{
-                        flexDirection: direccion,
-                        overflowX: xOverflow,
-                    }}
-                >
-                    {
-                        actividadesDestino.map((item) => {
-                            return (
-                                <div 
-                                    key={item.id} 
-                                    className="container-categoria-actividades"
-                                    style={{
-                                        minWidth: ancho
-                                    }}
-                                    onClick={() => handleClick(item.description)}
-                                >
-                                    <div 
-                                        className="contianer-img-actividad"
-                                        style= {{
-                                            backgroundImage: `url(${item.img})`
-                                        }}
-                                    >
 
-                                    </div> 
-                                    <div  className="container-info-actividad">
-                                        <div className="container-descripcion-breve-activida">
-                                            <div className="container-calificacion-activida">
-                                                <p>
-                                                    {item.calificacion}
-                                                </p>
-                                                <img src="/utils/icons8-estrella-48.png" alt= {item.name} />
-                                            </div>
-                                        </div>
-                                        <div className="continer-info-oferente-actividad">
-                                            <div className="container-logo-oferente-actividad">
-                                                <img src={item.logo} />
-                                            </div>
-                                            <div className="container-nombre-oferente-actividades">
-                                                <h5>
-                                                    {item.description}
-                                                </h5>
-                                                <p>
-                                                    {icon} {tipo}  {item.precio.toLocaleString('es-CO', {
-                                                                        style: 'currency',
-                                                                        currency: 'COP',
-                                                                        maximumFractionDigits: 0 // Opcional, ajusta el número de decimales
-                                                                    })} {iconCalendar} {fecha} {noche}
-                                                </p>
-                                                <p>
-                                                    <IoLocationOutline className="IoLocationOutline" />  Suesca, Cundinamarca
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
+    return (
+        <div className="container-carrusel-actividades">
+            <div 
+                className="container-carrusel-categorias-actividades-2"
+                style={{
+                    flexDirection: direccion,
+                    overflowX: xOverflow,
+                }}
+            >
+                {actividadesDestino.map((item) => (
+                    <div 
+                        key={`${item.oferenteId}-${item.name}`}
+                        className="container-categoria-actividades"
+                        style={{
+                            minWidth: ancho
+                        }}
+                        onClick={() => handleClick(item.description)}
+                    >
+                        <div 
+                            className="contianer-img-actividad"
+                            style={{
+                                backgroundImage: `url(${item.img})`
+                            }}
+                        />
+                        <div className="container-info-actividad">
+                            <div className="container-descripcion-breve-activida">
+                                <div className="container-calificacion-activida">
+                                    <p>{item.calificacion}</p>
+                                    <img src="/utils/icons8-estrella-48.png" alt={item.name} />
                                 </div>
-                            )
-                        })
-                    }  
-                </div>
+                            </div>
+                            <div className="continer-info-oferente-actividad">
+                                <div className="container-logo-oferente-actividad">
+                                    <img src={item.oferenteLogo} alt={item.oferenteNombre} />
+                                </div>
+                                <div className="container-nombre-oferente-actividades">
+                                    <h5>{item.name}</h5>
+                                    <p>
+                                        {icon} {tipo} {item.precio.toLocaleString('es-CO', {
+                                            style: 'currency',
+                                            currency: 'COP',
+                                            maximumFractionDigits: 0
+                                        })} {iconCalendar} {fecha} {noche}
+                                    </p>
+                                    <p>
+                                        <IoLocationOutline className="IoLocationOutline" /> Suesca, Cundinamarca
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
 export default ContainerMediano

@@ -43,11 +43,11 @@ const MainComponentEvent = () => {
     if (error) return <><div>Error: {error}</div></>;
     if (!content) return <><div>No hay contenido disponible</div></>;
 
-    return <DescripcionEventos evento={content} />;
+    return <DescripcionEventos evento={content.evento[0]} oferente={content} />;
 }
 
 
-const DescripcionEventos = ( {evento} ) => {
+const DescripcionEventos = ( {evento, oferente} ) => {
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
     
@@ -81,7 +81,7 @@ const DescripcionEventos = ( {evento} ) => {
                 {/* Titulo */}
                 <div className='container-logo-nombre-calificacion'>
                     <div className='logo-establecimiento'>
-                        <img src={evento.logo} />
+                        <img src={oferente.logo} />
                     </div>
                     <div className='nombre-establecimiento'>
                         <h4>{evento.name}</h4>
@@ -112,7 +112,7 @@ const DescripcionEventos = ( {evento} ) => {
                                 <IoMdPeople />
                             </div>
                             <h5>
-                                {evento.oferente}
+                                {oferente.oferente}
                             </h5>
                         </div>
                         <div className='container-individual'>
@@ -178,7 +178,7 @@ const DescripcionEventos = ( {evento} ) => {
                         <div className='container-metodo'>
                             <h4>Metodos de pago</h4>
                             <p>
-                                {evento.metodosdepago}
+                                {oferente.metodosdepago}
                             </p>
                         </div>
                     </div>

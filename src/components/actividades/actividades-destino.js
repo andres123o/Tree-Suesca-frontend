@@ -3,35 +3,51 @@ import ContainerMediano from "../common/container-mediano";
 import FiltrosTitulo from "../common/titulo-filtro";
 
 
-const ListadoActividades = ( {actividades, titulo, icon, tipo} ) => {
+const ListadoActividades = ({ actividades, titulo, icon, tipo }) => {
     const [filtros, setFiltros] = useState({});
-    const [actividadesFiltradas, setActividadesFiltradas] = useState(actividades);
+    const [actividadesFiltradas, setActividadesFiltradas] = useState([]);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
 
-     // Inicializa los filtros según los datos de las rutas
-     useEffect(() => {
+    // Aplanar actividades y preparar filtros
+    useEffect(() => {
+        const todasLasActividades = actividades.flatMap(oferente => 
+            oferente.actividad.map(act => ({
+                ...act,
+                oferenteLogo: oferente.logo,
+                oferenteNombre: oferente.oferente,
+                oferenteId: oferente.id
+            }))
+        );
+        setActividadesFiltradas(todasLasActividades);
+
         const nuevosFiltros = {};
-        actividades.forEach((act) => {
+        todasLasActividades.forEach((act) => {
             Object.entries(act.items).forEach(([key, value]) => {
                 if (!nuevosFiltros[key]) {
-                  nuevosFiltros[key] = new Set()
+                    nuevosFiltros[key] = new Set();
                 }
                 if (!Array.from(nuevosFiltros[key]).some(item => item.value === value)) {
-                  nuevosFiltros[key].add({value});
+                    nuevosFiltros[key].add({value});
                 }
             });
         });
         setFiltros(nuevosFiltros);
-    }, [actividades]);  
-
+    }, [actividades]);
 
     const manejarClick = (key, value) => {
         setFiltroSeleccionado(value.value);
-        const nuevasRutas = actividades.filter(act => act.items[key] === value.value);
-        setActividadesFiltradas(nuevasRutas);
-    }
+        const actividadesFiltradas = actividades.flatMap(oferente => 
+            oferente.actividad.filter(act => act.items[key] === value.value)
+            .map(act => ({
+                ...act,
+                oferenteLogo: oferente.logo,
+                oferenteNombre: oferente.oferente,
+                oferenteId: oferente.id
+            }))
+        );
+        setActividadesFiltradas(actividadesFiltradas);
+    };
 
-    
     return (
         <>
             <FiltrosTitulo 
@@ -46,11 +62,11 @@ const ListadoActividades = ( {actividades, titulo, icon, tipo} ) => {
                 tipo={tipo}
                 direccion= 'column'
                 xOverflow = 'none'
-                ancho= '42vh'
+                ancho= '40vh'
                 routeInndividual = 'actividad'
             />
         </>
-    )
-}
+    );
+};
 
 export default ListadoActividades

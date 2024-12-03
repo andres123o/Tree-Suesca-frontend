@@ -5,6 +5,18 @@ import ContainerMediano from '../common/container-mediano'
 const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo, route, noche, routeIndividual} ) => {
     const navigate = useNavigate();
 
+    const todasLasActividades = actividadesDestino.flatMap(oferente => {
+        // Detect which array we're dealing with (actividad, evento, or alojamiento)
+        const contentKey = oferente.actividad ? 'actividad' : 
+                         oferente.evento ? 'evento' : 'alojamiento';
+        
+        return oferente[contentKey].map(act => ({
+            ...act,
+            oferenteLogo: oferente.logo,
+            oferenteId: oferente.id
+        }));
+    });
+
     const handle = () => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
         navigate(`/${route}`);
@@ -22,7 +34,7 @@ const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo,
                     />
                 </div>
                 <ContainerMediano 
-                    actividadesDestino={actividadesDestino}
+                    actividadesDestino={todasLasActividades}
                     icon={icon}
                     iconCalendar={iconCalendar}
                     fecha={fecha}

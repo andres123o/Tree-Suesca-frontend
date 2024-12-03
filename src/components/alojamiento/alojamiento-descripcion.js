@@ -62,12 +62,12 @@ const MainComponentAlojamiento = () => {
     if (error) return <><div>Error: {error}</div></>;
     if (!content) return <><div>No hay contenido disponible</div></>;
 
-    return <AlojamientoDescripcion alojamiento={content} />;
+    return <AlojamientoDescripcion alojamiento={content.alojamiento[0]} oferente={content} />;
 }
 
 
 
-const AlojamientoDescripcion = ( {alojamiento} ) => {
+const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     const [backgroundImage, setBackgroundImg] = useState(alojamiento.img);
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [expandedSection, setExpandedSection] = useState(null);
@@ -134,11 +134,11 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
                     </div>
                     <div className='container-info-titulo-calificacion-logo'>
                         <div className='logo-establecimiento'>
-                            <img src={alojamiento.logo} />
+                            <img src={oferente.logo} />
                         </div>
                         <div className='nombre-establecimiento-alojamiento'>
-                            <h5>{alojamiento.oferente}</h5>
-                            <p>{`Chek In: ${alojamiento.checkIn} Chek Out: ${alojamiento.checkOut}`}</p>
+                            <h5>{oferente.oferente}</h5>
+                            <p>{`Chek In: ${oferente.checkIn} Chek Out: ${oferente.checkOut}`}</p>
                         </div>
                     </div>
                 </div>
@@ -188,7 +188,7 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
 
                  {/* seccion de accordean, recomendaciones y mas */}
                 <div className='accordion'>
-                    {Object.entries(alojamiento.politicas).map(([key, value], index) => (
+                    {Object.entries(oferente.politicas).map(([key, value], index) => (
                         <div key={key} className='accordion-item1'>
                         <button 
                             className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
@@ -228,7 +228,7 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
                         <div className='container-metodo'>
                             <h4>Metodos de pago</h4>
                             <p>
-                                {alojamiento.metodosDePago}
+                                {oferente.metodosDePago}
                             </p>
                         </div>
                     </div>
@@ -238,14 +238,14 @@ const AlojamientoDescripcion = ( {alojamiento} ) => {
                 <div className='container-contacto'>
                     <button 
                         className='como-llegar'
-                        onClick={() => window.open(alojamiento.address, '_blank')}  
+                        onClick={() => window.open(oferente.address, '_blank')}  
                     >
                         ¿Como llegar?
                         <img src="/utils/icons8-gps-50.png" />
                     </button>
                     <button 
                         className='contacto'
-                        onClick={() => window.open(`https://wa.me/${alojamiento.contacto}`, '_blank')}    
+                        onClick={() => window.open(`https://wa.me/${oferente.contacto}`, '_blank')}    
                     >
                         Escribe por Whats
                         <img src="/utils/icons8-whatsapp-48.png" />

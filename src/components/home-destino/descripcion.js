@@ -15,7 +15,7 @@ const Descripcion = ({destino}) => {
 
     const toggleSection = (section) => {
         setExpandedSection(expandedSection === section ? null : section);
-      };
+    };
     
     const toggleExpand = () => {
         setIsExpanded(!isExpanded);

@@ -4,33 +4,49 @@ import FiltrosTitulo from "../common/titulo-filtro";
 
 const ListadoAlojamiewnto = ( {alojamientos, titulo, icon, tipo, iconCalendar, fecha} ) => {
     const [filtros, setFiltros] = useState({});
-    const [alojamientoFiltrados, setAlojamientoFiltrados] = useState(alojamientos);
+    const [alojamientoFiltrados, setAlojamientosFiltrados] = useState([]);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
 
-     // Inicializa los filtros según los datos de las rutas
-     useEffect(() => {
+    useEffect(() => {
+        // Flatten the data
+        const todosLosAlojamientos = alojamientos.flatMap(oferente =>
+            oferente.alojamiento.map(aloj => ({
+                ...aloj,
+                oferenteLogo: oferente.logo,
+                oferenteId: oferente.id
+            }))
+        );
+        setAlojamientosFiltrados(todosLosAlojamientos);
+
+        // Create filters
         const nuevosFiltros = {};
-        alojamientos.forEach((alojamiento) => {
-            Object.entries(alojamiento.items).forEach(([key, value]) => {
+        todosLosAlojamientos.forEach((aloj) => {
+            Object.entries(aloj.items).forEach(([key, value]) => {
                 if (!nuevosFiltros[key]) {
-                  nuevosFiltros[key] = new Set()
+                    nuevosFiltros[key] = new Set();
                 }
                 if (!Array.from(nuevosFiltros[key]).some(item => item.value === value)) {
-                  nuevosFiltros[key].add({value});
+                    nuevosFiltros[key].add({value});
                 }
             });
         });
         setFiltros(nuevosFiltros);
-    }, [alojamientos]);  
+    }, [alojamientos]);
 
 
     const manejarClick = (key, value) => {
         setFiltroSeleccionado(value.value);
-        const nuevasRutas = alojamientos.filter(alojamiento => alojamiento.items[key] === value.value);
-        setAlojamientoFiltrados(nuevasRutas);
-    }
+        const filtrados = alojamientos.flatMap(oferente =>
+            oferente.alojamiento.filter(aloj => aloj.items[key] === value.value)
+            .map(aloj => ({
+                ...aloj,
+                oferenteLogo: oferente.logo,
+                oferenteId: oferente.id
+            }))
+        );
+        setAlojamientosFiltrados(filtrados);
+    };
 
-    
     return (
         <>
             <FiltrosTitulo 
@@ -45,7 +61,7 @@ const ListadoAlojamiewnto = ( {alojamientos, titulo, icon, tipo, iconCalendar, f
                 tipo={tipo}
                 direccion= 'column'
                 xOverflow = 'none'
-                ancho= '42vh'
+                ancho= '40vh'
                 routeInndividual = 'alojamiento'
             />
         </>
