@@ -11,6 +11,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZGVzdGluby1wbHVzIiwiYSI6ImNtM3QzY3VkcTA0MnMyb
 const CACHE_NAME = 'mapbox-tiles-cache';
 const LOCATION_STORAGE_KEY = 'tracked-locations';
 
+
 const getTileUrls = (bounds, zoom) => {
     const tiles = [];
     
@@ -271,6 +272,8 @@ const initLocationTracking = (map, firstStation, setCurrentLocation) => {
     let lastKnownLocation = null;
     let watchId = null;
     let locationHistory = [];
+    let hasReachedFirstStation = false; // Nueva bandera para controlar si llegó a la primera estación
+    const ARRIVAL_THRESHOLD = 0.03; // 30 metros en kilómetros
 
     // Cargar ubicaciones guardadas
     const loadStoredLocations = () => {
@@ -283,6 +286,31 @@ const initLocationTracking = (map, firstStation, setCurrentLocation) => {
     // Guardar ubicaciones en localStorage
     const saveLocations = () => {
         localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(locationHistory));
+    };
+
+    // Función para verificar si el usuario ha llegado a la primera estación
+    const checkArrivalToFirstStation = (userLocation) => {
+        if (hasReachedFirstStation) return true;
+
+        const distance = calculateDistance(
+            userLocation.lat,
+            userLocation.lng,
+            firstStation[1], // lat
+            firstStation[0]  // lng
+        );
+
+        if (distance <= ARRIVAL_THRESHOLD) {
+            hasReachedFirstStation = true;
+            // Eliminar la ruta de guía cuando llega
+            if (map.getSource('guidance-route')) {
+                map.removeLayer('guidance-route');
+                map.removeSource('guidance-route');
+            }
+            console.log("Usuario ha llegado a la primera estación");
+            return true;
+        }
+
+        return false;
     };
 
     // Función mejorada para crear el marcador del usuario
@@ -312,6 +340,9 @@ const initLocationTracking = (map, firstStation, setCurrentLocation) => {
 
     // Función mejorada para actualizar la ruta de guía con soporte offline
     const updateGuidanceRoute = async (userLocation) => {
+        // Si ya llegó a la primera estación, no actualizamos la ruta
+        if (hasReachedFirstStation) return;
+
         try {
             // Intentar obtener la ruta desde la API
             const response = await fetch(
@@ -383,6 +414,9 @@ const initLocationTracking = (map, firstStation, setCurrentLocation) => {
                     speed: position.coords.speed
                 };
 
+                // Verificar si ha llegado a la primera estación
+                checkArrivalToFirstStation(userLocation);
+
                 // Guardar ubicación en el historial
                 locationHistory.push(userLocation);
                 saveLocations();
@@ -394,8 +428,10 @@ const initLocationTracking = (map, firstStation, setCurrentLocation) => {
                     position.coords.accuracy
                 );
 
-                // Actualizar ruta de guía
-                updateGuidanceRoute(userLocation);
+                // Solo actualizar la ruta si aún no ha llegado a la primera estación
+                if (!hasReachedFirstStation) {
+                    updateGuidanceRoute(userLocation);
+                }
 
                 // Actualizar estado
                 setCurrentLocation(userLocation);
@@ -434,142 +470,105 @@ const useMetricsTracking = (map, ruta, currentLocation, refs) => {
     const [startTime, setStartTime] = useState(null);
     const [metrics, setMetrics] = useState({
         kmRecorridos: 0,
-        kmRestantes: 0,
+        velocidadPromedio: 0,
         tiempoRecorrido: '00:00',
-        elevacionActual: 0
+        porcentajeCompletado: 0
     });
     const [lastPosition, setLastPosition] = useState(null);
-    const totalDistanceRef = useRef(0);
+    const distanceAccumulatorRef = useRef(0);
 
     // Calcular distancia total de la ruta
     const calcularDistanciaTotal = useCallback((coordinates) => {
         let total = 0;
         for (let i = 1; i < coordinates.length; i++) {
             total += calculateDistance(
-                coordinates[i-1][1], coordinates[i-1][0],
-                coordinates[i][1], coordinates[i][0]
+                coordinates[i-1].lat, coordinates[i-1].lng,
+                coordinates[i].lat, coordinates[i].lng
             );
         }
         return total;
-    }, []);
-
-    // Calcular distancia recorrida en tiempo real
-    const calcularDistanciaRecorrida = useCallback((currentPos, lastPos) => {
-        if (!lastPos) return 0;
-        return calculateDistance(
-            lastPos.lat, lastPos.lng,
-            currentPos.lat, currentPos.lng
-        );
-    }, []);
-
-    // Encontrar punto más cercano en la ruta
-    const encontrarPuntoMasCercano = useCallback((userLocation, routeCoordinates) => {
-        let minDistance = Infinity;
-        let closestIndex = 0;
-
-        routeCoordinates.forEach((coord, index) => {
-            const distance = calculateDistance(
-                userLocation.lat, userLocation.lng,
-                coord[1], coord[0]
-            );
-            if (distance < minDistance) {
-                minDistance = distance;
-                closestIndex = index;
-            }
-        });
-
-        return {
-            index: closestIndex,
-            distance: minDistance
-        };
     }, []);
 
     // Actualizar métricas cuando cambia la ubicación
     useEffect(() => {
         if (!currentLocation || !map || !ruta) return;
 
-        if (!lastPosition) {
-            const coordinates = ruta.coordenadas_principales[0].cordenadas[0];
-            const distanciaInicial = calculateDistance(
-                currentLocation.lat,
-                currentLocation.lng,
-                coordinates.lat,
-                coordinates.lng
-            );
-            totalDistanceRef.current = distanciaInicial;
-        }
-
-        // Iniciar tiempo si es necesario
-        if (!startTime) {
-            setStartTime(Date.now());
-            // Guardar tiempo inicial en localStorage
-            localStorage.setItem('route_start_time', Date.now().toString());
-        }
-
-        // Obtener coordenadas de la ruta
-        const coordinates = ruta.coordenadas_principales[0].cordenadas.map(coord => [
-            coord.lng,
-            coord.lat
-        ]);
-
-        // Calcular distancia total de la ruta
-        const distanciaTotal = calcularDistanciaTotal(coordinates);
-
-        // Calcular distancia recorrida
-        if (lastPosition) {
-            const nuevaDistancia = calcularDistanciaRecorrida(currentLocation, lastPosition);
-            totalDistanceRef.current += nuevaDistancia;
-        }
-        setLastPosition(currentLocation);
-
-        // Encontrar punto más cercano en la ruta
-        const { index } = encontrarPuntoMasCercano(currentLocation, coordinates);
-        const distanciaRestante = calcularDistanciaTotal(coordinates.slice(index));
-
-        // Obtener elevación actual usando el DEM
-        let elevacion = 0;
         try {
-            const dem = map.queryTerrainElevation([currentLocation.lng, currentLocation.lat]);
-            if (dem) {
-                elevacion = Math.round(dem);
+            // Iniciar tiempo si es necesario
+            if (!startTime) {
+                setStartTime(Date.now());
+                localStorage.setItem('route_start_time', Date.now().toString());
             }
+
+            // Obtener coordenadas de la ruta
+            const coordinates = ruta.coordenadas_principales[0].cordenadas;
+            const distanciaTotal = calcularDistanciaTotal(coordinates);
+
+            // Calcular distancia recorrida con umbral mínimo
+            if (lastPosition) {
+                const newDistance = calculateDistance(
+                    lastPosition.lat, lastPosition.lng,
+                    currentLocation.lat, currentLocation.lng
+                );
+                
+                // Solo acumular distancia si es mayor a 2 metros (0.002 km)
+                if (newDistance > 0.002) {
+                    distanceAccumulatorRef.current += newDistance;
+                }
+            }
+            setLastPosition(currentLocation);
+
+            // Calcular tiempo transcurrido en horas
+            const storedStartTime = localStorage.getItem('route_start_time');
+            const startTimeToUse = storedStartTime ? parseInt(storedStartTime) : startTime;
+            const tiempoTranscurridoMs = Date.now() - startTimeToUse;
+            const tiempoTranscurridoHoras = tiempoTranscurridoMs / (1000 * 60 * 60);
+
+            // Calcular velocidad promedio (km/h)
+            const velocidadPromedio = tiempoTranscurridoHoras > 0 
+                ? (distanceAccumulatorRef.current / tiempoTranscurridoHoras)
+                : 0;
+
+            // Calcular porcentaje completado
+            const porcentaje = Math.min(
+                Math.round((distanceAccumulatorRef.current / distanciaTotal) * 100),
+                100
+            );
+
+            // Formatear tiempo para display
+            const minutos = Math.floor(tiempoTranscurridoMs / 60000);
+            const segundos = Math.floor((tiempoTranscurridoMs % 60000) / 1000);
+            const tiempoFormateado = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+
+            // Actualizar métricas
+            const newMetrics = {
+                kmRecorridos: distanceAccumulatorRef.current.toFixed(2),
+                velocidadPromedio: velocidadPromedio.toFixed(1),
+                tiempoRecorrido: tiempoFormateado,
+                porcentajeCompletado: porcentaje
+            };
+
+            setMetrics(newMetrics);
+
+            // Actualizar UI
+            if (refs.kmRecorridosRef.current) {
+                refs.kmRecorridosRef.current.textContent = `${newMetrics.kmRecorridos}`;
+            }
+            if (refs.velocidadRef.current) {
+                refs.velocidadRef.current.textContent = `${newMetrics.velocidadPromedio}`;
+            }
+            if (refs.tiempoRecorridoRef.current) {
+                refs.tiempoRecorridoRef.current.textContent = newMetrics.tiempoRecorrido;
+            }
+            if (refs.porcentajeCompletadoRef.current) {
+                refs.porcentajeCompletadoRef.current.textContent = `${newMetrics.porcentajeCompletado}%`;
+            }
+
         } catch (error) {
-            console.warn('Error getting elevation:', error);
+            console.error('Error actualizando métricas:', error);
         }
 
-        // Calcular tiempo transcurrido
-        const storedStartTime = localStorage.getItem('route_start_time');
-        const startTimeToUse = storedStartTime ? parseInt(storedStartTime) : startTime;
-        const tiempoTranscurrido = Date.now() - startTimeToUse;
-        const minutos = Math.floor(tiempoTranscurrido / 60000);
-        const segundos = Math.floor((tiempoTranscurrido % 60000) / 1000);
-        const tiempoFormateado = `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
-
-        // Actualizar métricas
-        const newMetrics = {
-            kmRecorridos: totalDistanceRef.current.toFixed(2),
-            kmRestantes: distanciaRestante.toFixed(2),
-            tiempoRecorrido: tiempoFormateado,
-            elevacionActual: elevacion
-        };
-
-        setMetrics(newMetrics);
-
-        // Actualizar UI
-        if (refs.kmRecorridosRef.current) {
-            refs.kmRecorridosRef.current.textContent = newMetrics.kmRecorridos;
-        }
-        if (refs.kmRestantesRef.current) {
-            refs.kmRestantesRef.current.textContent = newMetrics.kmRestantes;
-        }
-        if (refs.tiempoRecorridoRef.current) {
-            refs.tiempoRecorridoRef.current.textContent = newMetrics.tiempoRecorrido;
-        }
-        if (refs.elevacionActualRef.current) {
-            refs.elevacionActualRef.current.textContent = newMetrics.elevacionActual;
-        }
-
-    }, [currentLocation, map, ruta, startTime, lastPosition, calcularDistanciaTotal, calcularDistanciaRecorrida, encontrarPuntoMasCercano]);
+    }, [currentLocation, map, ruta, startTime, lastPosition, calcularDistanciaTotal]);
 
     return metrics;
 };
@@ -605,19 +604,19 @@ const FuncionalidadesMapa = ({ ruta }) => {
     const kmRecorridosRef = useRef(null);
     const tiempoRecorridoContainer = useRef(null);
     const containerChart = useRef(null);
-    const containerElevacionActual = useRef(null);
-    const containerKmRestantes = useRef(null);
     const [map, setMap] = useState(null);
+    const velocidadRef = useRef(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isExpanded, setIsExpanded] = useState(false);
     const [currentLocation, setCurrentLocation] = useState(null);
     const [locationTracker, setLocationTracker] = useState(null);
     const [isOnline, setIsOnline] = useState(navigator.onLine);
+    const porcentajeCompletadoRef = useRef(null);
     const metrics = useMetricsTracking(map, ruta, currentLocation, {
         kmRecorridosRef: kmRecorridosRef,
-        kmRestantesRef: containerKmRestantes,
+        velocidadRef: velocidadRef,
         tiempoRecorridoRef: tiempoRecorridoContainer,
-        elevacionActualRef: containerElevacionActual
+        porcentajeCompletadoRef: porcentajeCompletadoRef
     });
 
     useEffect(() => {
@@ -852,23 +851,23 @@ const FuncionalidadesMapa = ({ ruta }) => {
                 <div className='container-cuadro-funcionalidades'>
                     <div className='container-interno'>
                         <h5 className='container-title-funcionalidades'>
-                            Elevación (msnm)
+                            Progreso
                         </h5>
                         <p 
                             className="container-funcionalidad" 
-                            id="elevacionActual"
-                            ref={containerElevacionActual}
-                        >0</p>
+                            id="porcentajeCompletado"
+                            ref={porcentajeCompletadoRef}
+                        >0%</p>
                     </div>
 
                     <div className='container-interno'>
                         <h5 className='container-title-funcionalidades'>
-                            Km restantes
+                            Velocidad (km/h)
                         </h5>
                         <span 
                             className='container-funcionalidad'
-                            id="km-restantes"
-                            ref={containerKmRestantes}
+                            id="velocidad"
+                            ref={velocidadRef}
                         >0.0</span>
                     </div>
                 </div>
