@@ -31,6 +31,8 @@ import MainComponentEvent from './components/eventos/descripcion-evento';
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
 import MainComponentAlojamiento from './components/alojamiento/alojamiento-descripcion'
 
+import MainComponentCoordenadaMapBox from './service/mapBox';
+
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
 import { FaWineBottle } from "react-icons/fa";
@@ -162,6 +164,7 @@ function App() {
                 <Route path='/actividad/:description' element={<MainComponentActivity />} />
                 <Route path='/evento/:description' element={<MainComponentEvent />} />
                 <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
+                <Route path='/mapBox' element={<MainComponentCoordenadaMapBox />} />
             </Routes>
         </>
     );

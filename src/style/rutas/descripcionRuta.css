@@ -421,3 +421,20 @@
     align-items: center;
     z-index: 1000;
 }
+.station-marker {
+    cursor: pointer;
+}
+
+.marker-svg {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.marker-svg path {
+    transform-origin: center;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.station-marker:hover .marker-svg path {
+    transform: scale(1.1);
+}
