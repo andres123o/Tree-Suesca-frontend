@@ -60,9 +60,6 @@ const Home = () => {
         });
     };
 
-    const handleTestMap = (destino_id, municipio) => {
-        navigate(`/mapBox`);
-    };
 
     if (loading) return <div>Cargando...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -145,11 +142,6 @@ const Home = () => {
                     </div>
                 ))}
             </div>
-            <button 
-                onClick={handleTestMap}
-            >
-                Click Test
-            </button>
         </>
     );
 };
