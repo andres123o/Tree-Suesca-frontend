@@ -12,7 +12,7 @@ import Homedestino from './components/home-destino/home-destino'
 //  Componentes de la Lista de Rutas
 import MainComponentListadoRutas from './components/listado-rutas/listaRutas';
 import MainComponentRuta from './components/listado-rutas/descripcion-ruta-individual'
-import MainComponentCoordenada from './components/listado-rutas/seccion-mapa'
+import MainComponentCoordenadaMapBox from './components/listado-rutas/seccion-mapa'
 
 // Componentes de la lista de Restaurantes y Bares
 import ListadoRestaurantes from './components/restaurantes/listado-restaurantes';
@@ -30,8 +30,6 @@ import MainComponentEvent from './components/eventos/descripcion-evento';
 //  Componentes dellistado de alojamientis
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
 import MainComponentAlojamiento from './components/alojamiento/alojamiento-descripcion'
-
-import MainComponentCoordenadaMapBox from './service/mapBox';
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -110,7 +108,7 @@ function App() {
                     />
                 } />
                 <Route path='/rutas/caracteristicas/:nombre' element={<MainComponentRuta />} />
-                <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenada />} />
+                <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenadaMapBox />} />
                 
                 {/* Restaurantes y Bares */}
                 <Route path='/restaurantes' element={
@@ -164,7 +162,6 @@ function App() {
                 <Route path='/actividad/:description' element={<MainComponentActivity />} />
                 <Route path='/evento/:description' element={<MainComponentEvent />} />
                 <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
-                <Route path='/mapBox' element={<MainComponentCoordenadaMapBox />} />
             </Routes>
         </>
     );
