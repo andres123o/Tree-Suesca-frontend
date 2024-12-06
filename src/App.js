@@ -90,200 +90,81 @@ const actividadesRuta = [
     }
 ]
 
-const useDestinoContent = (destinoId = 1) => {
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [content, setContent] = useState(null);
-  
-    useEffect(() => {
-      const fetchDestinoContent = async () => {
-        try {
-          setLoading(true);
-          const response = await axios.get(
-            `https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/${destinoId}/content`
-          );
-          setContent(response.data);
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setLoading(false);
-        }
-      };
-  
-      fetchDestinoContent();
-    }, [destinoId]);
-  
-    return { content, loading, error };
-};
 
 function App() {
-    const { content, loading, error } = useDestinoContent();
-
-    if (loading) {
-        return <><div>Cargando...</div></>;
-    }
-
-    if (error) {
-        return <><div>Error: {error}</div></>;
-    }
-
-    if (!content) {
-        return <><div>No hay contenido disponible</div></>;
-    }
-
-    const { restaurantes } = content
-    const { bares } = content
-    const { tendencias } = content
-    const { actividades } = content
-    const { eventos } = content
-    const { alojamientos } = content 
 
     return (
         <>
             <ScrollToTop />
             <Routes>
-                {/* Home */}
-                <Route 
-                    path='/'
-                    element={<Home />}
-                />
-
-                {/* Home - destinos*/}
-                <Route 
-                    path = "/home/destino/:nombre" 
-                    element = {<Homedestino
-                        restaurantes={restaurantes}
-                        bares={bares}
-                        tendencias={tendencias}
-                        actividades={actividades}
-                        eventos={eventos}
-                        alojamientos={alojamientos}
-                    />} 
-                /> 
-
-                {/* Seccion de rutas */}
-                <Route 
-                    path='/rutas/:nombre' 
-                    element = {
-                        <MainComponentListadoRutas
-                            iconos= {iconCaraceristicas}
-                            route= 'caracteristicas'
-                        />
-                    }
-                />
-                <Route 
-                    path='/rutas/caracteristicas/:nombre'
-                    element = {
-                        <MainComponentRuta/>
-                    }
-                />
-                <Route 
-                    path='/ruta/mapa/:nombre'
-                    element= {
-                        <MainComponentCoordenada/>
-                    }
-                />
+                <Route path='/' element={<Home />} />
+                <Route path="/home/destino/:nombre" element={<Homedestino />} />
+    
+                {/* Rutas */}
+                <Route path='/rutas/Senderismo' element={
+                    <MainComponentListadoRutas
+                        iconos={iconCaraceristicas}
+                        route='caracteristicas'
+                    />
+                } />
+                <Route path='/rutas/caracteristicas/:nombre' element={<MainComponentRuta />} />
+                <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenada />} />
                 
-                {/* Seccion restaurantes y bares */}
-                <Route
-                    path='/restaurantes'
-                    element = {
-                        <ListadoRestaurantes 
-                            restaurantes = { restaurantes }
-                            icono1 = {<IoFastFoodOutline className='Faperson'/>} 
-                            icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                            titulo = 'Restaurantes'
-                            tipoEstablecimiento= 'restaurante'
-                        />
-                    }
-                />
-                <Route
-                    path='/fiesta-amigos'
-                    element = {
-                        <ListadoBares
-                            bares = {bares}
-                            icono1 = {<FaWineBottle className='Faperson'/>} 
-                            icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                            titulo= 'Fiesta y Amigos'
-                            tipoEstablecimiento= 'bares'
-                        />
-                    }
-                />
-                <Route 
-                    path='/establecimiento/:tipo/:nombre'
-                    element = {
-                        <MainComponent/>
-                    }
-                />
-                <Route 
-                    path='/establecimiento/:tipo/:nombre'
-                    element = {
-                        <MainComponent/>
-                    }
-                />
+                {/* Restaurantes y Bares */}
+                <Route path='/restaurantes' element={
+                    <ListadoRestaurantes 
+                        icono1={<IoFastFoodOutline className='Faperson'/>}
+                        icono2={<PiMapPinAreaFill className='Faperson'/>}
+                        titulo='Restaurantes'
+                        tipoEstablecimiento='restaurante'
+                    />
+                } />
+                <Route path='/fiesta-amigos' element={
+                    <ListadoBares
+                        icono1={<FaWineBottle className='Faperson'/>}
+                        icono2={<PiMapPinAreaFill className='Faperson'/>}
+                        titulo='Fiesta y Amigos'
+                        tipoEstablecimiento='bares'
+                    />
+                } />
                 
-                {/* Seccion Actividades */}
-                <Route 
-                    path='/actividades'
-                    element = {
-                        <ListadoActividades 
-                            actividades = {actividades}
-                            titulo = 'Actividades'
-                            icon = {<FaPerson className="Faperson" />}
-                            tipo = 'Por persona: '
-                        />
-                    }
-                />
-                <Route 
-                    path='/actividad/:description'
-                    element = {
-                        <MainComponentActivity/>
-                    }
-                />
-
-
-                {/* Seccion eventos */}
-                <Route 
-                    path='/eventos'
-                    element = {
-                        <ListadoEventos 
-                            eventos = {eventos}
-                            titulo = 'Eventos'
-                            icon={<FaPerson className="Faperson" />}
-                            tipo= 'Por persona: '
-                            iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
-                            fecha = '30 Oct'
-                        />
-                    }
-                />
-                <Route 
-                    path ='/evento/:description'
-                    element = {
-                        <MainComponentEvent/>
-                    }
-                />
+                {/* Actividades */}
+                <Route path='/actividades' element={
+                    <ListadoActividades 
+                        titulo='Actividades'
+                        icon={<FaPerson className="Faperson" />}
+                        tipo='Por persona: '
+                    />
+                } />
                 
-                {/* Seccion Alojamientos */}
-                <Route 
-                    path='/alojamientos'
-                    element = {
-                        <ListadoAlojamiewnto 
-                            alojamientos={alojamientos}
-                            titulo= 'Alojamientos'
-                            icon={ <MdHotel className="Faperson" />}
-                            noche = 'noche'
-                        />
-                    }
-                />
-                <Route 
-                    path='/alojamiento/:description'
-                    element = {
-                        <MainComponentAlojamiento/>
-                    }
-                />
+                {/* Eventos */}
+                <Route path='/eventos' element={
+                    <ListadoEventos 
+                        titulo='Eventos'
+                        icon={<FaPerson className="Faperson" />}
+                        tipo='Por persona: '
+                        iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
+                        fecha='30 Oct'
+                    />
+                } />
+                
+                {/* Alojamientos */}
+                <Route path='/alojamientos' element={
+                    <ListadoAlojamiewnto 
+                        titulo='Alojamientos'
+                        icon={<MdHotel className="Faperson" />}
+                        noche='noche'
+                    />
+                } />
+    
+                {/* Rutas para vistas detalladas */}
+                <Route path='/establecimiento/:tipo/:nombre' element={<MainComponent />} />
+                <Route path='/actividad/:description' element={<MainComponentActivity />} />
+                <Route path='/evento/:description' element={<MainComponentEvent />} />
+                <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
             </Routes>
         </>
-    )
+    );
 }
 
 export default App;

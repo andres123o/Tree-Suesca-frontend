@@ -5,8 +5,6 @@ import { TiWeatherPartlySunny } from "react-icons/ti";
 import { TbLockCheck } from "react-icons/tb";
 import { FaBus } from "react-icons/fa6";
 
-
-
 const Descripcion = ({destino}) => {
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);

@@ -57,7 +57,6 @@ const useDestinoContent = (destinoId = 1) => {
 const MainComponentAlojamiento = () => {
     const { content, loading, error } = useDestinoContent();
     
-    console.log(content)
     if (loading) return <><div>Cargando...</div></>;
     if (error) return <><div>Error: {error}</div></>;
     if (!content) return <><div>No hay contenido disponible</div></>;

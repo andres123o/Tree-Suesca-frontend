@@ -6,14 +6,18 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useState, useEffect } from 'react'
 
 
-const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route, tipoEstablecimiento} ) => {
+const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route, tipoEstablecimiento, destino_id} ) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const itemsPerPage = 3;
     const navigate = useNavigate();
 
     const handle = () => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/${route}`);
+        navigate(`/${route}`,{
+            state: {
+                destino_id: destino_id
+            }
+        });
     }
 
     useEffect(() => {

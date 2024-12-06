@@ -1,23 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import FiltrosTitulo from '../common/titulo-filtro'
 import { useNavigate } from "react-router-dom"
+import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios'
 
 // Obtener datos
-const useDestinoContent = (destinoId = 1) => {
-  const { nombre } = useParams();
+const useDestinoContent = () => {
+  const location = useLocation();
+  const actividad = location.state?.actividad
+  const destino_id = location.state?.destino_id
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [content, setContent] = useState(null);
+
+  console.log(location.state);
+  console.log(destino_id, actividad);
 
   useEffect(() => {
     const fetchDestinoContent = async () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `https://tree-suesca-backend-production.up.railway.app/api/v1/rutas/${nombre}/content`
+          `https://tree-suesca-backend-production.up.railway.app/api/v1/rutas/${destino_id}/Senderismo/content`
         );
         setContent(response.data);
       } catch (err) {
@@ -27,8 +33,10 @@ const useDestinoContent = (destinoId = 1) => {
       }
     };
 
-    fetchDestinoContent();
-  }, [destinoId]);
+    if (destino_id && actividad) {
+      fetchDestinoContent();
+    }
+  }, [destino_id, actividad]);
 
   return { content, loading, error };
 };
@@ -87,7 +95,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
   return (
     <>
       <FiltrosTitulo 
-        nombre={actividadesTitulo[nombre]}
+        nombre={'Paisajes & Miradores'}
         filtros={filtros}
         filtroSeleccionado={filtroSeleccionado}
         manejarClick={manejarClick}

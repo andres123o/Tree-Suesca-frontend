@@ -2,7 +2,7 @@ import { MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom"
 import ContainerMediano from '../common/container-mediano'
 
-const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo, route, noche, routeIndividual} ) => {
+const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo, route, noche, routeIndividual, destino_id} ) => {
     const navigate = useNavigate();
 
     const todasLasActividades = actividadesDestino.flatMap(oferente => {
@@ -19,7 +19,11 @@ const Carrusel = ( {actividadesDestino, titulo, icon, iconCalendar, fecha, tipo,
 
     const handle = () => {
         // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/${route}`);
+        navigate(`/${route}`, {
+            state: {
+                destino_id: destino_id
+            }
+        });
     }
 
     return  (

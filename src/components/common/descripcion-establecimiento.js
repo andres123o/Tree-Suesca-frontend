@@ -224,9 +224,10 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                             </div>
                         </div>
 
-                        <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
-                        <PopularSection title="Top 3 Cocteles!" items={establecimiento.destacados} />
                         <BebidaSection title="Antojos" items={establecimiento.antojos} />
+                        <PopularSection title="Top 3 Cocteles!" items={establecimiento.destacados} />
+                        <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
+                        
                         
                         <ContactButtons establecimiento={establecimiento} />
                         <Footer />
@@ -300,8 +301,9 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                         </div>
 
                         <PopularSection title="Top 3 Platos!" items={establecimiento.destacados} />
-                        <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
                         <BebidaSection title="Antojos" items={establecimiento.antojos} />
+                        <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
+                        
 
                         <ContactButtons establecimiento={establecimiento} />
                         <Footer />

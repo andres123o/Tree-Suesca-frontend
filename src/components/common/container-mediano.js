@@ -50,10 +50,7 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                                             style: 'currency',
                                             currency: 'COP',
                                             maximumFractionDigits: 0
-                                        })} {iconCalendar} {fecha} {noche}
-                                    </p>
-                                    <p>
-                                        <IoLocationOutline className="IoLocationOutline" /> Suesca, Cundinamarca
+                                        })} {item.fecha && iconCalendar} {item.fecha} {noche}
                                     </p>
                                 </div>
                             </div>

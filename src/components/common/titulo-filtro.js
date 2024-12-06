@@ -1,6 +1,6 @@
 
 
-const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado, urlImg}) => {
+const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado}) => {
     return (
         <>
             <div className="container-titulo-categoria-filtro">
@@ -8,7 +8,7 @@ const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado, urlIm
                     <h5>
                         {nombre}
                     </h5>
-                    <img src={urlImg}/>
+                    <img src={'https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png'}/>
                 </div>
                 <div className="container-filtros-general">
                     {
