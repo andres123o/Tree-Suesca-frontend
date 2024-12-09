@@ -3,6 +3,8 @@ import * as LucideIcons from 'lucide-react';
 import { IoIosArrowForward } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import OptimizedImage from '../common/optimzarImg'
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -96,13 +98,10 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     return (
         <>
             {/* Ver las imagenes del carrusel */}
-            <div 
-                className='container-img-principal' 
-                style={{
-                backgroundImage:`url(${backgroundImage})`
-                }}
-            >
-            </div>
+            <OptimizedImage className='container-img-principal'
+                imageUrl={backgroundImage}
+                alt={backgroundImage}
+            />
                 
             {/* Container principal de la informacion */}
             <div className="container-info">
@@ -111,10 +110,10 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                 <div className='container-carrusel-imgs'>
                     <div className='carrusel-imgs'>
                         {alojamiento.imgs.map((imgSrc, index) => (
-                        <img 
+                        <OptimizedImageLarge
                             key={index}
-                            src={imgSrc}
-                            alt="Imagen de la ruta"
+                            imageUrl={imgSrc}
+                            alt={`Imagen ${index + 1} del establecimiento`}
                             onClick={() => handleImageClick(imgSrc, index)}
                             className={index === selectedImgIndex ? 'selected' : ''}
                         />

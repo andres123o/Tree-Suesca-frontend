@@ -1,5 +1,7 @@
 import React from "react"
 import { useNavigate } from "react-router-dom"
+import OptimizedImage from "../common/optimzarImg";
+
 
 const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion, tipoEstablecimiento} ) => {
     const navigate = useNavigate();
@@ -19,13 +21,9 @@ const ContainerPequeño = ( {displayedItems, icono1, icono2, tipoDescripcion, ti
                                 className="restaurantes"
                                 onClick={() => handleClick(item.name)}
                             >
-                                <div 
-                                    className="contaniner-img-principal-restaurante"
-                                    style={{ 
-                                        backgroundImage: `url(${item.img})`  
-                                    }}    
-                                >
-                                </div>
+                                <OptimizedImage className='contaniner-img-principal-restaurante'
+                                    imageUrl={item.img}
+                                />    
                                 <div className="container-descripcion-restaurante">
                                      <div className="container-calificacion-restaurante">
                                         <p>

@@ -1,5 +1,7 @@
 import { IoLocationOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom"
+import OptimizedImage from "../common/optimzarImg";
+
 
 const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, precio, direccion, xOverflow, noche, ancho, routeInndividual}) => {
     const navigate = useNavigate();
@@ -26,11 +28,9 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                         }}
                         onClick={() => handleClick(item.description)}
                     >
-                        <div 
-                            className="contianer-img-actividad"
-                            style={{
-                                backgroundImage: `url(${item.img})`
-                            }}
+                        <OptimizedImage className='contianer-img-actividad'
+                            imageUrl={item.img}
+                            alt={item.municipio}
                         />
                         <div className="container-info-actividad">
                             <div className="container-descripcion-breve-activida">

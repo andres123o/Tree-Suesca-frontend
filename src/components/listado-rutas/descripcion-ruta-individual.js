@@ -4,6 +4,7 @@ import Footer from '../common/footer';
 import { useNavigate } from "react-router-dom"
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import OptimizedImage from '../common/optimzarImg'
 
 
 // Obtener datos
@@ -63,13 +64,10 @@ const DescripcionRuta = ({ rutas }) => {
   return (
     <>
       {/* Ver las imagenes del carrusel */}
-      <div 
-        className='container-img-principal' 
-        style={{
-          backgroundImage:`url(${backgroundImage})`
-        }}
-      >
-      </div>
+      <OptimizedImage className='container-img-principal'
+          imageUrl={backgroundImage}
+          alt={backgroundImage}
+      />
 
       {/* Contenedor principal de la información */}
       <div className='container-info'>

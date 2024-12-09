@@ -6,6 +6,8 @@ import { FaRegClock } from "react-icons/fa6";
 import { IoIosArrowForward } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import OptimizedImage from '../common/optimzarImg'
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -76,13 +78,10 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
     return (
         <>
             {/* Ver las imagenes del carrusel */}
-            <div 
-                className='container-img-principal' 
-                style={{
-                backgroundImage:`url(${backgroundImage})`
-                }}
-            >
-            </div>
+            <OptimizedImage className='container-img-principal'
+                imageUrl={backgroundImage}
+                alt={backgroundImage}
+            />
                 
             {/* Container principal de la informacion */}
             <div className="container-info">
@@ -91,10 +90,10 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                 <div className='container-carrusel-imgs'>
                     <div className='carrusel-imgs'>
                         {actividad.imgs.Imagenes.map((imgSrc, index) => (
-                        <img 
+                        <OptimizedImageLarge
                             key={index}
-                            src={imgSrc}
-                            alt="Imagen de la ruta"
+                            imageUrl={imgSrc}
+                            alt={`Imagen ${index + 1} del establecimiento`}
                             onClick={() => handleImageClick(imgSrc, index)}
                             className={index === selectedImgIndex ? 'selected' : ''}
                         />

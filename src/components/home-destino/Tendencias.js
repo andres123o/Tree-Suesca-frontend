@@ -1,3 +1,5 @@
+import React from "react";
+import OptimizedImage from "../common/optimzarImg";
 
 const PopularActivities = ( { contenido } ) => {
     return (
@@ -12,15 +14,11 @@ const PopularActivities = ( { contenido } ) => {
                         {
                             contenido.map((item)  => {
                                 return (
-                                <div 
-                                    key={item.id} 
-                                    className="contenido" 
-                                    style={{ 
-                                        backgroundImage: `url(${item.img})`,
-                                    }}
-                                >
-
-                                </div>
+                                    <OptimizedImage 
+                                        className='contenido'     
+                                        key={item.img}
+                                        imageUrl={item.img}
+                                    />
                                 ) 
                             })
                         }

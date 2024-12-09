@@ -4,6 +4,7 @@ import SearchBox from '../home-destino/searchBox';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import OptimizedImage from "../common/optimzarImg";
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
@@ -119,11 +120,10 @@ const Home = () => {
                         className="container-item-lista-rutas"
                         onClick={() => handle(item.id, item.municipio)}
                     >
-                        <div
-                            className="container-img-ruta"
-                            style={{ backgroundImage: `url(${item.img})` }}
-                        >
-                        </div>
+                        <OptimizedImage className='container-img-ruta'
+                            imageUrl={item.img}
+                            alt={item.municipio}
+                        />
                         <div className="container-info-ruta">
                             <div className="container-nombre-titulo">
                                 <h5>{item.frase}.</h5>

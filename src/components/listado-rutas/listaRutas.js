@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { useLocation } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import OptimizedImage from '../common/optimzarImg'
 
 // Obtener datos
 const useDestinoContent = () => {
@@ -107,11 +108,10 @@ const ListaRutas = ({ rutas, iconos, route}) => {
             className="container-item-lista-rutas"
             onClick={() => {handle(item.nombre)}}
           >
-            <div
-                className="container-img-ruta"
-                style={{ backgroundImage: `url(${item.img})` }}
-            >
-            </div>
+            <OptimizedImage className='container-img-ruta'
+              imageUrl={item.img}
+              alt={item.img}
+            />
             <div className="container-info-ruta">
               <div className="container-nombre-titulo">
                 <h5>

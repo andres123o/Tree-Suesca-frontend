@@ -4,6 +4,7 @@ import FiltrosTitulo from "../common/titulo-filtro";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
+
 const ListadoEventos = ({ titulo, icon, tipo, iconCalendar, fecha }) => {
    const location = useLocation();
    const destino_id = location.state?.destino_id;

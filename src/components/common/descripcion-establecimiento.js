@@ -3,15 +3,17 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaPerson } from "react-icons/fa6";
 import axios from 'axios'
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import OptimizedImage from '../common/optimzarImg'
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
 const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
     <div className='container-carrusel-imgs'>
         <div className='carrusel-imgs'>
             {images.map((imgSrc, index) => (
-                <img 
+                <OptimizedImageLarge
                     key={index}
-                    src={imgSrc}
+                    imageUrl={imgSrc}
                     alt={`Imagen ${index + 1} del establecimiento`}
                     onClick={() => onImageClick(imgSrc, index)}
                     className={`carrusel-img ${index === selectedIndex ? 'selected' : ''}`}
@@ -172,9 +174,8 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
         <>
             {!establecimiento.servicios.delivery ? (
                 <>
-                    <div 
-                        className='container-img-principal' 
-                        style={{backgroundImage: `url(${backgroundImage})`}}
+                    <OptimizedImage className='container-img-principal'
+                            imageUrl={backgroundImage}
                     />
                     <div className="container-info">
                         <ImageCarousel 
@@ -235,9 +236,8 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                 </>
             ) : (
                 <>
-                    <div 
-                        className='container-img-principal' 
-                        style={{backgroundImage: `url(${backgroundImage})`}}
+                    <OptimizedImage className='container-img-principal'
+                            imageUrl={backgroundImage}
                     />
                     <div className="container-info">
                         <ImageCarousel 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import StarRating from '../common/calificacion';
 import { IoIosArrowForward } from "react-icons/io";
+import OptimizedImage from '../common/optimzarImg'
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(null);
@@ -211,10 +213,10 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='container-carrusel-imgs'>
           <div className='carrusel-imgs'>
             {ruta.imagenes.map((img, index) => (
-              <img 
+              <OptimizedImageLarge
                 key={img.id}
-                src={img.url}
-                alt="Imagen de la ruta"
+                imageUrl={img.url}
+                alt={`Imagen ${index + 1} del establecimiento`}
                 onClick={() => handleImageClick(img.url, index)}
                 className={index === selectedImgIndex ? 'selected' : ''}
               />

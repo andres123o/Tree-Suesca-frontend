@@ -4,6 +4,8 @@ import { BsCalendarDate } from "react-icons/bs";
 import { TiWeatherPartlySunny } from "react-icons/ti";
 import { TbLockCheck } from "react-icons/tb";
 import { FaBus } from "react-icons/fa6";
+import OptimizedImage from "../common/optimzarImg";
+
 
 const Descripcion = ({destino}) => {
     const [expandedSection, setExpandedSection] = useState(null);
@@ -52,15 +54,10 @@ const Descripcion = ({destino}) => {
                         {
                             destino.imagenes.map((item)  => {
                                 return (
-                                <div 
-                                    key={item.id} 
-                                    className="contenidoDestino" 
-                                    style={{ 
-                                        backgroundImage: `url(${item.img})`,
-                                    }}
-                                >
-
-                                </div>
+                                    <OptimizedImage className="contenidoDestino"
+                                        imageUrl={item.img}
+                                        key={item.id} 
+                                    />
                                 ) 
                             })
                         }

@@ -5,6 +5,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoMdPeople } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
+import OptimizedImage from '../common/optimzarImg'
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -66,13 +68,10 @@ const DescripcionEventos = ( {evento, oferente} ) => {
     return (
         <>
             {/* Ver las imagenes del carrusel */}
-            <div 
-                className='container-img-principal' 
-                style={{
-                backgroundImage:`url(${evento.img})`
-                }}
-            >
-            </div>
+            <OptimizedImage className='container-img-principal'
+                imageUrl={evento.img}
+                alt={evento.img}
+            />
                 
             {/* Container principal de la informacion */}
             <div className="container-info">
