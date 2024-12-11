@@ -62,6 +62,7 @@ const ListadoAlojamiento = ({ titulo, icon, tipo, iconCalendar, fecha }) => {
                xOverflow="none" 
                ancho="40vh"
                routeInndividual="alojamiento"
+               noche='por noche'
            />
        </>
    );

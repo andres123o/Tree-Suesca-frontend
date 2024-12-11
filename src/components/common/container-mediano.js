@@ -41,7 +41,7 @@ const ContainerMediano = ({actividadesDestino, icon, iconCalendar, fecha, tipo, 
                             </div>
                             <div className="continer-info-oferente-actividad">
                                 <div className="container-logo-oferente-actividad">
-                                    <img src={item.oferenteLogo} alt={item.oferenteNombre} />
+                                    <img src={item.oferenteLogo || item.logo} alt={item.oferenteNombre || item.name} />
                                 </div>
                                 <div className="container-nombre-oferente-actividades">
                                     <h5>{item.name}</h5>

@@ -128,7 +128,7 @@ const Homedestino = () => {
                 actividadesDestino= { alojamientos }
                 titulo= 'Alojamientos'
                 icon={ <MdHotel className="Faperson" />}
-                noche = 'noche'
+                noche = 'por noche'
                 route= 'alojamientos'
                 routeIndividual= 'alojamiento'
                 destino_id={destino_id}
