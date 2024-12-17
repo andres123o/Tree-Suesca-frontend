@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import OptimizedImage from "../common/optimzarImg";
+import { MdError } from "react-icons/md";
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
@@ -62,14 +63,32 @@ const Home = () => {
     };
 
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (loading) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Cargando destinos...</h5>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="error-container">
+            <div className="error-content">
+                <MdError className="error-icon" />
+                <h5 className="error-text">¡Ups! Algo salió mal</h5>
+                <p className="error-message">
+                    {error}. Por favor, intenta de nuevo más tarde.
+                </p>
+            </div>
+        </div>
+    );
 
     return (
         <>
             <div className="header">
                 <div className="title-header">
-                    <h5>Destino <span className="mas">+</span></h5>
+                    <h5>Destino <span className="mas-home"><strong>+</strong></span></h5>
                 </div>
                 <div className="back-home">   
                     <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="Tree Suesca" />
@@ -126,7 +145,7 @@ const Home = () => {
                         />
                         <div className="container-info-ruta">
                             <div className="container-nombre-titulo">
-                                <h5>{item.frase}.</h5>
+                                <h5>{item.municipio}, {item.departamento}.</h5>
                                 <div className="container-clasificacion-ruta">
                                     <p>
                                         {item.calificacion}
@@ -136,7 +155,7 @@ const Home = () => {
                             </div>
                             <div className="container-descripcion-caracteristicas">
                                 <MdExplore />
-                                <p>{item.municipio}, {item.departamento}.</p>
+                                <p>{item.frase}.</p>
                             </div>
                         </div>
                     </div>

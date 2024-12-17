@@ -1,77 +1,202 @@
-
-/* Seccion del header */
-.container-titulo-categoria-filtro {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    padding-top: 8%;
-    padding-bottom: 3%;
-    padding-left: 7%;
-    padding-right: 2%;
-}
-
-/* Seccion de titulo  */
-.container-nombre-categoria {
-    width: 100%;
-    height: auto;
-    margin-bottom: 3%;
-    display: flex;
-    justify-content: space-between;
-    padding-right: 7%;
-}
-.container-nombre-categoria h5 {
-    font-size: 1.5em;
-    font-weight: 700;
-    color: var(--font-color-primary);
-    margin: 0; /* Elimina márgenes que puedan causar separación */
-}
-.container-nombre-categoria img {
-    width: 10%;
-    height: auto;
+.rutas-container {
+  padding: 20px 7%;
 }
 
 /* Seccion de los filtros */
-.container-filtros-general {
-    width: 100%;
-    height: auto;
-}
-/* Seccion interna filtros */
-.cotainer-valores-duracion {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    margin-top: 3%;
-    padding-right: 7%;
-}
-.cotainer-valores-duracion h5 {
-    font-size: 17px;
-    font-weight: 700;
-    color: var(--font-color-primary);
-    margin-right: 3%;
+.filters-container {
+    padding: 20px 7%;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 24px;
 }
 
-.container-valores-filto-duracion {
-    width: 100%;
-    height: 3em;
-    display: flex;
-    align-items: center;
-    overflow-x: auto;
-    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.075); /* Sombra ajustada */
-    border-radius: 1em;
+.filters-header {
+  margin-bottom: 10px;
 }
-.container-valores-filto-duracion p {
-    font-size: 16px;
-    display: flex;
-    margin: 0% 2%;
-    border-radius: 0.5em;
-    padding: 0 2%;
+
+.filters-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.filtro-seleccionado {  
-    color: var(--font-color-primary);
-    font-weight: 700;
+
+.filters-title h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
 }
+
+.filters-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.filters-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 200px;
+  max-width: 100%;
+}
+
+.filter-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.filter-category h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #222;
+  margin: 0;
+}
+
+.filter-icon {
+  color: #00cd70;
+}
+
+.filter-options {
+  display: flex;
+  flex-wrap: nowrap; /* Evita que los botones se envuelvan */
+  gap: 8px;
+  overflow-x: auto; /* Habilita el scroll horizontal */
+  padding-bottom: 10px; /* Espacio para la barra de scroll */
+  -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+  scrollbar-width: thin; /* Para Firefox */
+  
+  /* Oculta la barra de scroll en Chrome/Safari pero mantiene la funcionalidad */
+  &::-webkit-scrollbar {
+      height: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 4px;
+  }
+  
+  /* Previene el scroll vertical */
+  overflow-y: hidden;
+}
+  
+.filter-button {
+  background: #f5f5f5;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  flex: 0 0 auto; /* Evita que los botones se compriman */
+  min-width: min-content; /* Asegura un tamaño mínimo basado en el contenido */
+  height: 36px; /* Altura fija para todos los botones */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-options::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 40px;
+  background: linear-gradient(to right, transparent, white);
+  pointer-events: none; /* Permite hacer click a través del degradado */
+  opacity: 0.8;
+}
+
+/* Solo muestra el degradado si hay scroll */
+.filter-options:not(.scrollable)::after {
+    display: none;
+}
+  
+  .filter-button:hover {
+    background: #e8e8e8;
+    transform: translateY(-1px);
+  }
+  
+  .filter-button.selected {
+    background: #00cd70;
+    color: white;
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .filters-container {
+      padding: 16px 5%;
+    }
+  
+    .filters-title h2 {
+      font-size: 20px;
+    }
+  
+    .filters-logo {
+      height: 32px;
+    }
+  
+    .filters-content {
+      gap: 16px;
+    }
+  
+    .filter-group {
+      flex: 1;
+      min-width: 200px;
+      max-width: 100%;
+    }
+  
+    .filter-button {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+  }
+  
+  /* Animaciones */
+  @keyframes filterAppear {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .filter-button {
+    animation: filterAppear 0.3s ease;
+  }
+  
+  .filter-button.selected {
+    animation: none;
+  }
+  
+  /* Mejoras de accesibilidad */
+  .filter-button:focus {
+    outline: 2px solid #00cd70;
+    outline-offset: 2px;
+  }
+  
+  /* Estado activo para dispositivos táctiles */
+  .filter-button:active {
+    transform: scale(0.95);
+  }
 
 /* Seccion de rutas individuales */
 .container-seccion-lista-rutas {
@@ -83,7 +208,7 @@
     margin-top: 5%;
 }
 .container-item-lista-rutas {
-    width: 85%;
+    width: 100%;
     height: 30vh;
     margin-bottom: 1.5em;
     position: relative;
@@ -124,14 +249,16 @@
 }
 .container-descripcion-caracteristicas p {
     font-size: 11.2px;
-    opacity: 0.8;
+    opacity: 0.9;
     font-weight: 600;
     text-align: left;
     margin-right: 2%;
     margin-left: 2%;
 }
 .icon2 {
-    font-size: 14px;
+  color: #00cd70;
+  font-size: 14px;
+
 }
 
 /* Seccion de calificacion */

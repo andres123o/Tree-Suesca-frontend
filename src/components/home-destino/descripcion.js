@@ -7,44 +7,15 @@ import { FaBus } from "react-icons/fa6";
 import OptimizedImage from "../common/optimzarImg";
 
 
-const Descripcion = ({destino}) => {
+const Descripcion = ({destino, destino_id}) => {
     const [expandedSection, setExpandedSection] = useState(null);
-    const [isExpanded, setIsExpanded] = useState(false);
 
-    const maxTextLength = 150;
 
     const toggleSection = (section) => {
         setExpandedSection(expandedSection === section ? null : section);
     };
-    
-    const toggleExpand = () => {
-        setIsExpanded(!isExpanded);
-    };
 
-    const accordionSections = [
-        {   
-            title: 'Épocas para viajar',
-            content: destino.epocas,
-            icon: <BsCalendarDate className="accordion-icon" />
-        },
-        {   
-            title: 'Clima y que llevar',
-            content: destino.clima,
-            icon: <TiWeatherPartlySunny className="accordion-icon" />
-        },
-        {   
-            title: 'Tips de seguridad',
-            content: destino.seguridad,
-            icon: <TbLockCheck className="accordion-icon" />
-        },
-        {   
-            title: 'Como llegar',
-            content: destino.transporte,
-            icon: <FaBus className="accordion-icon" />
-        }
-    ];
     
-    const visibleText = isExpanded ? destino.descripcion : `${destino.descripcion.slice(0, maxTextLength)}...`;
     return (
         <>
             {/* Carrusel */}
@@ -72,35 +43,8 @@ const Descripcion = ({destino}) => {
 
             <div className='container-descripcion-destino'>
                 <p className='descripcion-destino' id="descripcion-texto">
-                    {visibleText}
-                        <button onClick={toggleExpand} className='show-more-btn-destino'>
-                    {isExpanded ? 'menos' : 'más'}
-                    </button>
+                    {destino.descripcion}
                 </p>
-            </div>
-
-            {/* Acordeón de información */}
-            <div className='accordion2'>
-                {accordionSections.map((section, index) => (
-                    <div key={index} className='accordion-item12'>
-                        <button 
-                            className={`accordion-header2 ${expandedSection === section.title ? 'active2' : ''}`}
-                            onClick={() => toggleSection(section.title)}
-                        >
-                            <div className="header-content2">
-                                {section.icon}
-                                <span>{section.title}</span>
-                            </div>
-                            <IoIosArrowForward className={`arrow-icon2 ${expandedSection === section.title ? 'rotated' : ''}`} />
-                        </button>
-                        <div 
-                            className='accordion-content2'
-                            style={{ display: expandedSection === section.title ? 'block' : 'none' }}
-                        >
-                            <p>{section.content}</p>
-                        </div>
-                    </div>
-                ))}
             </div>
 
             <div className='separador'></div>

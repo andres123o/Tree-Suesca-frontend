@@ -5,8 +5,8 @@ const PopularActivities = ( { contenido } ) => {
     return (
         <>
             <div className="container-mas-populares">
-                <div className="container-title-mas-popular">
-                    <h5>Tendencias</h5>
+                <div className="overview-header">
+                    <h2 className="overview-title">Experiencias en Tendencia</h2>
                 </div>
 
                 <div className="container-carrusel-actividades-populares">

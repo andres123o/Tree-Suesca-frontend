@@ -58,7 +58,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 1%;
-    box-shadow: 1px 5px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     overflow-x: auto;
 }
 .carrusel-imgs img {
@@ -302,12 +302,13 @@
 .unlock-button {
     width: 90%;
     height: 8vh;
-    background-color: var(--red-botons);
+    background-color:#00cd70 ;
     color: white;
     border: none;
     border-radius: 0.8em;
     cursor: pointer;
     font-size: 1.2em;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 .unlock-button:active {
     background-color: #3a3535;

@@ -7,10 +7,21 @@ import axios from "axios";
 const ListadoActividades = ({ titulo, icon, tipo }) => {
    const location = useLocation();
    const destino_id = location.state.destino_id;
+
    const [filtros, setFiltros] = useState({});
    const [actividades, setActividades] = useState([]);
    const [actividadesFiltradas, setActividadesFiltradas] = useState([]);
    const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
+
+   const filtrarActividadesValidas = (data) => {
+        return data.filter(actividad => {
+            // Verificar si la actividad tiene toda la información necesaria
+            return actividad.name !== "Pendiente" &&
+                actividad.img !== "" &&
+                actividad.logo !== ""
+        });
+    };
+
 
    useEffect(() => {
        const fetchData = async () => {
@@ -18,11 +29,14 @@ const ListadoActividades = ({ titulo, icon, tipo }) => {
                const response = await axios.get(
                    `https://tree-suesca-backend-production.up.railway.app/api/v1/listados/demas/${destino_id}/actividades`
                );
-               setActividades(response.data);
-               setActividadesFiltradas(response.data);
+
+               const actividadesFiltradas = filtrarActividadesValidas(response.data)
+
+               setActividades(actividadesFiltradas);
+               setActividadesFiltradas(actividadesFiltradas);
 
                const nuevosFiltros = {};
-               response.data.forEach((act) => {
+               actividadesFiltradas.forEach((act) => {
                    Object.entries(act.items).forEach(([key, value]) => {
                        if (!nuevosFiltros[key]) {
                            nuevosFiltros[key] = new Set();

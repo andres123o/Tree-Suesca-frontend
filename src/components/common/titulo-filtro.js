@@ -1,45 +1,56 @@
-
+import React from 'react';
+import { Filter } from 'lucide-react';
+import { useEffect } from 'react';
 
 const FiltrosTitulo = ({nombre, filtros, manejarClick, filtroSeleccionado}) => {
-    return (
-        <>
-            <div className="container-titulo-categoria-filtro">
-                <div className="container-nombre-categoria">
-                    <h5>
-                        {nombre}
-                    </h5>
-                    <img src={'https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png'}/>
-                </div>
-                <div className="container-filtros-general">
-                    {
-                        Object.entries(filtros).map(([key, values]) => (
-                            <div 
-                                className="cotainer-valores-duracion"
-                                key = {key}   
-                            >
-                                <h5>
-                                    {key}
-                                </h5>
-                                <div className="container-valores-filto-duracion">
-                                    {
-                                        Array.from(values).map((value, index) => (
-                                            <p
-                                                key={index}
-                                                onClick = { () => manejarClick(key, value)}
-                                                className= {filtroSeleccionado === value.value ? 'filtro-seleccionado' : ''}
-                                            >
-                                                {value.value}
-                                            </p>
-                                        ))
-                                    }
-                                </div>
-                            </div>
-                        ))
-                    }
-                </div>
-            </div>
-        </>
-    )
-}
+  useEffect(() => {
+    const filterOptions = document.querySelectorAll('.filter-options');
+    
+    filterOptions.forEach(element => {
+      if (element.scrollWidth > element.clientWidth) {
+        element.classList.add('scrollable');
+      } else {
+        element.classList.remove('scrollable');
+      }
+    });
+  }, [filtros]);
 
-export default FiltrosTitulo 
+  return (
+    <div className="filters-container">
+      <div className="filters-header">
+        <div className="filters-title">
+          <h2>{nombre}</h2>
+          <img 
+            src='https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png'
+            alt="Tree Suesca"
+            className="filters-logo"
+          />
+        </div>
+      </div>
+      
+      <div className="filters-content">
+        {Object.entries(filtros).map(([key, values]) => (
+          <div className="filter-group" key={key}>
+            <div className="filter-category">
+              <Filter size={16} className="filter-icon" />
+              <h3>{key}</h3>
+            </div>
+            <div className="filter-options">
+              {Array.from(values).map((value, index) => (
+                <button
+                  key={index}
+                  onClick={() => manejarClick(key, value)}
+                  className={`filter-button ${filtroSeleccionado === value.value ? 'selected' : ''}`}
+                >
+                  {value.value}
+                </button>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FiltrosTitulo;

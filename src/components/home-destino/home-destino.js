@@ -2,26 +2,18 @@ import React, { useEffect, useState } from 'react';
 import ScrollToTop  from '../common/scrollToTop';
 import { useLocation } from "react-router-dom";
 import axios from 'axios'
+import { MdError } from "react-icons/md";
 
 // Componente home destino
 import Header from './header';
 import Descripcion from './descripcion';
 import SearchBox from './searchBox'
-import CategoryCarousel from './CategoryCarrusel';
+import ViewpointsSection from './CategoryCarrusel';
 import PopularActivities from './Tendencias'
-import ListaTop3 from './ListaTop3';
-import Carrusel from './carrusel';
+import AccommodationsSection from './ListaTop3';
+import DiscoverSection from '../home-destino/todo'
+import DestinationInfo from '../home-destino/tips'
 
-//  Iconos pagina principal
-import { IoFastFoodOutline } from "react-icons/io5";
-import { FaWineBottle } from "react-icons/fa";
-import { FaPerson } from "react-icons/fa6";
-import { MdHotel } from "react-icons/md";
-import { IoCalendarOutline } from "react-icons/io5";
-import { PiMapPinAreaFill } from "react-icons/pi";
-
-// Variables de ejemplo de respuesta a la API por destino
-const destino = 'Suesca'
 
 const Homedestino = () => {
     const location = useLocation();
@@ -50,9 +42,35 @@ const Homedestino = () => {
         }
     }, [destino_id]);
 
-    if (loading) return <div>Cargando...</div>;
-    if (error) return <div>Error: {error}</div>;
-    if (!content) return <div>No hay contenido disponible</div>;
+    if (loading) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Cargando Suesca...</h5>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="error-container">
+            <div className="error-content">
+                <MdError className="error-icon" />
+                <h5 className="error-text">¡Ups! Algo salió mal</h5>
+                <p className="error-message">
+                    {error}. Por favor, intenta de nuevo más tarde.
+                </p>
+            </div>
+        </div>
+    );
+
+    if (!content) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Estamos trabajando en este destino</h5>
+            </div>
+        </div>
+    );
 
     const { 
         restaurantes, bares, tendencias, actividades, 
@@ -79,60 +97,13 @@ const Homedestino = () => {
             />
             <Descripcion 
                 destino={infoDes}
+                destino_id={destino_id}
             />
+            <DiscoverSection destino_id={destino_id}/>
             <PopularActivities contenido = { tendencias } />
-            <CategoryCarousel
-                destino={destino_id}
-            />
-            <Carrusel 
-                actividadesDestino = { actividades }
-                titulo = 'Actividades'
-                icon={<FaPerson className="Faperson"/>}
-                tipo = 'Por persona:'
-                route= 'actividades'
-                routeIndividual= 'actividad'
-                destino_id={destino_id}
-            />
-            <ListaTop3 
-                rest = {restaurantes}
-                titulo = 'Restaurantes'
-                icono1 = {<IoFastFoodOutline className='Faperson'/>} 
-                icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                tipo = 'Platos desde'    
-                route= 'restaurantes'
-                tipoEstablecimiento= 'restaurante'
-                destino_id={destino_id}
-            />
-            <Carrusel 
-                actividadesDestino = { eventos }
-                titulo = 'Eventos'
-                icon={<FaPerson className="Faperson"/>}
-                iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
-                fecha = '30 Oct'
-                tipo = 'Desde:'
-                route= 'eventos'
-                routeIndividual= 'evento'
-                destino_id={destino_id}
-            />
-            <ListaTop3 
-                rest = {bares}
-                titulo = 'Bares y Cafes'
-                icono1 = {<FaWineBottle className='Faperson'/>} 
-                icono2 = { <PiMapPinAreaFill className='Faperson'/> }
-                tipo = 'Botellas desde'
-                route= 'fiesta-amigos'
-                tipoEstablecimiento= 'bares'
-                destino_id={destino_id}
-            />
-            <Carrusel 
-                actividadesDestino= { alojamientos }
-                titulo= 'Alojamientos'
-                icon={ <MdHotel className="Faperson" />}
-                noche = 'por noche'
-                route= 'alojamientos'
-                routeIndividual= 'alojamiento'
-                destino_id={destino_id}
-            />
+            <ViewpointsSection imagenes={content.imagenes} destino_id={destino_id} />
+            <AccommodationsSection alojamientos={alojamientos} destino_id={destino_id} />
+            <DestinationInfo destino={infoDes} />
         </>
     )
 }

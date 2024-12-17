@@ -8,10 +8,20 @@ const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) =>
     const location = useLocation()
     const destino_id = location.state?.destino_id
     const tipo = 'restaurantes' 
+
     const [filtros, setFiltros] = useState({});
     const [restaurantes, setRestaurantes] = useState([]);
     const [restaurantesFiltrados, setRestaurantesFiltrados] = useState([]);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
+
+    const filtrarRestaurantesValidos = (data) => {
+        return data.filter(restaurante => {
+            // Verificar si el restaurante tiene toda la información necesaria
+            return restaurante.name !== "Pendiente" &&
+                   restaurante.img !== "" &&
+                   restaurante.logo !== ""
+        });
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,11 +29,14 @@ const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) =>
                 const response = await axios.get(
                     `https://tree-suesca-backend-production.up.railway.app/api/v1/listados/${destino_id}/${tipo}`
                 );
-                setRestaurantes(response.data);
-                setRestaurantesFiltrados(response.data);
+
+                const restaurantesFiltrados = filtrarRestaurantesValidos(response.data);
+
+                setRestaurantes(restaurantesFiltrados);
+                setRestaurantesFiltrados(restaurantesFiltrados);
 
                 const nuevosFiltros = {};
-                response.data.forEach((res) => {
+                restaurantesFiltrados.forEach((res) => {
                     Object.entries(res.items).forEach(([key, value]) => {
                         if (!nuevosFiltros[key]) {
                             nuevosFiltros[key] = new Set();

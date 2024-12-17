@@ -123,19 +123,12 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
 
                 {/* Titulo */}
                 <div className='container-logo-nombre-calificacion-alojamiento'>
-                    <div className='container-name-calificacion'>
-                        <h4>{alojamiento.name}</h4>
-                        <div className='calificacion-establecimiento'>
-                            <p>{alojamiento.calificacion}</p>
-                            <img src='/utils/icons8-estrella-48.png' />
-                        </div>
-                    </div>
                     <div className='container-info-titulo-calificacion-logo'>
                         <div className='logo-establecimiento'>
                             <img src={oferente.logo} />
                         </div>
                         <div className='nombre-establecimiento-alojamiento'>
-                            <h5>{oferente.oferente}</h5>
+                            <h5>{alojamiento.name}</h5>
                             <p>{`Chek In: ${oferente.checkIn} Chek Out: ${oferente.checkOut}`}</p>
                         </div>
                     </div>
@@ -245,7 +238,7 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                         className='contacto'
                         onClick={() => window.open(`https://wa.me/${oferente.contacto}`, '_blank')}    
                     >
-                        Escribe por Whats
+                        Reservar directa
                         <img src="/utils/icons8-whatsapp-48.png" />
                     </button>
                 </div>

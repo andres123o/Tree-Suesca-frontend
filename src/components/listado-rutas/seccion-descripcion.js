@@ -97,7 +97,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   
           const triangulo = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
           triangulo.setAttribute("points", `${estacion.x - 17},${estacion.y - 12} ${estacion.x + 17},${estacion.y - 12} ${estacion.x},${estacion.y - 40}`);
-          triangulo.setAttribute("fill", "#EB2330");
+          triangulo.setAttribute("fill", "#00cd70");
           grupoEstacion.appendChild(triangulo);
   
           grupoEstacion.addEventListener('click', () => mostrarTooltip(estacion.nombre, estacion.dificultad, estacion.x, estacion.y - 20));
@@ -251,12 +251,8 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='container-leyenda-mapa-interactivo-arriba'>
           <div className='container-leyenda'>
             <h5>Estaciones</h5>
-            <div className='circulo' style={{ backgroundColor: '#EB2330' }}></div>
+            <div className='circulo' style={{ backgroundColor: '#00cd70' }}></div>
           </div>
-          <div className='container-leyenda'>
-            <h5>Atajos</h5>
-            <div className='circulo' style={{ backgroundColor: '#FFA500' }}></div>
-          </div>  
         </div>
 
         <div className='separador'></div>

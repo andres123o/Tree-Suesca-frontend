@@ -1,63 +1,138 @@
-import React from "react"
-import { useNavigate } from "react-router-dom"
-
-import ContainerPequeño from "../common/container-pequeño";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import { useState, useEffect } from 'react'
+import React from 'react';
+import { Heart, Star, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 
-const ListaTop3 = ( {rest, titulo, tipo, icono1, icono2, route, tipoEstablecimiento, destino_id} ) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const itemsPerPage = 3;
+const formatCurrency = (amount) => {
+  return new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+  }).format(amount);
+};
+
+const transformAlojamientosData = (alojamientos) => {
+  return alojamientos
+    .flatMap(lugar => {
+      if (!lugar.alojamiento || lugar.alojamiento.length === 0) return [];
+      
+      return lugar.alojamiento.map(accommodation => ({
+        id: `${lugar.id}-${accommodation.name}`,
+        title: accommodation.name,
+        rating: accommodation.calificacion || 0,
+        details: {
+          rooms: accommodation.equipamento.habitaciones,
+          beds: accommodation.equipamento.camas,
+          bathrooms: accommodation.equipamento.baños
+        },
+        price: accommodation.precio,
+        isSuperhost: accommodation.calificacion >= 4.8 || false,
+        isNew: accommodation.calificacion === 0 || true,
+        image: accommodation.img
+      }));
+    });
+};
+
+const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
     const navigate = useNavigate();
+    const accommodations = transformAlojamientosData(alojamientos);
 
-    const handle = () => {
-        // Redirige a listaRutas.html con el nombre de la actividad como query param
-        navigate(`/${route}`,{
+    const handleNavigateToAll = () => {
+        navigate('/alojamientos', {
             state: {
                 destino_id: destino_id
             }
         });
-    }
+    };
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentIndex((prevIndex) => {
-                // Si llegamos al final de la lista, volvemos al principio
-                return (prevIndex + itemsPerPage) % rest.length;
-            });
-        }, 3000); // Cambia cada 2 segundos
+    const handleCardClick = (title) => {
+        navigate(`/alojamiento/${encodeURIComponent(title)}`);
+    };
 
-        // Limpiar el intervalo cuando el componente se desmonte
-        return () => clearInterval(interval);     
-    }, [rest]);
+    const handleFavoriteClick = (e) => {
+        e.stopPropagation(); // Evita que el clic se propague a la tarjeta
+        // Aquí puedes agregar la lógica para los favoritos
+    };
 
-    //  Obtener los elementos que se deben mostrar en cada iteración
-    const displayedItems = rest.slice(currentIndex, currentIndex + itemsPerPage);
+    const handleBookClick = (e) => {
+        e.stopPropagation(); // Evita que el clic se propague a la tarjeta
+        // Aquí puedes agregar la lógica para las reservas
+    };
 
     return (
         <>
-            <div className="container-descripcion-destino-restaurantes">
-                <div className="container-title-mas-popular-restaurantes">
-                    <h5>
-                        {titulo}
-                    </h5>
-                    <MdKeyboardDoubleArrowRight 
-                        className="icon-ver-mas" 
-                        id= {titulo}
-                        onClick={() => handle()}
-                    />
-                </div>
-                <ContainerPequeño 
-                    displayedItems={displayedItems}
-                    icono1={icono1}
-                    icono2={icono2}
-                    tipoDescripcion={tipo}
-                    tipoEstablecimiento={tipoEstablecimiento}
-                />
+        <section className="accommodations-section">
+            <div className="overview-header">
+            <h2 className="overview-title">Dónde alojarse</h2>
+            <button className="see-more-btn" onClick={handleNavigateToAll}>
+                Ver todos
+                <ChevronRight size={16} />
+            </button>
             </div>
-        </>
-    )
-}
+            <div className="carousel-container">
+            <div className="accommodations-grid">
+                {accommodations.map((accommodation) => (
+                <div
+                    key={accommodation.id}
+                    className="accommodation-card"
+                    onClick={() => handleCardClick(accommodation.title)}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <div className="image-container">
+                    <OptimizedImageLarge className='accommodation-image'
+                        imageUrl={accommodation.image}
+                        alt={accommodation.title}
+                    />
+                    <button 
+                        className="favorite-btn"
+                        onClick={handleFavoriteClick}
+                    >
+                        <Heart size={18} />
+                    </button>
+                    {accommodation.isSuperhost && (
+                        <span className="badge">Superhost</span>
+                    )}
+                    {accommodation.isNew && (
+                        <span className="badge">Nuevo</span>
+                    )}
+                    </div>
 
-export default ListaTop3 
+                    <div className="content">
+                    <div className="title-row">
+                        <h3 className="accommodation-title">{accommodation.title}</h3>
+                        <div className="rating">
+                        <Star size={14} className='star-icon' />
+                        {accommodation.rating}
+                        </div>
+                    </div>
+
+                    <p className="details">
+                        {accommodation.details.rooms} habitación{accommodation.details.rooms !== 1 ? 'es' : ''} · {' '}
+                        {accommodation.details.beds} cama{accommodation.details.beds !== 1 ? 's' : ''} · {' '}
+                        {accommodation.details.bathrooms} baño{accommodation.details.bathrooms !== 1 ? 's' : ''}
+                    </p>
+
+                    <div className="price-row">
+                        <span className="price">
+                        {formatCurrency(accommodation.price)} <span className="nights">noche</span>
+                        </span>
+                        <button 
+                        className="book-btn"
+                        onClick={handleBookClick}
+                        >
+                        Reservar
+                        </button>
+                    </div>
+                    </div>
+                </div>
+                ))}
+            </div>
+            </div>
+        </section>
+        </>
+    );
+};
+
+export default AccommodationsSection;

@@ -7,7 +7,7 @@ const Footer = () => {
           {/* Footer */}
           <footer className="footer">
             <p>Destino +</p>
-            <img src="/utils/icons8-colombia-48.png" alt="Icono de Colombia" />
+            <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732811972/utils/qc4wozfzxhgdm6fztb6a.webp" alt="Icono de Colombia" />
           </footer>
         </>
       );

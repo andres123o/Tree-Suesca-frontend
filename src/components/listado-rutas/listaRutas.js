@@ -9,7 +9,6 @@ import OptimizedImage from '../common/optimzarImg'
 // Obtener datos
 const useDestinoContent = () => {
   const location = useLocation();
-  const actividad = location.state?.actividad
   const destino_id = location.state?.destino_id
 
   const [loading, setLoading] = useState(true);
@@ -17,7 +16,6 @@ const useDestinoContent = () => {
   const [content, setContent] = useState(null);
 
   console.log(location.state);
-  console.log(destino_id, actividad);
 
   useEffect(() => {
     const fetchDestinoContent = async () => {
@@ -34,10 +32,10 @@ const useDestinoContent = () => {
       }
     };
 
-    if (destino_id && actividad) {
+    if (destino_id) {
       fetchDestinoContent();
     }
-  }, [destino_id, actividad]);
+  }, [destino_id]);
 
   return { content, loading, error };
 };
@@ -95,56 +93,58 @@ const ListaRutas = ({ rutas, iconos, route}) => {
 
   return (
     <>
-      <FiltrosTitulo 
-        nombre={'Paisajes & Miradores'}
-        filtros={filtros}
-        filtroSeleccionado={filtroSeleccionado}
-        manejarClick={manejarClick}
-      />
-      <div className="container-seccion-lista-rutas">
-        {rutasFiltradas.map((item) => (
-          <div 
-            key={item.id} 
-            className="container-item-lista-rutas"
-            onClick={() => {handle(item.nombre)}}
-          >
-            <OptimizedImage className='container-img-ruta'
-              imageUrl={item.img}
-              alt={item.img}
-            />
-            <div className="container-info-ruta">
-              <div className="container-nombre-titulo">
-                <h5>
-                  {item.nombre}
-                </h5>
-                <div className="container-clasificacion-ruta">
-                  <p>
-                    {item.calificacion}
-                    <img key={`star-${item.id}`} src="/utils/icons8-estrella-48.png" alt="estrella" />
+      <div className="rutas-container">
+        <FiltrosTitulo 
+          nombre={'Paisajes & Miradores'}
+          filtros={filtros}
+          filtroSeleccionado={filtroSeleccionado}
+          manejarClick={manejarClick}
+        />
+        <div className="container-seccion-lista-rutas">
+          {rutasFiltradas.map((item) => (
+            <div 
+              key={item.id} 
+              className="container-item-lista-rutas"
+              onClick={() => {handle(item.nombre)}}
+            >
+              <OptimizedImage className='container-img-ruta'
+                imageUrl={item.img}
+                alt={item.img}
+              />
+              <div className="container-info-ruta">
+                <div className="container-nombre-titulo">
+                  <h5>
+                    {item.nombre}
+                  </h5>
+                  <div className="container-clasificacion-ruta">
+                    <p>
+                      {item.calificacion}
+                      <img key={`star-${item.id}`} src="/utils/icons8-estrella-48.png" alt="estrella" />
+                    </p>
+                  </div>
+                </div>
+                <div className="container-descripcion-caracteristicas">
+                  {React.cloneElement(iconos.Dificultad, { key: `dificultad-icon-${item.id}` })}
+                  <p key={`dificultad-${item.id}`}>
+                    Dificultad: {item.dificultad}
+                  </p>
+                  {React.cloneElement(iconos.distancia, { key: `distancia-icon-${item.id}` })}
+                  <p key={`distancia-${item.id}`}>
+                    {item.distancia} Km
+                  </p>
+                  {React.cloneElement(iconos.tiempo, { key: `tiempo-icon-${item.id}` })}
+                  <p key={`tiempo-${item.id}`}>
+                    {item.tiempo} Min
+                  </p>
+                  {React.cloneElement(iconos.terreno, { key: `terreno-icon-${item.id}` })}
+                  <p key={`terreno-${item.id}`}>
+                    {item.terreno}
                   </p>
                 </div>
               </div>
-              <div className="container-descripcion-caracteristicas">
-                {React.cloneElement(iconos.Dificultad, { key: `dificultad-icon-${item.id}` })}
-                <p key={`dificultad-${item.id}`}>
-                  Dificultad: {item.dificultad}
-                </p>
-                {React.cloneElement(iconos.distancia, { key: `distancia-icon-${item.id}` })}
-                <p key={`distancia-${item.id}`}>
-                  {item.distancia} Km
-                </p>
-                {React.cloneElement(iconos.tiempo, { key: `tiempo-icon-${item.id}` })}
-                <p key={`tiempo-${item.id}`}>
-                  {item.tiempo} Min
-                </p>
-                {React.cloneElement(iconos.terreno, { key: `terreno-icon-${item.id}` })}
-                <p key={`terreno-${item.id}`}>
-                  {item.terreno}
-                </p>
-              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </>
   );

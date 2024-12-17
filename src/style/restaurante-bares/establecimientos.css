@@ -256,7 +256,7 @@
 .container-contacto .contacto {
     width: 48%;
     height: 65%;
-    background-color: var(--red-botons);
+    background: #00cd70;
     display: flex;
     justify-content: center;
     align-items: center;

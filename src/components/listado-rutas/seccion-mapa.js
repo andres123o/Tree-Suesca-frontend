@@ -733,7 +733,7 @@ const FuncionalidadesMapa = ({ ruta }) => {
                     el.innerHTML = `
                         <svg width="40" height="40" viewBox="0 0 24 24" class="marker-svg">
                             <path d="M12 0C7.58 0 4 3.58 4 8c0 5.25 8 13 8 13s8-7.75 8-13c0-4.42-3.58-8-8-8z" 
-                                  fill="#FF4B4B"/>
+                                  fill="#00cd70"/>
                             <text 
                                 x="50%" 
                                 y="45%" 
