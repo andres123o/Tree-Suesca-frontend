@@ -1542,6 +1542,11 @@
     border-radius: 20px;
     width: fit-content;
 }
+.explorar-boton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .visitors-icon {
     color: #666;

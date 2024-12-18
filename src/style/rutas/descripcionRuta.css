@@ -489,3 +489,129 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Mapa */
+/* Container funcionalidades */
+.container-info-mapa {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    position: absolute;
+    top: 63vh;
+    background-clip: padding-box
+}
+.container-img-map {
+    width: 100%;
+    height: 70vh;
+    position: fixed;
+}
+#map2 {
+    width: 100%;
+    height: 100%;
+}
+.container-recuadro-info-title-mapa {
+    width: 100%;
+    height: auto;
+    align-items: center;
+    text-align: center;
+    margin-top: 5%;
+}
+.container-recuadro-info-title-mapa h4 {
+    font-size: 28.8px;
+}
+.container-cuadro-funcionalidades {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+.container-interno {
+    width: 45%;
+    height: auto;
+    background-color: var(--fondo-claro);
+    text-align: center;
+    padding-top: 5%;
+    border-radius: 1em;
+    padding-bottom: 5%;
+}
+.container-interno .container-title-funcionalidades {
+    font-size: 1em;
+    color: var(--font-color-primary);
+}
+.container-interno .container-funcionalidad {
+    font-size: 1.8em;
+    font-weight: 300;
+    color: var(--font-color-secundary);
+}
+
+/* Seccion del grafico */
+.container-canvas-chart {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10%;
+    margin-bottom: 5%;
+}
+
+/* Loader */
+#loading-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.station-marker {
+    cursor: pointer;
+}
+
+.marker-svg {
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+}
+
+.marker-svg path {
+    transform-origin: center;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.station-marker:hover .marker-svg path {
+    transform: scale(1.1);
+}

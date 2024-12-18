@@ -250,12 +250,11 @@
     align-items: center;
     gap: 6px;
     color: #666;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .icon2 {
     color: #00cd70;
-    font-size: 18px;
 }
 
 /* Calificación */

@@ -133,7 +133,7 @@ async function getElevation(coordinates, containerChart) {
         });
 
         // Crear puntos para el gráfico
-        const numParts = 5;
+        const numParts = 10;
         const partSize = Math.floor(y.length / numParts);
         const middleIndexes = [];
 

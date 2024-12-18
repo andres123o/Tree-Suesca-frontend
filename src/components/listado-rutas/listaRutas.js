@@ -116,15 +116,15 @@ const ListaRutas = ({ rutas, iconos, route}) => {
               
               <div className="route-stats">
                 <div className="stat-item">
-                  <Clock className="icon2" />
+                  <Clock className="icon2" size={12}/>
                   <span>{item.tiempo} min</span>
                 </div>
                 <div className="stat-item">
-                  <Navigation2 className="icon2" />
+                  <Navigation2 className="icon2"size={12} />
                   <span>{item.distancia} km</span>
                 </div>
                 <div className="stat-item">
-                  <Mountain className="icon2" />
+                  <Mountain className="icon2" size={12}/>
                   <span>{item.terreno}</span>
                 </div>
               </div>

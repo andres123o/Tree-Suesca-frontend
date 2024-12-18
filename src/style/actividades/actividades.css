@@ -334,3 +334,7 @@
   height: 1px;
   background-color: rgba(105, 105, 105, 0.2);
 }
+.calendar-icon {
+  color: var(--primary-color);
+  margin-left: 3%;
+}

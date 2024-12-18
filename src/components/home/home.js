@@ -182,9 +182,12 @@ const Home = () => {
                                 <MdExplore className="explore-icon" />
                                 <p>{item.frase}</p>
                             </div>
-                            <div className="destination-stats">
-                                <FaUserGroup className="visitors-icon" />
-                                <span>150 visitantes este mes</span>
+                            <div className="explorar-boton">
+                                <div className="destination-stats">
+                                    <FaUserGroup className="visitors-icon" />
+                                    <span>150 visitantes este mes</span>
+                                </div>
+                                <button className="book-btn" onClick={() => handle(item.id, item.municipio)}>Explorar</button>
                             </div>
                         </div>
                     </div>
