@@ -8,6 +8,7 @@ import { FaGripfire } from "react-icons/fa";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
+import MapComponent from '../common/mapaUbicacion';
 
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
@@ -178,6 +179,7 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const [backgroundImage, setBackgroundImage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !establecimiento.calificacion || establecimiento.calificacion === 0;
+    const [isMapOpen, setIsMapOpen] = useState(false);
 
     useEffect(() => {
         setBackgroundImage(establecimiento.img);
@@ -305,10 +307,19 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
                         <div className='separador-res'></div>
 
+                        {isMapOpen && (
+                            <MapComponent
+                                isOpen={isMapOpen}
+                                onClose={() => setIsMapOpen(false)}
+                                coordinates={establecimiento.coordenadas}  // Ya viene en el formato correcto {lat, lng}
+                                establishmentName={establecimiento.name}  // Nombre del establecimiento
+                            />
+                        )}
+
                         <div className='container-contacto-aloja'>
                             <button 
                                 className='como-llegar-aloja'
-                                onClick={() => window.open(establecimiento.coordenadas, '_blank')}
+                                onClick={() => setIsMapOpen(true)}
                             >
                                 <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
                                 Ver ubicación
@@ -444,10 +455,20 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
                         <div className='separador-res'></div>
 
+                        {/* Agregar el MapComponent */}
+                        {isMapOpen && (
+                            <MapComponent
+                                isOpen={isMapOpen}
+                                onClose={() => setIsMapOpen(false)}
+                                coordinates={establecimiento.coordenadas}  // Ya viene en el formato correcto {lat, lng}
+                                establishmentName={establecimiento.name}  // Nombre del establecimiento
+                            />
+                        )}
+
                         <div className='container-contacto-aloja'>
                             <button 
                                 className='como-llegar-aloja'
-                                onClick={() => window.open(establecimiento.coordenadas, '_blank')}
+                                onClick={() => setIsMapOpen(true)}
                             >
                                 <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
                                 Ver ubicación

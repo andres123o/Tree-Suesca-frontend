@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
 import { Star, Clock, Award } from 'lucide-react';
+import MapComponent from '../common/mapaUbicacion';
 
 
 // Obtener datos
@@ -53,7 +54,7 @@ const DescripcionEventos = ( {evento, oferente} ) => {
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !evento.calificacion || evento.calificacion === 0;
-    
+    const [isMapOpen, setIsMapOpen] = useState(false);
 
     const maxTextLength = 100;
 
@@ -195,10 +196,20 @@ const DescripcionEventos = ( {evento, oferente} ) => {
                     </div>
                 </div>
 
+                {/* Agregar el MapComponent */}
+                {isMapOpen && (
+                    <MapComponent
+                        isOpen={isMapOpen}
+                        onClose={() => setIsMapOpen(false)}
+                        coordinates={oferente.coordenadas}  // Ya viene en el formato correcto {lat, lng}
+                        establishmentName={oferente.oferente}  // Nombre del establecimiento
+                    />
+                )}
+
                 <div className='container-contacto-aloja'>
                     <button 
                         className='como-llegar-aloja'
-                        onClick={() => window.open(oferente.coordenadas, '_blank')}
+                        onClick={() => setIsMapOpen(true)}
                     >
                         <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
                         Ver ubicación
@@ -211,6 +222,7 @@ const DescripcionEventos = ( {evento, oferente} ) => {
                         <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
                     </button>
                 </div>
+                
 
                 {/* seccion de accordean, recomendaciones y mas */}
                 <div className='accordion-aloja'>

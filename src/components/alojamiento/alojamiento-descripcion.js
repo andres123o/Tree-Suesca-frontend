@@ -6,6 +6,7 @@ import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import MapComponent from '../common/mapaUbicacion';
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -75,6 +76,7 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !alojamiento.calificacion || alojamiento.calificacion === 0;
+    const [isMapOpen, setIsMapOpen] = useState(false);
 
     const maxTextLength = 150;
 
@@ -241,10 +243,20 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                     </div>
                 </div>
 
+                {/* Agregar el MapComponent */}
+                {isMapOpen && (
+                    <MapComponent
+                        isOpen={isMapOpen}
+                        onClose={() => setIsMapOpen(false)}
+                        coordinates={oferente.coordenadas}  // Ya viene en el formato correcto {lat, lng}
+                        establishmentName={oferente.oferente}  // Nombre del establecimiento
+                    />
+                )}
+
                 <div className='container-contacto-aloja'>
                     <button 
                         className='como-llegar-aloja'
-                        onClick={() => window.open(oferente.address, '_blank')}
+                        onClick={() => setIsMapOpen(true)}
                     >
                         <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
                         Ver ubicación

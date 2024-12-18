@@ -48,6 +48,7 @@ import './style/restaurante-bares/establecimientos.css'
 import './style/actividades/actividades.css'
 import './style/alojamiento/alojamiento.css'
 import './style/destino-home/destino.css'
+import './style/rutas/mapaUbicacion.css'
 
 
 // Iconos de la Lista de rutas
