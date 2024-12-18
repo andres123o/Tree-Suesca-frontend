@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
+
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -53,6 +55,8 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const isNewListing = !actividad.calificacion || actividad.calificacion === 0;
+
 
     const maxTextLength = 100;
 
@@ -74,6 +78,12 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
     };
 
     const visibleText = isExpanded ? actividad.itinerario : `${actividad.itinerario.slice(0, maxTextLength)}...`;
+
+    const handleWhatsAppClick = () => {
+        const message = `¡Hola! Me interesa reservar ${actividad.name} para mi estadía en Suesca`;
+        const whatsappUrl = `https://wa.me/${oferente.contacto}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    };
 
     return (
         <>
@@ -101,20 +111,58 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                     </div>
                 </div>
 
-                {/* Titulo */}
-                <div className='container-logo-nombre-calificacion'>
-                    <div className='logo-establecimiento'>
-                        <img src={oferente.logo} alt={oferente.oferente}/>
-                    </div>
-                    <div className='nombre-establecimiento'>
-                        <h4>{actividad.name}</h4>
-                        <p>{`Horario: ${oferente.horario.abren} - ${oferente.horario.cierran}`}</p>
-                    </div>
-                    <div className='calificacion-establecimiento'>
-                        <p>{actividad.calificacion}</p>
-                        <img src='/utils/icons8-estrella-48.png' />
+                {/* Sección de título actualizada */}
+                <div className='container-logo-nombre-calificacion-alojamiento'>
+                    <div className='container-info-titulo-calificacion-logo'>
+                        <div className='logo-establecimiento'>
+                            <img src={oferente.logo} alt={oferente.oferente} />
+                        </div>
+                        <div className='nombre-establecimiento-alojamiento'>
+                            <h5>{actividad.name}</h5>
+                            <div className="check-times">
+                                <Clock size={14} className="check-icon" />
+                                <p>{`Horario: ${oferente.horario.abren} - ${oferente.horario.cierran}`}</p>
+                            </div>
+                            {isNewListing && (
+                                <div className="new-listing-badge">
+                                    <Award size={14} className="award-icon" />
+                                    <span>¡Nueva Actividad!</span>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
+
+                {/* Caracteriticas  */}
+                <div className='container-caracteristicas'>
+                    <div className='sub-container'>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Dificultad</h5>
+                                <FaGripfire className='fa-grip-fire'/>
+                            </div>
+                            <h5>
+                                {actividad.dificultad}
+                            </h5>
+                        </div>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Duración</h5>
+                                <FaRegClock className='fa-clock'/>
+                            </div>
+                            <h5>{actividad.duracion} Min</h5>
+                        </div>
+                        <div className='container-individual'>
+                            <div>
+                                <h5>Capacidad</h5>
+                                <FaPerson className='fa-person'/>
+                            </div>
+                            <h5>{actividad.capacidad}</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='separador'></div>
                 
                 {/* Descripcion */}
                 <div className='container-descripcion'>
@@ -125,40 +173,74 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                         </button>
                     </p>
                 </div>
-                    
-                {/* Caracteriticas  */}
-                <div className='container-caracteristicas'>
-                    <div className='sub-container'>
-                        <div className='container-individual'>
-                            <div>
-                                <h5>Dificultad</h5>
-                                <FaGripfire />
+
+                <div className='separador'></div>
+
+                {!isNewListing && (
+                    <div className="social-proof-container">
+                        <div className="rating-overview">
+                            <div className="rating-number">{actividad.calificacion}</div>
+                            <div className="rating-stats">
+                                <div className="rating-stars">
+                                    {[...Array(5)].map((_, index) => (
+                                        <Star
+                                            key={index}
+                                            size={20}
+                                            fill={index < Math.floor(actividad.calificacion) ? "#FFB800" : "none"}
+                                            color={index < Math.floor(actividad.calificacion) ? "#FFB800" : "#e0e0e0"}
+                                        />
+                                    ))}
+                                </div>
+                                <p className="rating-text">Calificación de Usuaior</p>
                             </div>
+                        </div>
+                        <div className="testimonial-preview">
+                            "Una experiencia única en Suesca. La actividad superó nuestras expectativas..."
+                        </div>
+                    </div>
+                )}
+
+                {/* Seccion metodos de pago */}
+                <div className='container-principal-precio-metodo'>
+                    <div className='container-precio-metodo-pago'>
+                        <div className='container-precio'>
                             <h5>
-                                {actividad.dificultad}
+                                {actividad.precio.toLocaleString('es-CO', {
+                                    style: 'currency',
+                                    currency: 'COP',
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                })}
                             </h5>
+                            <p>Por persona</p>
+                            {isNewListing && <span className="promo-tag">¡Precio de lanzamiento!</span>}
                         </div>
-                        <div className='container-individual'>
-                            <div>
-                                <h5>Duración</h5>
-                                <FaRegClock />
-                            </div>
-                            <h5>{actividad.duracion} Min</h5>
-                        </div>
-                        <div className='container-individual'>
-                            <div>
-                                <h5>Capacidad</h5>
-                                <FaPerson />
-                            </div>
-                            <h5>{actividad.capacidad}</h5>
+                        <div className='container-metodo'>
+                            <h4>Métodos de pago</h4>
+                            <p>{oferente.metodosDePago}</p>
                         </div>
                     </div>
                 </div>
 
-                <div className='separador'></div>
+                <div className='container-contacto-aloja'>
+                    <button 
+                        className='como-llegar-aloja'
+                        onClick={() => window.open(oferente.address, '_blank')}
+                    >
+                        <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
+                        Ver ubicación
+                    </button>
+                    <button 
+                        className='contacto-aloja'
+                        onClick={handleWhatsAppClick}
+                    >
+                        <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
+                        <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
+                    </button>
+                </div>
 
                 {/* seccion de accordean, recomendaciones y mas */}
-                <div className='accordion'>
+                <div className='accordion-aloja'>
                     {Object.entries(actividad.requisitosRecomendaciones).map(([key, value], index) => (
                         <div key={key} className='accordion-item1'>
                         <button 
@@ -185,44 +267,6 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                         </div>
                         </div>
                     ))}
-                </div>
-
-                <div className='separador'></div>
-                
-                {/* Seccion metodos de pago */}
-                <div className='container-principal-precio-metodo'>
-                    <div className='container-precio-metodo-pago'>
-                        <div className='container-precio'>
-                            <h5>
-                                {actividad.precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                            </h5>
-                            <p>Por persona</p>
-                        </div>
-                        <div className='container-metodo'>
-                            <h4>Metodos de pago</h4>
-                            <p>
-                                {oferente.metodosDePago}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Contacto */}
-                <div className='container-contacto'>
-                    <button 
-                        className='como-llegar'
-                        onClick={() => window.open(actividad.address, '_blank')}  
-                    >
-                        ¿Como llegar?
-                        <img src="/utils/icons8-gps-50.png" />
-                    </button>
-                    <button 
-                        className='contacto'
-                        onClick={() => window.open(`https://wa.me/${oferente.contacto}`, '_blank')}    
-                    >
-                        Escribe por Whats
-                        <img src="/utils/icons8-whatsapp-48.png" />
-                    </button>
                 </div>
             </div>
         </>

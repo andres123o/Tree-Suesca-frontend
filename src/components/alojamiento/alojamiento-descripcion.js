@@ -4,6 +4,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
+import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
 const getIconComponent = (serviceName) => {
@@ -73,6 +74,7 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [expandedSection, setExpandedSection] = useState(null);
     const [isExpanded, setIsExpanded] = useState(false);
+    const isNewListing = !alojamiento.calificacion || alojamiento.calificacion === 0;
 
     const maxTextLength = 150;
 
@@ -94,6 +96,12 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     };
 
     const visibleText = isExpanded ? alojamiento.detalle : `${alojamiento.detalle.slice(0, maxTextLength)}...`;
+
+    const handleWhatsAppClick = () => {
+        const message = `¡Hola! Me interesa reservar ${alojamiento.name} para mi estadía en Suesca`;
+        const whatsappUrl = `https://wa.me/${oferente.contacto}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    };
     
     return (
         <>
@@ -121,27 +129,37 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                     </div>
                 </div>
 
-                {/* Titulo */}
+                {/* Sección de título actualizada */}
                 <div className='container-logo-nombre-calificacion-alojamiento'>
                     <div className='container-info-titulo-calificacion-logo'>
                         <div className='logo-establecimiento'>
-                            <img src={oferente.logo} />
+                            <img src={oferente.logo} alt={alojamiento.name} />
                         </div>
                         <div className='nombre-establecimiento-alojamiento'>
                             <h5>{alojamiento.name}</h5>
-                            <p>{`Chek In: ${oferente.checkIn} Chek Out: ${oferente.checkOut}`}</p>
+                            <div className="check-times">
+                                <Clock size={14} className="check-icon" />
+                                <p>Check In: {oferente.checkIn} - Check Out: {oferente.checkOut}</p>
+                            </div>
+                            {isNewListing && (
+                                <div className="new-listing-badge">
+                                    <Award size={14} className="award-icon" />
+                                    <span>¡Nuevo Alojamiento!</span>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
                                 
-                {/* Carusel servicios */}
+                {/* Carrusel servicios mejorado */}
                 <div className='container-carrusel-servicios'>
                     <div className='sub-container-carrusel-servicios'>
                         {alojamiento.servicios.servicios.map((servicio, index) => {
                             const IconComponent = getIconComponent(servicio);
                             return (
-                                <p key={index}>
-                                    <IconComponent size={18} className="mr-2" /> {servicio}
+                                <p key={index} className="servicio-item">
+                                    <IconComponent size={18} />
+                                    {servicio}
                                 </p>
                             );
                         })}
@@ -177,8 +195,71 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
 
                 <div className='separador'></div>
 
+                {!isNewListing && (
+                    <div className="social-proof-container">
+                        <div className="rating-overview">
+                            <div className="rating-number">{alojamiento.calificacion}</div>
+                            <div className="rating-stats">
+                                <div className="rating-stars">
+                                    {[...Array(5)].map((_, index) => (
+                                        <Star
+                                            key={index}
+                                            size={20}
+                                            fill={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "none"}
+                                            color={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "#e0e0e0"}
+                                        />
+                                    ))}
+                                </div>
+                                <p className="rating-text">Calificación de huéspedes</p>
+                            </div>
+                        </div>
+                        <div className="testimonial-preview">
+                            "Una experiencia única en Suesca. El alojamiento superó nuestras expectativas..."
+                        </div>
+                    </div>
+                )}
+
+                {/* Seccion metodos de pago */}
+                <div className='container-principal-precio-metodo'>
+                    <div className='container-precio-metodo-pago'>
+                        <div className='container-precio'>
+                            <h5>
+                                {alojamiento.precio.toLocaleString('es-CO', {
+                                    style: 'currency',
+                                    currency: 'COP',
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                })}
+                            </h5>
+                            <p>Por noche</p>
+                            {isNewListing && <span className="promo-tag">¡Precio de lanzamiento!</span>}
+                        </div>
+                        <div className='container-metodo'>
+                            <h4>Métodos de pago</h4>
+                            <p>{oferente.metodosDePago}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className='container-contacto-aloja'>
+                    <button 
+                        className='como-llegar-aloja'
+                        onClick={() => window.open(oferente.address, '_blank')}
+                    >
+                        <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
+                        Ver ubicación
+                    </button>
+                    <button 
+                        className='contacto-aloja'
+                        onClick={handleWhatsAppClick}
+                    >
+                        <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
+                        <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
+                    </button>
+                </div>
+
                  {/* seccion de accordean, recomendaciones y mas */}
-                <div className='accordion'>
+                 <div className='accordion-aloja'>
                     {Object.entries(oferente.politicas).map(([key, value], index) => (
                         <div key={key} className='accordion-item1'>
                         <button 
@@ -205,42 +286,6 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                         </div>
                         </div>
                     ))}
-                </div>
-
-                {/* Seccion metodos de pago */}
-                <div className='container-principal-precio-metodo'>
-                    <div className='container-precio-metodo-pago'>
-                        <div className='container-precio'>
-                            <h5>
-                                {alojamiento.precio.toLocaleString('es-CO', { style: 'currency', currency: 'COP', minimumFractionDigits: 0, maximumFractionDigits: 0 })}
-                            </h5>
-                            <p>Por noche</p>
-                        </div>
-                        <div className='container-metodo'>
-                            <h4>Metodos de pago</h4>
-                            <p>
-                                {oferente.metodosDePago}
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Contacto */}
-                <div className='container-contacto'>
-                    <button 
-                        className='como-llegar'
-                        onClick={() => window.open(oferente.address, '_blank')}  
-                    >
-                        ¿Como llegar?
-                        <img src="/utils/icons8-gps-50.png" />
-                    </button>
-                    <button 
-                        className='contacto'
-                        onClick={() => window.open(`https://wa.me/${oferente.contacto}`, '_blank')}    
-                    >
-                        Reservar directa
-                        <img src="/utils/icons8-whatsapp-48.png" />
-                    </button>
                 </div>
             </div>
         </>

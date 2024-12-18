@@ -4,6 +4,7 @@ import SearchBox from '../home-destino/searchBox';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { FaUserGroup } from "react-icons/fa6";
 import OptimizedImage from "../common/optimzarImg";
 import { MdError } from "react-icons/md";
 
@@ -62,6 +63,18 @@ const Home = () => {
         });
     };
 
+    // Función para determinar el tipo de badge basado en la calificación
+    const getBadgeType = (calificacion) => {
+        if (calificacion === 0) return 'new';
+        if (calificacion >= 4.6) return 'popular';
+        return null;
+    };
+
+    // Función para determinar el tipo de destino (simulado por ahora)
+    const getDestinationType = (municipio) => {
+        // Esto sería reemplazado por datos reales de la API
+        return municipio === "Suesca" ? "Aventura" : "Familiar";
+    };
 
     if (loading) return (
         <div className="loading-container">
@@ -132,30 +145,46 @@ const Home = () => {
                 ))}
             </div>
 
-            <div className="container-seccion-lista-rutas">
+            <div className="container-seccion-lista-home">
                 {rutasFiltradas.map((item) => (
                     <div 
                         key={item.id} 
-                        className="container-item-lista-rutas"
+                        className="destination-card"
                         onClick={() => handle(item.id, item.municipio)}
                     >
-                        <OptimizedImage className='container-img-ruta'
-                            imageUrl={item.img}
-                            alt={item.municipio}
-                        />
-                        <div className="container-info-ruta">
-                            <div className="container-nombre-titulo">
-                                <h5>{item.municipio}, {item.departamento}.</h5>
-                                <div className="container-clasificacion-ruta">
-                                    <p>
-                                        {item.calificacion}
-                                        <img src="/utils/icons8-estrella-48.png" alt="estrella" />
-                                    </p>
-                                </div>
+                        <div className="image-section">
+                            <OptimizedImage
+                                imageUrl={item.img}
+                                alt={item.municipio}
+                                className={'destination-image'}
+                            />
+                            <div className="destination-badges">
+                                {getBadgeType(item.calificacion) && (
+                                    <span className={`badge ${getBadgeType(item.calificacion)}`}>
+                                        {getBadgeType(item.calificacion) === 'new' ? 'Nuevo' : 'Popular'}
+                                    </span>
+                                )}
                             </div>
-                            <div className="container-descripcion-caracteristicas">
-                                <MdExplore />
-                                <p>{item.frase}.</p>
+                            <div className="destination-rating">
+                                <span>{item.calificacion}</span>
+                                <img src="/utils/icons8-estrella-48.png" alt="estrella" />
+                            </div>
+                        </div>
+
+                        <div className="destination-info">
+                            <div className="destination-header">
+                                <h3>{item.municipio}, {item.departamento}</h3>
+                                <span className="destination-type">
+                                    {getDestinationType(item.municipio)}
+                                </span>
+                            </div>
+                            <div className="destination-description">
+                                <MdExplore className="explore-icon" />
+                                <p>{item.frase}</p>
+                            </div>
+                            <div className="destination-stats">
+                                <FaUserGroup className="visitors-icon" />
+                                <span>150 visitantes este mes</span>
                             </div>
                         </div>
                     </div>

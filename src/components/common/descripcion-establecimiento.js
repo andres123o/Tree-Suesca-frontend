@@ -3,8 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FaPerson } from "react-icons/fa6";
 import axios from 'axios'
+import { FaRegClock } from "react-icons/fa6";
+import { FaGripfire } from "react-icons/fa";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import OptimizedImage from '../common/optimzarImg'
+import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
+
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
 const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
@@ -23,30 +27,43 @@ const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
     </div>
 );
 
-const HeaderInfo = ({ establecimiento, nombre }) => (
-    <div className='container-logo-nombre-calificacion'>
-        <div className='logo-establecimiento'>
-            <img src={establecimiento.logo} />
-        </div>
-        <div className='nombre-establecimiento'>
-            <h4>{establecimiento.name}</h4>
-            <p>{`Horario: ${establecimiento.horario.abren} - ${establecimiento.horario.cierran}`}</p>
-        </div>
-        <div className='calificacion-establecimiento'>
-            <p>{establecimiento.calificacion}</p>
-            <img src='/utils/icons8-estrella-48.png' />
-        </div>
-    </div>
-);
+const HeaderInfo = ({ establecimiento, nombre }) => {
+    const isNewListing = !establecimiento.calificacion || establecimiento.calificacion === 0;
+
+    return (
+        <>
+            <div className='container-logo-nombre-calificacion-alojamiento'>
+                <div className='container-info-titulo-calificacion-logo'>
+                    <div className='logo-establecimiento'>
+                        <img src={establecimiento.logo} alt={establecimiento.logo} />
+                    </div>
+                    <div className='nombre-establecimiento-alojamiento'>
+                        <h5>{establecimiento.name}</h5>
+                        <div className="check-times">
+                            <Clock size={14} className="check-icon" />
+                            <p>{`Horario: ${establecimiento.horario.abren} - ${establecimiento.horario.cierran}`}</p>
+                        </div>
+                        {isNewListing && (
+                            <div className="new-listing-badge">
+                                <Award size={14} className="award-icon" />
+                                <span>¡Nuevo lugar!</span>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+};
 
 const Description = ({ texto, isExpanded, toggleExpand, maxLength = 100 }) => {
     const visibleText = isExpanded ? texto : `${texto.slice(0, maxLength)}...`;
     return (
-        <div className='descripcion-establecimiento'>
+        <div className='container-descripcion'>
             <p className='descripcion' id="descripcion-texto">
-                {visibleText}   
+                {visibleText}
                 <button onClick={toggleExpand} className='show-more-btn'>
-                    {isExpanded ? 'less' : 'more'}
+                {isExpanded ? 'less' : 'more'}
                 </button>
             </p>
         </div>
@@ -160,7 +177,8 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const [selectedImgIndex, setSelectedImgIndex] = useState(null);
     const [backgroundImage, setBackgroundImage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
-    
+    const isNewListing = !establecimiento.calificacion || establecimiento.calificacion === 0;
+
     useEffect(() => {
         setBackgroundImage(establecimiento.img);
     }, [establecimiento.img]);
@@ -168,6 +186,12 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const handleImageClick = (imgSrc, index) => {
         setSelectedImgIndex(index);
         setBackgroundImage(imgSrc);
+    };
+
+    const handleWhatsAppClick = () => {
+        const message = `¡Hola! Me interesa reservar ${establecimiento.name} para mi estadía en Suesca`;
+        const whatsappUrl = `https://wa.me/${establecimiento.contacto}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
     };
 
     return (
@@ -186,18 +210,12 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
                         <HeaderInfo establecimiento={establecimiento} />
 
-                        <Description 
-                            texto={establecimiento.concepto}
-                            isExpanded={isExpanded}
-                            toggleExpand={() => setIsExpanded(!isExpanded)}
-                        />
-
                         <div className='container-caracteristicas'>
                             <div className='sub-container'>
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Cover</h5>
-                                        <FaPerson className="Faperson"/>
+                                        <FaPerson className="fa-grip-fire"/>
                                     </div>
                                     <h5>
                                         {establecimiento.servicios.cover.toLocaleString('es-CO', {
@@ -211,27 +229,98 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Reservas</h5>
-                                        <img src='/utils/icons8-reserva-50.png'/>
+                                        <FaRegClock className='fa-clock'/>
                                     </div>
                                     <h5 className='disponibilidad'>{establecimiento.servicios.reservas}</h5>
                                 </div>
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Parking</h5>
-                                        <img src='/utils/icons8-estacionamiento-50.png'/>
+                                        <FaPerson className='fa-person'/>
                                     </div>
                                     <h5 className='disponibilidad'>{establecimiento.servicios.parking}</h5>
                                 </div>
                             </div>
                         </div>
 
+                        <div className='separador'></div>
+
+
+                        <Description 
+                            texto={establecimiento.concepto}
+                            isExpanded={isExpanded}
+                            toggleExpand={() => setIsExpanded(!isExpanded)}
+                        />
+
+                        <div className='separador'></div>
+
+                        {!isNewListing && (
+                            <div className="social-proof-container">
+                                <div className="rating-overview">
+                                    <div className="rating-number">{establecimiento.calificacion}</div>
+                                    <div className="rating-stats">
+                                        <div className="rating-stars">
+                                            {[...Array(5)].map((_, index) => (
+                                                <Star
+                                                    key={index}
+                                                    size={20}
+                                                    fill={index < Math.floor(establecimiento.calificacion) ? "#FFB800" : "none"}
+                                                    color={index < Math.floor(establecimiento.calificacion) ? "#FFB800" : "#e0e0e0"}
+                                                />
+                                            ))}
+                                        </div>
+                                        <p className="rating-text">Calificación de Usuaior</p>
+                                    </div>
+                                </div>
+                                <div className="testimonial-preview">
+                                    "Una experiencia única en Suesca. El restaurante superó nuestras expectativas..."
+                                </div>
+                            </div>
+                        )}
+                        
+                        
+                        {/* Seccion metodos de pago */}
+                        <div className='container-principal-precio-metodo-es'>
+                            <div className='container-precio-metodo-pago'>
+                                <div className='container-precio'>
+                                    <h5>
+                                        $ 0.0
+                                    </h5>
+                                    <p>Reserva</p>
+                                    {isNewListing && <span className="promo-tag">¡Precio de reserva!</span>}
+                                </div>
+                                <div className='container-metodo'>
+                                    <h4>Aquí puedes pagar con</h4>
+                                    <p>{establecimiento.metodos_de_pago}</p>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className='separador'></div>
+
                         <BebidaSection title="Antojos" items={establecimiento.antojos} />
                         <PopularSection title="Top 3 Cocteles!" items={establecimiento.destacados} />
                         <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
-                        
-                        
-                        <ContactButtons establecimiento={establecimiento} />
-                        <Footer />
+
+                        <div className='separador-res'></div>
+
+                        <div className='container-contacto-aloja'>
+                            <button 
+                                className='como-llegar-aloja'
+                                onClick={() => window.open(establecimiento.coordenadas, '_blank')}
+                            >
+                                <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
+                                Ver ubicación
+                            </button>
+                            <button 
+                                className='contacto-aloja'
+                                onClick={handleWhatsAppClick}
+                            >
+                                <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
+                                <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
+                            </button>
+                        </div>
                     </div>
                 </>
             ) : (
@@ -248,37 +337,86 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
                         <HeaderInfo establecimiento={establecimiento} />
 
-                        <Description 
-                            texto={establecimiento.concepto}
-                            isExpanded={isExpanded}
-                            toggleExpand={() => setIsExpanded(!isExpanded)}
-                        />
-
                         <div className='container-caracteristicas'>
                             <div className='sub-container'>
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Domicilios</h5>
-                                        <img src='/utils/icons8-entrega-moto-caja-sola-50.png' />
+                                        <FaGripfire className='fa-grip-fire'/>
                                     </div>
                                     <h5 className='disponibilidad'>{establecimiento.servicios.delivery}</h5>
                                 </div>
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Reservas</h5>
-                                        <img src='/utils/icons8-reserva-50.png'/>
+                                        <FaRegClock className='fa-clock'/>
                                     </div>
                                     <h5 className='disponibilidad'>{establecimiento.servicios.reservas}</h5>
                                 </div>
                                 <div className='container-individual'>
                                     <div>
                                         <h5>Parking</h5>
-                                        <img src='/utils/icons8-estacionamiento-50.png'/>
+                                        <FaPerson className='fa-person'/>
                                     </div>
                                     <h5 className='disponibilidad'>{establecimiento.servicios.parking}</h5>
                                 </div>
                             </div>
                         </div>
+
+                        <div className='separador'></div>
+
+
+                        <Description 
+                            texto={establecimiento.concepto}
+                            isExpanded={isExpanded}
+                            toggleExpand={() => setIsExpanded(!isExpanded)}
+                        />
+
+                        <div className='separador'></div>
+
+                        {!isNewListing && (
+                            <div className="social-proof-container">
+                                <div className="rating-overview">
+                                    <div className="rating-number">{establecimiento.calificacion}</div>
+                                    <div className="rating-stats">
+                                        <div className="rating-stars">
+                                            {[...Array(5)].map((_, index) => (
+                                                <Star
+                                                    key={index}
+                                                    size={20}
+                                                    fill={index < Math.floor(establecimiento.calificacion) ? "#FFB800" : "none"}
+                                                    color={index < Math.floor(establecimiento.calificacion) ? "#FFB800" : "#e0e0e0"}
+                                                />
+                                            ))}
+                                        </div>
+                                        <p className="rating-text">Calificación de Usuaior</p>
+                                    </div>
+                                </div>
+                                <div className="testimonial-preview">
+                                    "Una experiencia única en Suesca. El restaurante superó nuestras expectativas..."
+                                </div>
+                            </div>
+                        )}
+                        
+
+                        {/* Seccion metodos de pago */}
+                        <div className='container-principal-precio-metodo-es'>
+                            <div className='container-precio-metodo-pago'>
+                                <div className='container-precio'>
+                                    <h5>
+                                        $ 0.0
+                                    </h5>
+                                    <p>Reserva</p>
+                                    {isNewListing && <span className="promo-tag">¡Precio de reserva!</span>}
+                                </div>
+                                <div className='container-metodo'>
+                                    <h4>Aquí puedes pagar con</h4>
+                                    <p>{establecimiento.metodosdepago}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='separador'></div>
 
                         <div className='container-top-5'>
                             <div className='container-title'>
@@ -303,10 +441,25 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                         <PopularSection title="Top 3 Platos!" items={establecimiento.destacados} />
                         <BebidaSection title="Antojos" items={establecimiento.antojos} />
                         <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
-                        
 
-                        <ContactButtons establecimiento={establecimiento} />
-                        <Footer />
+                        <div className='separador-res'></div>
+
+                        <div className='container-contacto-aloja'>
+                            <button 
+                                className='como-llegar-aloja'
+                                onClick={() => window.open(establecimiento.coordenadas, '_blank')}
+                            >
+                                <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
+                                Ver ubicación
+                            </button>
+                            <button 
+                                className='contacto-aloja'
+                                onClick={handleWhatsAppClick}
+                            >
+                                <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
+                                <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
+                            </button>
+                        </div>
                     </div>
                 </>
             )}

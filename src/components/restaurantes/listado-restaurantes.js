@@ -2,9 +2,24 @@ import React, { useState, useEffect } from "react";
 import ContainerPequeño from "../common/container-pequeño";
 import FiltrosTitulo from "../common/titulo-filtro";
 import axios from "axios";
+import { Heart, Star, Users, BedDouble, Home } from 'lucide-react';
 import { useLocation } from "react-router-dom";
+import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import { useNavigate} from "react-router-dom";
+
+
+
+const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('es-CO', {
+      style: 'currency',
+      currency: 'COP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+};
 
 const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) => {
+    const navigate = useNavigate();
     const location = useLocation()
     const destino_id = location.state?.destino_id
     const tipo = 'restaurantes' 
@@ -60,22 +75,79 @@ const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) =>
         setRestaurantesFiltrados(nuevasRutas);
     };
 
+    const handleCardClick = (name) => {
+        navigate(`/establecimiento/restaurante/${encodeURIComponent(name)}`);
+    };
+
     
     return (
         <>
-            <FiltrosTitulo 
-                nombre={titulo}
-                filtros={filtros}
-                filtroSeleccionado={filtroSeleccionado}
-                manejarClick={manejarClick}
-            />
-            <ContainerPequeño 
-                displayedItems = {restaurantesFiltrados}
-                icono1 = {icono1}
-                icono2={icono2}
-                tipoDescripcion= 'Platos desde: '
-                tipoEstablecimiento= {tipoEstablecimiento}
-            />
+            <div className="alojamientos-container">
+                <FiltrosTitulo
+                    nombre={titulo}
+                    filtros={filtros}
+                    filtroSeleccionado={filtroSeleccionado}
+                    manejarClick={manejarClick}
+                />
+                
+                <div className="alojamientos-grid">
+                    {restaurantesFiltrados.map((restaurante) => (
+                    <div
+                        key={restaurante.name}
+                        className="alojamiento-card"
+                        onClick={() => handleCardClick(restaurante.name)}
+                    >
+                        <div className="image-container">
+                        <OptimizedImageLarge className='accommodation-image'
+                            imageUrl={restaurante.img}
+                            alt={restaurante.img}
+                        />
+                        <button className="favorite-btn">
+                            <Heart size={18} />
+                        </button>
+                        {restaurante.calificacion === 0 && (
+                            <span className="badge">Nuevo</span>
+                        )}
+                        </div>
+
+                        <div className="content">
+                        {/* Header with logo, name and rating */}
+                        <div className="card-header">
+                            <div className="logo-name-container">
+                            <img 
+                                src={restaurante.logo} 
+                                alt={`Logo de ${restaurante.name}`}
+                                className="alojamiento-logo"
+                            />
+                            <h3 className="accommodation-title-lista">{restaurante.name}</h3>
+                            </div>
+                            <div className="rating">
+                            <Star size={14} className="star-icon" />
+                            <span>{restaurante.calificacion === 0 ? "Nuevo" : restaurante.calificacion}</span>
+                            </div>
+                        </div>
+
+                        <div className="participants-info">
+                            <div className="profile-circles">
+                            <div className="profile-circle"></div>
+                            <div className="profile-circle"></div>
+                            </div>
+                            <span>+124 personas este mes</span>
+                        </div>
+
+                        {/* Price and booking */}
+                        <div className="price-booking">
+                            <div className="price">
+                            <span className="amount">{formatCurrency(restaurante.precio_promedio)}</span>
+                            <span className="per-night">/Precio promedio</span>
+                            </div>
+                            <button className="book-btn">Reservar</button>
+                        </div>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+            </div>
         </>
     )
 }

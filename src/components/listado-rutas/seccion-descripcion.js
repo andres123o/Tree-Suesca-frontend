@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import {  Navigation2, Clock, Mountain, Star, Award, Users  } from 'lucide-react'; // Importamos los iconos
 import StarRating from '../common/calificacion';
 import { IoIosArrowForward } from "react-icons/io";
 import OptimizedImage from '../common/optimzarImg'
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import Footer from '../common/footer'
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const [selectedImgIndex, setSelectedImgIndex] = useState(null);
   const [expandedSection, setExpandedSection] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
 
   const maxTextLength = 100;
 
@@ -228,15 +231,24 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
           <h4>{ruta.nombre}</h4>
           <div className='container-dificultad-distancia-timpo'>
             <div className='section'>
-              <h5>Distancia</h5>
+              <h5>
+                <Navigation2 className="info-icon" size={18} />
+                Distancia
+              </h5>
               <p>{ruta.distancia} Km</p>
             </div>
             <div className='section'>
-              <h5>Tiempo</h5>
+              <h5>
+                <Clock className="info-icon" size={18} />
+                Tiempo
+              </h5>
               <p>{ruta.tiempo} Min</p>
             </div>
             <div className='section'>
-              <h5>Dificultad</h5>
+              <h5>
+                <Mountain className="info-icon" size={18} />
+                Dificultad
+              </h5>
               <p>{ruta.dificultad}</p>
             </div>
           </div>
@@ -268,33 +280,57 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
 
         <div className='separador'></div>
 
+        {/* Nueva sección de estadísticas */}
+          {isNewRoute ? (
+            <div className='new-route-banner'>
+              <div className='new-route-header'>
+                <Award className="award-icon" />
+                <h3>¡Nueva Ruta Descubierta!</h3>
+              </div>
+              <p>Sé el primero en explorar este emocionante sendero</p>
+              <div className='pioneer-badge'>
+                <Users className="users-icon" />
+                <span>¡Conviértete en pionero de esta aventura!</span>
+              </div>
+            </div>
+          ) : (
+            <>
+              <div className="sub-stats-container">
+                <div className="calificacion">
+                  <span className="rating-number">{ruta.calificacion}</span>
+                  <div className="rating-stars">
+                    {[...Array(5)].map((_, index) => (
+                      <Star
+                        key={index}
+                        size={20}
+                        fill={index < Math.floor(ruta.calificacion) ? "#FFB800" : "none"}
+                        color={index < Math.floor(ruta.calificacion) ? "#FFB800" : "#e0e0e0"}
+                      />
+                    ))}
+                  </div>
+                  <div className="recomendacion">
+                    <p>Recomendada: <strong>{ruta.veces_recomendada}</strong> veces</p>
+                    <p>Completada: <strong>{ruta.completaron_ruta}</strong> veces</p>
+                  </div>
+                </div>
+                <div className="testimonial-preview">
+                  "Una experiencia única en la ruta. El recorrido superó mis expectativas, los puntos de descanso están perfectamente ubicados y las vistas son espectaculares..."
+                </div>
+              </div>
+            </>
+          )}
+
+        {/* Botón CTA mejorado */}
         <div className='container-boton'>
           <button 
-            className="unlock-button" 
-            id="desbloquear"
+            className="adventure-button"
             onClick={startMap}
           >
-            Iniciar Ruta
+            <span className="button-main-text">¡Iniciar Aventura!</span>
+            <span className="button-sub-text">
+              {isNewRoute ? '¡Sé el primero en explorar!' : '¡Únete a la aventura!'}
+            </span>
           </button>
-        </div>
-
-        <div className='separador'></div>
-
-        <div className='container-calificativo'>
-          <div className='container-estrellas'>
-            <p>{ruta.calificacion}</p>
-            <StarRating rating={ruta.calificacion} />
-          </div>
-          <div className='container-comentarios'>
-            <div>
-              <h5>Veces recomendada: </h5>
-              <span>{ruta.veces_recomendada}</span>
-            </div>
-            <div>
-              <h5>Completaron la ruta: </h5>
-              <span>{ruta.completaron_ruta}</span>
-            </div>
-          </div> 
         </div>
 
         <div className='separador'></div>
