@@ -69,7 +69,7 @@ const DescripcionEventos = ( {evento, oferente} ) => {
     const visibleText = isExpanded ? evento.itinerario : `${evento.itinerario.slice(0, maxTextLength)}...`;
 
     const handleWhatsAppClick = () => {
-        const message = `¡Hola! Me interesa reservar ${evento.name} para mi estadía en Suesca`;
+        const message = `¡Hola! Me interesa asistir a:${evento.name}`;
         const whatsappUrl = `https://wa.me/${evento.contacto}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     };

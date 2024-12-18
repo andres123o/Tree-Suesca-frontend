@@ -191,7 +191,7 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     };
 
     const handleWhatsAppClick = () => {
-        const message = `¡Hola! Me interesa reservar ${establecimiento.name} para mi estadía en Suesca`;
+        const message = `¡Hola! Me interesa ir a: ${establecimiento.name}, estan disponibles`;
         const whatsappUrl = `https://wa.me/${establecimiento.contacto}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     };
