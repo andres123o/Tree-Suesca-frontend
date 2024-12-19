@@ -57,8 +57,8 @@ const Home = () => {
         setRutasFiltradas(nuevasRutas);
     };
     
-    const handle = (destino_id, municipio) => {
-        navigate(`/home/destino/${municipio}`, {
+    const handle = (destino_id) => {
+        navigate(`/home/destino/${destino_id}`, {
             state: { destino_id }
         });
     };

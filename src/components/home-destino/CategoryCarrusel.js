@@ -9,11 +9,7 @@ const ViewpointsSection = ({ imagenes = [], destino_id }) => {
   const mainImage = imagenes?.[0]?.img || "https://res.cloudinary.com/destinoplus/image/upload/v1733759892/rutas/mirador-del-halcon/mxxupbqr7ls8uhzasdmg.jpg";
 
   const handleClick = () => {
-    navigate('/rutas/Senderismo', {
-      state: {
-        destino_id: destino_id
-      }
-    })
+    navigate(`/rutas/Senderismo/${encodeURIComponent(destino_id)}`)
   }
 
 

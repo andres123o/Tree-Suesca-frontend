@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContainerPequeño from "../common/container-pequeño";
 import FiltrosTitulo from "../common/titulo-filtro";
 import axios from "axios";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Heart, Star, Users, BedDouble, Home } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { useNavigate} from "react-router-dom";
@@ -17,9 +17,8 @@ const formatCurrency = (amount) => {
 };
 
 const ListadoBares = ( { icono1, icono2, titulo, tipoEstablecimiento} ) => {
+    const { destino_id } = useParams()
     const navigate = useNavigate();
-    const location = useLocation()
-    const destino_id = location.state?.destino_id
     const tipo = 'bares'
 
     const [filtros, setFiltros] = useState({});

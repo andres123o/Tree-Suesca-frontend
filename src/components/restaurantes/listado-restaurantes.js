@@ -3,7 +3,7 @@ import ContainerPequeño from "../common/container-pequeño";
 import FiltrosTitulo from "../common/titulo-filtro";
 import axios from "axios";
 import { Heart, Star, Users, BedDouble, Home } from 'lucide-react';
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { useNavigate} from "react-router-dom";
 
@@ -19,9 +19,8 @@ const formatCurrency = (amount) => {
 };
 
 const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) => {
+    const { destino_id } = useParams()
     const navigate = useNavigate();
-    const location = useLocation()
-    const destino_id = location.state?.destino_id
     const tipo = 'restaurantes' 
 
     const [filtros, setFiltros] = useState({});

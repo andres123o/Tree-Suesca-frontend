@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ScrollToTop  from '../common/scrollToTop';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
 import { MdError } from "react-icons/md";
 
@@ -16,8 +16,9 @@ import DestinationInfo from '../home-destino/tips'
 
 
 const Homedestino = () => {
+    const navigate = useNavigate()
+    const { destino_id } = useParams()
     const location = useLocation();
-    const destino_id = location.state?.destino_id;
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);

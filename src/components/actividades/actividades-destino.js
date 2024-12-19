@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Heart, Star, Users, MapPin } from 'lucide-react';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import FiltrosTitulo from "../common/titulo-filtro";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion';
@@ -15,9 +15,8 @@ const formatCurrency = (amount) => {
 };
 
 const ListadoActividades = ({ titulo }) => {
-  const location = useLocation();
+  const { destino_id } = useParams()
   const navigate = useNavigate();
-  const destino_id = location.state?.destino_id;
 
   const [filtros, setFiltros] = useState({});
   const [actividades, setActividades] = useState([]);

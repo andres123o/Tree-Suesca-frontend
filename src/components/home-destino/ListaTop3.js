@@ -40,11 +40,7 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
     const accommodations = transformAlojamientosData(alojamientos);
 
     const handleNavigateToAll = () => {
-        navigate('/alojamientos', {
-            state: {
-                destino_id: destino_id
-            }
-        });
+        navigate(`/alojamientos/${encodeURIComponent(destino_id)}`);
     };
 
     const handleCardClick = (title) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ContainerMediano from "../common/container-mediano";
 import FiltrosTitulo from "../common/titulo-filtro";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion';
 import { Heart, Star, Users, MapPin, Calendar } from 'lucide-react';
 
@@ -18,13 +18,12 @@ const formatCurrency = (amount) => {
   
 
 const ListadoEventos = ({ titulo, icon, tipo, iconCalendar, fecha }) => {
-   const location = useLocation();
-   const navigate = useNavigate();
-   const destino_id = location.state?.destino_id;
-   const [filtros, setFiltros] = useState({});
-   const [eventos, setEventos] = useState([]);
-   const [eventosFiltrados, setEventosFiltrados] = useState([]);
-   const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
+    const { destino_id } = useParams()
+    const navigate = useNavigate();
+    const [filtros, setFiltros] = useState({});
+    const [eventos, setEventos] = useState([]);
+    const [eventosFiltrados, setEventosFiltrados] = useState([]);
+    const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
 
    useEffect(() => {
        const fetchData = async () => {

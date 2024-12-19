@@ -99,10 +99,10 @@ function App() {
             <ScrollToTop />
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path="/home/destino/:nombre" element={<Homedestino />} />
+                <Route path="/home/destino/:destino_id" element={<Homedestino />} />
     
                 {/* Rutas */}
-                <Route path='/rutas/Senderismo' element={
+                <Route path='/rutas/Senderismo/:destino_id' element={
                     <MainComponentListadoRutas
                         iconos={iconCaraceristicas}
                         route='caracteristicas'
@@ -112,7 +112,7 @@ function App() {
                 <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenadaMapBox />} />
                 
                 {/* Restaurantes y Bares */}
-                <Route path='/restaurantes' element={
+                <Route path='/restaurantes/:destino_id' element={
                     <ListadoRestaurantes 
                         icono1={<IoFastFoodOutline className='Faperson'/>}
                         icono2={<PiMapPinAreaFill className='Faperson'/>}
@@ -120,7 +120,7 @@ function App() {
                         tipoEstablecimiento='restaurante'
                     />
                 } />
-                <Route path='/fiesta-amigos' element={
+                <Route path='/fiesta-amigos/:destino_id' element={
                     <ListadoBares
                         icono1={<FaWineBottle className='Faperson'/>}
                         icono2={<PiMapPinAreaFill className='Faperson'/>}
@@ -130,7 +130,7 @@ function App() {
                 } />
                 
                 {/* Actividades */}
-                <Route path='/actividades' element={
+                <Route path='/actividades/:destino_id' element={
                     <ListadoActividades 
                         titulo='Actividades'
                         icon={<FaPerson className="Faperson" />}
@@ -139,7 +139,7 @@ function App() {
                 } />
                 
                 {/* Eventos */}
-                <Route path='/eventos' element={
+                <Route path='/eventos/:destino_id' element={
                     <ListadoEventos 
                         titulo='Eventos'
                         icon={<FaPerson className="Faperson" />}
@@ -150,7 +150,7 @@ function App() {
                 } />
                 
                 {/* Alojamientos */}
-                <Route path='/alojamientos' element={
+                <Route path='/alojamientos/:destino_id' element={
                     <ListadoAlojamiewnto 
                         titulo='Alojamientos'
                         icon={<MdHotel className="Faperson" />}

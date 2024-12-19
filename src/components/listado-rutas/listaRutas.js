@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { Clock, Navigation2, Mountain } from 'lucide-react';
 import { Heart, Share2 } from 'lucide-react';
 import FiltrosTitulo from '../common/titulo-filtro';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 import OptimizedImage from '../common/optimzarImg';
 
 const useDestinoContent = () => {
-  const location = useLocation();
-  const destino_id = location.state?.destino_id;
+  const { destino_id } = useParams()
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [content, setContent] = useState(null);
@@ -53,7 +52,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
   const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
 
   const handle = (nombreRuta) => {
-    navigate(`/rutas/caracteristicas/${nombreRuta}/`);
+    navigate(`/rutas/caracteristicas/${nombreRuta}`);
   };
 
   useEffect(() => {
