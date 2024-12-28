@@ -8,7 +8,8 @@ import { FaGripfire } from "react-icons/fa";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
-import MapComponent from '../common/mapaUbicacion';
+import AuthButtons from '../common/logUser'; 
+import { MdError } from "react-icons/md";
 
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
@@ -166,10 +167,35 @@ const useDestinoContent = (destinoId = 1) => {
 const MainComponent = () => {
     const { content, loading, error } = useDestinoContent();
     
-    console.log(content)
-    if (loading) return <><div>Cargando...</div></>;
-    if (error) return <><div>Error: {error}</div></>;
-    if (!content) return <><div>No hay contenido disponible</div></>;
+    if (loading) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Cargando Establecimiento...</h5>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="error-container">
+            <div className="error-content">
+                <MdError className="error-icon" />
+                <h5 className="error-text">¡Ups! Algo salió mal</h5>
+                <p className="error-message">
+                    {error}. Por favor, intenta de nuevo más tarde.
+                </p>
+            </div>
+        </div>
+    );
+
+    if (!content) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Estamos trabajando en este establecimiento</h5>
+            </div>
+        </div>
+    );
 
     return <DescripcionEstablecimientos establecimiento={content} />;
 }
@@ -179,7 +205,6 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const [backgroundImage, setBackgroundImage] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !establecimiento.calificacion || establecimiento.calificacion === 0;
-    const [isMapOpen, setIsMapOpen] = useState(false);
 
     useEffect(() => {
         setBackgroundImage(establecimiento.img);
@@ -188,12 +213,6 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const handleImageClick = (imgSrc, index) => {
         setSelectedImgIndex(index);
         setBackgroundImage(imgSrc);
-    };
-
-    const handleWhatsAppClick = () => {
-        const message = `¡Hola! Me interesa ir a: ${establecimiento.name}, estan disponibles`;
-        const whatsappUrl = `https://wa.me/${establecimiento.contacto}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
     };
 
     return (
@@ -302,36 +321,20 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                         <div className='separador'></div>
 
                         <BebidaSection title="Antojos" items={establecimiento.antojos} />
-                        <PopularSection title="Top 3 Cocteles!" items={establecimiento.destacados} />
+                        <PopularSection title="¡Recomendado!" items={establecimiento.destacados} />
                         <BebidaSection title="Bebidas" items={establecimiento.bebidas} />
 
                         <div className='separador-res'></div>
 
-                        {isMapOpen && (
-                            <MapComponent
-                                isOpen={isMapOpen}
-                                onClose={() => setIsMapOpen(false)}
-                                coordinates={establecimiento.coordenadas}  // Ya viene en el formato correcto {lat, lng}
-                                establishmentName={establecimiento.name}  // Nombre del establecimiento
-                            />
-                        )}
+                        {/* Reemplazar el div container-contacto-aloja por AuthButtons */}
+                        <AuthButtons 
+                            isNewListing={isNewListing}
+                            contactInfo={establecimiento.contacto}
+                            location={establecimiento.coordenadas}
+                            name={establecimiento.name}
+                            tipo={'Una mesa'}
+                        />
 
-                        <div className='container-contacto-aloja'>
-                            <button 
-                                className='como-llegar-aloja'
-                                onClick={() => setIsMapOpen(true)}
-                            >
-                                <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
-                                Ver ubicación
-                            </button>
-                            <button 
-                                className='contacto-aloja'
-                                onClick={handleWhatsAppClick}
-                            >
-                                <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
-                                <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
-                            </button>
-                        </div>
                     </div>
                 </>
             ) : (
@@ -455,32 +458,14 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
                         <div className='separador-res'></div>
 
-                        {/* Agregar el MapComponent */}
-                        {isMapOpen && (
-                            <MapComponent
-                                isOpen={isMapOpen}
-                                onClose={() => setIsMapOpen(false)}
-                                coordinates={establecimiento.coordenadas}  // Ya viene en el formato correcto {lat, lng}
-                                establishmentName={establecimiento.name}  // Nombre del establecimiento
-                            />
-                        )}
-
-                        <div className='container-contacto-aloja'>
-                            <button 
-                                className='como-llegar-aloja'
-                                onClick={() => setIsMapOpen(true)}
-                            >
-                                <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
-                                Ver ubicación
-                            </button>
-                            <button 
-                                className='contacto-aloja'
-                                onClick={handleWhatsAppClick}
-                            >
-                                <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
-                                <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
-                            </button>
-                        </div>
+                        {/* Reemplazar el div container-contacto-aloja por AuthButtons */}
+                        <AuthButtons 
+                            isNewListing={isNewListing}
+                            contactInfo={establecimiento.contacto}
+                            location={establecimiento.coordenadas}
+                            name={establecimiento.name}
+                            tipo={'Una mesa'}
+                        />
                     </div>
                 </>
             )}

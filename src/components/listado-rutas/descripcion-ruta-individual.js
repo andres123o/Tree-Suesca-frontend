@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
+import { MdError } from "react-icons/md";
 
 
 // Obtener datos
@@ -39,10 +40,35 @@ const useDestinoContent = (destinoId = 1) => {
 const MainComponentRuta = () => {
   const { content, loading, error } = useDestinoContent();
   
-  console.log(content)
-  if (loading) return <><div>Cargando...</div></>;
-  if (error) return <><div>Error: {error}</div></>;
-  if (!content) return <><div>No hay contenido disponible</div></>;
+  if (loading) return (
+      <div className="loading-container">
+          <div className="loading-content">
+              <div className="loading-spinner"></div>
+              <h5 className="loading-text">Cargando Ruta...</h5>
+          </div>
+      </div>
+  );
+
+  if (error) return (
+      <div className="error-container">
+          <div className="error-content">
+              <MdError className="error-icon" />
+              <h5 className="error-text">¡Ups! Algo salió mal</h5>
+              <p className="error-message">
+                  {error}. Por favor, intenta de nuevo más tarde.
+              </p>
+          </div>
+      </div>
+  );
+
+  if (!content) return (
+      <div className="loading-container">
+          <div className="loading-content">
+              <div className="loading-spinner"></div>
+              <h5 className="loading-text">Estamos trabajando en esta ruta</h5>
+          </div>
+      </div>
+  );
 
   return <DescripcionRuta rutas={content} />;
 }

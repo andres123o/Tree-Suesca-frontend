@@ -4,7 +4,8 @@ import {
   CalendarClock,
   UtensilsCrossed,
   Coffee,
-  Activity
+  Activity,
+  ChevronRight
 } from 'lucide-react';
 
 const DiscoverSection = ({destino_id}) => {
@@ -14,7 +15,7 @@ const DiscoverSection = ({destino_id}) => {
     {
       id: 2,
       title: "Actividades",
-      count: "+8 opciones",
+      count: "+19 opciones",
       icon: <Activity size={24} />,
       iconClass: "icon-food",
       bgClass: "bg-icon-food",
@@ -23,7 +24,7 @@ const DiscoverSection = ({destino_id}) => {
     {
       id: 3,
       title: "Restaurantes",
-      count: "+5 lugares",
+      count: "+11 lugares",
       icon: <UtensilsCrossed size={24} />,
       iconClass: "icon-food",
       bgClass: "bg-icon-food",
@@ -32,7 +33,7 @@ const DiscoverSection = ({destino_id}) => {
     {
       id: 4,
       title: "Bares y Cafés",
-      count: "+5 lugares",
+      count: "+6 lugares",
       icon: <Coffee size={24} />,
       iconClass: "icon-coffee",
       bgClass: "bg-icon-coffee",
@@ -41,7 +42,7 @@ const DiscoverSection = ({destino_id}) => {
     {
       id: 1,
       title: "Eventos",
-      count: "+4 por suceder",
+      count: "+1 por suceder",
       icon: <CalendarClock size={24} />,
       iconClass: "icon-sleep",
       bgClass: "bg-icon-sleep",
@@ -70,8 +71,14 @@ const DiscoverSection = ({destino_id}) => {
               </div>
               <div className="category-text">
                 <span className="category-title">{category.title}</span>
-                <span className="category-count">{category.count}</span>
+                <div className="category-count">
+                  {category.count}
+                </div>
               </div>
+            </div>
+            <div className="category-action">
+              <span>Ver todos</span>
+              <ChevronRight size={16} />
             </div>
           </button>
         ))}

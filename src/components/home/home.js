@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios';
-import SearchBox from '../home-destino/searchBox';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaUserGroup } from "react-icons/fa6";
 import OptimizedImage from "../common/optimzarImg";
 import { MdError } from "react-icons/md";
+import SearchBox from '../home-destino/searchBox'
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
@@ -19,6 +19,10 @@ const Home = () => {
     const [filtroAbierto, setFiltroAbierto] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [activeFilters, setActiveFilters] = useState({});
+    const [searchResults, setSearchResults] = useState([]);
+    const [filteredResults, setFilteredResults] = useState([]);
 
     useEffect(() => {
         const fetchDestinos = async () => {
@@ -52,9 +56,47 @@ const Home = () => {
     };
 
     const manejarClick = (key, value) => {
-        setFiltroSeleccionado(value.value);
-        const nuevasRutas = destinos.filter(destino => destino.items[key] === value.value);
-        setRutasFiltradas(nuevasRutas);
+        const newActiveFilters = {
+            ...activeFilters,
+            [key]: value.value
+        };
+        setActiveFilters(newActiveFilters);
+        aplicarFiltros(newActiveFilters);
+    };    
+
+    // Función separada para manejar la búsqueda
+    const handleSearch = (value) => {
+        setSearchTerm(value);
+        
+        if (!value.trim()) {
+            setSearchResults(destinos);
+            // Si hay filtros activos, mostrar solo los resultados filtrados
+            if (Object.keys(activeFilters).length > 0) {
+                setRutasFiltradas(filteredResults);
+            } else {
+                setRutasFiltradas(destinos);
+            }
+            return;
+        }
+
+        const searchLower = value.toLowerCase();
+        const results = destinos.filter(destino => 
+            destino.municipio.toLowerCase().includes(searchLower) ||
+            destino.departamento.toLowerCase().includes(searchLower) ||
+            destino.frase.toLowerCase().includes(searchLower)
+        );
+        
+        setSearchResults(results);
+        
+        // Si hay filtros activos, aplicar la búsqueda sobre los resultados filtrados
+        if (Object.keys(activeFilters).length > 0) {
+            const combinedResults = results.filter(destino => 
+                filteredResults.some(filtered => filtered.id === destino.id)
+            );
+            setRutasFiltradas(combinedResults);
+        } else {
+            setRutasFiltradas(results);
+        }
     };
     
     const handle = (destino_id) => {
@@ -97,6 +139,52 @@ const Home = () => {
         </div>
     );
 
+    // Función separada para manejar los filtros
+    const aplicarFiltros = (filters) => {
+        if (Object.keys(filters).length === 0) {
+            setFilteredResults(destinos);
+            // Si hay término de búsqueda, mostrar solo los resultados de la búsqueda
+            if (searchTerm.trim()) {
+                setRutasFiltradas(searchResults);
+            } else {
+                setRutasFiltradas(destinos);
+            }
+            return;
+        }
+
+        const results = destinos.filter(destino => {
+            return Object.entries(filters).every(([key, value]) => 
+                destino.items[key] === value
+            );
+        });
+        
+        setFilteredResults(results);
+        
+        // Si hay término de búsqueda, aplicar los filtros sobre los resultados de la búsqueda
+        if (searchTerm.trim()) {
+            const combinedResults = results.filter(destino => 
+                searchResults.some(searched => searched.id === destino.id)
+            );
+            setRutasFiltradas(combinedResults);
+        } else {
+            setRutasFiltradas(results);
+        }
+    };
+
+    const limpiarFiltros = () => {
+        setActiveFilters({});
+        setFilteredResults(destinos);
+        setFiltroSeleccionado(null);
+        setFiltroAbierto(null);
+        
+        // Mantener los resultados de la búsqueda si hay término de búsqueda
+        if (searchTerm.trim()) {
+            setRutasFiltradas(searchResults);
+        } else {
+            setRutasFiltradas(destinos);
+        }
+    };
+
     return (
         <>
             <div className="header">
@@ -117,32 +205,52 @@ const Home = () => {
 
             <div className='separador'></div>
             
-            <SearchBox placeholder="A donde quieres ir..." />
+            <SearchBox 
+                placeholder="A donde quieres ir..." 
+                onSearch={handleSearch}
+            />
 
-            <div className="filtros-dropdown">
-                {Object.entries(filtros).map(([key, values]) => (
-                    <div className="filtro-item" key={key}>
+            <div className="filtros-container">
+                <div className="filtros-dropdown">
+                    {Object.entries(filtros).map(([key, values]) => (
+                        <div className="filtro-item" key={key}>
+                            <button 
+                                className={`filtro-button ${activeFilters[key] ? 'active' : ''}`}
+                                onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
+                            >
+                                {key} <IoMdArrowDropdown className='icono-arrow-down'/>
+                            </button>
+                            {filtroAbierto === key && (
+                                <div className="filtro-opciones">
+                                    {Array.from(values).map((value, index) => (
+                                        <div
+                                            key={index}
+                                            onClick={() => manejarClick(key, value)}
+                                            className={activeFilters[key] === value.value ? 'opcion-seleccionada' : ''}
+                                        >
+                                            {value.value}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    ))}
+                    
+                    {(Object.keys(activeFilters).length > 0) && (
                         <button 
-                            className="filtro-button"
-                            onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
+                            className="limpiar-filtros-btn"
+                            onClick={limpiarFiltros}
                         >
-                            {key} <IoMdArrowDropdown className='icono-arrow-down'/>
+                            Limpiar filtros
                         </button>
-                        {filtroAbierto === key && (
-                            <div className="filtro-opciones">
-                                {Array.from(values).map((value, index) => (
-                                    <div
-                                        key={index}
-                                        onClick={() => manejarClick(key, value)}
-                                        className={filtroSeleccionado === value.value ? 'opcion-seleccionada' : ''}
-                                    >
-                                        {value.value}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                    )}
+                </div>
+                
+                {rutasFiltradas.length === 0 && (
+                    <div className="no-resultados">
+                        <p>No se encontraron destinos con los criterios seleccionados</p>
                     </div>
-                ))}
+                )}
             </div>
 
             <div className="container-seccion-lista-home">
@@ -166,8 +274,16 @@ const Home = () => {
                                 )}
                             </div>
                             <div className="destination-rating">
-                                <span>{item.calificacion}</span>
-                                <img src="/utils/icons8-estrella-48.png" alt="estrella" />
+                                {item.calificacion > 0 ? (
+                                    <>
+                                        <span>{item.calificacion}</span>
+                                        <img src="/utils/icons8-estrella-48.png" alt="estrella" />
+                                    </>
+                                ) :
+                                    <>
+                                        <img src="/utils/icons8-estrella-48.png" alt="estrella" />
+                                    </>
+                                }
                             </div>
                         </div>
 
@@ -185,7 +301,7 @@ const Home = () => {
                             <div className="explorar-boton">
                                 <div className="destination-stats">
                                     <FaUserGroup className="visitors-icon" />
-                                    <span>150 visitantes este mes</span>
+                                    <span>¡Sé de los primeros en explorar!</span>
                                 </div>
                                 <button className="book-btn" onClick={() => handle(item.id, item.municipio)}>Explorar</button>
                             </div>

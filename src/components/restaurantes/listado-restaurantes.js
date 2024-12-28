@@ -131,7 +131,7 @@ const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) =>
                             <div className="profile-circle"></div>
                             <div className="profile-circle"></div>
                             </div>
-                            <span>+124 personas este mes</span>
+                            <span>¡Descubre nuevos sabores!</span>
                         </div>
 
                         {/* Price and booking */}

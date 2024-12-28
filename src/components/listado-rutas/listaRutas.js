@@ -5,6 +5,7 @@ import FiltrosTitulo from '../common/titulo-filtro';
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 import OptimizedImage from '../common/optimzarImg';
+import { MdError } from "react-icons/md";
 
 const useDestinoContent = () => {
   const { destino_id } = useParams()
@@ -38,9 +39,35 @@ const useDestinoContent = () => {
 const MainComponentListadoRutas = ({iconos, route}) => {
   const { content, loading, error } = useDestinoContent();
   
-  if (loading) return <div>Cargando...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!content) return <div>No hay contenido disponible</div>;
+  if (loading) return (
+      <div className="loading-container">
+          <div className="loading-content">
+              <div className="loading-spinner"></div>
+              <h5 className="loading-text">Cargando Rutas...</h5>
+          </div>
+      </div>
+  );
+
+  if (error) return (
+      <div className="error-container">
+          <div className="error-content">
+              <MdError className="error-icon" />
+              <h5 className="error-text">¡Ups! Algo salió mal</h5>
+              <p className="error-message">
+                  {error}. Por favor, intenta de nuevo más tarde.
+              </p>
+          </div>
+      </div>
+  );
+
+  if (!content) return (
+      <div className="loading-container">
+          <div className="loading-content">
+              <div className="loading-spinner"></div>
+              <h5 className="loading-text">Estamos trabajando en estas rutas</h5>
+          </div>
+      </div>
+  );
 
   return <ListaRutas rutas={content} iconos={iconos} route={route}/>;
 };
@@ -134,7 +161,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
                     <div className="avatar"></div>
                     <div className="avatar"></div>
                   </div>
-                  <span>+124 personas este mes</span>
+                  <span>¡Recién agregada!</span>
                 </div>
                 <button 
                   className="ver-ruta-btn"

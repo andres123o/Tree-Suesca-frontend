@@ -7,6 +7,7 @@ import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import MapComponent from '../common/mapaUbicacion';
+import { MdError } from "react-icons/md";
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -61,9 +62,35 @@ const useDestinoContent = (destinoId = 1) => {
 const MainComponentAlojamiento = () => {
     const { content, loading, error } = useDestinoContent();
     
-    if (loading) return <><div>Cargando...</div></>;
-    if (error) return <><div>Error: {error}</div></>;
-    if (!content) return <><div>No hay contenido disponible</div></>;
+    if (loading) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Cargando Alojamiento...</h5>
+            </div>
+        </div>
+    );
+
+    if (error) return (
+        <div className="error-container">
+            <div className="error-content">
+                <MdError className="error-icon" />
+                <h5 className="error-text">¡Ups! Algo salió mal</h5>
+                <p className="error-message">
+                    {error}. Por favor, intenta de nuevo más tarde.
+                </p>
+            </div>
+        </div>
+    );
+
+    if (!content) return (
+        <div className="loading-container">
+            <div className="loading-content">
+                <div className="loading-spinner"></div>
+                <h5 className="loading-text">Estamos trabajando en este alojamiento</h5>
+            </div>
+        </div>
+    );
 
     return <AlojamientoDescripcion alojamiento={content.alojamiento[0]} oferente={content} />;
 }

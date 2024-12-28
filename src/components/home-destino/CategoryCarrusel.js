@@ -39,7 +39,7 @@ const ViewpointsSection = ({ imagenes = [], destino_id }) => {
               <div className="viewpoints-badges">
                 <span className="viewpoints-badge">
                   <Mountain size={14} className="viewpoints-badge-icon" />
-                  16 spots
+                  Spots
                 </span>
               </div>
 

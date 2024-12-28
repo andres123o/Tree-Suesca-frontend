@@ -350,8 +350,28 @@
   border-radius: 12px;
   font-size: var(--font-small);
   font-weight: 500;
+  white-space: nowrap; /* Evita que el texto se divida en múltiples líneas */
+  text-overflow: ellipsis; /* Añade ... si el texto es muy largo */
+  overflow: hidden; /* Oculta el texto que se desborde */
+  max-width: 200px; /* Ancho máximo para el tag */
+}
+@media (max-width: 768px) {
+  .promo-tag {
+      top: -16px; /* Ajustamos la posición si es necesario */
+      font-size: 11px; /* Reducimos el tamaño de fuente */
+      padding: 3px 8px; /* Reducimos el padding */
+      max-width: 150px; /* Reducimos el ancho máximo en móviles */
+  }
 }
 
+/* Para pantallas muy pequeñas */
+@media (max-width: 320px) {
+  .promo-tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      max-width: 120px;
+  }
+}
 /* Botones de contacto mejorados */
 .container-contacto-aloja {
   position: fixed;

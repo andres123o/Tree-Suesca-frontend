@@ -127,7 +127,7 @@ const ListadoBares = ( { icono1, icono2, titulo, tipoEstablecimiento} ) => {
                             <div className="profile-circle"></div>
                             <div className="profile-circle"></div>
                             </div>
-                            <span>+124 personas este mes</span>
+                            <span>¡Nuevo ambiente!</span>
                         </div>
 
                         {/* Price and booking */}

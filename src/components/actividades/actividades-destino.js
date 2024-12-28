@@ -125,7 +125,7 @@ const ListadoActividades = ({ titulo }) => {
                   <div className="profile-circle"></div>
                   <div className="profile-circle"></div>
                 </div>
-                <span>+124 personas este mes</span>
+                <span>¡Nueva experiencia disponible!</span>
               </div>
 
               <div className="price-booking">

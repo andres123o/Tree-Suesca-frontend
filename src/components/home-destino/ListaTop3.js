@@ -100,7 +100,11 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
                         <h3 className="accommodation-title">{accommodation.title}</h3>
                         <div className="rating">
                         <Star size={14} className='star-icon' />
-                        {accommodation.rating}
+                        {accommodation.rating > 0 ? (
+                            <>
+                                accommodation.rating
+                            </>
+                        ) : ''}
                         </div>
                     </div>
 

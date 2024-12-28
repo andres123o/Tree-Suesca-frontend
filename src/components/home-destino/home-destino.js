@@ -7,7 +7,6 @@ import { MdError } from "react-icons/md";
 // Componente home destino
 import Header from './header';
 import Descripcion from './descripcion';
-import SearchBox from './searchBox'
 import ViewpointsSection from './CategoryCarrusel';
 import PopularActivities from './Tendencias'
 import AccommodationsSection from './ListaTop3';
@@ -47,7 +46,7 @@ const Homedestino = () => {
         <div className="loading-container">
             <div className="loading-content">
                 <div className="loading-spinner"></div>
-                <h5 className="loading-text">Cargando Suesca...</h5>
+                <h5 className="loading-text">Cargando Destino...</h5>
             </div>
         </div>
     );
@@ -93,9 +92,7 @@ const Homedestino = () => {
         <>
             <ScrollToTop />
             <Header destino = {municipio}/>
-            <SearchBox 
-                placeholder='Que quieres hacer...'
-            />
+            
             <Descripcion 
                 destino={infoDes}
                 destino_id={destino_id}
