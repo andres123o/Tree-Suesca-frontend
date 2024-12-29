@@ -6,7 +6,7 @@ import ErrorBoundary from './ErrorBoundary'; // Importa el componente ErrorBound
 import ReactGA from 'react-ga4';
 
 // Inicializa GA4 con tu ID de medición
-ReactGA.initialize('G-PM724GHGMF');
+ReactGA.initialize('G-TT6MX1S9SE');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
