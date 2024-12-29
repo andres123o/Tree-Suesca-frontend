@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import ScrollToTop  from './components/common/scrollToTop';
 import axios from 'axios'
+import ReactGA from 'react-ga4';
 
 // Componentes de la pagina de inicio
 import Home from './components/home/home'
@@ -93,6 +94,12 @@ const actividadesRuta = [
 
 
 function App() {
+    const location = useLocation();
+
+    useEffect(() => {
+        // Envía pageview cuando la ubicación cambia
+        ReactGA.send({ hitType: "pageview", page: location.pathname });
+    }, [location]);
 
     return (
         <>
