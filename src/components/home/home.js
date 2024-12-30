@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import ReactGA from 'react-ga4';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
@@ -48,16 +47,10 @@ const Home = () => {
         
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000); // en segundos
-            ReactGA.event({
-                category: 'User_Engagement',
-                action: 'Time_On_Home',
-                value: timeSpent,
-                // Añade un callback para verificar
-                callback: () => console.log('Evento enviado:', {
-                  category: 'User_Engagement',
-                  action: 'Time_On_Home',
-                  value: timeSpent
-                })
+            window.gtag('event', 'time_on_page', {
+                'event_category': 'User_Engagement',
+                'event_label': 'Home',
+                'value': timeSpent
             });
         };
     }, []);
@@ -122,10 +115,10 @@ const Home = () => {
     };
     
     const handle = (destino_id, municipio) => {
-        ReactGA.event({
-            category: 'User_Engagement',
-            action: 'Destination_Click',
-            label: municipio
+        window.gtag('event', 'destination_click', {
+            'event_category': 'User_Engagement',
+            'event_label': municipio,
+            'destino_id': destino_id
         });
 
         navigate(`/home/destino/${destino_id}`, {

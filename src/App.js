@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import ScrollToTop  from './components/common/scrollToTop';
 import axios from 'axios'
-import ReactGA from 'react-ga4';
-
-
 
 // Componentes de la pagina de inicio
 import Home from './components/home/home'
@@ -96,22 +93,7 @@ const actividadesRuta = [
 
 
 function App() {
-    const location = useLocation();
 
-    // Inicializa GA4 con tu ID de medición
-    
-    useEffect(() => {
-        ReactGA.initialize('G-PM724GHGMF', {
-            debug: true,
-            testMode: false,
-            send_page_view: true 
-        });
-    
-        ReactGA.send({ 
-          hitType: 'pageview', 
-          page: window.location.pathname 
-        });
-      }, []);
 
     return (
         <>
