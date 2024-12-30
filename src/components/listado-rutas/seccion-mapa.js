@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactGA from 'react-ga4';
 import { ClipLoader } from 'react-spinners';
 import { IoIosArrowForward } from "react-icons/io";
 import mapboxgl from 'mapbox-gl';
@@ -621,6 +622,51 @@ const FuncionalidadesMapa = ({ ruta }) => {
         tiempoRecorridoRef: tiempoRecorridoContainer,
         porcentajeCompletadoRef: porcentajeCompletadoRef
     });
+
+    // 1. Track tiempo en la página de destino
+    useEffect(() => {
+        let startTime = Date.now();
+        let activeTime = 0;
+        let isVisible = true;
+    
+        const trackVisibility = () => {
+            if (document.hidden) {
+                if (isVisible) {
+                    // Acumular tiempo cuando la página estaba visible
+                    activeTime += Date.now() - startTime;
+                    isVisible = false;
+                }
+            } else {
+                // Restablecer tiempo de inicio cuando la página vuelve a ser visible
+                startTime = Date.now();
+                isVisible = true;
+            }
+        };
+    
+        // Agregar listener para cambios de visibilidad
+        document.addEventListener('visibilitychange', trackVisibility);
+    
+        return () => {
+            // Asegurar que se capture el tiempo si la página aún está visible
+            if (isVisible) {
+                activeTime += Date.now() - startTime;
+            }
+    
+            // Convertir milisegundos a segundos
+            const tiempoTranscurridoSegundos = Math.round(activeTime / 1000);
+            
+            // Enviar evento a Google Analytics
+            ReactGA.event({
+                category: 'Compromiso_Ruta_Mapa',
+                action: 'Tiempo_En_Ruta',
+                label: nombre || 'desconocido',
+                value: tiempoTranscurridoSegundos
+            });
+    
+            // Remover listener
+            document.removeEventListener('visibilitychange', trackVisibility);
+        };
+    }, [nombre]);
 
     useEffect(() => {
         const handleOnline = () => setIsOnline(true);

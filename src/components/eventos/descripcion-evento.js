@@ -9,6 +9,7 @@ import OptimizedImage from '../common/optimzarImg'
 import { Star, Clock, Award } from 'lucide-react';
 import AuthButtons from '../common/logUser'; 
 import { MdError } from "react-icons/md";
+import ReactGA from 'react-ga4';
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -83,6 +84,22 @@ const DescripcionEventos = ( {evento, oferente} ) => {
     const isNewListing = !evento.calificacion || evento.calificacion === 0;
 
     const maxTextLength = 100;
+
+    
+     // 1. Tracking tiempo en página
+     useEffect(() => {
+        const startTime = Date.now();
+        
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000);
+            ReactGA.event({
+                category: 'Event_Engagement',
+                action: 'Time_On_Activity',
+                label: evento.name,
+                value: timeSpent
+            });
+        };
+    }, [evento.name]);
 
     const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -223,6 +240,20 @@ const DescripcionEventos = ( {evento, oferente} ) => {
                     location={oferente.coordenadas}
                     name={oferente.name}
                     tipo={evento.name}
+                    onLocationClick={() => {
+                        ReactGA.event({
+                            category: 'Event_Location',
+                            action: 'Map_View',
+                            label: evento.name
+                        });
+                    }}
+                    onContactClick={() => {
+                        ReactGA.event({
+                            category: 'Event_Contact',
+                            action: 'WhatsApp_Click',
+                            label: evento.name
+                        });
+                    }}
                 />
                 
 

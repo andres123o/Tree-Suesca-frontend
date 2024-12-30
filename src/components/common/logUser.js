@@ -3,7 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './auth';
 import MapComponent from '../common/mapaUbicacion';
 
-const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo }) => {
+const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick}) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
@@ -102,13 +102,33 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo }
 
   const handleWhatsAppClick = () => {
     if (contactInfo) {
-      const message = isNewListing 
-        ? `¡Hola! Me interesa ser el primero en reservar: ${tipo}`
-        : `¡Hola! Me interesa reservar: ${tipo}`;
-      
-      window.open(`https://wa.me/${contactInfo}?text=${encodeURIComponent(message)}`, '_blank');
+        // Trackear el evento cuando realmente se hace el contacto
+        onContactClick?.(); // El ?. es para que no falle si no se pasa la función
+        
+        const message = isNewListing 
+            ? `¡Hola! Me interesa ser el primero en reservar: ${tipo}`
+            : `¡Hola! Me interesa reservar: ${tipo}`;
+        
+        window.open(`https://wa.me/${contactInfo}?text=${encodeURIComponent(message)}`, '_blank');
     }
   };
+
+  const handleMapOpen = () => {
+    // Trackear el evento cuando realmente se abre el mapa
+    onLocationClick?.();
+    setIsMapOpen(true);
+  };
+
+  useEffect(() => {
+    if (user && pendingAction) {
+        if (pendingAction === 'map') {
+            handleMapOpen(); // Usar la nueva función
+        } else if (pendingAction === 'contact') {
+            handleWhatsAppClick();
+        }
+        setPendingAction(null);
+    }
+  }, [user, pendingAction]);
 
   return (
     <div className="container-contacto-aloja">

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga4';
 import { useNavigate } from 'react-router-dom';
 import {
   CalendarClock,
@@ -19,7 +20,8 @@ const DiscoverSection = ({destino_id}) => {
       icon: <Activity size={24} />,
       iconClass: "icon-food",
       bgClass: "bg-icon-food",
-      route: '/actividades'
+      route: '/actividades',
+      trackingName: 'Activities'
     },
     {
       id: 3,
@@ -28,7 +30,8 @@ const DiscoverSection = ({destino_id}) => {
       icon: <UtensilsCrossed size={24} />,
       iconClass: "icon-food",
       bgClass: "bg-icon-food",
-      route: '/restaurantes'
+      route: '/restaurantes',
+      trackingName: 'Restaurants'
     },
     {
       id: 4,
@@ -37,7 +40,8 @@ const DiscoverSection = ({destino_id}) => {
       icon: <Coffee size={24} />,
       iconClass: "icon-coffee",
       bgClass: "bg-icon-coffee",
-      route: '/fiesta-amigos'
+      route: '/fiesta-amigos',
+      trackingName: 'Bars_Cafes'
     },
     {
       id: 1,
@@ -46,11 +50,19 @@ const DiscoverSection = ({destino_id}) => {
       icon: <CalendarClock size={24} />,
       iconClass: "icon-sleep",
       bgClass: "bg-icon-sleep",
-      route: '/eventos'
+      route: '/eventos',
+      trackingName: 'Events'
     }
   ];
 
-  const handleCategoryClick = (route) => {
+  const handleCategoryClick = (route, trackingName) => {
+    // Trackear el clic antes de navegar
+    ReactGA.event({
+      category: 'Navigation',
+      action: 'Category_Click',
+      label: trackingName
+    });
+
     navigate(`${route}/${destino_id}`)
   };
 
@@ -61,7 +73,7 @@ const DiscoverSection = ({destino_id}) => {
           <button 
             key={category.id} 
             className="category-card"
-            onClick={() => handleCategoryClick(category.route)}
+            onClick={() => handleCategoryClick(category.route, category.trackingName)}
           >
             <div className="category-icon-container">
               <div className={`icon-wrapper ${category.bgClass}`}>

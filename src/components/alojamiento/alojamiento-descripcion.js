@@ -8,6 +8,8 @@ import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import MapComponent from '../common/mapaUbicacion';
 import { MdError } from "react-icons/md";
+import ReactGA from 'react-ga4';
+import AuthButtons from '../common/logUser';
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -106,6 +108,21 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     const [isMapOpen, setIsMapOpen] = useState(false);
 
     const maxTextLength = 150;
+
+    // 1. Trackear tiempo en página
+    useEffect(() => {
+        const startTime = Date.now();
+        
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000);
+            ReactGA.event({
+                category: 'Accommodation_Engagement',
+                action: 'Time_On_Accommodation',
+                label: alojamiento.name,
+                value: timeSpent
+            });
+        };
+    }, [alojamiento.name]);
 
     useEffect(() => {
       setBackgroundImg(alojamiento.img)
@@ -270,32 +287,28 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                     </div>
                 </div>
 
-                {/* Agregar el MapComponent */}
-                {isMapOpen && (
-                    <MapComponent
-                        isOpen={isMapOpen}
-                        onClose={() => setIsMapOpen(false)}
-                        coordinates={oferente.coordenadas}  // Ya viene en el formato correcto {lat, lng}
-                        establishmentName={oferente.oferente}  // Nombre del establecimiento
-                    />
-                )}
-
-                <div className='container-contacto-aloja'>
-                    <button 
-                        className='como-llegar-aloja'
-                        onClick={() => setIsMapOpen(true)}
-                    >
-                        <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
-                        Ver ubicación
-                    </button>
-                    <button 
-                        className='contacto-aloja'
-                        onClick={handleWhatsAppClick}
-                    >
-                        <span>{isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}</span>
-                        <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
-                    </button>
-                </div>
+                {/* Reemplazar el div container-contacto-aloja por AuthButtons */}
+                <AuthButtons 
+                    isNewListing={isNewListing}
+                    contactInfo={oferente.contacto}
+                    location={oferente.coordenadas}
+                    name={oferente.oferente}
+                    tipo={alojamiento.name}
+                    onLocationClick={() => {
+                        ReactGA.event({
+                            category: 'Accommodation_Location',
+                            action: 'Map_View',
+                            label: alojamiento.name
+                        });
+                    }}
+                    onContactClick={() => {
+                        ReactGA.event({
+                            category: 'Accommodation_Contact',
+                            action: 'WhatsApp_Click',
+                            label: alojamiento.name
+                        });
+                    }}
+                />
 
                  {/* seccion de accordean, recomendaciones y mas */}
                  <div className='accordion-aloja'>

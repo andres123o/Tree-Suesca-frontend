@@ -1,18 +1,111 @@
 import React, { useState, useEffect } from 'react';
 import {  Navigation2, Clock, Mountain, Star, Award, Users  } from 'lucide-react'; // Importamos los iconos
-import StarRating from '../common/calificacion';
 import { IoIosArrowForward } from "react-icons/io";
 import OptimizedImage from '../common/optimzarImg'
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
-import Footer from '../common/footer'
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { auth } from '../common/auth';
+import { useNavigate } from "react-router-dom"
+import ReactGA from 'react-ga4';
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
+  const navigate = useNavigate()
   const [selectedImgIndex, setSelectedImgIndex] = useState(null);
   const [expandedSection, setExpandedSection] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(null);
+  const provider = new GoogleAuthProvider();
 
   const maxTextLength = 100;
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem('user');
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        handleUserAuthenticated(user);
+      } else {
+        localStorage.removeItem('user');
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleUserAuthenticated = async (user) => {
+    try {
+      setError(null);
+      const response = await fetch('https://tree-suesca-backend-production.up.railway.app/api/v1/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          nombre: user.displayName,
+          foto_perfil: user.photoURL,
+          fecha_registro: new Date().toISOString(),
+          ultima_conexion: new Date().toISOString(),
+          estado: true
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al registrar usuario');
+      }
+
+      const data = await response.json();
+      
+      const userData = {
+        email: user.email,
+        nombre: user.displayName,
+        foto_perfil: user.photoURL,
+        auth: true
+      };
+      
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+    } catch (error) {
+      console.error('Error:', error);
+      setError('Error al verificar/registrar usuario. Intente nuevamente.');
+    }
+  };
+
+  const handleAuthClick = async () => {
+    ReactGA.event({
+        category: 'User_Interaction',
+        action: 'Start_Adventure_Click',
+        label: ruta.nombre || 'Ruta Desconocida'
+    });
+
+    if (!user) {
+      try {
+        setError(null);
+        const result = await signInWithPopup(auth, provider);
+        if (result.user) {
+          await handleUserAuthenticated(result.user);
+          navigate(`/ruta/mapa/${startMap}`);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setError(error.message || 'Error al iniciar sesión. Intente nuevamente.');
+      }
+    } else {
+      ReactGA.event({
+        category: 'Route_Conversion',
+        action: 'Route_Started',
+        label: ruta.nombre || 'Ruta Sin Nombre'
+      });
+      
+      navigate(`/ruta/mapa/${startMap}`)
+    }
+  };
 
   useEffect(() => {
     function crearMapaIlustrativo(containerId) {
@@ -324,7 +417,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='container-boton'>
           <button 
             className="adventure-button"
-            onClick={startMap}
+            onClick={handleAuthClick}
           >
             <span className="button-main-text">¡Iniciar Aventura!</span>
             <span className="button-sub-text">

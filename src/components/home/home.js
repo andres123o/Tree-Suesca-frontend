@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactGA from 'react-ga4';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
@@ -9,6 +10,7 @@ import { MdError } from "react-icons/md";
 import SearchBox from '../home-destino/searchBox'
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
+
 
 const Home = () => {
     const navigate = useNavigate();
@@ -38,6 +40,26 @@ const Home = () => {
             }
         };
         fetchDestinos();
+    }, []);
+
+    // 1. Track tiempo en página
+    useEffect(() => {
+        const startTime = Date.now();
+        
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000); // en segundos
+            ReactGA.event({
+                category: 'User_Engagement',
+                action: 'Time_On_Home',
+                value: timeSpent,
+                // Añade un callback para verificar
+                callback: () => console.log('Evento enviado:', {
+                  category: 'User_Engagement',
+                  action: 'Time_On_Home',
+                  value: timeSpent
+                })
+            });
+        };
     }, []);
 
     const initializeFiltros = (data) => {
@@ -99,7 +121,13 @@ const Home = () => {
         }
     };
     
-    const handle = (destino_id) => {
+    const handle = (destino_id, municipio) => {
+        ReactGA.event({
+            category: 'User_Engagement',
+            action: 'Destination_Click',
+            label: municipio
+        });
+
         navigate(`/home/destino/${destino_id}`, {
             state: { destino_id }
         });

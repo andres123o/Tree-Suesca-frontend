@@ -74,7 +74,6 @@ const MainComponentRuta = () => {
 }
 
 const DescripcionRuta = ({ rutas }) => {
-  const navigate = useNavigate()
   const [backgroundImage, setBackgroundImg] = useState(rutas.img);
 
 
@@ -102,10 +101,7 @@ const DescripcionRuta = ({ rutas }) => {
         <InfoDescripcion 
           ruta={rutas} 
           onImageSelect ={handleImageSelect}
-          startMap={() => {
-              // Redirige a listaRutas.html con el nombre de la actividad como query param
-              navigate(`/ruta/mapa/${rutas.nombre}`);
-          }} // aqui va la funcion donde se hace click y se muestra el mapa en mapaFuncionalidades 
+          startMap={rutas.nombre}
         />
         
         {/* Footer comun */}

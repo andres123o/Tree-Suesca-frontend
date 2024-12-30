@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import ReactGA from 'react-ga4';
 import ScrollToTop  from '../common/scrollToTop';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
@@ -21,6 +22,21 @@ const Homedestino = () => {
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // 1. Track tiempo en la página de destino
+    useEffect(() => {
+        const startTime = Date.now();
+        
+        return () => {
+            const timeSpent = Math.round((Date.now() - startTime) / 1000);
+            ReactGA.event({
+                category: 'Destination_Engagement',
+                action: 'Time_On_Destination',
+                label: content?.municipio || 'unknown',
+                value: timeSpent
+            });
+        };
+    }, [content?.municipio]);
 
     useEffect(() => {
         const fetchDestinoContent = async () => {
@@ -96,12 +112,40 @@ const Homedestino = () => {
             <Descripcion 
                 destino={infoDes}
                 destino_id={destino_id}
+                onClick={() => ReactGA.event({
+                    category: 'Destination_Content',
+                    action: 'Description_View',
+                    label: municipio
+                })}
             />
             <DiscoverSection destino_id={destino_id}/>
             <PopularActivities contenido = { tendencias } />
-            <ViewpointsSection imagenes={content.imagenes} destino_id={destino_id} />
-            <AccommodationsSection alojamientos={alojamientos} destino_id={destino_id} />
-            <DestinationInfo destino={infoDes} />
+            <ViewpointsSection 
+                imagenes={content.imagenes}
+                destino_id={destino_id}
+                onClick={() => ReactGA.event({
+                    category: 'Route_Interest',
+                    action: 'Routes_View',
+                    label: municipio
+                })}
+            />
+            <AccommodationsSection 
+                alojamientos={alojamientos} 
+                destino_id={destino_id} 
+                onClick={() => ReactGA.event({
+                    category: 'Destination_Interest',
+                    action: 'Accommodations_View',
+                    label: municipio
+                })}
+            />
+            <DestinationInfo 
+                destino={infoDes} 
+                onClick={() => ReactGA.event({
+                    category: 'Destination_Information',
+                    action: 'Info_View',
+                    label: municipio
+                })}
+            />
         </>
     )
 }
