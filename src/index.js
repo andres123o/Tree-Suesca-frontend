@@ -7,7 +7,8 @@ import ReactGA from 'react-ga4';
 
 // Inicializa GA4 con tu ID de medición
 ReactGA.initialize('G-PM724GHGMF', {
-  debug: true
+  debug: true,
+  testMode: process.env.NODE_ENV === 'development'
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

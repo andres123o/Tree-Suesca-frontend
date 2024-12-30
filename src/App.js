@@ -97,9 +97,18 @@ function App() {
     const location = useLocation();
 
     useEffect(() => {
-        // Envía pageview cuando la ubicación cambia
-        ReactGA.send({ hitType: "pageview", page: location.pathname });
-    }, [location]);
+        ReactGA.send({ 
+          hitType: 'pageview', 
+          page: window.location.pathname 
+        });
+      
+        // Evento de prueba
+        ReactGA.event({
+          category: 'Test',
+          action: 'Debug_Event',
+          label: 'Initialization_Check'
+        });
+      }, []);
 
     return (
         <>
