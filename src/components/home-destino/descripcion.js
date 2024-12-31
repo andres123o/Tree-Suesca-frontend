@@ -10,7 +10,17 @@ import OptimizedImage from "../common/optimzarImg";
 const Descripcion = ({destino, destino_id}) => {
     const [expandedSection, setExpandedSection] = useState(null);
 
-
+    // Trackear cuando ven la descripción
+    useEffect(() => {
+        if (destino?.municipio) {
+            window.gtag('event', 'vista_contenido_destino', {
+                nombre_destino: destino.municipio,
+                tipo_contenido: 'descripcion',
+                tipo_interaccion: 'vista'
+            });
+        }
+    }, [destino?.municipio]);
+    
     const toggleSection = (section) => {
         setExpandedSection(expandedSection === section ? null : section);
     };

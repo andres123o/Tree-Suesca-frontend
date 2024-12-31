@@ -53,6 +53,12 @@ const DestinationInfo = ({ destino }) => {
   }));
 
   const handleOpenModal = () => {
+    window.gtag('event', 'vista_info_destino', {
+      nombre_destino: destino.municipio || 'desconocido',
+      tipo_contenido: 'sugerencias',
+      tipo_interaccion: 'vista'
+    });
+    
     setShowModal(true);
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {

@@ -131,10 +131,16 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   };
 
   const handleMapOpen = () => {
-    // Trackear el evento cuando realmente se abre el mapa
-    onLocationClick?.();
+    // PRIMERO disparar el evento
+    if (onLocationClick) {
+        window.gtag('event', 'ver_ubicacion', {
+            tipo_negocio: tipo || 'desconocido',
+            nombre_establecimiento: name || 'desconocido'
+        });
+    }
+    // LUEGO abrir el mapa
     setIsMapOpen(true);
-  };
+};
 
   useEffect(() => {
     if (user && pendingAction) {

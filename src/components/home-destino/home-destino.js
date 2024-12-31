@@ -38,84 +38,7 @@ const Analytics = {
             console.error('Error Analytics - Tiempo:', error);
         }
     },
-
-    // Track vistas de descripción
-    trackDescriptionView: (municipio) => {
-        try {
-            if (!window?.gtag || !municipio) return;
-            
-            window.gtag('event', 'vista_contenido_destino', {
-                nombre_destino: municipio,
-                tipo_contenido: 'descripcion',
-                tipo_interaccion: 'vista'
-            });
-
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Analytics - Vista Descripción:', { destino: municipio });
-            }
-        } catch (error) {
-            console.error('Error Analytics - Descripción:', error);
-        }
-    },
-
-    // Track vistas de rutas
-    trackRoutesView: (municipio) => {
-        try {
-            if (!window?.gtag || !municipio) return;
-            
-            window.gtag('event', 'vista_rutas', {
-                nombre_destino: municipio,
-                tipo_contenido: 'rutas',
-                tipo_interaccion: 'clic'
-            });
-
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Analytics - Vista Rutas:', { destino: municipio });
-            }
-        } catch (error) {
-            console.error('Error Analytics - Rutas:', error);
-        }
-    },
-
-    // Track vistas de alojamientos
-    trackAccommodationsView: (municipio) => {
-        try {
-            if (!window?.gtag || !municipio) return;
-            
-            window.gtag('event', 'vista_alojamientos', {
-                nombre_destino: municipio,
-                tipo_contenido: 'alojamientos',
-                tipo_interaccion: 'vista'
-            });
-
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Analytics - Vista Alojamientos:', { destino: municipio });
-            }
-        } catch (error) {
-            console.error('Error Analytics - Alojamientos:', error);
-        }
-    },
-
-    // Track vistas de información
-    trackInfoView: (municipio) => {
-        try {
-            if (!window?.gtag || !municipio) return;
-            
-            window.gtag('event', 'vista_info_destino', {
-                nombre_destino: municipio,
-                tipo_contenido: 'sugerencias',
-                tipo_interaccion: 'vista'
-            });
-
-            if (process.env.NODE_ENV === 'development') {
-                console.log('Analytics - Vista Info:', { destino: municipio });
-            }
-        } catch (error) {
-            console.error('Error Analytics - Info:', error);
-        }
-    },
-
-    // Track errores de carga (nuevo)
+    // Track errores de carga (mantener esto es importante)
     trackError: (municipio, errorType) => {
         try {
             if (!window?.gtag) return;
@@ -166,6 +89,8 @@ const Homedestino = () => {
                 setContent(response.data);
             } catch (err) {
                 setError(err.message);
+
+                Analytics.trackError(destino_id, 'error_fetch_contenido');
             } finally {
                 setLoading(false);
             }
@@ -230,23 +155,19 @@ const Homedestino = () => {
             <Descripcion 
                 destino={infoDes}
                 destino_id={destino_id}
-                onClick={() => Analytics.trackDescriptionView(municipio)}
             />
             <DiscoverSection destino_id={destino_id}/>
             <PopularActivities contenido = { tendencias } />
             <ViewpointsSection 
                 imagenes={content.imagenes}
                 destino_id={destino_id}
-                onClick={() => Analytics.trackRoutesView(municipio)}
             />
             <AccommodationsSection 
                 alojamientos={alojamientos} 
                 destino_id={destino_id} 
-                onClick={() => Analytics.trackAccommodationsView(municipio)}
             />
             <DestinationInfo 
                 destino={infoDes} 
-                onClick={() => Analytics.trackInfoView(municipio)}
             />
         </>
     )
