@@ -41,19 +41,6 @@ const Home = () => {
         fetchDestinos();
     }, []);
 
-    // 1. Track tiempo en página
-    useEffect(() => {
-        const startTime = Date.now();
-        
-        return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000); // en segundos
-            window.gtag('event', 'time_on_page', {
-                'event_category': 'User_Engagement',
-                'event_label': 'Home',
-                'value': timeSpent
-            });
-        };
-    }, []);
 
     const initializeFiltros = (data) => {
         const nuevosFiltros = {};
@@ -113,13 +100,24 @@ const Home = () => {
             setRutasFiltradas(results);
         }
     };
+
+    
     
     const handle = (destino_id, municipio) => {
-        window.gtag('event', 'destination_click', {
-            'event_category': 'User_Engagement',
-            'event_label': municipio,
-            'destino_id': destino_id
-        });
+        if (window && window.gtag) {
+            window.gtag('event', 'destination_click', {
+                event_category: 'Navigation',
+                event_label: municipio,
+                value: destino_id,
+                app_name: 'Tree Suesca',
+                screen_name: municipio,
+                // Añadir más contexto útil
+                timestamp: new Date().toISOString(),
+                interaction_type: 'click'
+            });
+        } else {
+            console.warn('Google Analytics no está disponible');
+        }
 
         navigate(`/home/destino/${destino_id}`, {
             state: { destino_id }

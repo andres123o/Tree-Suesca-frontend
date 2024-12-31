@@ -6,7 +6,6 @@ import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../common/auth';
 import { useNavigate } from "react-router-dom"
-import ReactGA from 'react-ga4';
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const navigate = useNavigate()
@@ -78,11 +77,12 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   };
 
   const handleAuthClick = async () => {
-    ReactGA.event({
-        category: 'User_Interaction',
-        action: 'Start_Adventure_Click',
-        label: ruta.nombre || 'Ruta Desconocida'
-    });
+    // Trackear click en iniciar aventura
+    window.gtag('event', 'iniciar_aventura', {
+      tipo_negocio: 'miradores',
+      nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+      tipo_interaccion: 'click'
+  });
 
     if (!user) {
       try {
@@ -91,16 +91,24 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         if (result.user) {
           await handleUserAuthenticated(result.user);
           navigate(`/ruta/mapa/${startMap}`);
+
+          // Trackear inicio exitoso de ruta
+          window.gtag('event', 'ruta_iniciada', {
+              tipo_negocio: 'miradores',
+              nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
+              tipo_interaccion: 'conversion'
+          });
         }
       } catch (error) {
         console.error('Error:', error);
         setError(error.message || 'Error al iniciar sesión. Intente nuevamente.');
       }
     } else {
-      ReactGA.event({
-        category: 'Route_Conversion',
-        action: 'Route_Started',
-        label: ruta.nombre || 'Ruta Sin Nombre'
+      // Trackear inicio directo de ruta (usuario ya logueado)
+      window.gtag('event', 'ruta_iniciada', {
+          tipo_negocio: 'miradores',
+          nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
+          tipo_interaccion: 'conversion'
       });
       
       navigate(`/ruta/mapa/${startMap}`)

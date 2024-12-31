@@ -15,6 +15,129 @@ import DiscoverSection from '../home-destino/todo'
 import DestinationInfo from '../home-destino/tips'
 
 
+const Analytics = {
+    // Track tiempo en página
+    trackTimeSpent: (municipio, timeSpent) => {
+        try {
+            if (!window?.gtag) return;
+            if (timeSpent < 0) return;
+            
+            window.gtag('event', 'tiempo_destino', {
+                nombre_destino: municipio || 'desconocido',
+                tiempo_segundos: timeSpent,
+                tipo_engagement: 'tiempo_en_pagina'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Tiempo:', {
+                    destino: municipio,
+                    tiempo: timeSpent
+                });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Tiempo:', error);
+        }
+    },
+
+    // Track vistas de descripción
+    trackDescriptionView: (municipio) => {
+        try {
+            if (!window?.gtag || !municipio) return;
+            
+            window.gtag('event', 'vista_contenido_destino', {
+                nombre_destino: municipio,
+                tipo_contenido: 'descripcion',
+                tipo_interaccion: 'vista'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Vista Descripción:', { destino: municipio });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Descripción:', error);
+        }
+    },
+
+    // Track vistas de rutas
+    trackRoutesView: (municipio) => {
+        try {
+            if (!window?.gtag || !municipio) return;
+            
+            window.gtag('event', 'vista_rutas', {
+                nombre_destino: municipio,
+                tipo_contenido: 'rutas',
+                tipo_interaccion: 'clic'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Vista Rutas:', { destino: municipio });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Rutas:', error);
+        }
+    },
+
+    // Track vistas de alojamientos
+    trackAccommodationsView: (municipio) => {
+        try {
+            if (!window?.gtag || !municipio) return;
+            
+            window.gtag('event', 'vista_alojamientos', {
+                nombre_destino: municipio,
+                tipo_contenido: 'alojamientos',
+                tipo_interaccion: 'vista'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Vista Alojamientos:', { destino: municipio });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Alojamientos:', error);
+        }
+    },
+
+    // Track vistas de información
+    trackInfoView: (municipio) => {
+        try {
+            if (!window?.gtag || !municipio) return;
+            
+            window.gtag('event', 'vista_info_destino', {
+                nombre_destino: municipio,
+                tipo_contenido: 'sugerencias',
+                tipo_interaccion: 'vista'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Vista Info:', { destino: municipio });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Info:', error);
+        }
+    },
+
+    // Track errores de carga (nuevo)
+    trackError: (municipio, errorType) => {
+        try {
+            if (!window?.gtag) return;
+            
+            window.gtag('event', 'error_carga', {
+                nombre_destino: municipio || 'desconocido',
+                tipo_error: errorType,
+                pagina: 'destino'
+            });
+
+            if (process.env.NODE_ENV === 'development') {
+                console.log('Analytics - Error:', { 
+                    destino: municipio,
+                    error: errorType 
+                });
+            }
+        } catch (error) {
+            console.error('Error Analytics - Track Error:', error);
+        }
+    }
+};
+
 const Homedestino = () => {
     const navigate = useNavigate()
     const { destino_id } = useParams()
@@ -23,18 +146,13 @@ const Homedestino = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // 1. Track tiempo en la página de destino
     useEffect(() => {
-        const startTime = Date.now();
+        if (!content?.municipio) return; // Evitar tracking sin municipio
         
+        const startTime = Date.now();
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000);
-            ReactGA.event({
-                category: 'Destination_Engagement',
-                action: 'Time_On_Destination',
-                label: content?.municipio || 'unknown',
-                value: timeSpent
-            });
+            Analytics.trackTimeSpent(content.municipio, timeSpent);
         };
     }, [content?.municipio]);
 
@@ -112,39 +230,23 @@ const Homedestino = () => {
             <Descripcion 
                 destino={infoDes}
                 destino_id={destino_id}
-                onClick={() => ReactGA.event({
-                    category: 'Destination_Content',
-                    action: 'Description_View',
-                    label: municipio
-                })}
+                onClick={() => Analytics.trackDescriptionView(municipio)}
             />
             <DiscoverSection destino_id={destino_id}/>
             <PopularActivities contenido = { tendencias } />
             <ViewpointsSection 
                 imagenes={content.imagenes}
                 destino_id={destino_id}
-                onClick={() => ReactGA.event({
-                    category: 'Route_Interest',
-                    action: 'Routes_View',
-                    label: municipio
-                })}
+                onClick={() => Analytics.trackRoutesView(municipio)}
             />
             <AccommodationsSection 
                 alojamientos={alojamientos} 
                 destino_id={destino_id} 
-                onClick={() => ReactGA.event({
-                    category: 'Destination_Interest',
-                    action: 'Accommodations_View',
-                    label: municipio
-                })}
+                onClick={() => Analytics.trackAccommodationsView(municipio)}
             />
             <DestinationInfo 
                 destino={infoDes} 
-                onClick={() => ReactGA.event({
-                    category: 'Destination_Information',
-                    action: 'Info_View',
-                    label: municipio
-                })}
+                onClick={() => Analytics.trackInfoView(municipio)}
             />
         </>
     )

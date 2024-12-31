@@ -11,7 +11,6 @@ import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import AuthButtons from '../common/logUser';
 import { MdError } from "react-icons/md";
-import ReactGA from 'react-ga4';
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -86,21 +85,6 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
     const isNewListing = !actividad.calificacion || actividad.calificacion === 0;    
 
     const maxTextLength = 100;
-
-     // 1. Tracking tiempo en página
-     useEffect(() => {
-        const startTime = Date.now();
-        
-        return () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000);
-            ReactGA.event({
-                category: 'Activity_Engagement',
-                action: 'Time_On_Activity',
-                label: actividad.name,
-                value: timeSpent
-            });
-        };
-    }, [actividad.name]);
 
     useEffect(() => {
       setBackgroundImg(actividad.img)
@@ -267,17 +251,15 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                     name={oferente.oferente}
                     tipo={actividad.name}
                     onLocationClick={() => {
-                        ReactGA.event({
-                            category: 'Activity_Location',
-                            action: 'Map_View',
-                            label: actividad.name
+                        window.gtag('event', 'ver_ubicacion', {
+                            tipo_negocio: 'actividad',
+                            nombre_actividad: actividad.name
                         });
                     }}
                     onContactClick={() => {
-                        ReactGA.event({
-                            category: 'Activity_Contact',
-                            action: 'WhatsApp_Click',
-                            label: actividad.name
+                        window.gtag('event', 'contacto_whatsapp', {
+                            tipo_negocio: 'actividad',
+                            nombre_actividad: actividad.name
                         });
                     }}
                 />

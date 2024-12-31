@@ -8,7 +8,6 @@ import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import MapComponent from '../common/mapaUbicacion';
 import { MdError } from "react-icons/md";
-import ReactGA from 'react-ga4';
 import AuthButtons from '../common/logUser';
 
 const getIconComponent = (serviceName) => {
@@ -109,17 +108,15 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
 
     const maxTextLength = 150;
 
-    // 1. Trackear tiempo en página
     useEffect(() => {
         const startTime = Date.now();
         
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000);
-            ReactGA.event({
-                category: 'Accommodation_Engagement',
-                action: 'Time_On_Accommodation',
-                label: alojamiento.name,
-                value: timeSpent
+            window.gtag('event', 'tiempo_destino', {
+                nombre_destino: alojamiento.name,
+                tipo_negocio: 'alojamiento',
+                tiempo_segundos: timeSpent
             });
         };
     }, [alojamiento.name]);
@@ -295,17 +292,15 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                     name={oferente.oferente}
                     tipo={alojamiento.name}
                     onLocationClick={() => {
-                        ReactGA.event({
-                            category: 'Accommodation_Location',
-                            action: 'Map_View',
-                            label: alojamiento.name
+                        window.gtag('event', 'ver_ubicacion', {
+                            tipo_negocio: 'alojamiento',
+                            nombre_alojamiento: alojamiento.name
                         });
                     }}
                     onContactClick={() => {
-                        ReactGA.event({
-                            category: 'Accommodation_Contact',
-                            action: 'WhatsApp_Click',
-                            label: alojamiento.name
+                        window.gtag('event', 'contacto_whatsapp', {
+                            tipo_negocio: 'alojamiento',
+                            nombre_alojamiento: alojamiento.name
                         });
                     }}
                 />

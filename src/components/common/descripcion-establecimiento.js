@@ -10,7 +10,6 @@ import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import AuthButtons from '../common/logUser'; 
 import { MdError } from "react-icons/md";
-import ReactGA from 'react-ga4';
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
 const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
@@ -206,17 +205,15 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !establecimiento.calificacion || establecimiento.calificacion === 0;
 
-     // 1. Tracking tiempo en página
-     useEffect(() => {
+    useEffect(() => {
         const startTime = Date.now();
         
         return () => {
             const timeSpent = Math.round((Date.now() - startTime) / 1000);
-            ReactGA.event({
-                category: 'Establishment_Engagement',
-                action: 'Time_On_Establishment',
-                label: establecimiento.name,
-                value: timeSpent
+            window.gtag('event', 'tiempo_destino', {
+                nombre_destino: establecimiento.name,
+                tipo_negocio: 'establecimiento',
+                tiempo_segundos: timeSpent
             });
         };
     }, [establecimiento.name]);
@@ -349,17 +346,15 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                             name={establecimiento.name}
                             tipo={'Una mesa'}
                             onLocationClick={() => {
-                                ReactGA.event({
-                                    category: 'Establishment_Location',
-                                    action: 'Map_View',
-                                    label: establecimiento.name
+                                window.gtag('event', 'ver_ubicacion', {
+                                    tipo_negocio: 'restaurante',
+                                    nombre_establecimiento: establecimiento.name
                                 });
                             }}
                             onContactClick={() => {
-                                ReactGA.event({
-                                    category: 'Establishment_Contact',
-                                    action: 'WhatsApp_Click',
-                                    label: establecimiento.name
+                                window.gtag('event', 'contacto_whatsapp', {
+                                    tipo_negocio: 'restaurante',
+                                    nombre_establecimiento: establecimiento.name
                                 });
                             }}
                         />
@@ -495,17 +490,15 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                             name={establecimiento.name}
                             tipo={'Una mesa'}
                             onLocationClick={() => {
-                                ReactGA.event({
-                                    category: 'Establishment_Location',
-                                    action: 'Map_View',
-                                    label: establecimiento.name
+                                window.gtag('event', 'ver_ubicacion', {
+                                    tipo_negocio: 'bar_cafe',
+                                    nombre_establecimiento: establecimiento.name
                                 });
                             }}
                             onContactClick={() => {
-                                ReactGA.event({
-                                    category: 'Establishment_Contact',
-                                    action: 'WhatsApp_Click',
-                                    label: establecimiento.name
+                                window.gtag('event', 'contacto_whatsapp', {
+                                    tipo_negocio: 'bar_cafe',
+                                    nombre_establecimiento: establecimiento.name
                                 });
                             }}
                         />

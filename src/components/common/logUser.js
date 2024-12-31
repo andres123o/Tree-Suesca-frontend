@@ -85,10 +85,27 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
       setPendingAction(action);
       try {
         setError(null);
+
+        window.gtag('event', 'intento_login', {
+            tipo_negocio: tipo
+        });
+
         await signInWithPopup(auth, provider);
+
+        // Track login exitoso
+        window.gtag('event', 'login_exitoso', {
+            tipo_negocio: tipo
+        });
       } catch (error) {
         console.error('Error:', error);
         setError('Error al iniciar sesión. Intente nuevamente.');
+
+        // Track error login
+        window.gtag('event', 'error_login', {
+            tipo_negocio: tipo,
+            error_mensaje: error.message
+        });
+
         setPendingAction(null);
       }
     } else {
