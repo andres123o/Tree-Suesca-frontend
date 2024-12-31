@@ -292,7 +292,7 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                     name={oferente.oferente}
                     tipo={alojamiento.name}
                     onLocationClick={() => {
-                        window.gtag('event', 'ver_ubicacion', {
+                        window.gtag('event', 'ver_como_llegar', {
                             tipo_negocio: 'alojamiento',
                             nombre_alojamiento: alojamiento.name
                         });

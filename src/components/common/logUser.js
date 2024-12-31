@@ -99,7 +99,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
       }
     } else {
       if (action === 'map') {
-        setIsMapOpen(true);
+        handleMapOpen()
       } else if (action === 'contact') {
         handleWhatsAppClick();
       }
@@ -120,13 +120,9 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   };
 
   const handleMapOpen = () => {
-    window.gtag('event', 'ver_ubicacion', {
-        tipo_negocio: tipo || 'desconocido',
-        nombre_establecimiento: name || 'desconocido'
-    });
-    // LUEGO abrir el mapa
-    setIsMapOpen(true);
-};
+      setIsMapOpen(true);
+      onLocationClick()
+  };
 
   useEffect(() => {
     if (user && pendingAction) {

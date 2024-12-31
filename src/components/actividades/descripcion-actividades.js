@@ -251,7 +251,7 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
                     name={oferente.oferente}
                     tipo={actividad.name}
                     onLocationClick={() => {
-                        window.gtag('event', 'ver_ubicacion', {
+                        window.gtag('event', 'ver_como_llegar', {
                             tipo_negocio: 'actividad',
                             nombre_actividad: actividad.name
                         });

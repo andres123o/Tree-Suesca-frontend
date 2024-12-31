@@ -346,7 +346,7 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                             name={establecimiento.name}
                             tipo={'Una mesa'}
                             onLocationClick={() => {
-                                window.gtag('event', 'ver_ubicacion', {
+                                window.gtag('event', 'ver_como_llegar', {
                                     tipo_negocio: 'restaurante',
                                     nombre_establecimiento: establecimiento.name
                                 });
@@ -490,7 +490,7 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
                             name={establecimiento.name}
                             tipo={'Una mesa'}
                             onLocationClick={() => {
-                                window.gtag('event', 'ver_ubicacion', {
+                                window.gtag('event', 'ver_como_llegar', {
                                     tipo_negocio: 'bar_cafe',
                                     nombre_establecimiento: establecimiento.name
                                 });
