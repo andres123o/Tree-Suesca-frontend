@@ -28,17 +28,6 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
     return () => unsubscribe();
   }, []);
 
-  useEffect(() => {
-    if (user && pendingAction) {
-      if (pendingAction === 'map') {
-        setIsMapOpen(true);
-      } else if (pendingAction === 'contact') {
-        handleWhatsAppClick();
-      }
-      setPendingAction(null);
-    }
-  }, [user, pendingAction]);
-
   const handleUserAuthenticated = async (user) => {
     try {
       setError(null);
@@ -131,13 +120,10 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   };
 
   const handleMapOpen = () => {
-    // PRIMERO disparar el evento
-    if (onLocationClick) {
-        window.gtag('event', 'ver_ubicacion', {
-            tipo_negocio: tipo || 'desconocido',
-            nombre_establecimiento: name || 'desconocido'
-        });
-    }
+    window.gtag('event', 'ver_ubicacion', {
+        tipo_negocio: tipo || 'desconocido',
+        nombre_establecimiento: name || 'desconocido'
+    });
     // LUEGO abrir el mapa
     setIsMapOpen(true);
 };
