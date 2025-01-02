@@ -3,6 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './auth';
 import MapComponent from '../common/mapaUbicacion';
 import { AlertCircle } from 'lucide-react';
+import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 
 // Detector de navegador in-app
 const isInAppBrowser = () => {
@@ -82,14 +83,38 @@ const RedirectModal = ({ onClose }) => {
     <div className="redirect-modal-overlay">
       <div className="redirect-modal-container">
         <div className="redirect-modal-content">
-          <p className="redirect-modal-text">Para brindarte una experiencia segura</p>
-          <h4 className="redirect-modal-subtitle">Abriremos tu navegador habitual</h4>
-          <p className="redirect-modal-text">
-            Es un proceso rápido de solo 2 pasos para proteger tu información, no instalarás nada nuevo.
+          <div className="redirect-modal-header">
+            <div className="chrome-icon-container">
+              <Chrome size={24} />
+            </div>
+          </div>
+          
+          <h4 className="redirect-modal-title">
+            Tu Seguridad Primero
+          </h4>
+          
+          <p className="redirect-modal-description">
+            Para mayor seguridad, abriremos tu navegador de confianza
           </p>
-          <p className="redirect-modal-countdown">
-            Redirigiendo en {countdown} segundos...
-          </p>
+  
+          <div className="redirect-modal-icons">
+            <Chrome size={24} className="browser-icon" />
+            <div className="arrow-container">
+              <ArrowRight size={18} />
+            </div>
+            <Chrome size={24} className="browser-icon-active" />
+          </div>
+  
+          <div className="redirect-modal-security">
+            <ShieldCheck size={16} />
+            <span>No instalarás nada nuevo</span>
+          </div>
+  
+          <div className="redirect-modal-progress">
+            <div className="redirect-modal-countdown">
+              Continuando en {countdown}...
+            </div>
+          </div>
         </div>
       </div>
     </div>
