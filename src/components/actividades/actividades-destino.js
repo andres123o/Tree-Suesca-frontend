@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import FiltrosTitulo from "../common/titulo-filtro";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion';
+import { Helmet } from 'react-helmet-async';
 
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat('es-CO', {
@@ -72,6 +73,11 @@ const ListadoActividades = ({ titulo }) => {
   };
 
   return (
+  <>
+    <Helmet>
+        <title>Actividades </title>
+        <meta name="description" content="Descubre las mejores actividades de tu destino" />
+    </Helmet>
     <div className="actividades-container">
       <FiltrosTitulo
         nombre={titulo}
@@ -143,6 +149,7 @@ const ListadoActividades = ({ titulo }) => {
         ))}
       </div>
     </div>
+  </>
   );
 };
 

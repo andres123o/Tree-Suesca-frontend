@@ -7,6 +7,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../common/auth';
 import { useNavigate } from "react-router-dom"
 import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 
 // Primero agregamos las funciones de detección y redirección
 const isInAppBrowser = () => {
@@ -30,8 +31,8 @@ const getBrowserType = () => {
 
 const handleBrowserRedirect = () => {
   const browserType = getBrowserType();
-  const currentURL = window.location.href;
   const isAndroid = /android/i.test(navigator.userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   // Primer intento: Redirección específica según plataforma y navegador
   switch (browserType) {
@@ -40,9 +41,11 @@ const handleBrowserRedirect = () => {
     case 'tiktok':
     case 'other':
       if (isAndroid) {
+        // Para Android: Intent URL para abrir Chrome
         window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-      } else {
-        window.location.href = `googlechrome://${window.location.host}${window.location.pathname}`;
+      } else if (isIOS) {
+        // Para iOS: Usar URL de Safari
+        window.location.href = `https://${window.location.host}${window.location.pathname}`;
       }
       break;
   }
@@ -52,12 +55,12 @@ const handleBrowserRedirect = () => {
     window.location.href = `https://${window.location.host}${window.location.pathname}`;
   }, 1000);
 
-  // Tercer intento - sugerir instalar Chrome
+  // Tercer intento - sugerir instalar navegador si todo falla
   setTimeout(() => {
     if (isAndroid) {
       window.location.href = 'market://details?id=com.android.chrome';
-    } else {
-      window.location.href = 'https://apps.apple.com/app/google-chrome/id535886823';
+    } else if (isIOS) {
+      window.location.href = 'https://apps.apple.com/app/safari/id1146562112';
     }
   }, 2000);
 };
@@ -441,6 +444,10 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
 
   return (
     <>
+      <Helmet>
+          <title>{ruta.nombre}</title>
+          <meta name="description" content={ruta.nombre} />
+      </Helmet>
       {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
 
       <div className='container-info-descrip'>

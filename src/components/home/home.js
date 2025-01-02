@@ -7,6 +7,7 @@ import { FaUserGroup } from "react-icons/fa6";
 import OptimizedImage from "../common/optimzarImg";
 import { MdError } from "react-icons/md";
 import SearchBox from '../home-destino/searchBox'
+import { Helmet } from 'react-helmet-async';
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
@@ -206,6 +207,10 @@ const Home = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Home - Desti Plus</title>
+                <meta name="description" content="Descubre las mejores destinos y experiencias"/>
+            </Helmet>
             <div className="header">
                 <div className="title-header">
                     <h5>Destino <span className="mas-home"><strong>+</strong></span></h5>

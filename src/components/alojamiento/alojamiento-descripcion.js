@@ -9,6 +9,7 @@ import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import MapComponent from '../common/mapaUbicacion';
 import { MdError } from "react-icons/md";
 import AuthButtons from '../common/logUser';
+import { Helmet } from 'react-helmet-async';
 
 const getIconComponent = (serviceName) => {
     // Mapeo directo de servicios a iconos de Lucide
@@ -148,6 +149,10 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     
     return (
         <>
+            <Helmet>
+                <title>{alojamiento.name}</title>
+                <meta name="description" content={alojamiento.name} />
+            </Helmet>
             {/* Ver las imagenes del carrusel */}
             <OptimizedImage className='container-img-principal'
                 imageUrl={backgroundImage}

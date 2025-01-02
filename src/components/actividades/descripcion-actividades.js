@@ -11,6 +11,7 @@ import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import AuthButtons from '../common/logUser';
 import { MdError } from "react-icons/md";
+import { Helmet } from 'react-helmet-async';
 
 // Obtener datos
 const useDestinoContent = (destinoId = 1) => {
@@ -108,6 +109,10 @@ const DescripcionActividades = ( {actividad, oferente} ) => {
 
     return (
         <>
+            <Helmet>
+                <title>{actividad.name}</title>
+                <meta name="description" content={actividad.name} />
+            </Helmet>
             {/* Ver las imagenes del carrusel */}
             <OptimizedImage className='container-img-principal'
                 imageUrl={backgroundImage}

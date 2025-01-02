@@ -10,6 +10,7 @@ import OptimizedImage from '../common/optimzarImg'
 import { MapPin, Star, Clock, Award, MessageCircle } from 'lucide-react';
 import AuthButtons from '../common/logUser'; 
 import { MdError } from "react-icons/md";
+import { Helmet } from 'react-helmet-async';
 
 // Componentes reutilizables que mantienen la estructura exacta del JSX
 const ImageCarousel = ({ images, selectedIndex, onImageClick }) => (
@@ -229,6 +230,10 @@ const DescripcionEstablecimientos = ({establecimiento}) => {
 
     return (
         <>
+            <Helmet>
+                <title>{establecimiento.name}</title>
+                <meta name="description" content={establecimiento.name} />
+            </Helmet>
             {!establecimiento.servicios.delivery ? (
                 <>
                     <OptimizedImage className='container-img-principal'

@@ -6,6 +6,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { Heart, Star, Users, BedDouble, Home } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { useNavigate} from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 
 const formatCurrency = (amount) => {
     return new Intl.NumberFormat('es-CO', {
@@ -77,6 +78,10 @@ const ListadoBares = ( { icono1, icono2, titulo, tipoEstablecimiento} ) => {
 
     return (
         <>
+            <Helmet>
+                <title>Bares</title>
+                <meta name="description" content="Descubre los mejores bares de tu destino"/>
+            </Helmet>
             <div className="alojamientos-container">
                 <FiltrosTitulo
                     nombre={titulo}

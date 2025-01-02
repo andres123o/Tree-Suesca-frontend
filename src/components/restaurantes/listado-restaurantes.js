@@ -6,7 +6,7 @@ import { Heart, Star, Users, BedDouble, Home } from 'lucide-react';
 import { useLocation, useParams } from "react-router-dom";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { useNavigate} from "react-router-dom";
-
+import { Helmet } from 'react-helmet-async';
 
 
 const formatCurrency = (amount) => {
@@ -81,6 +81,10 @@ const ListadoRestaurantes = ( { titulo, icono1, icono2, tipoEstablecimiento}) =>
     
     return (
         <>
+            <Helmet>
+                <title>Restaurantes</title>
+                <meta name="description" content="Descubre los mejores restaurantes de tu destino"/>
+            </Helmet>
             <div className="alojamientos-container">
                 <FiltrosTitulo
                     nombre={titulo}

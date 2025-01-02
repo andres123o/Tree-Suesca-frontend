@@ -27,8 +27,8 @@ const getBrowserType = () => {
 
 const handleBrowserRedirect = () => {
   const browserType = getBrowserType();
-  const currentURL = window.location.href;
   const isAndroid = /android/i.test(navigator.userAgent);
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
   // Primer intento: Redirección específica según plataforma y navegador
   switch (browserType) {
@@ -39,9 +39,9 @@ const handleBrowserRedirect = () => {
       if (isAndroid) {
         // Intent URL funciona para la mayoría de navegadores Android in-app
         window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-      } else {
+      } else if (isIOS) {
         // Para iOS intentamos primero Chrome
-        window.location.href = `googlechrome://${window.location.host}${window.location.pathname}`;
+        window.location.href = `safari://${window.location.host}${window.location.pathname}`;
       }
       break;
   }
@@ -55,8 +55,8 @@ const handleBrowserRedirect = () => {
   setTimeout(() => {
     if (isAndroid) {
       window.location.href = 'market://details?id=com.android.chrome';
-    } else {
-      window.location.href = 'https://apps.apple.com/app/google-chrome/id535886823';
+    } else if (isIOS) {
+      window.location.href = 'https://apps.apple.com/app/safari/id1146562112';
     }
   }, 2000);
 };

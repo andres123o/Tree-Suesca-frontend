@@ -6,6 +6,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from 'axios';
 import OptimizedImage from '../common/optimzarImg';
 import { MdError } from "react-icons/md";
+import { Helmet } from 'react-helmet-async';
 
 const useDestinoContent = () => {
   const { destino_id } = useParams()
@@ -104,77 +105,83 @@ const ListaRutas = ({ rutas, iconos, route}) => {
   };
 
   return (
-    <div className="rutas-container">
-      <FiltrosTitulo 
-        nombre={'Paisajes & Miradores'}
-        filtros={filtros}
-        filtroSeleccionado={filtroSeleccionado}
-        manejarClick={manejarClick}
-      />
-      <div className="container-seccion-lista-rutas">
-        {rutasFiltradas.map((item) => (
-          <div key={item.id}  onClick={() => handle(item.nombre)} className="container-item-lista-rutas">
-            <div className="route-social">
-              <button className="interaction-button">
-                <Heart className="icon2" size={14}/>
-              </button>
-              <button className="interaction-button">
-                <Share2 className="icon2" size={14}/>
-              </button>
-            </div>
-            
-            <OptimizedImage
-              imageUrl={item.img}
-              alt={item.nombre}
-              className="container-img-ruta"
-            />
-            
-            <div className="rating-badge">
-              {parseFloat(item.calificacion) === 0 ? (
-                'Nuevo'
-              ) : (
-                `${parseFloat(item.calificacion).toFixed(1)} ★`
-              )}
-            </div>
-
-            <div className="container-info-ruta">
-              <h3 className="route-title">{item.nombre}</h3>
-              
-              <div className="route-stats">
-                <div className="stat-item">
-                  <Clock className="icon2" size={12}/>
-                  <span>{item.tiempo} min</span>
-                </div>
-                <div className="stat-item">
-                  <Navigation2 className="icon2"size={12} />
-                  <span>{item.distancia} km</span>
-                </div>
-                <div className="stat-item">
-                  <Mountain className="icon2" size={12}/>
-                  <span>{item.terreno}</span>
-                </div>
-              </div>
-
-              <div className="route-footer">
-                <div className="user-count">
-                  <div className="avatar-group">
-                    <div className="avatar"></div>
-                    <div className="avatar"></div>
-                  </div>
-                  <span>¡Recién agregada!</span>
-                </div>
-                <button 
-                  className="ver-ruta-btn"
-                  onClick={() => handle(item.nombre)}
-                >
-                  Ver Ruta
+    <>
+      <Helmet>
+        <title>Rutas y Miradores</title>
+        <meta name="description" content="Descrubre las mejores rutas y miradores"/>
+      </Helmet>
+      <div className="rutas-container">
+        <FiltrosTitulo 
+          nombre={'Paisajes & Miradores'}
+          filtros={filtros}
+          filtroSeleccionado={filtroSeleccionado}
+          manejarClick={manejarClick}
+        />
+        <div className="container-seccion-lista-rutas">
+          {rutasFiltradas.map((item) => (
+            <div key={item.id}  onClick={() => handle(item.nombre)} className="container-item-lista-rutas">
+              <div className="route-social">
+                <button className="interaction-button">
+                  <Heart className="icon2" size={14}/>
+                </button>
+                <button className="interaction-button">
+                  <Share2 className="icon2" size={14}/>
                 </button>
               </div>
+              
+              <OptimizedImage
+                imageUrl={item.img}
+                alt={item.nombre}
+                className="container-img-ruta"
+              />
+              
+              <div className="rating-badge">
+                {parseFloat(item.calificacion) === 0 ? (
+                  'Nuevo'
+                ) : (
+                  `${parseFloat(item.calificacion).toFixed(1)} ★`
+                )}
+              </div>
+
+              <div className="container-info-ruta">
+                <h3 className="route-title">{item.nombre}</h3>
+                
+                <div className="route-stats">
+                  <div className="stat-item">
+                    <Clock className="icon2" size={12}/>
+                    <span>{item.tiempo} min</span>
+                  </div>
+                  <div className="stat-item">
+                    <Navigation2 className="icon2"size={12} />
+                    <span>{item.distancia} km</span>
+                  </div>
+                  <div className="stat-item">
+                    <Mountain className="icon2" size={12}/>
+                    <span>{item.terreno}</span>
+                  </div>
+                </div>
+
+                <div className="route-footer">
+                  <div className="user-count">
+                    <div className="avatar-group">
+                      <div className="avatar"></div>
+                      <div className="avatar"></div>
+                    </div>
+                    <span>¡Recién agregada!</span>
+                  </div>
+                  <button 
+                    className="ver-ruta-btn"
+                    onClick={() => handle(item.nombre)}
+                  >
+                    Ver Ruta
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

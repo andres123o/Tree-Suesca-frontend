@@ -120,7 +120,7 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
                         </span>
                         <button 
                         className="book-btn"
-                        onClick={handleBookClick}
+                        onClick={() => handleCardClick(accommodation.title)}
                         >
                         Reservar
                         </button>

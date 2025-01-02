@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import ScrollToTop  from './components/common/scrollToTop';
 import axios from 'axios'
+import { HelmetProvider } from 'react-helmet-async';
 
 // Componentes de la pagina de inicio
 import Home from './components/home/home'
@@ -97,74 +98,77 @@ function App() {
 
     return (
         <>
-            <ScrollToTop />
-            <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path="/home/destino/:destino_id" element={<Homedestino />} />
-    
-                {/* Rutas */}
-                <Route path='/rutas/Senderismo/:destino_id' element={
-                    <MainComponentListadoRutas
-                        iconos={iconCaraceristicas}
-                        route='caracteristicas'
-                    />
-                } />
-                <Route path='/rutas/caracteristicas/:nombre' element={<MainComponentRuta />} />
-                <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenadaMapBox />} />
-                
-                {/* Restaurantes y Bares */}
-                <Route path='/restaurantes/:destino_id' element={
-                    <ListadoRestaurantes 
-                        icono1={<IoFastFoodOutline className='Faperson'/>}
-                        icono2={<PiMapPinAreaFill className='Faperson'/>}
-                        titulo='Restaurantes'
-                        tipoEstablecimiento='restaurante'
-                    />
-                } />
-                <Route path='/fiesta-amigos/:destino_id' element={
-                    <ListadoBares
-                        icono1={<FaWineBottle className='Faperson'/>}
-                        icono2={<PiMapPinAreaFill className='Faperson'/>}
-                        titulo='Fiesta y Amigos'
-                        tipoEstablecimiento='bares'
-                    />
-                } />
-                
-                {/* Actividades */}
-                <Route path='/actividades/:destino_id' element={
-                    <ListadoActividades 
-                        titulo='Actividades'
-                        icon={<FaPerson className="Faperson" />}
-                        tipo='Por persona: '
-                    />
-                } />
-                
-                {/* Eventos */}
-                <Route path='/eventos/:destino_id' element={
-                    <ListadoEventos 
-                        titulo='Eventos'
-                        icon={<FaPerson className="Faperson" />}
-                        tipo='Por persona: '
-                        iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
-                        fecha='30 Oct'
-                    />
-                } />
-                
-                {/* Alojamientos */}
-                <Route path='/alojamientos/:destino_id' element={
-                    <ListadoAlojamiewnto 
-                        titulo='Alojamientos'
-                        icon={<MdHotel className="Faperson" />}
-                        noche='noche'
-                    />
-                } />
-    
-                {/* Rutas para vistas detalladas */}
-                <Route path='/establecimiento/:tipo/:nombre' element={<MainComponent />} />
-                <Route path='/actividad/:description' element={<MainComponentActivity />} />
-                <Route path='/evento/:description' element={<MainComponentEvent />} />
-                <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
-            </Routes>
+            <HelmetProvider>
+                <ScrollToTop />
+                <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path="/home/destino/:destino_id" element={<Homedestino />} />
+        
+                    {/* Rutas */}
+                    <Route path='/rutas/Senderismo/:destino_id' element={
+                        <MainComponentListadoRutas
+                            iconos={iconCaraceristicas}
+                            route='caracteristicas'
+                        />
+                    } />
+                    <Route path='/rutas/caracteristicas/:nombre' element={<MainComponentRuta />} />
+                    <Route path='/ruta/mapa/:nombre' element={<MainComponentCoordenadaMapBox />} />
+                    
+                    {/* Restaurantes y Bares */}
+                    <Route path='/restaurantes/:destino_id' element={
+                        <ListadoRestaurantes 
+                            icono1={<IoFastFoodOutline className='Faperson'/>}
+                            icono2={<PiMapPinAreaFill className='Faperson'/>}
+                            titulo='Restaurantes'
+                            tipoEstablecimiento='restaurante'
+                        />
+                    } />
+                    <Route path='/fiesta-amigos/:destino_id' element={
+                        <ListadoBares
+                            icono1={<FaWineBottle className='Faperson'/>}
+                            icono2={<PiMapPinAreaFill className='Faperson'/>}
+                            titulo='Fiesta y Amigos'
+                            tipoEstablecimiento='bares'
+                        />
+                    } />
+                    
+                    {/* Actividades */}
+                    <Route path='/actividades/:destino_id' element={
+                        <ListadoActividades 
+                            titulo='Actividades'
+                            icon={<FaPerson className="Faperson" />}
+                            tipo='Por persona: '
+                        />
+                    } />
+                    
+                    {/* Eventos */}
+                    <Route path='/eventos/:destino_id' element={
+                        <ListadoEventos 
+                            titulo='Eventos'
+                            icon={<FaPerson className="Faperson" />}
+                            tipo='Por persona: '
+                            iconCalendar={<IoCalendarOutline className="FaCalendar"/>}
+                            fecha='30 Oct'
+                        />
+                    } />
+                    
+                    {/* Alojamientos */}
+                    <Route path='/alojamientos/:destino_id' element={
+                        <ListadoAlojamiewnto 
+                            titulo='Alojamientos'
+                            icon={<MdHotel className="Faperson" />}
+                            noche='noche'
+                        />
+                    } />
+        
+                    {/* Rutas para vistas detalladas */}
+                    <Route path='/establecimiento/:tipo/:nombre' element={<MainComponent />} />
+                    <Route path='/actividad/:description' element={<MainComponentActivity />} />
+                    <Route path='/evento/:description' element={<MainComponentEvent />} />
+                    <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
+                </Routes>
+            </HelmetProvider>
+            
         </>
     );
 }

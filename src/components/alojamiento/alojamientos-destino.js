@@ -4,6 +4,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import FiltrosTitulo from "../common/titulo-filtro";
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
+import { Helmet } from 'react-helmet-async';
 
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat('es-CO', {
@@ -72,71 +73,77 @@ const ListadoAlojamiento = ({ titulo }) => {
   };
 
   return (
-    <div className="alojamientos-container">
-      <FiltrosTitulo
-        nombre={titulo}
-        filtros={filtros}
-        filtroSeleccionado={filtroSeleccionado}
-        manejarClick={manejarClick}
-      />
-      
-        <div className="alojamientos-grid">
-            {alojamientoFiltrados.map((alojamiento) => (
-            <div
-                key={alojamiento.name}
-                className="alojamiento-card"
-                onClick={() => handleCardClick(alojamiento.name)}
-            >
-                <div className="image-container">
-                <OptimizedImageLarge className='accommodation-image'
-                    imageUrl={alojamiento.img}
-                    alt={alojamiento.img}
-                />
-                <button className="favorite-btn">
-                    <Heart size={18} />
-                </button>
-                {alojamiento.calificacion === 0 && (
-                    <span className="badge">Nuevo</span>
-                )}
-                </div>
+    <>
+      <Helmet>
+            <title>Alojamientos</title>
+            <meta name="description" content="Descubre los mejores alojamientos de tu destino"/>
+      </Helmet>
+      <div className="alojamientos-container">
+        <FiltrosTitulo
+          nombre={titulo}
+          filtros={filtros}
+          filtroSeleccionado={filtroSeleccionado}
+          manejarClick={manejarClick}
+        />
+        
+          <div className="alojamientos-grid">
+              {alojamientoFiltrados.map((alojamiento) => (
+              <div
+                  key={alojamiento.name}
+                  className="alojamiento-card"
+                  onClick={() => handleCardClick(alojamiento.name)}
+              >
+                  <div className="image-container">
+                  <OptimizedImageLarge className='accommodation-image'
+                      imageUrl={alojamiento.img}
+                      alt={alojamiento.img}
+                  />
+                  <button className="favorite-btn">
+                      <Heart size={18} />
+                  </button>
+                  {alojamiento.calificacion === 0 && (
+                      <span className="badge">Nuevo</span>
+                  )}
+                  </div>
 
-                <div className="content">
-                {/* Header with logo, name and rating */}
-                <div className="card-header">
-                    <div className="logo-name-container">
-                    <img 
-                        src={alojamiento.logo} 
-                        alt={`Logo de ${alojamiento.name}`}
-                        className="alojamiento-logo"
-                    />
-                    <h3 className="accommodation-title-lista">{alojamiento.name}</h3>
-                    </div>
-                    <div className="rating">
-                    <Star size={14} className="star-icon" />
-                    <span>{alojamiento.calificacion === 0 ? "Nuevo" : alojamiento.calificacion}</span>
-                    </div>
-                </div>
+                  <div className="content">
+                  {/* Header with logo, name and rating */}
+                  <div className="card-header">
+                      <div className="logo-name-container">
+                      <img 
+                          src={alojamiento.logo} 
+                          alt={`Logo de ${alojamiento.name}`}
+                          className="alojamiento-logo"
+                      />
+                      <h3 className="accommodation-title-lista">{alojamiento.name}</h3>
+                      </div>
+                      <div className="rating">
+                      <Star size={14} className="star-icon" />
+                      <span>{alojamiento.calificacion === 0 ? "Nuevo" : alojamiento.calificacion}</span>
+                      </div>
+                  </div>
 
-                {/* Accommodation details */}
-                <div className="details">
-                    {alojamiento.equipamento.habitaciones} habitación • {' '}
-                    {alojamiento.equipamento.camas} cama • {' '}
-                    {alojamiento.equipamento.baños} baño
-                </div>
+                  {/* Accommodation details */}
+                  <div className="details">
+                      {alojamiento.equipamento.habitaciones} habitación • {' '}
+                      {alojamiento.equipamento.camas} cama • {' '}
+                      {alojamiento.equipamento.baños} baño
+                  </div>
 
-                {/* Price and booking */}
-                <div className="price-booking">
-                    <div className="price">
-                    <span className="amount">{formatCurrency(alojamiento.precio)}</span>
-                    <span className="per-night">/noche</span>
-                    </div>
-                    <button className="book-btn">Reservar</button>
-                </div>
-                </div>
-            </div>
-            ))}
-        </div>
-    </div>
+                  {/* Price and booking */}
+                  <div className="price-booking">
+                      <div className="price">
+                      <span className="amount">{formatCurrency(alojamiento.precio)}</span>
+                      <span className="per-night">/noche</span>
+                      </div>
+                      <button className="book-btn">Reservar</button>
+                  </div>
+                  </div>
+              </div>
+              ))}
+          </div>
+      </div>
+    </>
   );
 };
 

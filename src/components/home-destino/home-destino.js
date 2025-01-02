@@ -4,6 +4,7 @@ import ScrollToTop  from '../common/scrollToTop';
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from 'axios'
 import { MdError } from "react-icons/md";
+import { Helmet } from 'react-helmet-async';
 
 // Componente home destino
 import Header from './header';
@@ -149,6 +150,10 @@ const Homedestino = () => {
 
     return (
         <>
+            <Helmet>
+                <title>{municipio}</title>
+                <meta name="description" content={`Descubre las mejores rutas y experiencias en ${municipio}`}  />
+            </Helmet>
             <ScrollToTop />
             <Header destino = {municipio}/>
             
