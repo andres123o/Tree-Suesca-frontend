@@ -16,6 +16,50 @@ const isInAppBrowser = () => {
   );
 };
 
+const getBrowserType = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('instagram')) return 'instagram';
+  if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
+  if (ua.includes('tiktok')) return 'tiktok';
+  return 'other';
+};
+
+const handleBrowserRedirect = () => {
+  const browserType = getBrowserType();
+  const currentURL = window.location.href;
+  const isAndroid = /android/i.test(navigator.userAgent);
+
+  // Primer intento: Redirección específica según plataforma y navegador
+  switch (browserType) {
+    case 'instagram':
+    case 'facebook':
+    case 'tiktok':
+    case 'other':
+      if (isAndroid) {
+        // Intent URL funciona para la mayoría de navegadores Android in-app
+        window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+      } else {
+        // Para iOS intentamos primero Chrome
+        window.location.href = `googlechrome://${window.location.host}${window.location.pathname}`;
+      }
+      break;
+  }
+
+  // Segundo intento: URL normal después de 1 segundo (funciona como fallback para cualquier navegador)
+  setTimeout(() => {
+    window.location.href = `https://${window.location.host}${window.location.pathname}`;
+  }, 1000);
+
+  // Tercer intento: Si todo falla, sugerimos instalar Chrome
+  setTimeout(() => {
+    if (isAndroid) {
+      window.location.href = 'market://details?id=com.android.chrome';
+    } else {
+      window.location.href = 'https://apps.apple.com/app/google-chrome/id535886823';
+    }
+  }, 2000);
+};
+
 const RedirectModal = ({ onClose }) => {
   const [countdown, setCountdown] = useState(3);
 
@@ -24,7 +68,7 @@ const RedirectModal = ({ onClose }) => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          window.location.href = window.location.href.replace('://', '://x.');
+          handleBrowserRedirect();
           return 0;
         }
         return prev - 1;
@@ -218,13 +262,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
       {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
-      <div className="container-contacto-aloja">
-        {error && (
-          <div className="error-message">
-            {error}
-          </div>
-        )}
-        
+      <div className="container-contacto-aloja">       
         <button 
           className="como-llegar-aloja"
           onClick={() => handleAuthClick('map')}
