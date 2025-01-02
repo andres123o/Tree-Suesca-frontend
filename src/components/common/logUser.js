@@ -61,7 +61,7 @@ const handleBrowserRedirect = () => {
 };
 
 const RedirectModal = ({ onClose }) => {
-  const [countdown, setCountdown] = useState(3);
+  const [countdown, setCountdown] = useState(5);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -82,10 +82,10 @@ const RedirectModal = ({ onClose }) => {
     <div className="redirect-modal-overlay">
       <div className="redirect-modal-container">
         <div className="redirect-modal-content">
-          <h3 className="redirect-modal-title">Para brindarte una experiencia segura</h3>
-          <h4 className="redirect-modal-subtitle">Continuaremos en tu navegador</h4>
+          <p className="redirect-modal-text">Para brindarte una experiencia segura</p>
+          <h4 className="redirect-modal-subtitle">Abriremos tu navegador habitual</h4>
           <p className="redirect-modal-text">
-            Es un proceso rápido de solo 2 pasos para proteger tu información
+            Es un proceso rápido de solo 2 pasos para proteger tu información, no instalarás nada nuevo.
           </p>
           <p className="redirect-modal-countdown">
             Redirigiendo en {countdown} segundos...

@@ -7,6 +7,97 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../common/auth';
 import { useNavigate } from "react-router-dom"
 
+// Primero agregamos las funciones de detección y redirección
+const isInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return (
+    ua.includes('FBAN') || 
+    ua.includes('FBAV') || 
+    ua.includes('Instagram') || 
+    ua.includes('TikTok') ||
+    (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
+  );
+};
+
+const getBrowserType = () => {
+  const ua = navigator.userAgent.toLowerCase();
+  if (ua.includes('instagram')) return 'instagram';
+  if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
+  if (ua.includes('tiktok')) return 'tiktok';
+  return 'other';
+};
+
+const handleBrowserRedirect = () => {
+  const browserType = getBrowserType();
+  const currentURL = window.location.href;
+  const isAndroid = /android/i.test(navigator.userAgent);
+
+  // Primer intento: Redirección específica según plataforma y navegador
+  switch (browserType) {
+    case 'instagram':
+    case 'facebook':
+    case 'tiktok':
+    case 'other':
+      if (isAndroid) {
+        window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+      } else {
+        window.location.href = `googlechrome://${window.location.host}${window.location.pathname}`;
+      }
+      break;
+  }
+
+  // Segundo intento después de 1 segundo
+  setTimeout(() => {
+    window.location.href = `https://${window.location.host}${window.location.pathname}`;
+  }, 1000);
+
+  // Tercer intento - sugerir instalar Chrome
+  setTimeout(() => {
+    if (isAndroid) {
+      window.location.href = 'market://details?id=com.android.chrome';
+    } else {
+      window.location.href = 'https://apps.apple.com/app/google-chrome/id535886823';
+    }
+  }, 2000);
+};
+
+// Componente para el modal de redirección
+const RedirectModal = ({ onClose }) => {
+  const [countdown, setCountdown] = useState(5);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          handleBrowserRedirect();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="redirect-modal-overlay">
+      <div className="redirect-modal-container">
+        <div className="redirect-modal-content">
+          <p className="redirect-modal-text">Para brindarte una experiencia segura</p>
+          <h4 className="redirect-modal-subtitle">Abriremos tu navegador habitual</h4>
+          <p className="redirect-modal-text">
+            Es un proceso rápido de solo 2 pasos para proteger tu información, no instalarás nada nuevo.
+          </p>
+          <p className="redirect-modal-countdown">
+            Redirigiendo en {countdown} segundos...
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const navigate = useNavigate()
   const [selectedImgIndex, setSelectedImgIndex] = useState(null);
@@ -15,6 +106,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [showRedirectModal, setShowRedirectModal] = useState(false);
   const provider = new GoogleAuthProvider();
 
   const maxTextLength = 100;
@@ -77,6 +169,17 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   };
 
   const handleAuthClick = async () => {
+    // Verificar si está en navegador in-app
+    if (isInAppBrowser()) {
+      window.gtag('event', 'in_app_browser_detected', {
+        tipo_negocio: 'miradores',
+        nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+        tipo_interaccion: 'click'
+      });
+      setShowRedirectModal(true);
+      return;
+    }
+
     // Trackear click en iniciar aventura
     window.gtag('event', 'iniciar_aventura', {
       tipo_negocio: 'miradores',
@@ -313,6 +416,8 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
 
   return (
     <>
+      {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
+
       <div className='container-info-descrip'>
         <div className='container-carrusel-imgs'>
           <div className='carrusel-imgs'>
