@@ -2,12 +2,81 @@ import React, { useState, useEffect } from 'react';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './auth';
 import MapComponent from '../common/mapaUbicacion';
+import { AlertCircle } from 'lucide-react';
+
+// Detector de navegador in-app
+const isInAppBrowser = () => {
+  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  return (
+    ua.includes('FBAN') || 
+    ua.includes('FBAV') || 
+    ua.includes('Instagram') || 
+    ua.includes('TikTok') ||
+    (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
+  );
+};
+
+const RedirectModal = ({ onClose }) => {
+  const [countdown, setCountdown] = useState(3);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          window.location.href = window.location.href.replace('://', '://x.');
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="redirect-modal-overlay">
+      <div className="redirect-modal-container">
+        <div className="redirect-modal-content">
+          <h3 className="redirect-modal-title">Para brindarte una experiencia segura</h3>
+          <h4 className="redirect-modal-subtitle">Continuaremos en tu navegador</h4>
+          <p className="redirect-modal-text">
+            Es un proceso rápido de solo 2 pasos para proteger tu información
+          </p>
+          <p className="redirect-modal-countdown">
+            Redirigiendo en {countdown} segundos...
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ErrorAlert = ({ message, onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 5000); // El error se ocultará después de 5 segundos
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className="error-alert">
+      <div className="error-alert-content">
+        <AlertCircle size={20} color="#dc3545" />
+        {message}
+      </div>
+    </div>
+  );
+};
 
 const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick}) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [pendingAction, setPendingAction] = useState(null);
   const [error, setError] = useState(null);
+  const [showRedirectModal, setShowRedirectModal] = useState(false);
   const provider = new GoogleAuthProvider();
 
   useEffect(() => {
@@ -70,6 +139,15 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   };
 
   const handleAuthClick = async (action) => {
+    // Verificar si es navegador in-app
+    if (isInAppBrowser()) {
+      window.gtag('event', 'in_app_browser_detected', {
+        tipo_negocio: tipo,
+        action: action
+      });
+      setShowRedirectModal(true);
+      return;
+    }
     if (!user) {
       setPendingAction(action);
       try {
@@ -112,8 +190,8 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
         onContactClick?.(); // El ?. es para que no falle si no se pasa la función
         
         const message = isNewListing 
-            ? `¡Hola! Me interesa ser el primero en reservar: ${tipo}`
-            : `¡Hola! Me interesa reservar: ${tipo}`;
+            ? `¡Hola! vengo de Desti Plus, me interesa ser el primero en reservar: ${tipo}`
+            : `¡Hola! vengo de Desti Plus, me interesa reservar: ${tipo}`;
         
         window.open(`https://wa.me/${contactInfo}?text=${encodeURIComponent(message)}`, '_blank');
     }
@@ -136,40 +214,45 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   }, [user, pendingAction]);
 
   return (
-    <div className="container-contacto-aloja">
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
-      
-      <button 
-        className="como-llegar-aloja"
-        onClick={() => handleAuthClick('map')}
-      >
-        <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
-        Ver ubicación
-      </button>
-      
-      <button 
-        className="contacto-aloja"
-        onClick={() => handleAuthClick('contact')}
-      >
-        <span>
-          {isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}
-        </span>
-        <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
-      </button>
+    <>
+      {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
+      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
-      {isMapOpen && location && (
-        <MapComponent
-          isOpen={isMapOpen}
-          onClose={() => setIsMapOpen(false)}
-          coordinates={location}
-          establishmentName={name}
-        />
-      )}
-    </div>
+      <div className="container-contacto-aloja">
+        {error && (
+          <div className="error-message">
+            {error}
+          </div>
+        )}
+        
+        <button 
+          className="como-llegar-aloja"
+          onClick={() => handleAuthClick('map')}
+        >
+          <img src="/utils/icons8-gps-50.png" alt="GPS icon" />
+          Ver ubicación
+        </button>
+        
+        <button 
+          className="contacto-aloja"
+          onClick={() => handleAuthClick('contact')}
+        >
+          <span>
+            {isNewListing ? '¡Sé el primero en reservar!' : 'Reservar ahora'}
+          </span>
+          <img src="/utils/icons8-whatsapp-48.png" alt="WhatsApp icon" />
+        </button>
+
+        {isMapOpen && location && (
+          <MapComponent
+            isOpen={isMapOpen}
+            onClose={() => setIsMapOpen(false)}
+            coordinates={location}
+            establishmentName={name}
+          />
+        )}
+      </div>
+    </>
   );
 };
 

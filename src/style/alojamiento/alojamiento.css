@@ -665,3 +665,115 @@
   padding: var(--spacing-md) 0;
   margin-bottom: 25%;
 }
+
+/* Estilos para el modal de redirección */
+.redirect-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.redirect-modal-container {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  width: 90%;
+  max-width: 420px;
+  box-shadow: var(--shadow-medium);
+  margin: 0 var(--spacing-md);
+}
+
+.redirect-modal-content {
+  text-align: center;
+}
+
+.redirect-modal-title {
+  font-size: var(--font-large);
+  font-weight: 600;
+  color: #222;
+  margin-bottom: var(--spacing-sm);
+}
+
+.redirect-modal-subtitle {
+  font-size: var(--font-medium);
+  color: #666;
+  margin-bottom: var(--spacing-md);
+}
+
+.redirect-modal-text {
+  font-size: var(--font-primary);
+  color: #666;
+  opacity: var(--opacity-medium);
+  margin-bottom: var(--spacing-md);
+}
+
+.redirect-modal-countdown {
+  font-size: var(--font-primary);
+  font-weight: 500;
+  color: var(--primary-color);
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .redirect-modal-container {
+    width: 95%;
+    padding: var(--spacing-md);
+  }
+  
+  .redirect-modal-title {
+    font-size: var(--font-medium);
+  }
+  
+  .redirect-modal-subtitle {
+    font-size: var(--font-primary);
+  }
+}
+
+
+
+/* Estilos para el mensaje de error */
+.error-alert {
+  position: fixed;
+  top: var(--spacing-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-medium);
+  z-index: 1000;
+  width: 90%;
+  max-width: 420px;
+  border-left: 4px solid #dc3545;
+  animation: slideDown 0.3s ease-out;
+}
+
+.error-alert-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: #dc3545;
+  font-size: var(--font-primary);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .error-alert {
+    width: 95%;
+    top: var(--spacing-md);
+  }
+}
