@@ -32,7 +32,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
       ua.includes('FBAN') || 
       ua.includes('FBAV') || 
       ua.includes('Instagram') || 
-      ua.includes('TikTok') ||
+      ua.includes('TikTok')
     );
   };
 
@@ -181,7 +181,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
           </div>
         </div>
       );
-    };
+  };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -241,10 +241,12 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   };
 
   const handleAuthClick = async () => {
+    // Verificar si está en navegador in-app
     if (isInAppBrowser()) {
       window.gtag('event', 'in_app_browser_detected', {
-        tipo_negocio: tipo,
-        action: action
+        tipo_negocio: 'miradores',
+        nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+        tipo_interaccion: 'click'
       });
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
       if (isIOS) {
@@ -495,8 +497,9 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
           <title>{ruta.nombre}</title>
           <meta name="description" content={ruta.nombre} />
       </Helmet>
-      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
       {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
+      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
+
 
       <div className='container-info-descrip'>
         <div className='container-carrusel-imgs'>
