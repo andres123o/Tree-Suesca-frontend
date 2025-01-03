@@ -144,7 +144,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
             </h4>
             
             <p className="redirect-modal-description">
-              En la esquina superior, dale en abrin en navegador externo.
+              En la esquina superior derecha, dale en abrir en navegador externo.
             </p>
     
             <div className="redirect-modal-icons">
