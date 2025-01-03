@@ -9,122 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
-// Primero agregamos las funciones de detección y redirección
-const isInAppBrowser = () => {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return (
-    ua.includes('FBAN') || 
-    ua.includes('FBAV') || 
-    ua.includes('Instagram') || 
-    ua.includes('TikTok') ||
-    (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
-  );
-};
 
-const getBrowserType = () => {
-  const ua = navigator.userAgent.toLowerCase();
-  if (ua.includes('instagram')) return 'instagram';
-  if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
-  if (ua.includes('tiktok')) return 'tiktok';
-  return 'other';
-};
-
-const handleBrowserRedirect = () => {
-  const browserType = getBrowserType();
-  const isAndroid = /android/i.test(navigator.userAgent);
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-  // Primer intento: Redirección específica según plataforma y navegador
-  switch (browserType) {
-    case 'instagram':
-    case 'facebook':
-    case 'tiktok':
-    case 'other':
-      if (isAndroid) {
-        // Para Android: Intent URL para abrir Chrome
-        window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-      } else if (isIOS) {
-        // Para iOS: Usar URL de Safari
-        window.location.href = `https://${window.location.host}${window.location.pathname}`;
-      }
-      break;
-  }
-
-  // Segundo intento después de 1 segundo
-  setTimeout(() => {
-    window.location.href = `https://${window.location.host}${window.location.pathname}`;
-  }, 1000);
-
-  // Tercer intento - sugerir instalar navegador si todo falla
-  setTimeout(() => {
-    if (isAndroid) {
-      window.location.href = 'market://details?id=com.android.chrome';
-    } else if (isIOS) {
-      window.location.href = 'https://apps.apple.com/app/safari/id1146562112';
-    }
-  }, 2000);
-};
-
-// Componente para el modal de redirección
-const RedirectModal = ({ onClose }) => {
-  const [countdown, setCountdown] = useState(5);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          handleBrowserRedirect();
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  return (
-    <div className="redirect-modal-overlay">
-      <div className="redirect-modal-container">
-        <div className="redirect-modal-content">
-          <div className="redirect-modal-header">
-            <div className="chrome-icon-container">
-              <Chrome size={24} />
-            </div>
-          </div>
-          
-          <h4 className="redirect-modal-title">
-            Tu Seguridad Primero
-          </h4>
-          
-          <p className="redirect-modal-description">
-            Para mayor seguridad, abriremos tu navegador de confianza
-          </p>
-  
-          <div className="redirect-modal-icons">
-            <Chrome size={24} className="browser-icon" />
-            <div className="arrow-container">
-              <ArrowRight size={18} />
-            </div>
-            <Chrome size={24} className="browser-icon-active" />
-          </div>
-  
-          <div className="redirect-modal-security">
-            <ShieldCheck size={16} />
-            <span>No instalarás nada nuevo</span>
-          </div>
-  
-          <div className="redirect-modal-progress">
-            <div className="redirect-modal-countdown">
-              Continuando en {countdown}...
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const navigate = useNavigate()
@@ -135,9 +20,168 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [showRedirectModal, setShowRedirectModal] = useState(false);
+  const [showIOSRedirectModal, setShowIOSRedirectModal] = useState(false);
   const provider = new GoogleAuthProvider();
 
   const maxTextLength = 100;
+
+  // Primero agregamos las funciones de detección y redirección
+  const isInAppBrowser = () => {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (
+      ua.includes('FBAN') || 
+      ua.includes('FBAV') || 
+      ua.includes('Instagram') || 
+      ua.includes('TikTok') ||
+    );
+  };
+
+  const getBrowserType = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes('instagram')) return 'instagram';
+    if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
+    if (ua.includes('tiktok')) return 'tiktok';
+    return 'other';
+  };
+
+  const handleBrowserRedirect = () => {
+    const browserType = getBrowserType();
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    // Primer intento: Redirección específica según plataforma y navegador
+    switch (browserType) {
+      case 'instagram':
+      case 'facebook':
+      case 'tiktok':
+      case 'other':
+        if (isAndroid) {
+          // Para Android: Intent URL para abrir Chrome
+          window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+        } else if (isIOS) {
+          setShowIOSRedirectModal(true);
+          return; 
+        }
+        break;
+    }
+
+    // Segundo intento después de 1 segundo
+    setTimeout(() => {
+      window.location.href = `https://${window.location.host}${window.location.pathname}`;
+    }, 1000);
+
+    // Tercer intento - sugerir instalar navegador si todo falla
+    setTimeout(() => {
+      if (isAndroid) {
+        window.location.href = 'market://details?id=com.android.chrome';
+      } 
+    }, 2000);
+  };
+
+  // Componente para el modal de redirección
+  const RedirectModal = ({ onClose }) => {
+    const [countdown, setCountdown] = useState(5);
+
+    useEffect(() => {
+      const timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            handleBrowserRedirect();
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }, []);
+
+    return (
+      <div className="redirect-modal-overlay">
+        <div className="redirect-modal-container">
+          <div className="redirect-modal-content">
+            <div className="redirect-modal-header">
+              <div className="chrome-icon-container">
+                <Chrome size={24} />
+              </div>
+            </div>
+            
+            <h4 className="redirect-modal-title">
+              Tu Seguridad Primero
+            </h4>
+            
+            <p className="redirect-modal-description">
+              Para mayor seguridad, abriremos tu navegador de confianza
+            </p>
+    
+            <div className="redirect-modal-icons">
+              <Chrome size={24} className="browser-icon" />
+              <div className="arrow-container">
+                <ArrowRight size={18} />
+              </div>
+              <Chrome size={24} className="browser-icon-active" />
+            </div>
+    
+            <div className="redirect-modal-security">
+              <ShieldCheck size={16} />
+              <span>No instalarás nada nuevo</span>
+            </div>
+    
+            <div className="redirect-modal-progress">
+              <div className="redirect-modal-countdown">
+                Continuando en {countdown}...
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const RedirectModalIOS = ({ onClose }) => {
+  
+      return (
+        <div className="redirect-modal-overlay">
+          <div className="redirect-modal-container">
+            <div className="redirect-modal-content">
+              <div className="redirect-modal-header">
+                <div className="chrome-icon-container">
+                  <Chrome size={24} />
+                </div>
+              </div>
+              
+              <h4 className="redirect-modal-title">
+                Tu Seguridad Primero
+              </h4>
+              
+              <p className="redirect-modal-description">
+                En la esquina superior, dale en abrin en navegador externo.
+              </p>
+      
+              <div className="redirect-modal-icons">
+                <Chrome size={24} className="browser-icon" />
+                <div className="arrow-container">
+                  <ArrowRight size={18} />
+                </div>
+                <Chrome size={24} className="browser-icon-active" />
+              </div>
+      
+              <div className="redirect-modal-security">
+                <ShieldCheck size={16} />
+                <span>No instalarás nada nuevo</span>
+              </div>
+      
+              <div className="redirect-modal-progress">
+                <div className="redirect-modal-countdown">
+                  Despues continuaremos en modo seguro
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -197,14 +241,17 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   };
 
   const handleAuthClick = async () => {
-    // Verificar si está en navegador in-app
     if (isInAppBrowser()) {
       window.gtag('event', 'in_app_browser_detected', {
-        tipo_negocio: 'miradores',
-        nombre_ruta: ruta.nombre || 'Ruta Desconocida',
-        tipo_interaccion: 'click'
+        tipo_negocio: tipo,
+        action: action
       });
-      setShowRedirectModal(true);
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        setShowIOSRedirectModal(true);
+      } else {
+        setShowRedirectModal(true);
+      }
       return;
     }
 
@@ -448,6 +495,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
           <title>{ruta.nombre}</title>
           <meta name="description" content={ruta.nombre} />
       </Helmet>
+      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
       {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
 
       <div className='container-info-descrip'>
