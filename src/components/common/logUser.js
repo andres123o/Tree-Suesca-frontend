@@ -3,77 +3,75 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './auth';
 import MapComponent from '../common/mapaUbicacion';
 import { AlertCircle } from 'lucide-react';
-import { Chrome, ArrowRight, ShieldCheck, Share2, ExternalLink, MoreHorizontal} from 'lucide-react';
+import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 
+const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick}) => {
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
+  const [error, setError] = useState(null);
+  const [showRedirectModal, setShowRedirectModal] = useState(false);
+  const [showIOSRedirectModal, setShowIOSRedirectModal] = useState(false);
+  const provider = new GoogleAuthProvider();
 
-// Detector de navegador in-app
-const isInAppBrowser = () => {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
-  return (
-    ua.includes('FBAN') || 
-    ua.includes('FBAV') || 
-    ua.includes('Instagram') || 
-    ua.includes('TikTok') ||
-    (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
-  );
-};
-
-const getBrowserType = () => {
-  const ua = navigator.userAgent.toLowerCase();
-  const isAndroid = /android/i.test(ua);
-  const isIOS = /ipad|iphone|ipod/.test(ua) && !window.MSStream;
-  const isSafari = isIOS && ua.includes('safari') && !ua.includes('crios');
-  
-  let browserType = 'other';
-  if (ua.includes('instagram')) return 'instagram';
-  if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
-  if (ua.includes('tiktok')) return 'tiktok';
-  
-  return {
-    isAndroid,
-    isIOS,
-    isSafari,
-    browserType,
-    isInApp: isInAppBrowser()
+  // Detector de navegador in-app
+  const isInAppBrowser = () => {
+    const ua = navigator.userAgent || navigator.vendor || window.opera;
+    return (
+      ua.includes('FBAN') || 
+      ua.includes('FBAV') || 
+      ua.includes('Instagram') || 
+      ua.includes('TikTok') ||
+      (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
+    );
   };
-};
 
-const handleBrowserRedirect = () => {
-  const { isAndroid, isIOS, browserType } = getBrowserType();
+  const getBrowserType = () => {
+    const ua = navigator.userAgent.toLowerCase();
+    if (ua.includes('instagram')) return 'instagram';
+    if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
+    if (ua.includes('tiktok')) return 'tiktok';
+    return 'other';
+  };
 
-  // Primer intento: Redirección específica según plataforma y navegador
-  switch (browserType) {
-    case 'instagram':
-    case 'facebook':
-    case 'tiktok':
-    case 'other':
-      if (isAndroid) {
-        // Intent URL funciona para la mayoría de navegadores Android in-app
-        window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-      } 
-  }
+  const handleBrowserRedirect = () => {
+    const browserType = getBrowserType();
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-  // Segundo intento: URL normal después de 1 segundo (funciona como fallback para cualquier navegador)
-  setTimeout(() => {
-    window.location.href = `https://${window.location.host}${window.location.pathname}`;
-  }, 1000);
-
-  // Tercer intento: Si todo falla, sugerimos instalar Chrome
-  setTimeout(() => {
-    if (isAndroid) {
-      window.location.href = 'market://details?id=com.android.chrome';
-    } else if (isIOS) {
-      window.location.href = 'https://apps.apple.com/app/safari/id1146562112';
+    // Primer intento: Redirección específica según plataforma y navegador
+    switch (browserType) {
+      case 'instagram':
+      case 'facebook':
+      case 'tiktok':
+      case 'other':
+        if (isAndroid) {
+          // Intent URL funciona para la mayoría de navegadores Android in-app
+          window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+        } else if (isIOS) {
+          setShowIOSRedirectModal(true);
+          return; 
+        }
+        break;
     }
-  }, 2000);
-};
 
-const RedirectModal = ({ onClose}) => {
-  const [countdown, setCountdown] = useState(5);
-  const { isIOS, isAndroid } = getBrowserType();
+    // Segundo intento: URL normal después de 1 segundo (funciona como fallback para cualquier navegador)
+    setTimeout(() => {
+      window.location.href = `https://${window.location.host}${window.location.pathname}`;
+    }, 1000);
 
-  useEffect(() => {
-    if (isAndroid) {
+    // Tercer intento: Si todo falla, sugerimos instalar Chrome
+    setTimeout(() => {
+      if (isAndroid) {
+        window.location.href = 'market://details?id=com.android.chrome';
+      } 
+    }, 2000);
+  };
+
+  const RedirectModal = ({ onClose }) => {
+    const [countdown, setCountdown] = useState(5);
+
+    useEffect(() => {
       const timer = setInterval(() => {
         setCountdown((prev) => {
           if (prev <= 1) {
@@ -86,99 +84,112 @@ const RedirectModal = ({ onClose}) => {
       }, 1000);
 
       return () => clearInterval(timer);
-    }
-  }, [isAndroid]);
+    }, []);
 
-  return (
-    <div className="redirect-modal-overlay">
-      <div className="redirect-modal-container">
-        <div className="redirect-modal-content">
-          {isIOS ? (
-            // Modal específico para iOS
-            <>
-              <h4 className="redirect-modal-title">
-                Abre en Safari para continuar
-              </h4>
-              
-              <div className="ios-instructions-content">
-                <div className="ios-steps">
-                  <div className="step-number">1</div>
-                  <span>Toca en los tres puntos <MoreHorizontal size={18} /></span>
-                </div>
-                <div className="ios-steps">
-                  <div className="step-number">2</div>
-                  <span>Selecciona "Abrir en navegador"</span>
-                </div>
+    return (
+      <div className="redirect-modal-overlay">
+        <div className="redirect-modal-container">
+          <div className="redirect-modal-content">
+            <div className="redirect-modal-header">
+              <div className="chrome-icon-container">
+                <Chrome size={24} />
               </div>
-            </>
-          ) : (
-            // Modal original para Android
-            <>
-              <div className="redirect-modal-header">
-                <div className="chrome-icon-container">
-                  <Chrome size={24} />
-                </div>
+            </div>
+            
+            <h4 className="redirect-modal-title">
+              Tu Seguridad Primero
+            </h4>
+            
+            <p className="redirect-modal-description">
+              Para mayor seguridad, abriremos tu navegador de confianza
+            </p>
+    
+            <div className="redirect-modal-icons">
+              <Chrome size={24} className="browser-icon" />
+              <div className="arrow-container">
+                <ArrowRight size={18} />
               </div>
-              
-              <h4 className="redirect-modal-title">Tu Seguridad Primero</h4>
-              
-              <p className="redirect-modal-description">
-                Para mayor seguridad, abriremos tu navegador de confianza
-              </p>
-              
-              <div className="redirect-modal-icons">
-                <Chrome size={24} className="browser-icon" />
-                <div className="arrow-container">
-                  <ArrowRight size={18} />
-                </div>
-                <Chrome size={24} className="browser-icon-active" />
+              <Chrome size={24} className="browser-icon-active" />
+            </div>
+    
+            <div className="redirect-modal-security">
+              <ShieldCheck size={16} />
+              <span>No instalarás nada nuevo</span>
+            </div>
+    
+            <div className="redirect-modal-progress">
+              <div className="redirect-modal-countdown">
+                Continuando en {countdown}...
               </div>
-              
-              <div className="redirect-modal-security">
-                <ShieldCheck size={16} />
-                <span>No instalarás nada nuevo</span>
-              </div>
-              
-              <div className="redirect-modal-progress">
-                <div className="redirect-modal-countdown">
-                  Continuando en {countdown}...
-                </div>
-              </div>
-            </>
-          )}
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const ErrorAlert = ({ message, onClose }) => {
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      onClose();
-    }, 5000); // El error se ocultará después de 5 segundos
+  const RedirectModalIOS = ({ onClose }) => {
 
-    return () => clearTimeout(timer);
-  }, [onClose]);
-
-  return (
-    <div className="error-alert">
-      <div className="error-alert-content">
-        <AlertCircle size={20} color="#dc3545" />
-        {message}
+    return (
+      <div className="redirect-modal-overlay">
+        <div className="redirect-modal-container">
+          <div className="redirect-modal-content">
+            <div className="redirect-modal-header">
+              <div className="chrome-icon-container">
+                <Chrome size={24} />
+              </div>
+            </div>
+            
+            <h4 className="redirect-modal-title">
+              Tu Seguridad Primero
+            </h4>
+            
+            <p className="redirect-modal-description">
+              En la esquina superior, dale en abrin en navegador externo.
+            </p>
+    
+            <div className="redirect-modal-icons">
+              <Chrome size={24} className="browser-icon" />
+              <div className="arrow-container">
+                <ArrowRight size={18} />
+              </div>
+              <Chrome size={24} className="browser-icon-active" />
+            </div>
+    
+            <div className="redirect-modal-security">
+              <ShieldCheck size={16} />
+              <span>No instalarás nada nuevo</span>
+            </div>
+    
+            <div className="redirect-modal-progress">
+              <div className="redirect-modal-countdown">
+                Despues continuaremos en modo seguro
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick}) => {
-  const [isMapOpen, setIsMapOpen] = useState(false);
-  const [user, setUser] = useState(null);
-  const [pendingAction, setPendingAction] = useState(null);
-  const [error, setError] = useState(null);
-  const [showRedirectModal, setShowRedirectModal] = useState(false);
-  const provider = new GoogleAuthProvider();
-  const { isIOS, isSafari, isInApp } = getBrowserType();
+  const ErrorAlert = ({ message, onClose }) => {
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        onClose();
+      }, 5000); // El error se ocultará después de 5 segundos
+
+      return () => clearTimeout(timer);
+    }, [onClose]);
+
+    return (
+      <div className="error-alert">
+        <div className="error-alert-content">
+          <AlertCircle size={20} color="#dc3545" />
+          {message}
+        </div>
+      </div>
+    );
+  };
 
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
@@ -241,29 +252,19 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
 
   const handleAuthClick = async (action) => {
     // Verificar si es navegador in-app
-    if (isInApp) {
-      // Para iOS mostramos el modal con instrucciones
-      if (isIOS && !isSafari) {
-        window.gtag('event', 'in_app_browser_detected', {
-          tipo_negocio: tipo,
-          action: action,
-          platform: 'ios'
-        });
+    if (isInAppBrowser()) {
+      window.gtag('event', 'in_app_browser_detected', {
+        tipo_negocio: tipo,
+        action: action
+      });
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      if (isIOS) {
+        setShowIOSRedirectModal(true);
+      } else {
         setShowRedirectModal(true);
-        return;
       }
-      // Para Android mantenemos el comportamiento original
-      if (!isIOS) {
-        window.gtag('event', 'in_app_browser_detected', {
-          tipo_negocio: tipo,
-          action: action,
-          platform: 'android'
-        });
-        setShowRedirectModal(true);
-        return;
-      }
+      return;
     }
-    
     if (!user) {
       setPendingAction(action);
       try {
@@ -332,6 +333,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
   return (
     <>
       {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
+      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
       <div className="container-contacto-aloja">       
