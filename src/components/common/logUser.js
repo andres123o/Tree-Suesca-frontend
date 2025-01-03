@@ -21,8 +21,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
       ua.includes('FBAN') || 
       ua.includes('FBAV') || 
       ua.includes('Instagram') || 
-      ua.includes('TikTok') ||
-      (ua.includes('Mobile') && ua.includes('Safari') && !ua.includes('Chrome'))
+      ua.includes('TikTok') 
     );
   };
 
