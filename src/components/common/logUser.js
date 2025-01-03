@@ -3,7 +3,7 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from './auth';
 import MapComponent from '../common/mapaUbicacion';
 import { AlertCircle } from 'lucide-react';
-import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Chrome, ArrowRight, ShieldCheck, Share2, ExternalLink } from 'lucide-react';
 
 // Detector de navegador in-app
 const isInAppBrowser = () => {
@@ -41,7 +41,18 @@ const handleBrowserRedirect = () => {
         window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
       } else if (isIOS) {
         // Para iOS intentamos primero Chrome
-        window.location.href = `safari://${window.location.host}${window.location.pathname}`;
+        const chromeURL = `googlechrome://${window.location.host}${window.location.pathname}`;
+        const safariURL = `https://${window.location.host}${window.location.pathname}`;
+        
+        window.location.href = chromeURL;
+
+        setTimeout(() => {
+          const safari = window.open(safariURL, '_system');
+          if (!safari || safari.closed || typeof safari.closed === 'undefined') {
+            // Si no se pudo abrir en Safari, intentamos una redirección directa
+            window.location.replace(safariURL);
+          }
+        }, 500);
       }
       break;
   }
@@ -61,14 +72,18 @@ const handleBrowserRedirect = () => {
   }, 2000);
 };
 
-const RedirectModal = ({ onClose }) => {
+const RedirectModal = ({ onClose, isIOS }) => {
   const [countdown, setCountdown] = useState(5);
+  const [showIOSInstructions, setShowIOSInstructions] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
+          if (isIOS) {
+            setShowIOSInstructions(true);
+          }
           handleBrowserRedirect();
           return 0;
         }
@@ -77,44 +92,67 @@ const RedirectModal = ({ onClose }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isIOS]);
 
   return (
-    <div className="redirect-modal-overlay">
-      <div className="redirect-modal-container">
-        <div className="redirect-modal-content">
-          <div className="redirect-modal-header">
-            <div className="chrome-icon-container">
-              <Chrome size={24} />
+    <>
+      <div className="redirect-modal-overlay">
+        <div className="redirect-modal-container">
+          <div className="redirect-modal-content">
+            <div className="redirect-modal-header">
+              <div className="chrome-icon-container">
+                <Chrome size={24} />
+              </div>
+            </div>
+            
+            <h4 className="redirect-modal-title">
+              {isIOS ? 'Abriendo en Safari' : 'Tu Seguridad Primero'}
+            </h4>
+            
+            <p className="redirect-modal-description">
+              {isIOS 
+                ? 'Para una mejor experiencia, abriremos Safari' 
+                : 'Para mayor seguridad, abriremos tu navegador de confianza'}
+            </p>
+    
+            <div className="redirect-modal-icons">
+              <Chrome size={24} className="browser-icon" />
+              <div className="arrow-container">
+                <ArrowRight size={18} />
+              </div>
+              <Chrome size={24} className="browser-icon-active" />
+            </div>
+    
+            <div className="redirect-modal-security">
+              <ShieldCheck size={16} />
+              <span>No instalarás nada nuevo</span>
+            </div>
+    
+            <div className="redirect-modal-progress">
+              <div className="redirect-modal-countdown">
+                Continuando en {countdown}...
+              </div>
             </div>
           </div>
-          
-          <h4 className="redirect-modal-title">
-            Tu Seguridad Primero
-          </h4>
-          
-          <p className="redirect-modal-description">
-            Para mayor seguridad, abriremos tu navegador de confianza
-          </p>
-  
-          <div className="redirect-modal-icons">
-            <Chrome size={24} className="browser-icon" />
-            <div className="arrow-container">
-              <ArrowRight size={18} />
-            </div>
-            <Chrome size={24} className="browser-icon-active" />
-          </div>
-  
-          <div className="redirect-modal-security">
-            <ShieldCheck size={16} />
-            <span>No instalarás nada nuevo</span>
-          </div>
-  
-          <div className="redirect-modal-progress">
-            <div className="redirect-modal-countdown">
-              Continuando en {countdown}...
-            </div>
-          </div>
+        </div>
+      </div>
+      {showIOSInstructions && <IOSInstructions />}
+    </>
+  );
+};
+
+const IOSInstructions = () => {
+  return (
+    <div className="ios-instructions">
+      <div className="ios-instructions-content">
+        <h4>Abre en Safari para continuar</h4>
+        <div className="ios-steps">
+          <div className="step-number">1</div>
+          <span>Toca el ícono <Share2 size={18} /></span>
+        </div>
+        <div className="ios-steps">
+          <div className="step-number">2</div>
+          <span>Selecciona "Abrir en Safari" <ExternalLink size={18} /></span>
         </div>
       </div>
     </div>
