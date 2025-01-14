@@ -4,9 +4,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import OptimizedImage from '../common/optimzarImg'
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../common/auth';
+// import { auth } from '../common/auth';
 import { useNavigate } from "react-router-dom"
-import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
+// import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 
 
@@ -17,283 +17,283 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   const [expandedSection, setExpandedSection] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-  const [showRedirectModal, setShowRedirectModal] = useState(false);
-  const [showIOSRedirectModal, setShowIOSRedirectModal] = useState(false);
-  const provider = new GoogleAuthProvider();
+  // const [user, setUser] = useState(null);
+  // const [error, setError] = useState(null);
+  // const [showRedirectModal, setShowRedirectModal] = useState(false);
+  // const [showIOSRedirectModal, setShowIOSRedirectModal] = useState(false);
+  // const provider = new GoogleAuthProvider();
 
   const maxTextLength = 100;
 
-  // Primero agregamos las funciones de detección y redirección
-  const isInAppBrowser = () => {
-    const ua = navigator.userAgent || navigator.vendor || window.opera;
-    return (
-      ua.includes('FBAN') || 
-      ua.includes('FBAV') || 
-      ua.includes('Instagram') || 
-      ua.includes('TikTok')
-    );
-  };
+  // // Primero agregamos las funciones de detección y redirección
+  // const isInAppBrowser = () => {
+  //   const ua = navigator.userAgent || navigator.vendor || window.opera;
+  //   return (
+  //     ua.includes('FBAN') || 
+  //     ua.includes('FBAV') || 
+  //     ua.includes('Instagram') || 
+  //     ua.includes('TikTok')
+  //   );
+  // };
 
-  const getBrowserType = () => {
-    const ua = navigator.userAgent.toLowerCase();
-    if (ua.includes('instagram')) return 'instagram';
-    if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
-    if (ua.includes('tiktok')) return 'tiktok';
-    return 'other';
-  };
+  // const getBrowserType = () => {
+  //   const ua = navigator.userAgent.toLowerCase();
+  //   if (ua.includes('instagram')) return 'instagram';
+  //   if (ua.includes('fbav') || ua.includes('fban')) return 'facebook';
+  //   if (ua.includes('tiktok')) return 'tiktok';
+  //   return 'other';
+  // };
 
-  const handleBrowserRedirect = () => {
-    const browserType = getBrowserType();
-    const isAndroid = /android/i.test(navigator.userAgent);
-    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  // const handleBrowserRedirect = () => {
+  //   const browserType = getBrowserType();
+  //   const isAndroid = /android/i.test(navigator.userAgent);
+  //   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
-    // Primer intento: Redirección específica según plataforma y navegador
-    switch (browserType) {
-      case 'instagram':
-      case 'facebook':
-      case 'tiktok':
-      case 'other':
-        if (isAndroid) {
-          // Para Android: Intent URL para abrir Chrome
-          window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
-        } else if (isIOS) {
-          setShowIOSRedirectModal(true);
-          return; 
-        }
-        break;
-    }
+  //   // Primer intento: Redirección específica según plataforma y navegador
+  //   switch (browserType) {
+  //     case 'instagram':
+  //     case 'facebook':
+  //     case 'tiktok':
+  //     case 'other':
+  //       if (isAndroid) {
+  //         // Para Android: Intent URL para abrir Chrome
+  //         window.location.href = `intent://${window.location.host}${window.location.pathname}#Intent;scheme=https;package=com.android.chrome;end`;
+  //       } else if (isIOS) {
+  //         setShowIOSRedirectModal(true);
+  //         return; 
+  //       }
+  //       break;
+  //   }
 
-    // Segundo intento después de 1 segundo
-    setTimeout(() => {
-      window.location.href = `https://${window.location.host}${window.location.pathname}`;
-    }, 1000);
+  //   // Segundo intento después de 1 segundo
+  //   setTimeout(() => {
+  //     window.location.href = `https://${window.location.host}${window.location.pathname}`;
+  //   }, 1000);
 
-    // Tercer intento - sugerir instalar navegador si todo falla
-    setTimeout(() => {
-      if (isAndroid) {
-        window.location.href = 'market://details?id=com.android.chrome';
-      } 
-    }, 2000);
-  };
+  //   // Tercer intento - sugerir instalar navegador si todo falla
+  //   setTimeout(() => {
+  //     if (isAndroid) {
+  //       window.location.href = 'market://details?id=com.android.chrome';
+  //     } 
+  //   }, 2000);
+  // };
 
-  // Componente para el modal de redirección
-  const RedirectModal = ({ onClose }) => {
-    const [countdown, setCountdown] = useState(5);
+  // // Componente para el modal de redirección
+  // const RedirectModal = ({ onClose }) => {
+  //   const [countdown, setCountdown] = useState(5);
 
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setCountdown((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            handleBrowserRedirect();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+  //   useEffect(() => {
+  //     const timer = setInterval(() => {
+  //       setCountdown((prev) => {
+  //         if (prev <= 1) {
+  //           clearInterval(timer);
+  //           handleBrowserRedirect();
+  //           return 0;
+  //         }
+  //         return prev - 1;
+  //       });
+  //     }, 1000);
 
-      return () => clearInterval(timer);
-    }, []);
+  //     return () => clearInterval(timer);
+  //   }, []);
 
-    return (
-      <div className="redirect-modal-overlay">
-        <div className="redirect-modal-container">
-          <div className="redirect-modal-content">
-            <div className="redirect-modal-header">
-              <div className="chrome-icon-container">
-                <Chrome size={24} />
-              </div>
-            </div>
+  //   return (
+  //     <div className="redirect-modal-overlay">
+  //       <div className="redirect-modal-container">
+  //         <div className="redirect-modal-content">
+  //           <div className="redirect-modal-header">
+  //             <div className="chrome-icon-container">
+  //               <Chrome size={24} />
+  //             </div>
+  //           </div>
             
-            <h4 className="redirect-modal-title">
-              Tu Seguridad Primero
-            </h4>
+  //           <h4 className="redirect-modal-title">
+  //             Tu Seguridad Primero
+  //           </h4>
             
-            <p className="redirect-modal-description">
-              Para mayor seguridad, abriremos tu navegador de confianza
-            </p>
+  //           <p className="redirect-modal-description">
+  //             Para mayor seguridad, abriremos tu navegador de confianza
+  //           </p>
     
-            <div className="redirect-modal-icons">
-              <Chrome size={24} className="browser-icon" />
-              <div className="arrow-container">
-                <ArrowRight size={18} />
-              </div>
-              <Chrome size={24} className="browser-icon-active" />
-            </div>
+  //           <div className="redirect-modal-icons">
+  //             <Chrome size={24} className="browser-icon" />
+  //             <div className="arrow-container">
+  //               <ArrowRight size={18} />
+  //             </div>
+  //             <Chrome size={24} className="browser-icon-active" />
+  //           </div>
     
-            <div className="redirect-modal-security">
-              <ShieldCheck size={16} />
-              <span>No instalarás nada nuevo</span>
-            </div>
+  //           <div className="redirect-modal-security">
+  //             <ShieldCheck size={16} />
+  //             <span>No instalarás nada nuevo</span>
+  //           </div>
     
-            <div className="redirect-modal-progress">
-              <div className="redirect-modal-countdown">
-                Continuando en {countdown}...
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  //           <div className="redirect-modal-progress">
+  //             <div className="redirect-modal-countdown">
+  //               Continuando en {countdown}...
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // };
 
-  const RedirectModalIOS = ({ onClose }) => {
+  // const RedirectModalIOS = ({ onClose }) => {
   
-      return (
-        <div className="redirect-modal-overlay">
-          <div className="redirect-modal-container">
-            <div className="redirect-modal-content">
-              <div className="redirect-modal-header">
-                <div className="chrome-icon-container">
-                  <Chrome size={24} />
-                </div>
-              </div>
+  //     return (
+  //       <div className="redirect-modal-overlay">
+  //         <div className="redirect-modal-container">
+  //           <div className="redirect-modal-content">
+  //             <div className="redirect-modal-header">
+  //               <div className="chrome-icon-container">
+  //                 <Chrome size={24} />
+  //               </div>
+  //             </div>
               
-              <h4 className="redirect-modal-title">
-                Tu Seguridad Primero
-              </h4>
+  //             <h4 className="redirect-modal-title">
+  //               Tu Seguridad Primero
+  //             </h4>
               
-              <p className="redirect-modal-description">
-                En la esquina superior derecha, dale en abrir en navegador externo.
-              </p>
+  //             <p className="redirect-modal-description">
+  //               En la esquina superior derecha, dale en abrir en navegador externo.
+  //             </p>
       
-              <div className="redirect-modal-icons">
-                <Chrome size={24} className="browser-icon" />
-                <div className="arrow-container">
-                  <ArrowRight size={18} />
-                </div>
-                <Chrome size={24} className="browser-icon-active" />
-              </div>
+  //             <div className="redirect-modal-icons">
+  //               <Chrome size={24} className="browser-icon" />
+  //               <div className="arrow-container">
+  //                 <ArrowRight size={18} />
+  //               </div>
+  //               <Chrome size={24} className="browser-icon-active" />
+  //             </div>
       
-              <div className="redirect-modal-security">
-                <ShieldCheck size={16} />
-                <span>No instalarás nada nuevo</span>
-              </div>
+  //             <div className="redirect-modal-security">
+  //               <ShieldCheck size={16} />
+  //               <span>No instalarás nada nuevo</span>
+  //             </div>
       
-              <div className="redirect-modal-progress">
-                <div className="redirect-modal-countdown">
-                  Despues continuaremos en modo seguro
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-  };
+  //             <div className="redirect-modal-progress">
+  //               <div className="redirect-modal-countdown">
+  //                 Despues continuaremos en modo seguro
+  //               </div>
+  //             </div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     );
+  // };
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
+  // useEffect(() => {
+  //   const savedUser = localStorage.getItem('user');
+  //   if (savedUser) {
+  //     setUser(JSON.parse(savedUser));
+  //   }
 
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        handleUserAuthenticated(user);
-      } else {
-        localStorage.removeItem('user');
-        setUser(null);
-      }
-    });
+  //   const unsubscribe = auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       handleUserAuthenticated(user);
+  //     } else {
+  //       localStorage.removeItem('user');
+  //       setUser(null);
+  //     }
+  //   });
 
-    return () => unsubscribe();
-  }, []);
+  //   return () => unsubscribe();
+  // }, []);
 
-  const handleUserAuthenticated = async (user) => {
-    try {
-      setError(null);
-      const response = await fetch('https://tree-suesca-backend-production.up.railway.app/api/v1/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: user.email,
-          nombre: user.displayName,
-          foto_perfil: user.photoURL,
-          fecha_registro: new Date().toISOString(),
-          ultima_conexion: new Date().toISOString(),
-          estado: true
-        }),
-      });
+  // const handleUserAuthenticated = async (user) => {
+  //   try {
+  //     setError(null);
+  //     const response = await fetch('https://tree-suesca-backend-production.up.railway.app/api/v1/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         email: user.email,
+  //         nombre: user.displayName,
+  //         foto_perfil: user.photoURL,
+  //         fecha_registro: new Date().toISOString(),
+  //         ultima_conexion: new Date().toISOString(),
+  //         estado: true
+  //       }),
+  //     });
 
-      if (!response.ok) {
-        throw new Error('Error al registrar usuario');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Error al registrar usuario');
+  //     }
 
-      const data = await response.json();
+  //     const data = await response.json();
       
-      const userData = {
-        email: user.email,
-        nombre: user.displayName,
-        foto_perfil: user.photoURL,
-        auth: true
-      };
+  //     const userData = {
+  //       email: user.email,
+  //       nombre: user.displayName,
+  //       foto_perfil: user.photoURL,
+  //       auth: true
+  //     };
       
-      localStorage.setItem('user', JSON.stringify(userData));
-      setUser(userData);
-    } catch (error) {
-      console.error('Error:', error);
-      setError('Error al verificar/registrar usuario. Intente nuevamente.');
-    }
-  };
+  //     localStorage.setItem('user', JSON.stringify(userData));
+  //     setUser(userData);
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //     setError('Error al verificar/registrar usuario. Intente nuevamente.');
+  //   }
+  // };
 
-  const handleAuthClick = async () => {
-    // Verificar si está en navegador in-app
-    if (isInAppBrowser()) {
-      window.gtag('event', 'in_app_browser_detected', {
-        tipo_negocio: 'miradores',
-        nombre_ruta: ruta.nombre || 'Ruta Desconocida',
-        tipo_interaccion: 'click'
-      });
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-      if (isIOS) {
-        setShowIOSRedirectModal(true);
-      } else {
-        setShowRedirectModal(true);
-      }
-      return;
-    }
+  // const handleAuthClick = async () => {
+  //   // Verificar si está en navegador in-app
+  //   if (isInAppBrowser()) {
+  //     window.gtag('event', 'in_app_browser_detected', {
+  //       tipo_negocio: 'miradores',
+  //       nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+  //       tipo_interaccion: 'click'
+  //     });
+  //     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  //     if (isIOS) {
+  //       setShowIOSRedirectModal(true);
+  //     } else {
+  //       setShowRedirectModal(true);
+  //     }
+  //     return;
+  //   }
 
-    // Trackear click en iniciar aventura
-    window.gtag('event', 'iniciar_aventura', {
-      tipo_negocio: 'miradores',
-      nombre_ruta: ruta.nombre || 'Ruta Desconocida',
-      tipo_interaccion: 'click'
-  });
+  //   // Trackear click en iniciar aventura
+  //   window.gtag('event', 'iniciar_aventura', {
+  //     tipo_negocio: 'miradores',
+  //     nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+  //     tipo_interaccion: 'click'
+  // });
 
-    if (!user) {
-      try {
-        setError(null);
-        const result = await signInWithPopup(auth, provider);
-        if (result.user) {
-          await handleUserAuthenticated(result.user);
-          navigate(`/ruta/mapa/${startMap}`);
+  //   if (!user) {
+  //     try {
+  //       setError(null);
+  //       const result = await signInWithPopup(auth, provider);
+  //       if (result.user) {
+  //         await handleUserAuthenticated(result.user);
+  //         navigate(`/ruta/mapa/${startMap}`);
 
-          // Trackear inicio exitoso de ruta
-          window.gtag('event', 'ruta_iniciada', {
-              tipo_negocio: 'miradores',
-              nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
-              tipo_interaccion: 'conversion'
-          });
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        setError(error.message || 'Error al iniciar sesión. Intente nuevamente.');
-      }
-    } else {
-      // Trackear inicio directo de ruta (usuario ya logueado)
-      window.gtag('event', 'ruta_iniciada', {
-          tipo_negocio: 'miradores',
-          nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
-          tipo_interaccion: 'conversion'
-      });
+  //         // Trackear inicio exitoso de ruta
+  //         window.gtag('event', 'ruta_iniciada', {
+  //             tipo_negocio: 'miradores',
+  //             nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
+  //             tipo_interaccion: 'conversion'
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error('Error:', error);
+  //       setError(error.message || 'Error al iniciar sesión. Intente nuevamente.');
+  //     }
+  //   } else {
+  //     // Trackear inicio directo de ruta (usuario ya logueado)
+  //     window.gtag('event', 'ruta_iniciada', {
+  //         tipo_negocio: 'miradores',
+  //         nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
+  //         tipo_interaccion: 'conversion'
+  //     });
       
-      navigate(`/ruta/mapa/${startMap}`)
-    }
-  };
+  //     navigate(`/ruta/mapa/${startMap}`)
+  //   }
+  // };
 
   useEffect(() => {
     function crearMapaIlustrativo(containerId) {
@@ -489,6 +489,24 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
     setIsExpanded(!isExpanded);
   };
 
+  const handleStartAdventure = () => {
+    // Trackear click en iniciar aventura
+    window.gtag('event', 'iniciar_aventura', {
+      tipo_negocio: 'miradores',
+      nombre_ruta: ruta.nombre || 'Ruta Desconocida',
+      tipo_interaccion: 'click'
+    });
+
+    // Trackear inicio de ruta
+    window.gtag('event', 'ruta_iniciada', {
+      tipo_negocio: 'miradores',
+      nombre_ruta: ruta.nombre || 'Ruta Sin Nombre',
+      tipo_interaccion: 'conversion'
+    });
+    
+    navigate(`/ruta/mapa/${startMap}`);
+  };
+
   const visibleText = isExpanded ? ruta.descripcion : `${ruta.descripcion.slice(0, maxTextLength)}...`;
 
   return (
@@ -497,8 +515,8 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
           <title>{ruta.nombre}</title>
           <meta name="description" content={ruta.nombre} />
       </Helmet>
-      {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
-      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
+      {/* {showRedirectModal && <RedirectModal onClose={() => setShowRedirectModal(false)} />}
+      {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />} */}
 
 
       <div className='container-info-descrip'>
@@ -613,7 +631,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='container-boton'>
           <button 
             className="adventure-button"
-            onClick={handleAuthClick}
+            onClick={handleStartAdventure}
           >
             <span className="button-main-text">¡Iniciar Aventura!</span>
             <span className="button-sub-text">
