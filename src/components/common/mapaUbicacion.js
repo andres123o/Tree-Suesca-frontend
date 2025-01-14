@@ -99,15 +99,33 @@ const MapComponent = ({ isOpen, onClose, coordinates, establishmentName }) => {
             }
         };
 
+        const createCustomMarkerElement = () => {
+            const element = document.createElement('div');
+            element.className = 'custom-user-marker';
+            element.innerHTML = `
+                <div class="user-marker-container">
+                    <div class="user-marker-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <circle cx="12" cy="12" r="11" fill="#FFFFFF"/>
+                            <path d="M12 13c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm6 6c0-2.2-1.8-4-4-4h-4c-2.2 0-4 1.8-4 4" fill="#2196F3"/>
+                        </svg>
+                    </div>
+                    <div class="user-marker-pulse"></div>
+                </div>
+            `;
+            return element;
+        };
+
         // Función para actualizar la posición del usuario
         const updateUserLocation = (position) => {
             const userCoords = [position.coords.longitude, position.coords.latitude];
             
             // Si el marcador no existe, créalo
             if (!userMarker.current) {
+                const markerElement = createCustomMarkerElement();
                 userMarker.current = new mapboxgl.Marker({
-                    color: "#2196F3",
-                    scale: 1.2
+                    element: markerElement,
+                    anchor: 'center'
                 })
                 .setLngLat(userCoords)
                 .addTo(map.current);
