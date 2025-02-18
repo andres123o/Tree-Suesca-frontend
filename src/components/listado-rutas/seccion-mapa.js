@@ -840,112 +840,116 @@ const FuncionalidadesMapa = ({ ruta }) => {
     }, [ruta]);
 
     return (
-        <>
-            <div className='container-img-map'>
-                <div 
-                    id='map2' 
-                    ref={mapContainerRef}
-                    style={{ width: '100%', height: '100%' }}
-                />
-                {isLoading && (
-                    <div className="loading-overlay">
-                        <ClipLoader color={"#123abc"} size={50} />
-                    </div>
-                )}
-            </div>
-
-            {!isOnline && (
-                <div className="offline-indicator">
-                    Modo sin conexión - Usando datos guardados
-                </div>
-            )}
-
-            <div className='container-info-mapa'>    
-                <div className='container-recuadro-info-title-mapa'>
-                    <h4>{nombre}</h4>
-                </div>
-
-                <div className='container-cuadro-funcionalidades'>
-                    <div className='container-interno'>
-                        <h5 className='container-title-funcionalidades'>
-                            Km recorridos
-                        </h5>
-                        <p 
-                            className="container-funcionalidad" 
-                            id="km-recorridos"
-                            ref={kmRecorridosRef}
-                        >0.0</p>
-                    </div>
-
-                    <div className='container-interno'>
-                        <h5 className='container-title-funcionalidades'>
-                            Tiempo recorrido
-                        </h5>
-                        <span 
-                            className='container-funcionalidad'
-                            id="tiempo-recorrido"
-                            ref={tiempoRecorridoContainer}
-                        >00:00</span>
-                    </div>
-                </div>
-
-                <div className='container-cuadro-funcionalidades'>
-                    <div className='container-interno'>
-                        <h5 className='container-title-funcionalidades'>
-                            Progreso
-                        </h5>
-                        <p 
-                            className="container-funcionalidad" 
-                            id="porcentajeCompletado"
-                            ref={porcentajeCompletadoRef}
-                        >0%</p>
-                    </div>
-
-                    <div className='container-interno'>
-                        <h5 className='container-title-funcionalidades'>
-                            Velocidad (km/h)
-                        </h5>
-                        <span 
-                            className='container-funcionalidad'
-                            id="velocidad"
-                            ref={velocidadRef}
-                        >0.0</span>
-                    </div>
-                </div>
-
-                <div className='container-canvas-chart'>
-                    <canvas 
-                        id="elevationChart" 
-                        width="300" 
-                        height="150"
-                        ref={containerChart}
-                    ></canvas>
-                </div>
-
-                <div className='separador'></div>
-
-                <div className='accordion'>
-                    <div className='accordion-item1'>
-                        <button 
-                            className={`accordion-header ${isExpanded ? 'active' : ''}`}
-                            onClick={toggleSection}
-                        >
-                            Emergencias
-                            <IoIosArrowForward className={`icon ${isExpanded ? 'rotated' : ''}`} />
-                        </button>
+        <>  
+            <div className='container-seccion-mapa-completo'>
+                <div className='container-mapa'>
+                    <div className='container-img-map'>
                         <div 
-                            className='accordion-content'
-                            style={{ display: isExpanded ? 'block' : 'none' }}
-                        >
-                            {ruta.emergencias.map(emergencia => (
-                                <div key={emergencia.id} className="emergency-contact">
-                                    <p><strong>{emergencia.tipo}:</strong> {emergencia.numero}</p>
-                                </div>
-                            ))}
+                            id='map2' 
+                            ref={mapContainerRef}
+                            style={{ width: '100%', height: '100%' }}
+                        />
+                        {isLoading && (
+                            <div className="loading-overlay">
+                                <ClipLoader color={"#123abc"} size={50} />
+                            </div>
+                        )}
+                    </div>
+
+                    {!isOnline && (
+                        <div className="offline-indicator">
+                            Modo sin conexión - Usando datos guardados
+                        </div>
+                    )}
+                </div>
+
+                <div className='container-info-mapa'>    
+                    <div className='container-recuadro-info-title-mapa'>
+                        <h4>{nombre}</h4>
+                    </div>
+
+                    <div className='container-cuadro-funcionalidades'>
+                        <div className='container-interno'>
+                            <h5 className='container-title-funcionalidades'>
+                                Km recorridos
+                            </h5>
+                            <p 
+                                className="container-funcionalidad" 
+                                id="km-recorridos"
+                                ref={kmRecorridosRef}
+                            >0.0</p>
+                        </div>
+
+                        <div className='container-interno'>
+                            <h5 className='container-title-funcionalidades'>
+                                Tiempo recorrido
+                            </h5>
+                            <span 
+                                className='container-funcionalidad'
+                                id="tiempo-recorrido"
+                                ref={tiempoRecorridoContainer}
+                            >00:00</span>
+                        </div>
+                    </div>
+
+                    <div className='container-cuadro-funcionalidades'>
+                        <div className='container-interno'>
+                            <h5 className='container-title-funcionalidades'>
+                                Progreso
+                            </h5>
+                            <p 
+                                className="container-funcionalidad" 
+                                id="porcentajeCompletado"
+                                ref={porcentajeCompletadoRef}
+                            >0%</p>
+                        </div>
+
+                        <div className='container-interno'>
+                            <h5 className='container-title-funcionalidades'>
+                                Velocidad (km/h)
+                            </h5>
+                            <span 
+                                className='container-funcionalidad'
+                                id="velocidad"
+                                ref={velocidadRef}
+                            >0.0</span>
+                        </div>
+                    </div>
+
+                    <div className='container-canvas-chart'>
+                        <canvas 
+                            className='canva-graph-elevation'
+                            id="elevationChart" 
+                            ref={containerChart}
+                        ></canvas>
+                    </div>
+
+                    <div className='separador'></div>
+
+                    <div className='accordion-emergencia'>
+                        <div className='accordion-item1'>
+                            <button 
+                                className={`accordion-header ${isExpanded ? 'active' : ''}`}
+                                onClick={toggleSection}
+                            >
+                                Emergencias
+                                <IoIosArrowForward className={`icon ${isExpanded ? 'rotated' : ''}`} />
+                            </button>
+                            <div 
+                                className='accordion-content'
+                                style={{ display: isExpanded ? 'block' : 'none' }}
+                            >
+                                {ruta.emergencias.map(emergencia => (
+                                    <div key={emergencia.id} className="emergency-contact">
+                                        <p><strong>{emergencia.tipo}:</strong> {emergencia.numero}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            
         </>
     );
 };

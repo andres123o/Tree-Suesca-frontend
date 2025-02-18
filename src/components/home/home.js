@@ -135,7 +135,7 @@ const Home = () => {
     // Función para determinar el tipo de destino (simulado por ahora)
     const getDestinationType = (municipio) => {
         // Esto sería reemplazado por datos reales de la API
-        return municipio === "Suesca" ? "Aventura" : "Familiar";
+        return municipio === "Suesca" ? "Aventura" : "Trekking";
     };
 
     if (loading) return (
@@ -213,14 +213,14 @@ const Home = () => {
             </Helmet>
             <div className="header">
                 <div className="title-header">
-                    <h5>Destino <span className="mas-home"><strong>+</strong></span></h5>
+                    <h5>Desti <span className="mas-home"><strong>plus</strong></span></h5>
                 </div>
                 <div className="back-home">   
                     <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="Tree Suesca" />
                 </div>
             </div>
 
-            <div className='container-landing'>
+            <div className='container-landing-2'>
                 <div className='titulo-landing'>
                     <h2>Explora destinos sin complicaciones</h2>
                     <h5>Toda la información que necesitas, en un solo lugar.</h5>
@@ -228,54 +228,58 @@ const Home = () => {
             </div>
 
             <div className='separador'></div>
-            
-            <SearchBox 
-                placeholder="A donde quieres ir..." 
-                onSearch={handleSearch}
-            />
 
-            <div className="filtros-container">
-                <div className="filtros-dropdown">
-                    {Object.entries(filtros).map(([key, values]) => (
-                        <div className="filtro-item" key={key}>
+            <div className="container-box-filter">
+                <SearchBox 
+                    placeholder="¿Qué tienes en mente?" 
+                    onSearch={handleSearch}
+                />
+
+                <div className="filtros-container">
+                    <div className="filtros-dropdown">
+                        {Object.entries(filtros).map(([key, values]) => (
+                            <div className="filtro-item" key={key}>
+                                <button 
+                                    className={`filtro-button ${activeFilters[key] ? 'active' : ''}`}
+                                    onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
+                                >
+                                    {key} <IoMdArrowDropdown className='icono-arrow-down'/>
+                                </button>
+                                {filtroAbierto === key && (
+                                    <div className="filtro-opciones">
+                                        {Array.from(values).map((value, index) => (
+                                            <div
+                                                key={index}
+                                                onClick={() => manejarClick(key, value)}
+                                                className={activeFilters[key] === value.value ? 'opcion-seleccionada' : ''}
+                                            >
+                                                {value.value}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                        
+                        {(Object.keys(activeFilters).length > 0) && (
                             <button 
-                                className={`filtro-button ${activeFilters[key] ? 'active' : ''}`}
-                                onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
+                                className="limpiar-filtros-btn"
+                                onClick={limpiarFiltros}
                             >
-                                {key} <IoMdArrowDropdown className='icono-arrow-down'/>
+                                Limpiar
                             </button>
-                            {filtroAbierto === key && (
-                                <div className="filtro-opciones">
-                                    {Array.from(values).map((value, index) => (
-                                        <div
-                                            key={index}
-                                            onClick={() => manejarClick(key, value)}
-                                            className={activeFilters[key] === value.value ? 'opcion-seleccionada' : ''}
-                                        >
-                                            {value.value}
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-                    ))}
+                        )}
+                    </div>
                     
-                    {(Object.keys(activeFilters).length > 0) && (
-                        <button 
-                            className="limpiar-filtros-btn"
-                            onClick={limpiarFiltros}
-                        >
-                            Limpiar filtros
-                        </button>
+                    {rutasFiltradas.length === 0 && (
+                        <div className="no-resultados">
+                            <p>No se encontraron destinos con los criterios seleccionados</p>
+                        </div>
                     )}
                 </div>
-                
-                {rutasFiltradas.length === 0 && (
-                    <div className="no-resultados">
-                        <p>No se encontraron destinos con los criterios seleccionados</p>
-                    </div>
-                )}
             </div>
+            
+            
 
             <div className="container-seccion-lista-home">
                 {rutasFiltradas.map((item) => (

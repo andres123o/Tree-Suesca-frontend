@@ -3,7 +3,7 @@ import { Mountain, Navigation, Camera, ChevronRight } from 'lucide-react';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion';
 import { useNavigate } from 'react-router-dom';
 
-const ViewpointsSection = ({ imagenes = [], destino_id }) => {
+const ViewpointsSection = ({ imagenes = [], destino_id, municipio }) => {
   const navigate = useNavigate()
   // Usar la primera imagen del array si existe, o una imagen por defecto si no hay imágenes
   const mainImage = imagenes?.[0]?.img || "https://res.cloudinary.com/destinoplus/image/upload/v1733759892/rutas/mirador-del-halcon/mxxupbqr7ls8uhzasdmg.jpg";
@@ -46,7 +46,7 @@ const ViewpointsSection = ({ imagenes = [], destino_id }) => {
               {/* Información del mirador */}
               <div className="viewpoints-content">
                 <h3 className="viewpoints-title-text">
-                  Descubre los mejores lugares de Suesca
+                  Explora lo mejor de {municipio}
                 </h3>
                 <div className="viewpoints-tags">
                   <span className="viewpoints-tag">Autonomo</span>

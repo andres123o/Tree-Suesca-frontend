@@ -125,7 +125,16 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 2%;
     align-items: center;
+}
+.container-recomendados-top-5 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 .popular {
     width: 90%;
@@ -174,7 +183,6 @@
     overflow-x: auto;
     padding: 2% 5%;
     gap: 20px;
-    margin-bottom: 8%;
 }
 .recurrente {
     min-width: 340px;
@@ -198,16 +206,21 @@
     overflow-x: auto;
     padding: 0% 5%;
     gap: 20px;
-    margin-bottom: 8%;
+}
+.separador-menus {
+    width: 90%;
+    margin: var(--spacing-md) auto;
+    height: 2px;
+    background-color: rgba(105, 105, 105, 0.116);
 }
 .bebida {
     min-width: 200px;
     max-width: 200px;
-    height: 320px;
+    height: auto;
 }
 .ofertaBebida {
     width: 200px;
-    height: 200px;
+    height: auto;
 }
 .ofertaBebida img {
     width: 200px;
@@ -234,6 +247,7 @@
     padding-left: 5%;
     opacity: 0.6;
     font-size: 12px;
+    margin-bottom: 15%;
 }
 /* Container contacto y como llegar */
 .container-contacto {
@@ -285,3 +299,115 @@
     color: var(--red-botons);
     font-size: 14px;
 }
+.container-contacto-res-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    justify-content: center;
+    background: white; /* Fondo blanco para que no se vea el contenido detrás */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1); /* Sombra sutil en la parte superior */
+    z-index: 1000;
+  }
+
+  @media (min-width: 768px) {
+    .container-contacto-res-bar {
+        position: relative;
+        display: flex;
+        gap: var(--spacing-md);
+        padding: 0;
+        justify-content: center;
+        background: white; /* Fondo blanco para que no se vea el contenido detrás */
+        box-shadow: 0 0px 0px rgba(0,0,0,0.1); /* Sombra sutil en la parte superior */
+        z-index: 1000;
+    }
+    .container-title {
+        width: 100%;
+        height: auto;
+        display: flex;
+        justify-content: first baseline;
+        align-items: center;
+        padding: 0% 8%;
+        margin-bottom: 1%;
+    }
+    .container-top-5 {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10%;
+    }
+    .container-carrusel-bebidas {
+        padding: 0% 0%;
+        gap: 0 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        justify-content: center;
+    }
+    .container-title {
+        padding: 0% 0%;
+    }
+    .container-recomendados-top-5 {
+        flex-direction: row;
+        
+    }
+    .bebida {
+        min-width: 130px;
+        max-width: 130px;
+        height: auto;
+    }
+    .ofertaBebida {
+        width: 130px;
+        height: auto;
+    }
+    .ofertaBebida img {
+        width: 130px;
+        height: 130px;
+        border-radius: 1em;
+        object-fit: cover;
+    }
+    .container-info-bebidas {
+        flex-direction: column;
+        gap: 0;
+    }
+    .popular {
+        margin-bottom: 3%;
+        height: auto;
+    }
+    .popular .oferta {
+        width: 150px;
+        height: 150px;
+    }
+    .oferta img {
+        width: 150px;
+        height: 150px;
+    }
+    .precio-top {
+        margin-top: 0;
+    }
+    .separador-menus {
+        width: 80%;
+    }
+    .container-carrusel-recurrentes {
+        padding: 0% 0%;
+        gap: 0 40px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        justify-content: center;
+        margin-bottom: 0;
+    }
+    .recurrente {
+        min-width: auto;
+        max-width: 100%;
+        height: auto;
+        gap: 5%;
+    }
+    .recurrente .oferta {
+        width: 150px;
+    }
+  }

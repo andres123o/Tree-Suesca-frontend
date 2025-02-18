@@ -162,11 +162,14 @@ const Homedestino = () => {
                 destino_id={destino_id}
             />
             <DiscoverSection destino_id={destino_id}/>
-            <PopularActivities contenido = { tendencias } />
-            <ViewpointsSection 
-                imagenes={content.imagenes}
-                destino_id={destino_id}
-            />
+            <div className='container-tendencias-miradores'>
+                <PopularActivities contenido = { tendencias } />
+                <ViewpointsSection 
+                    imagenes={content.imagenes}
+                    destino_id={destino_id}
+                    municipio={municipio}
+                />
+            </div>
             <AccommodationsSection 
                 alojamientos={alojamientos} 
                 destino_id={destino_id} 

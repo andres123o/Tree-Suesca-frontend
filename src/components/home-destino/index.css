@@ -184,6 +184,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
 .container-carrusel-categorias-actividades {
@@ -193,7 +194,6 @@ body {
     justify-content: flex-start; /* Cambiado de space-around a flex-start */
     overflow-x: auto;
     gap: 20px; /* Añadido para separar los elementos */
-    display: flex;
     justify-content: first baseline;
     align-items: center;
 }
@@ -201,10 +201,10 @@ body {
     min-width: 28vh;
     height: 100%;
     border-radius: 1.5em;
-    background-size: cover; 
-    background-position: center; 
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
+    transition: all 0.5s ease-in-out;
 }
 
 /*  Container categorias restaurante */
@@ -497,4 +497,31 @@ body {
     margin-top: 10%;
     margin-bottom: 3%;
 }
-
+/* Destok home*/
+@media (min-width: 768px) {
+    .container-mas-populares {
+        width: 55%;
+        height: 100%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+        padding: 0% 0%;
+    }
+    .container-carrusel-actividades-populares {
+        height: 60vh;
+    }
+    .contenido {
+        min-width: 50vh;
+        flex: 0 0 calc(50% - 10px);
+    }
+    .container-carrusel-categorias-actividades {
+        overflow-x: auto; /* Permite el scroll horizontal */
+        scroll-behavior: smooth; /* Suaviza el desplazamiento */
+        -webkit-overflow-scrolling: touch; /* Mejora en dispositivos táctiles */
+        
+        /* Oculta la barra de scroll */
+        scrollbar-width: none; /* Firefox */
+    }
+    .container-carrusel-categorias-actividades::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }
+}

@@ -24,7 +24,6 @@
 .container-img-principal {
     width: 100%;
     height: 55vh;
-    position: fixed;
     overflow: hidden;
     background-size: cover;
     background-repeat: no-repeat;
@@ -38,7 +37,6 @@
     left: 0;
     width: 100%;
     height: 10%;
-    z-index: 2;
 }
 
 .container-info {
@@ -47,9 +45,16 @@
     height: auto;
     border-top-left-radius: var(--radius-lg);
     border-top-right-radius: var(--radius-lg);
-    position: absolute;
-    top: 55vh;
+    position: relative;
     background-clip: padding-box;
+}
+.container-info-menus {
+    background-color: white;
+    width: 100%;
+    height: auto;
+    position: relative;
+    background-clip: padding-box;
+    margin-bottom: 95px;
 }
 
 .container-info-descrip {
@@ -60,6 +65,46 @@
 }
 
 /* Carrusel */
+.carousel-main-container {
+    position: relative;
+    width: 100%;
+    height: 55vh;
+}
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-arrow svg {
+    width: 24px;
+    height: 24px;
+    color: #333;
+}
+
+.carousel-arrow-left {
+    left: 20px;
+}
+
+.carousel-arrow-right {
+    right: 20px;
+}
 .container-carrusel-imgs {
     width: 100%;
     height: calc(12vw);
@@ -348,45 +393,23 @@
     margin-bottom: 3%;
 }
   
-  .new-route-header {
+.new-route-header {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
     margin-bottom: var(--spacing-sm);
-  }
-  
-  .new-route-header h3 {
+}
+
+.new-route-header h3 {
     color: #2e7d32;
     font-size: var(--font-medium);
     font-weight: 600;
-  }
-  
-  .award-icon {
-    color: var(--primary-color);
-  }
-  
-  .pioneer-badge {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-sm);
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: var(--radius-sm);
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .stats-container {
-      flex-direction: column;
-      gap: var(--spacing-md);
-    }
-    
-    .rating-number {
-      font-size: 36px;
-    }
-  }
+}
 
+.award-icon {
+    color: var(--primary-color);
+}
+  
 
 /* Botón de aventura */
 .container-boton {
@@ -439,6 +462,13 @@
     align-items: center;
     padding: var(--spacing-md) 0;
 }
+.accordion-emergencia {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--spacing-md) 0;
+}
 
 .accordion-item1 {
     width: 90%;
@@ -460,6 +490,12 @@
 }
 
 .accordion-content {
+    padding: var(--spacing-md);
+    font-size: var(--font-primary);
+    line-height: 1.5;
+    opacity: var(--opacity-low);
+}
+.accordion-content-aloja {
     padding: var(--spacing-md);
     font-size: var(--font-primary);
     line-height: 1.5;
@@ -490,6 +526,10 @@
     100% { transform: rotate(360deg); }
 }
 /* Mapa */
+.container-seccion-mapa-completo {
+    width: 100%;
+    height: auto;
+}
 /* Container funcionalidades */
 .container-info-mapa {
     background-color: rgb(255, 255, 255);
@@ -614,4 +654,146 @@
 
 .station-marker:hover .marker-svg path {
     transform: scale(1.1);
+}
+
+/* Destok home*/
+@media (min-width: 768px) {
+    .carousel-main-container {
+        width: 45%;
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .container-img-principal {
+        width: 70%;
+        height: 75vh;
+        position: relative;
+        top: 0%;
+        left: 0%;
+        transform: translate(-0%, -0%); /* Centra exactamente */
+        border-radius: 5%;
+    }
+    .container-info {
+        position: relative;
+        top: 0;
+        width: 55%;
+    }
+    .container-carrusel-imgs {
+        display: none;
+    }
+    .container-descripcion {
+        width: 100%;
+        padding: var(--spacing-md) 8%;
+    }
+    .container-mapa-atajos-estaciones {
+        display: none;
+    }
+    .container-recuadro-info-title {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .container-dificultad-distancia-timpo {
+        border-bottom: solid 2px rgba(128, 128, 128, 0.164);
+        width: 90%;
+        height: 80px;
+        margin-top: 1%;
+    }
+    .container-recuadro-info-title h4 {
+        margin-bottom: 0;
+    }
+    .container-leyenda-mapa-interactivo-arriba {
+        display: none;
+    }
+    .container-pioneros-nuevos {
+        display: flex;
+        justify-content: center;
+        gap: 5%;
+        align-items: center;
+    }
+    .new-route-banner {
+        padding: 20px 20px;
+    }
+    .new-route-header {
+        justify-content: center;
+    }
+    .p-del-pionero-nueva-ruta {
+        display: none;
+    }
+    .container-items-efecto-error {
+        display: grid;
+    }
+    .accordion {
+        display: grid;
+        gap: 2%;
+        grid-template-columns: repeat(4, 1fr);
+        padding: 0 7%;
+    }
+    .container-boton {
+        padding: 1% 0;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .adventure-button {
+        width: 30%;
+        padding: 0.5%;
+    }
+    .pioneer-badge {
+        margin-top: 0%;
+    }
+
+    /* Seccion del mapa */
+    /* Mapa */
+    .container-seccion-mapa-completo {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+    }
+    .container-mapa {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5%;
+    }
+    /* Container funcionalidades */
+    .container-info-mapa {
+        width: 40%;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        position: relative;
+        top: 0vh;
+    }
+    .container-img-map {
+        height: 90vh;
+        position: relative;
+    }
+    #map2 {
+        border-radius: 25px;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.76);
+    }
+    .canva-graph-elevation {
+        width: 80%;
+    }
+    .container-info-mapa {
+        padding: 3% 0;
+        padding-right: 5%;
+    }
+    .container-interno .container-funcionalidad {
+        font-size: 2.2em;
+    }
+    .container-recuadro-info-title-mapa h4 {
+        font-size: 35px;
+    }
+    .accordion-item1 {
+        display: none;
+    }
+    .accordion-emergencia {
+        display: none;
+    }
 }

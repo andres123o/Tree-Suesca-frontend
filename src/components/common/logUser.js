@@ -5,7 +5,7 @@ import MapComponent from '../common/mapaUbicacion';
 // import { AlertCircle } from 'lucide-react';
 // import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 
-const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick}) => {
+const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, onLocationClick, onContactClick, uniqueClassNmae = 'container-contacto-aloja'}) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
   // const [user, setUser] = useState(null);
   // const [pendingAction, setPendingAction] = useState(null);
@@ -335,7 +335,7 @@ const AuthButtons = ({ isNewListing = false, contactInfo, location, name, tipo, 
       {showIOSRedirectModal && <RedirectModalIOS onClose={() => setShowIOSRedirectModal(false)} />}
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />} */}
 
-      <div className="container-contacto-aloja">       
+      <div className={uniqueClassNmae}>       
         <button 
           className="como-llegar-aloja"
           onClick={handleMapOpen}

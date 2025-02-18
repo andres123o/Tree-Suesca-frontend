@@ -338,3 +338,42 @@
   color: var(--primary-color);
   margin-left: 3%;
 }
+
+/* Destok home*/
+@media (min-width: 768px) {
+  .container-actividades-div {
+    display: flex;
+  }
+  .container-caracteristicas {
+      margin-bottom: 0;
+      margin-top: 2%;
+      width: 100%;
+  }
+  .sub-container {
+    height: 80%;
+  }
+  .container-principal-precio-metodo {
+      margin-bottom: 3%;
+      margin-top: 3%;
+  }
+  .container-logo-nombre-caracteristicas {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+  }
+  .separador {
+    display: none;
+  }
+
+  /* Metods de pago */
+  .container-precio-metodo-pago {
+    width: 70%;
+  }
+  .promo-tag {
+    left: 15%;
+  }
+  .container-principal-precio-metodo-es {
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }
+}

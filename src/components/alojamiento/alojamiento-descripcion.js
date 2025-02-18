@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as LucideIcons from 'lucide-react';
-import { IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import OptimizedImage from '../common/optimzarImg'
@@ -106,8 +106,26 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     const [isExpanded, setIsExpanded] = useState(false);
     const isNewListing = !alojamiento.calificacion || alojamiento.calificacion === 0;
     const [isMapOpen, setIsMapOpen] = useState(false);
+    const [maxTextLength, setMaxTextLength] = useState(100); // Estado dinámico
 
-    const maxTextLength = 150;
+
+    // Efecto para manejar el tamaño de la pantalla
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+            setMaxTextLength(100);
+            } else {
+            setMaxTextLength(Infinity); // Mostrar todo el texto en pantallas grandes
+            }
+        };
+
+        // Ejecutar al montar y al cambiar tamaño
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        // Limpiar evento al desmontar
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     useEffect(() => {
         const startTime = Date.now();
@@ -139,12 +157,33 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
     setIsExpanded(!isExpanded);
     };
 
-    const visibleText = isExpanded ? alojamiento.detalle : `${alojamiento.detalle.slice(0, maxTextLength)}...`;
+    // Calcular texto visible
+    const needsTruncation = alojamiento.detalle.length > maxTextLength;
+    const truncatedText = alojamiento.detalle.slice(0, maxTextLength);
+    const visibleText = isExpanded 
+        ? alojamiento.detalle 
+        : `${truncatedText}${needsTruncation ? "..." : ""}`;
 
     const handleWhatsAppClick = () => {
         const message = `¡Hola! Me interesa reservar ${alojamiento.name} para mi estadía en Suesca`;
         const whatsappUrl = `https://wa.me/${oferente.contacto}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
+    };
+
+    const handlePrevious = () => {
+        setSelectedImgIndex((prevIndex) => {
+            const newIndex = prevIndex === 0 ? alojamiento.imgs.length - 1 : prevIndex - 1;
+            setBackgroundImg(alojamiento.imgs[newIndex]);
+            return newIndex;
+        });
+    };
+
+    const handleNext = () => {
+        setSelectedImgIndex((prevIndex) => {
+            const newIndex = (prevIndex + 1) % alojamiento.imgs.length;
+            setBackgroundImg(alojamiento.imgs[newIndex]);
+            return newIndex;
+        });
     };
     
     return (
@@ -153,193 +192,216 @@ const AlojamientoDescripcion = ( {alojamiento, oferente} ) => {
                 <title>{alojamiento.name}</title>
                 <meta name="description" content={alojamiento.name} />
             </Helmet>
-            {/* Ver las imagenes del carrusel */}
-            <OptimizedImage className='container-img-principal'
-                imageUrl={backgroundImage}
-                alt={backgroundImage}
-            />
-                
-            {/* Container principal de la informacion */}
-            <div className="container-info">
+            <div className='container-actividades-div'>
+                <div className='carousel-main-container'>
+                    <OptimizedImage className='container-img-principal'
+                        imageUrl={backgroundImage}
+                        alt={backgroundImage}
+                    />
+                    <button 
+                        className="carousel-arrow carousel-arrow-left"
+                        onClick={handlePrevious}
+                        aria-label="Imagen anterior"
+                    >
+                        <IoIosArrowBack />
+                    </button>
+                    <button 
+                        className="carousel-arrow carousel-arrow-right"
+                        onClick={handleNext}
+                        aria-label="Siguiente imagen"
+                    >
+                        <IoIosArrowForward />
+                    </button>
+                </div>
+                    
+                {/* Container principal de la informacion */}
+                <div className="container-info">
 
-                {/* Container de carrusel */}
-                <div className='container-carrusel-imgs'>
-                    <div className='carrusel-imgs'>
-                        {alojamiento.imgs.map((imgSrc, index) => (
-                        <OptimizedImageLarge
-                            key={index}
-                            imageUrl={imgSrc}
-                            alt={`Imagen ${index + 1} del establecimiento`}
-                            onClick={() => handleImageClick(imgSrc, index)}
-                            className={index === selectedImgIndex ? 'selected' : ''}
-                        />
+                    {/* Container de carrusel */}
+                    <div className='container-carrusel-imgs'>
+                        <div className='carrusel-imgs'>
+                            {alojamiento.imgs.map((imgSrc, index) => (
+                            <OptimizedImageLarge
+                                key={index}
+                                imageUrl={imgSrc}
+                                alt={`Imagen ${index + 1} del establecimiento`}
+                                onClick={() => handleImageClick(imgSrc, index)}
+                                className={index === selectedImgIndex ? 'selected' : ''}
+                            />
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Sección de título actualizada */}
+                    <div className='container-logo-nombre-calificacion-alojamiento'>
+                        <div className='container-info-titulo-calificacion-logo'>
+                            <div className='logo-establecimiento'>
+                                <img src={oferente.logo} alt={alojamiento.name} />
+                            </div>
+                            <div className='nombre-establecimiento-alojamiento'>
+                                <h5>{alojamiento.name}</h5>
+                                <div className='container-horario-modal-nuevo'>
+                                    <div className="check-times">
+                                        <Clock size={14} className="check-icon" />
+                                        <p>Check In: {oferente.checkIn} - Check Out: {oferente.checkOut}</p>
+                                    </div>
+                                    {isNewListing && (
+                                        <div className="new-listing-badge">
+                                            <Award size={14} className="award-icon" />
+                                            <span>¡Nuevo Alojamiento!</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                    
+                    {/* Carrusel servicios mejorado */}
+                    <div className='container-carrusel-servicios'>
+                        <div className='sub-container-carrusel-servicios'>
+                            {alojamiento.servicios.servicios.map((servicio, index) => {
+                                const IconComponent = getIconComponent(servicio);
+                                return (
+                                    <p key={index} className="servicio-item">
+                                        <IconComponent size={18} />
+                                        {servicio}
+                                    </p>
+                                );
+                            })}
+                        </div>
+                    </div>
+
+                    {/* Seccion numero de habitacioens, camas, baños */}
+                    <div className='container-hab-camas-baños'>
+                        <div>
+                            <p>
+                                Habitaciones: <strong>{alojamiento.equipamento.habitaciones}</strong>
+                            </p>
+                            <p>
+                                Camas: <strong>{alojamiento.equipamento.camas}</strong>
+                            </p>
+                            <p>
+                                Baños: <strong>{alojamiento.equipamento.baños}</strong>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className='separador'></div>
+
+                    {/* Descripcion */}
+                    <div className='container-descripcion'>
+                        <p className='descripcion' id="descripcion-texto">
+                        {visibleText}
+                            {/* Mostrar botón solo si es necesario */}
+                            {needsTruncation && (
+                                <button onClick={toggleExpand} className='show-more-btn'>
+                                {isExpanded ? 'less' : 'more'}
+                                </button>
+                            )}
+                        </p>
+                    </div>
+
+                    <div className='separador'></div>
+
+                    {!isNewListing && (
+                        <div className="social-proof-container">
+                            <div className="rating-overview">
+                                <div className="rating-number">{alojamiento.calificacion}</div>
+                                <div className="rating-stats">
+                                    <div className="rating-stars">
+                                        {[...Array(5)].map((_, index) => (
+                                            <Star
+                                                key={index}
+                                                size={20}
+                                                fill={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "none"}
+                                                color={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "#e0e0e0"}
+                                            />
+                                        ))}
+                                    </div>
+                                    <p className="rating-text">Calificación de huéspedes</p>
+                                </div>
+                            </div>
+                            <div className="testimonial-preview">
+                                "Una experiencia única en Suesca. El alojamiento superó nuestras expectativas..."
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Seccion metodos de pago */}
+                    <div className='container-principal-precio-metodo'>
+                        <div className='container-precio-metodo-pago'>
+                            <div className='container-precio'>
+                                <h5>
+                                    {alojamiento.precio.toLocaleString('es-CO', {
+                                        style: 'currency',
+                                        currency: 'COP',
+                                        minimumFractionDigits: 0,
+                                        maximumFractionDigits: 0
+                                    })}
+                                </h5>
+                                <p>Por noche</p>
+                                {isNewListing && <span className="promo-tag">¡Precio de lanzamiento!</span>}
+                            </div>
+                            <div className='container-metodo'>
+                                <h4>Métodos de pago</h4>
+                                <p>{oferente.metodosDePago}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Reemplazar el div container-contacto-aloja por AuthButtons */}
+                    <AuthButtons 
+                        isNewListing={isNewListing}
+                        contactInfo={oferente.contacto}
+                        location={oferente.coordenadas}
+                        name={oferente.oferente}
+                        tipo={alojamiento.name}
+                        onLocationClick={() => {
+                            window.gtag('event', 'ver_como_llegar', {
+                                tipo_negocio: 'alojamiento',
+                                nombre_alojamiento: alojamiento.name
+                            });
+                        }}
+                        onContactClick={() => {
+                            window.gtag('event', 'contacto_whatsapp', {
+                                tipo_negocio: 'alojamiento',
+                                nombre_alojamiento: alojamiento.name
+                            });
+                        }}
+                    />
+
+                    {/* seccion de accordean, recomendaciones y mas */}
+                    <div className='accordion-aloja'>
+                        {Object.entries(oferente.politicas).map(([key, value], index) => (
+                            <div key={key} className='accordion-item1'>
+                            <button 
+                                className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
+                                onClick={() => toggleSection(index)}
+                            >
+                                {key.charAt(0).toUpperCase() + key.slice(1)}
+                                <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
+                            </button>
+                            <div 
+                                className='accordion-content-aloja'
+                                style={{ display: expandedSection === index ? 'block' : 'none' }}
+                            >
+                                {typeof value === 'string' ? (
+                                <p>{value}</p>
+                                ) : typeof value === 'object' ? (
+                                Object.entries(value).map(([subKey, subValue]) => (
+                                    <div className='emergencia-item' key={subKey}>
+                                    <p>{subKey}: </p>
+                                    <a href={subValue}>{subValue}</a>
+                                    </div>
+                                ))
+                                ) : null}
+                            </div>
+                            </div>
                         ))}
                     </div>
                 </div>
-
-                {/* Sección de título actualizada */}
-                <div className='container-logo-nombre-calificacion-alojamiento'>
-                    <div className='container-info-titulo-calificacion-logo'>
-                        <div className='logo-establecimiento'>
-                            <img src={oferente.logo} alt={alojamiento.name} />
-                        </div>
-                        <div className='nombre-establecimiento-alojamiento'>
-                            <h5>{alojamiento.name}</h5>
-                            <div className="check-times">
-                                <Clock size={14} className="check-icon" />
-                                <p>Check In: {oferente.checkIn} - Check Out: {oferente.checkOut}</p>
-                            </div>
-                            {isNewListing && (
-                                <div className="new-listing-badge">
-                                    <Award size={14} className="award-icon" />
-                                    <span>¡Nuevo Alojamiento!</span>
-                                </div>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                                
-                {/* Carrusel servicios mejorado */}
-                <div className='container-carrusel-servicios'>
-                    <div className='sub-container-carrusel-servicios'>
-                        {alojamiento.servicios.servicios.map((servicio, index) => {
-                            const IconComponent = getIconComponent(servicio);
-                            return (
-                                <p key={index} className="servicio-item">
-                                    <IconComponent size={18} />
-                                    {servicio}
-                                </p>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* Seccion numero de habitacioens, camas, baños */}
-                <div className='container-hab-camas-baños'>
-                    <div>
-                        <p>
-                            Habitaciones: <strong>{alojamiento.equipamento.habitaciones}</strong>
-                        </p>
-                        <p>
-                            Camas: <strong>{alojamiento.equipamento.camas}</strong>
-                        </p>
-                        <p>
-                            Baños: <strong>{alojamiento.equipamento.baños}</strong>
-                        </p>
-                    </div>
-                </div>
-
-                <div className='separador'></div>
-
-                {/* Descripcion */}
-                <div className='container-descripcion'>
-                    <p className='descripcion' id="descripcion-texto">
-                        {visibleText}
-                        <button onClick={toggleExpand} className='show-more-btn'>
-                        {isExpanded ? 'less' : 'more'}
-                        </button>
-                    </p>
-                </div>
-
-                <div className='separador'></div>
-
-                {!isNewListing && (
-                    <div className="social-proof-container">
-                        <div className="rating-overview">
-                            <div className="rating-number">{alojamiento.calificacion}</div>
-                            <div className="rating-stats">
-                                <div className="rating-stars">
-                                    {[...Array(5)].map((_, index) => (
-                                        <Star
-                                            key={index}
-                                            size={20}
-                                            fill={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "none"}
-                                            color={index < Math.floor(alojamiento.calificacion) ? "#FFB800" : "#e0e0e0"}
-                                        />
-                                    ))}
-                                </div>
-                                <p className="rating-text">Calificación de huéspedes</p>
-                            </div>
-                        </div>
-                        <div className="testimonial-preview">
-                            "Una experiencia única en Suesca. El alojamiento superó nuestras expectativas..."
-                        </div>
-                    </div>
-                )}
-
-                {/* Seccion metodos de pago */}
-                <div className='container-principal-precio-metodo'>
-                    <div className='container-precio-metodo-pago'>
-                        <div className='container-precio'>
-                            <h5>
-                                {alojamiento.precio.toLocaleString('es-CO', {
-                                    style: 'currency',
-                                    currency: 'COP',
-                                    minimumFractionDigits: 0,
-                                    maximumFractionDigits: 0
-                                })}
-                            </h5>
-                            <p>Por noche</p>
-                            {isNewListing && <span className="promo-tag">¡Precio de lanzamiento!</span>}
-                        </div>
-                        <div className='container-metodo'>
-                            <h4>Métodos de pago</h4>
-                            <p>{oferente.metodosDePago}</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Reemplazar el div container-contacto-aloja por AuthButtons */}
-                <AuthButtons 
-                    isNewListing={isNewListing}
-                    contactInfo={oferente.contacto}
-                    location={oferente.coordenadas}
-                    name={oferente.oferente}
-                    tipo={alojamiento.name}
-                    onLocationClick={() => {
-                        window.gtag('event', 'ver_como_llegar', {
-                            tipo_negocio: 'alojamiento',
-                            nombre_alojamiento: alojamiento.name
-                        });
-                    }}
-                    onContactClick={() => {
-                        window.gtag('event', 'contacto_whatsapp', {
-                            tipo_negocio: 'alojamiento',
-                            nombre_alojamiento: alojamiento.name
-                        });
-                    }}
-                />
-
-                 {/* seccion de accordean, recomendaciones y mas */}
-                 <div className='accordion-aloja'>
-                    {Object.entries(oferente.politicas).map(([key, value], index) => (
-                        <div key={key} className='accordion-item1'>
-                        <button 
-                            className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
-                            onClick={() => toggleSection(index)}
-                        >
-                            {key.charAt(0).toUpperCase() + key.slice(1)}
-                            <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
-                        </button>
-                        <div 
-                            className='accordion-content'
-                            style={{ display: expandedSection === index ? 'block' : 'none' }}
-                        >
-                            {typeof value === 'string' ? (
-                            <p>{value}</p>
-                            ) : typeof value === 'object' ? (
-                            Object.entries(value).map(([subKey, subValue]) => (
-                                <div className='emergencia-item' key={subKey}>
-                                <p>{subKey}: </p>
-                                <a href={subValue}>{subValue}</a>
-                                </div>
-                            ))
-                            ) : null}
-                        </div>
-                        </div>
-                    ))}
-                </div>
             </div>
+            
         </>
     )
 }

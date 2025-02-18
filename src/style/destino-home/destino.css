@@ -1,4 +1,4 @@
-.container-landing {
+.container-landing-2 {
     width: 100%;
     height: auto;
     padding: 0% 7%;
@@ -11,7 +11,7 @@
 }
 .mas-home {
     color: #00cd70;
-    font-size: 30px;
+    font-size: 24px;
     font-weight: 800;
 }
 .titulo-landing {
@@ -106,46 +106,97 @@
 
 
 /* Carrusel */
+.container-carr-des {
+    padding: 0 4%;
+}
 .container-mas-populares-2 {
     width: 100%;
     height: auto;
     margin-top: 4%;
-    overflow: hidden; /* Previene scroll horizontal */
+    position: relative;
 }
 .container-carrusel-actividades-populares-2 {
     width: 100%;
-    height: 45vh;
+    height: 44vh;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden; /* Previene scroll horizontal */
-
 }
 
 .container-carrusel-categorias-actividades-2 {
     width: 100%;
     height: 100%;
     display: flex;
-    justify-content: flex-start; /* Cambiado de space-around a flex-start */
-    overflow-x: auto;
-    gap: 20px; /* Añadido para separar los elementos */
-    display: flex;
-    justify-content: first baseline;
+    gap: 0px;
     align-items: center;
-    overflow-x: auto; /* Permite scroll solo dentro del carrusel */
-    scrollbar-width: none; /* Oculta scrollbar en Firefox */
-    -ms-overflow-style: none; /* Oculta scrollbar en IE/Edge */
-    padding: 0 8%; /* Agrega padding para que no toque los bordes */
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    align-items: stretch;
 }
+.container-carrusel-categorias-actividades-2::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-item {
+    user-select: none; 
+    pointer-events: none; 
+    min-width: 33vh;
+    height: 100%;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(0.9);
+    opacity: 0.7;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.carousel-item.active-img {
+    transform: scale(1.1);
+    opacity: 1;
+    z-index: 2;
+}
+
 .contenidoDestino {
-    min-width: 35vh;
+    min-width: 33vh;
     height: 100%;
     border-radius: 1.5em;
-    background-size: cover; 
-    background-position: center; 
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    overflow: hidden;
+    transform: scale(0.9);
 }
+.contenidoDestino.active {
+    transform: scale(1.1);
+    opacity: 1;
+    z-index: 2;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.carousel-arrow.left {
+    left: 20px;
+}
+
+.carousel-arrow.right {
+    right: 20px;
+}
+
+
 /* Descripcion */
 .container-descripcion-destino {
     width: 100%;
@@ -182,7 +233,7 @@
     box-sizing: border-box; /* Incluye padding en el ancho total */
     margin-bottom: 1.8
 }
-.container-title-destino h5 {
+.title-destino {
     text-align: center;    
     font-size: 24px;
     margin-top: 8%;
@@ -401,29 +452,6 @@
     opacity: 0.8;
 }
 
-/* Responsive */
-@media (max-width: 640px) {
-    .discover-grid {
-        gap: 12px;
-    }
-
-    .category-card {
-        padding: 12px;
-    }
-
-    .icon-wrapper {
-        width: 40px;
-        height: 40px;
-    }
-
-    .category-title {
-        font-size: 13px;
-    }
-
-    .category-count {
-        font-size: 11px;
-    }
-}
 .category-action {
     display: flex;
     justify-content: space-between;
@@ -819,38 +847,7 @@
     cursor: pointer;
 }
 
-@media (max-width: 640px) {
-    .container-landing {
-        padding: 0 5%;
-    }
-
-    .viewpoints-title {
-        font-size: 1.1rem;
-    }
-
-    .viewpoints-see-all {
-        font-size: 0.8rem;
-    }
-
-    .viewpoints-image-container {
-        height: 12rem;
-    }
-
-    .viewpoints-title-text {
-        font-size: 1rem;
-    }
-
-    .viewpoints-badge,
-    .viewpoints-tag {
-        font-size: 0.7rem;
-    }
-
-    .viewpoints-action-text {
-        font-size: 0.65rem;
-    }
-}
-
-/* SEccion alojamientos */
+/* Seccion alojamientos */
 
 .accommodations-section {
     padding: 0 7%;
@@ -883,13 +880,16 @@
 }
 
 .carousel-container {
-    margin: 0 -7%;
+    user-select: none;
+    white-space: nowrap;
+    cursor: grab;
     overflow-x: auto;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    padding: 0% 7%;
 }
-
+.carousel-container:active {
+    cursor: grabbing;
+}
 .carousel-container::-webkit-scrollbar {
     display: none;
 }
@@ -1032,40 +1032,6 @@
 
 .dot.active {
     background: #00cd70;
-}
-
-@media (max-width: 640px) {
-    .accommodations-section {
-        padding: 0 5%;
-    }
-
-    .section-title {
-        font-size: 18px;
-    }
-
-    .accommodation-card {
-        min-width: 260px;
-        width: 260px;
-    }
-
-    .content {
-        padding: 10px;
-    }
-
-    .accommodation-title {
-        font-size: 16px;
-    }
-
-    .rating,
-    .details,
-    .nights {
-        font-size: 12px;
-    }
-
-    .book-btn {
-        font-size: 12px;
-        padding: 5px 10px;
-    }
 }
 
 /* Estilos base */
@@ -1366,16 +1332,16 @@
   }
   
   .section-content {
+    text-align: justify;
     font-size: 14px;
     color: #666;
     line-height: 1.6;
-    padding-left: 64px;
-  }
+}
   
   /* Scroll personalizado para el modal */
   .modal-content {
     scrollbar-width: thin;
-    scrollbar-color: #00cd70 #f5f5f5;
+    scrollbar-color: #00cd70 #f5f5f500;
   }
   
   .modal-content::-webkit-scrollbar {
@@ -1388,33 +1354,10 @@
   
   .modal-content::-webkit-scrollbar-thumb {
     background-color: #00cd70;
-    border-radius: 6px;
   }
   
-  @media (max-width: 640px) {
-    .overview-section {
-      padding: 0 5%;
-    }
-  
-    .preview-cards {
-      gap: 8px;
-    }
-  
-    .preview-card {
-      padding: 12px;
-    }
-  
-    .modal-content {
-      max-height: 85vh;
-    }
-  
-    .section-content {
-      padding-left: 0;
-      margin-top: 12px;
-    }
-  }
-
 /* Hommmee card */
+
 /* Estilos de la tarjeta de destino */
 .destination-card {
     width: 100%;
@@ -1565,24 +1508,6 @@
     color: #666;
 }
 
-/* Media queries */
-@media (max-width: 768px) {
-    .destination-card {
-        max-width: 100%;
-    }
-
-    .image-section {
-        height: 180px;
-    }
-
-    .destination-header h3 {
-        font-size: 16px;
-    }
-
-    .destination-description p {
-        font-size: 13px;
-    }
-}
 /* Badge de Nuevo/Popular */
 .badge.new {
     background: #00cd70;
@@ -1656,4 +1581,288 @@
     font-size: 15px;
     font-weight: 400;
     opacity: 0.8;
+}
+
+/* Destok home*/
+@media (min-width: 768px) {
+    /* Container for destination cards */
+    .container-seccion-lista-home {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        justify-content: center;
+        padding: 0 5%;
+    }
+
+    /* Header adjustments */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        margin-top: 0;
+    }
+
+    .title-header {
+        margin-left: 0;
+    }
+
+    .back-home {
+        width: 60px;
+        padding-right: 0;
+    }
+
+    /* Search and filter container */
+    .container-box-filter {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0 5%;
+        height: auto;
+        margin-top: 2%;
+    }
+    .search-box {
+        display: flex;
+        justify-content: left;
+        margin-top: 0%;
+        width: 65%;
+    }
+    .search-btn {
+        right: 5%;
+    }
+    .search-input {
+        padding-left: 3%;
+        padding-right: 6%;
+        width: 97%;
+    }
+    .container-landing-2 {
+        width: 100%;
+        margin: 0;
+    }
+    
+    .titulo-landing {
+        text-align: center;
+        width: 100%;
+    }
+    .titulo-landing h5 {
+        font-size: 15px;
+        font-weight: 400;
+        opacity: 0.8;
+        text-align: center;
+        padding-right: 0%;
+        margin-top: 1%;
+    }
+    .filtros-container {
+        width: 30%;
+        margin-top: 0;
+        display: flex;
+        justify-content: left;
+        margin: 1px;
+    }
+
+    .filtros-dropdown {
+        flex-wrap: nowrap;
+        gap: 15px;
+        display: flex;
+        justify-content: left;
+        margin-top: 0;
+    }
+
+    .limpiar-filtros-btn {
+        width: auto;
+        background-color: #ef4444;
+        color: white;
+        border: none;
+        border-radius: 0.375rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        margin-top: 0;
+        padding: 11px 16px;
+    }
+
+    /* Destination card hover effect for desktop */
+    .container-seccion-lista-home {
+        margin-top: 2.5%;
+    }
+    .destination-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .destination-card:hover {
+        transform: scale(1.03);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+    }
+    .no-resultados {
+        width: 400px;
+        height: 200px;
+        margin: 0 auto;
+        display: block;
+        position: absolute;
+        top: 70%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 0;
+    }
+    
+    /* Carrusel home-destino */
+    .container-carr-des {
+        display: flex;
+        flex-direction: row;
+        gap: 48px;
+        padding: 0px 5%;
+        align-items: center;
+        max-width: 1600px;
+        margin: 0 auto;
+
+    }
+    .container-mas-populares-2 {
+        width: 68%;
+        margin-top: 0;
+    }
+    .container-carrusel-actividades-populares-2 {
+        height: 60vh;
+        min-height: 500px;
+    }
+
+    .carousel-item {
+        min-width: 70vh;
+        height: 97.5%;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-item.active-img {
+        transform: scale(1.1);
+    }
+    
+    .contenidoDestino {
+        min-width: 70vh;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.377);
+    }
+    
+    /* Descripcion */
+    .container-descri-home {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+    .container-descripcion-destino {
+        width: 100%;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .container-title-destino {
+        padding: 0;
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .title-destino {
+        font-size: 42px;
+        line-height: 1.2;
+        font-weight: 800;
+        text-align: center;
+        margin: 0;
+        margin-bottom: 1px;
+    }
+
+    .descripcion-destino {
+        width: 100%;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-align: center;
+        opacity: 0.75;
+    }
+
+    /* Seccion establecimienos */
+    .discover-section {
+        width: 100%;
+        height: auto;
+        padding: 0% 5%;
+        margin-top: 1%;
+        margin-bottom: 0%;
+    }
+    .discover-grid {
+        display: flex;
+        justify-content: space-around;
+        gap: 20px;
+        width: 100%;
+    }
+    .category-action {
+        margin-top: 10%;
+        padding: 0 2%;
+    }
+    /* Miradores y paisajes */
+    .container-tendencias-miradores {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 2% 5%;
+        gap: 2%;
+    }
+    .container-landing {
+        width: 40%;
+        height: 100%;
+        padding: 0 0%;
+        margin-top: 0%;
+        margin-bottom: 0%;
+    }
+    .viewpoints-main-card {
+        height: 60vh;
+    }
+    .viewpoints-image-container {
+        height: 85%;
+    }
+    /* Seccion de alojamientos */
+    .accommodations-section {
+        padding: 0 5%;
+        margin: 0px 0;
+    }
+    .carousel-container {
+        padding-bottom: 1%;
+        overflow-x: auto;
+        scrollbar-width:auto;
+        -ms-overflow-style: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+    }
+    .carousel-container::-webkit-scrollbar {
+        height: 11px; /* Grosor */
+    }
+    .carousel-container::-webkit-scrollbar-thumb {
+        background: #00cd70; /* Color */
+        border-radius: 10px; /* Bordes redondeados */
+    }
+    
+    .carousel-container::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03); /* Color del fondo */
+    }
+    .carousel-container::-webkit-scrollbar {
+        display:block;
+    }
+    .accommodation-card {
+        min-width: 360px;
+        width: 360px;
+    }
+
+    /* Seccion de tips */
+    .overview-section {
+        padding: 0 5%;
+    }
+    .preview-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+    }
+    .modal-content {
+        background: white;
+        width: 80%;
+        max-height: 80vh;
+        margin: 0 auto;
+    }
 }

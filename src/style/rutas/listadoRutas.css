@@ -1,6 +1,6 @@
 .rutas-container {
   padding: 20px 7%;
-  max-width: 1200px;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -346,22 +346,4 @@
 
 .ver-ruta-btn:hover {
     background: #00b563;
-}
-
-@media (max-width: 640px) {
-    .rutas-container {
-        padding: 16px 5%;
-    }
-    
-    .container-seccion-lista-rutas {
-        grid-template-columns: 1fr;
-    }
-    
-    .container-img-ruta {
-        height: 180px;
-    }
-    
-    .route-stats {
-        flex-wrap: wrap;
-    }
 }

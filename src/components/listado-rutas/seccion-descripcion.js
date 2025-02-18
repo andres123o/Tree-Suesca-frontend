@@ -11,19 +11,38 @@ import { Helmet } from 'react-helmet-async';
 
 
 
-const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
+const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) => {
   const navigate = useNavigate()
-  const [selectedImgIndex, setSelectedImgIndex] = useState(null);
+  const [selectedImgIndex, setSelectedImgIndex] = useState(currentImageIndex || null);
   const [expandedSection, setExpandedSection] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
+  const [maxTextLength, setMaxTextLength] = useState(100); // Estado dinámico
+  
   // const [user, setUser] = useState(null);
   // const [error, setError] = useState(null);
   // const [showRedirectModal, setShowRedirectModal] = useState(false);
   // const [showIOSRedirectModal, setShowIOSRedirectModal] = useState(false);
   // const provider = new GoogleAuthProvider();
 
-  const maxTextLength = 100;
+  // Efecto para manejar el tamaño de la pantalla
+  useEffect(() => {
+      const handleResize = () => {
+          if (window.innerWidth < 768) {
+          setMaxTextLength(100);
+          } else {
+          setMaxTextLength(Infinity); // Mostrar todo el texto en pantallas grandes
+          }
+      };
+
+      // Ejecutar al montar y al cambiar tamaño
+      handleResize();
+      window.addEventListener("resize", handleResize);
+
+      // Limpiar evento al desmontar
+      return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  
 
   // // Primero agregamos las funciones de detección y redirección
   // const isInAppBrowser = () => {
@@ -296,6 +315,12 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
   // };
 
   useEffect(() => {
+    if (currentImageIndex !== undefined) {
+      setSelectedImgIndex(currentImageIndex);
+    }
+  }, [currentImageIndex]);
+
+  useEffect(() => {
     function crearMapaIlustrativo(containerId) {
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("width", "100%");
@@ -478,8 +503,9 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
 
   const handleImageClick = (imgSrc, index) => {
     setSelectedImgIndex(index);
-    onImageSelect(imgSrc);
+    onImageSelect(imgSrc, index);
   };
+
 
   const toggleSection = (section) => {
     setExpandedSection(expandedSection === section ? null : section);
@@ -507,8 +533,13 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
     navigate(`/ruta/mapa/${startMap}`);
   };
 
-  const visibleText = isExpanded ? ruta.descripcion : `${ruta.descripcion.slice(0, maxTextLength)}...`;
-
+  // Calcular texto visible
+  const needsTruncation = ruta.descripcion.length > maxTextLength;
+  const truncatedText = ruta.descripcion.slice(0, maxTextLength);
+  const visibleText = isExpanded 
+      ? ruta.descripcion 
+      : `${truncatedText}${needsTruncation ? "..." : ""}`;
+  
   return (
     <>
       <Helmet>
@@ -579,9 +610,11 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='container-descripcion'>
           <p className='descripcion' id="descripcion-texto">
             {visibleText}
-            <button onClick={toggleExpand} className='show-more-btn'>
+            {needsTruncation && (
+              <button onClick={toggleExpand} className='show-more-btn'>
               {isExpanded ? 'less' : 'more'}
-            </button>
+              </button>
+            )}
           </p>
         </div>
 
@@ -594,10 +627,14 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
                 <Award className="award-icon" />
                 <h3>¡Nueva Ruta Descubierta!</h3>
               </div>
-              <p>Sé el primero en explorar este emocionante sendero</p>
-              <div className='pioneer-badge'>
-                <Users className="users-icon" />
-                <span>¡Conviértete en pionero de esta aventura!</span>
+              <div className='container-pioneros-nuevos'>
+                <div className='p-del-pionero-nueva-ruta'>
+                  <p>Sé el primero en explorar este emocionante sendero</p>
+                </div>
+                <div className='pioneer-badge'>
+                  <Users className="users-icon" />
+                  <span>¡Conviértete en pionero de esta aventura!</span>
+                </div>
               </div>
             </div>
           ) : (
@@ -643,33 +680,29 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap }) => {
         <div className='separador'></div>
 
         <div className='accordion'>
-          {ruta.instrucciones.map((instruccion, index) => (
-            <div key={instruccion.id} className='accordion-item1'>
-              {Object.entries(instruccion).map(([key, value]) => {
-                if (key !== 'id') {
-                  return (
-                    <div key={key}>
-                      <button 
-                        className={`accordion-header ${expandedSection === `${index}-${key}` ? 'active' : ''}`}
-                        onClick={() => toggleSection(`${index}-${key}`)}
-                      >
-                        {key.charAt(0).toUpperCase() + key.slice(1)}
-                        <IoIosArrowForward className={`icon ${expandedSection === `${index}-${key}` ? 'rotated' : ''}`} />
-                      </button>
-                      <div 
-                        className='accordion-content'
-                        style={{ display: expandedSection === `${index}-${key}` ? 'block' : 'none' }}
-                      >
-                        <p>{value}</p>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
-          ))}
+          {Object.entries(ruta.instrucciones[0]).map(([key, value], index) => {
+            if (key === 'id') return null;
+            
+            return (
+              <div key={key} className='accordion-item1'>
+                <button 
+                  className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
+                  onClick={() => toggleSection(index)}
+                >
+                  {key.charAt(0).toUpperCase() + key.slice(1)}
+                  <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
+                </button>
+                <div 
+                  className='accordion-content'
+                  style={{ display: expandedSection === index ? 'block' : 'none' }}
+                >
+                  <p>{value}</p>
+                </div>
+              </div>
+            );
+          })}
         </div>
+
       </div>
     </>
   );

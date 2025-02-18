@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heart, Star, ChevronRight } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import OptimizedImageLarge from '../common/optimizarImagenesVersion'
 
@@ -39,6 +40,11 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
     const navigate = useNavigate();
     const accommodations = transformAlojamientosData(alojamientos);
 
+    const carouselRef = useRef(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+
     const handleNavigateToAll = () => {
         navigate(`/alojamientos/${encodeURIComponent(destino_id)}`);
     };
@@ -57,6 +63,26 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
         // Aquí puedes agregar la lógica para las reservas
     };
 
+     // Iniciar arrastre
+     const handleMouseDown = (e) => {
+        setIsDragging(true);
+        setStartX(e.pageX - carouselRef.current.offsetLeft);
+        setScrollLeft(carouselRef.current.scrollLeft);
+    };
+
+    // Mientras se arrastra
+    const handleMouseMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - carouselRef.current.offsetLeft;
+        const walk = (x - startX) * 2; // Velocidad de desplazamiento
+        carouselRef.current.scrollLeft = scrollLeft - walk;
+    };
+
+    // Terminar arrastre
+    const handleMouseUp = () => setIsDragging(false);
+    const handleMouseLeave = () => setIsDragging(false);
+
     return (
         <>
         <section className="accommodations-section">
@@ -67,7 +93,15 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
                 <ChevronRight size={16} />
             </button>
             </div>
-            <div className="carousel-container">
+            <div 
+                className="carousel-container" 
+                ref={carouselRef} 
+                onMouseDown={handleMouseDown}
+                onMouseMove={handleMouseMove}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                style={{ cursor: isDragging ? 'grabbing' : 'grab' }}
+            >
             <div className="accommodations-grid">
                 {accommodations.map((accommodation) => (
                 <div
