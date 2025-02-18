@@ -110,7 +110,7 @@ const Home = () => {
                 event_category: 'Navigation',
                 event_label: municipio,
                 value: destino_id,
-                app_name: 'Tree Suesca',
+                app_name: 'Home busqueda',
                 screen_name: municipio,
                 // Añadir más contexto útil
                 timestamp: new Date().toISOString(),
@@ -208,7 +208,7 @@ const Home = () => {
     return (
         <>
             <Helmet>
-                <title>Home - Desti Plus</title>
+                <title>Destiplus | Descubre experiencias únicas</title>
                 <meta name="description" content="Descubre las mejores destinos y experiencias"/>
             </Helmet>
             <div className="header">
@@ -216,7 +216,7 @@ const Home = () => {
                     <h5>Desti <span className="mas-home"><strong>plus</strong></span></h5>
                 </div>
                 <div className="back-home">   
-                    <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="Tree Suesca" />
+                    <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="destiplus home" />
                 </div>
             </div>
 
