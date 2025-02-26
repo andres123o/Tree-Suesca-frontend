@@ -17,7 +17,7 @@ const ViewpointsSection = ({ imagenes = [], destino_id, municipio }) => {
     <>
       <div className="container-landing">
         <div className="overview-header">
-          <h2 className="overview-title">Paisajes & Miradores</h2>
+          <h2 className="overview-title">Paisajes épicos para explorar</h2>
           <button className="see-more-btn" onClick={handleClick}>
             Ver todos
             <ChevronRight size={16} />
@@ -46,10 +46,10 @@ const ViewpointsSection = ({ imagenes = [], destino_id, municipio }) => {
               {/* Información del mirador */}
               <div className="viewpoints-content">
                 <h3 className="viewpoints-title-text">
-                  Explora lo mejor de {municipio}
+                  Descubre los mejores spots de {municipio}
                 </h3>
                 <div className="viewpoints-tags">
-                  <span className="viewpoints-tag">Autonomo</span>
+                  <span className="viewpoints-tag">Sin costo</span>
                   <span className="viewpoints-tag">Facil</span>
                   <span className="viewpoints-tag">Rapido</span>
                 </div>
@@ -61,15 +61,15 @@ const ViewpointsSection = ({ imagenes = [], destino_id, municipio }) => {
           <div className="viewpoints-actions">
             <button className="viewpoints-action-button">
               <Mountain size={20} className="viewpoints-action-icon" />
-              <span className="viewpoints-action-text">Rutas Autodirigidas</span>
+              <span className="viewpoints-action-text">Aventúrate sin guía</span>
             </button>
             <button className="viewpoints-action-button">
               <Navigation size={20} className="viewpoints-action-icon" />
-              <span className="viewpoints-action-text">Ubicación GPS</span>
+              <span className="viewpoints-action-text">Encuéntralos fácil</span>
             </button>
             <button className="viewpoints-action-button">
               <Camera size={20} className="viewpoints-action-icon" />
-              <span className="viewpoints-action-text">Fotos Actulizadas</span>
+              <span className="viewpoints-action-text">Vívelo antes de ir</span>
             </button>
           </div>
         </div>

@@ -87,7 +87,7 @@ const AccommodationsSection = ({ alojamientos = [], destino_id }) => {
         <>
         <section className="accommodations-section">
             <div className="overview-header">
-            <h2 className="overview-title">Dónde alojarse</h2>
+            <h2 className="overview-title">Estadías imperdibles</h2>
             <button className="see-more-btn" onClick={handleNavigateToAll}>
                 Ver todos
                 <ChevronRight size={16} />

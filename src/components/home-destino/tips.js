@@ -80,7 +80,7 @@ const DestinationInfo = ({ destino }) => {
     <>
       <div className="overview-section">
         <div className="overview-header">
-          <h2 className="overview-title">Importante</h2>
+          <h2 className="overview-title">No viajes sin leer esto</h2>
           <button 
             onClick={handleOpenModal}
             className="see-more-btn"

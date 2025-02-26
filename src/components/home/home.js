@@ -7,14 +7,59 @@ import { FaUserGroup } from "react-icons/fa6";
 import OptimizedImage from "../common/optimzarImg";
 import { MdError } from "react-icons/md";
 import SearchBox from '../home-destino/searchBox'
+import AIResponse from "./responseIA";
+import { consultarOpenAI } from "../../service/openIAService";
 import { Helmet } from 'react-helmet-async';
+import { ChevronDown } from 'lucide-react';
+import FeedbackSection from './feedback';
+
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
+const CategoriasBurbujas = () => {
+    return (
+      <div className="categorias-burbujas-container">
+        <div className="categorias-burbujas-wrapper">
+          <button className="categoria-burbuja">
+            No sé a dónde ir, ¡sorpréndeme! 🌍
+          </button>
+          <button className="categoria-burbuja">
+            Quiero comer rico, ¿dónde voy? 🍽️ 
+          </button>
+          <button className="categoria-burbuja">
+            Quiero un mirador con la mejor vista 🌄
+          </button>
+        </div>
+      </div>
+    );
+};
+
+// Nuevo componente de chat IA
+const ChatAI = ({ messages, isLoading, onClose }) => {
+    return (
+        <div className="chat-ai-container">
+            <div className="chat-ai-messages">
+                {messages.map((msg, index) => (
+                    <div key={index} className={`chat-message ${msg.sender}`}>
+                        <div className="message-content">{msg.text}</div>
+                    </div>
+                ))}
+                {isLoading && (
+                    <div className="chat-message ai">
+                        <div className="message-content typing-indicator">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </div>
+    );
+};
 
 const Home = () => {
     const navigate = useNavigate();
     const [destinos, setDestinos] = useState([]);
+    const [datosCompletos, setDatosCompletos] = useState(null);
     const [filtros, setFiltros] = useState({});
     const [rutasFiltradas, setRutasFiltradas] = useState([]);
     const [filtroSeleccionado, setFiltroSeleccionado] = useState(null);
@@ -25,6 +70,16 @@ const Home = () => {
     const [activeFilters, setActiveFilters] = useState({});
     const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
+
+    // Estados para la integración de IA
+    const [aiResponse, setAiResponse] = useState('');
+    const [aiLoading, setAiLoading] = useState(false);
+    const [showAiResponse, setShowAiResponse] = useState(false);
+
+    // Nuevos estados para el chat
+    const [chatMessages, setChatMessages] = useState([]);
+    const [showChat, setShowChat] = useState(false);
+    const [titleVisible, setTitleVisible] = useState(true);
 
     useEffect(() => {
         const fetchDestinos = async () => {
@@ -42,6 +97,27 @@ const Home = () => {
         fetchDestinos();
     }, []);
 
+    useEffect(() => {
+        // Script para el auto-crecimiento del textarea
+        const handleInput = function(e) {
+            if (e.target && e.target.className.includes('search-input')) {
+            // Resetear altura
+            e.target.style.height = 'auto';
+            
+            // Establecer nueva altura basada en el contenido
+            const newHeight = Math.min(e.target.scrollHeight, 150);
+            e.target.style.height = newHeight + 'px';
+            }
+        };
+
+        // Añadir listener
+        document.addEventListener('input', handleInput);
+
+        // Limpiar listener al desmontar
+        return () => {
+            document.removeEventListener('input', handleInput);
+        };
+    }, []);
 
     const initializeFiltros = (data) => {
         const nuevosFiltros = {};
@@ -58,52 +134,102 @@ const Home = () => {
         setFiltros(nuevosFiltros);
     };
 
-    const manejarClick = (key, value) => {
-        const newActiveFilters = {
-            ...activeFilters,
-            [key]: value.value
-        };
-        setActiveFilters(newActiveFilters);
-        aplicarFiltros(newActiveFilters);
-    };    
 
-    // Función separada para manejar la búsqueda
+    // Función separada para manejar la búsqueda normal
     const handleSearch = (value) => {
-        setSearchTerm(value);
+        // setSearchTerm(value);
         
-        if (!value.trim()) {
-            setSearchResults(destinos);
-            // Si hay filtros activos, mostrar solo los resultados filtrados
-            if (Object.keys(activeFilters).length > 0) {
-                setRutasFiltradas(filteredResults);
-            } else {
-                setRutasFiltradas(destinos);
-            }
-            return;
+        // if (!value.trim()) {
+        //     setSearchResults(destinos);
+        //     // Si hay filtros activos, mostrar solo los resultados filtrados
+        //     if (Object.keys(activeFilters).length > 0) {
+        //         setRutasFiltradas(filteredResults);
+        //     } else {
+        //         setRutasFiltradas(destinos);
+        //     }
+        //     return;
+        // }
+
+        // const searchLower = value.toLowerCase();
+        // const results = destinos.filter(destino => 
+        //     destino.municipio.toLowerCase().includes(searchLower) ||
+        //     destino.departamento.toLowerCase().includes(searchLower) ||
+        //     destino.frase.toLowerCase().includes(searchLower)
+        // );
+        
+        // setSearchResults(results);
+        
+        // // Si hay filtros activos, aplicar la búsqueda sobre los resultados filtrados
+        // if (Object.keys(activeFilters).length > 0) {
+        //     const combinedResults = results.filter(destino => 
+        //         filteredResults.some(filtered => filtered.id === destino.id)
+        //     );
+        //     setRutasFiltradas(combinedResults);
+        // } else {
+        //     setRutasFiltradas(results);
+        // }
+    };
+
+    // Función para manejar la búsqueda con IA
+    const handleAISearch = async (query) => {
+        // Mostrar el chat y comenzar la animación para ocultar el título
+        setShowChat(true);
+
+        // Animación suave para el título
+        const titleElement = document.querySelector('.titulo-landing');
+        if (titleElement) {
+            titleElement.classList.add('title-fade-out');
+            setTimeout(() => {
+                setTitleVisible(false);
+            }, 600); // Tiempo de animación
+        } else {
+            setTitleVisible(false);
         }
 
-        const searchLower = value.toLowerCase();
-        const results = destinos.filter(destino => 
-            destino.municipio.toLowerCase().includes(searchLower) ||
-            destino.departamento.toLowerCase().includes(searchLower) ||
-            destino.frase.toLowerCase().includes(searchLower)
-        );
+        setAiLoading(true);
+                
+
+        // Agregar el mensaje del usuario al chat
+        setChatMessages(prev => [...prev, { text: query, sender: 'user' }]);
+
+        // Limpiar el input después de enviar el mensaje
+        // Buscar el input y limpiarlo sin tocar el componente SearchBox
+        setTimeout(() => {
+            const searchInput = document.querySelector('.container-box-filter input');
+            if (searchInput) {
+                // Crear un evento para limpiar el input
+                const event = new Event('input', { bubbles: true });
+                searchInput.value = '';
+                searchInput.dispatchEvent(event);
+            }
+        }, 100);
+
         
-        setSearchResults(results);
-        
-        // Si hay filtros activos, aplicar la búsqueda sobre los resultados filtrados
-        if (Object.keys(activeFilters).length > 0) {
-            const combinedResults = results.filter(destino => 
-                filteredResults.some(filtered => filtered.id === destino.id)
-            );
-            setRutasFiltradas(combinedResults);
-        } else {
-            setRutasFiltradas(results);
+        try {
+            // Utilizamos directamente la función consultarOpenAI que ya tiene acceso a los datos
+            const response = await consultarOpenAI(query);
+            setChatMessages(prev => [...prev, { text: response, sender: 'ai' }]);
+            setAiResponse(response);
+        } catch (err) {
+            console.error('Error al consultar la IA:', err);
+            const errorMsg = 'Lo siento, tuve un problema al procesar tu consulta. Por favor, intenta de nuevo más tarde.';
+            setChatMessages(prev => [...prev, { text: errorMsg, sender: 'ai' }]);
+            setAiResponse(errorMsg);
+        } finally {
+            setAiLoading(false);
         }
     };
 
-    
-    
+    // Función para cerrar el chat y restaurar el título
+    const handleCloseChat = () => {
+        // Animación para cerrar el chat y mostrar el título nuevamente
+        setShowChat(false);
+        setTimeout(() => {
+            setTitleVisible(true);
+            setChatMessages([]);
+        }, 300); // Tiempo para la animación de desaparición
+    };
+   
     const handle = (destino_id, municipio) => {
         if (window && window.gtag) {
             window.gtag('event', 'destination_click', {
@@ -138,6 +264,11 @@ const Home = () => {
         return municipio === "Suesca" ? "Aventura" : "Trekking";
     };
 
+    // Función para cerrar la respuesta de la IA
+    const handleCloseAIResponse = () => {
+        setShowAiResponse(false);
+    };
+
     if (loading) return (
         <div className="loading-container">
             <div className="loading-content">
@@ -159,52 +290,6 @@ const Home = () => {
         </div>
     );
 
-    // Función separada para manejar los filtros
-    const aplicarFiltros = (filters) => {
-        if (Object.keys(filters).length === 0) {
-            setFilteredResults(destinos);
-            // Si hay término de búsqueda, mostrar solo los resultados de la búsqueda
-            if (searchTerm.trim()) {
-                setRutasFiltradas(searchResults);
-            } else {
-                setRutasFiltradas(destinos);
-            }
-            return;
-        }
-
-        const results = destinos.filter(destino => {
-            return Object.entries(filters).every(([key, value]) => 
-                destino.items[key] === value
-            );
-        });
-        
-        setFilteredResults(results);
-        
-        // Si hay término de búsqueda, aplicar los filtros sobre los resultados de la búsqueda
-        if (searchTerm.trim()) {
-            const combinedResults = results.filter(destino => 
-                searchResults.some(searched => searched.id === destino.id)
-            );
-            setRutasFiltradas(combinedResults);
-        } else {
-            setRutasFiltradas(results);
-        }
-    };
-
-    const limpiarFiltros = () => {
-        setActiveFilters({});
-        setFilteredResults(destinos);
-        setFiltroSeleccionado(null);
-        setFiltroAbierto(null);
-        
-        // Mantener los resultados de la búsqueda si hay término de búsqueda
-        if (searchTerm.trim()) {
-            setRutasFiltradas(searchResults);
-        } else {
-            setRutasFiltradas(destinos);
-        }
-    };
-
     return (
         <>
             <Helmet>
@@ -220,67 +305,49 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* Sección que cambia entre título y chat */}
             <div className='container-landing-2'>
-                <div className='titulo-landing'>
-                    <h2>Explora destinos sin complicaciones</h2>
-                    <h5>Toda la información que necesitas, en un solo lugar.</h5>
-                </div>
+                {titleVisible ? (
+                    <div className={`titulo-landing ${showChat ? 'fade-out' : ''}`}>
+                        <h2>Descubre tu próximo destino sin perder tiempo. Explora más, planea menos.</h2>
+                    </div>
+                ) : (
+                    <div className={`chat-container ${showChat ? 'fade-in' : ''}`}>
+                        <ChatAI 
+                            messages={chatMessages}
+                            isLoading={aiLoading} 
+                        />
+                        {chatMessages.length > 0 && (
+                            <div className="close-chat-btn" onClick={handleCloseChat}>
+                                Cerrar conversación
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-
-            <div className='separador'></div>
 
             <div className="container-box-filter">
                 <SearchBox 
-                    placeholder="¿Qué tienes en mente?" 
+                    placeholder="" 
                     onSearch={handleSearch}
+                    onAISearch={handleAISearch}
                 />
+            </div>
 
-                <div className="filtros-container">
-                    <div className="filtros-dropdown">
-                        {Object.entries(filtros).map(([key, values]) => (
-                            <div className="filtro-item" key={key}>
-                                <button 
-                                    className={`filtro-button ${activeFilters[key] ? 'active' : ''}`}
-                                    onClick={() => setFiltroAbierto(filtroAbierto === key ? null : key)}
-                                >
-                                    {key} <IoMdArrowDropdown className='icono-arrow-down'/>
-                                </button>
-                                {filtroAbierto === key && (
-                                    <div className="filtro-opciones">
-                                        {Array.from(values).map((value, index) => (
-                                            <div
-                                                key={index}
-                                                onClick={() => manejarClick(key, value)}
-                                                className={activeFilters[key] === value.value ? 'opcion-seleccionada' : ''}
-                                            >
-                                                {value.value}
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                        
-                        {(Object.keys(activeFilters).length > 0) && (
-                            <button 
-                                className="limpiar-filtros-btn"
-                                onClick={limpiarFiltros}
-                            >
-                                Limpiar
-                            </button>
-                        )}
-                    </div>
-                    
-                    {rutasFiltradas.length === 0 && (
-                        <div className="no-resultados">
-                            <p>No se encontraron destinos con los criterios seleccionados</p>
-                        </div>
-                    )}
+            <CategoriasBurbujas/>
+
+            {/* Encabezado atractivo con llamado a la acción */}
+            <div className="destinations-header">
+                <div className="destinations-title-container">
+                    <h2 className="destinations-title">Destinos recomendados para ti</h2>
+                    <p className="destinations-subtitle">
+                        <ChevronDown size={18} className="arrow-down" />
+                        Da click en alguno y empieza a explorar
+                        <ChevronDown size={18} className="arrow-down" />
+                    </p>    
                 </div>
             </div>
             
-            
-
             <div className="container-seccion-lista-home">
                 {rutasFiltradas.map((item) => (
                     <div 
@@ -337,6 +404,7 @@ const Home = () => {
                     </div>
                 ))}
             </div>
+            <FeedbackSection/>
         </>
     );
 };

@@ -161,6 +161,8 @@ const Homedestino = () => {
                 destino={infoDes}
                 destino_id={destino_id}
             />
+
+            <div className='separador'></div>
             <DiscoverSection destino_id={destino_id}/>
             <div className='container-tendencias-miradores'>
                 <PopularActivities contenido = { tendencias } />
