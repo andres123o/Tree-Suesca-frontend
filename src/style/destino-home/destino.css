@@ -334,7 +334,6 @@
     margin-top: 16px;
   }
 
-  * Estilos para la sección de feedback */
   .feedback-container {
       width: 100%;
       max-width: 100%;
@@ -628,7 +627,6 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Estilos para la animación de aparecer/desaparecer */
 .fade-out {
     opacity: 0;
     transition: opacity 0.5s ease-out;
