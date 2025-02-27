@@ -2169,10 +2169,12 @@
     margin: 0;
   }
   
-  .welcome-modal-collaboration p {
+  .welcome-modal-collaboration h5 {
     font-size: 12x;
-    color: #555;
+    font-weight: 600;
+    color: #333333b0;
     margin-bottom: 10px;
+    text-align: center;
   }
   
   .collaboration-list {
@@ -2641,8 +2643,9 @@
         font-size: 18px;
       }
       
-      .welcome-modal-collaboration p {
-        font-size: 15px; 
+      .welcome-modal-collaboration h5 {
+        font-size: 15px;
+        text-align: left; 
       }
       
       .collaboration-list li {
