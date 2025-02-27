@@ -2001,7 +2001,7 @@
   .welcome-modal-content {
     background-color: white;
     width: 100%;
-    max-width: 450px;
+    max-width: 320px;
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -2050,12 +2050,12 @@
   
   /* Cabecera del modal */
   .welcome-modal-header {
-    padding: 25px 30px 5px;
+    padding: 15px 20px 5px; ;
     position: relative;
   }
   
   .welcome-modal-logo h2 {
-    font-size: 28px;
+    font-size: 15px;
     font-weight: 700;
     margin: 0;
     color: #333;
@@ -2068,22 +2068,23 @@
   
   /* Cuerpo del modal */
   .welcome-modal-body {
-    padding: 0 30px 30px;
+    padding: 0 20px 20px;
   }
   
   .welcome-modal-title {
-    font-size: 22px;
+    font-size: 16px;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: 600;
     text-align: center;
     line-height: 1.3;
+    padding: 0 8%;
   }
   
   .welcome-modal-mission p {
-    font-size: 16px;
+    font-size: 14px;
     color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     line-height: 1.5;
     text-align: center;
   }
@@ -2092,15 +2093,15 @@
   .welcome-modal-benefits {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin: 20px 0;
+    gap: 8px;
+    margin: 15px 0;
   }
   
   .welcome-modal-benefit {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 15px;
+    gap: 8px;
+    padding: 8px 12px;
     background-color: #f9f9f9;
     border-radius: 12px;
     transition: transform 0.2s;
@@ -2112,8 +2113,8 @@
   }
   
   .benefit-icon {
-    width: 36px;
-    height: 36px;
+    width: 25px;
+    height: 25px;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -2136,7 +2137,7 @@
   }
   
   .welcome-modal-benefit span {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 500;
     color: #444;
   }
@@ -2145,16 +2146,16 @@
   .welcome-modal-collaboration {
     background-color: #f8fafb;
     border-radius: 16px;
-    padding: 20px;
-    margin: 25px 0;
+    padding: 14px;
+    margin: 15px 0;
     border-left: 4px solid #00cd70;
   }
   
   .collaboration-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 15px;
+    gap: 8px;
+    margin-bottom: 10px;
   }
   
   .collaboration-icon {
@@ -2162,14 +2163,14 @@
   }
   
   .welcome-modal-collaboration h4 {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
     color: #333;
     margin: 0;
   }
   
   .welcome-modal-collaboration p {
-    font-size: 15px;
+    font-size: 12x;
     color: #555;
     margin-bottom: 10px;
   }
@@ -2180,9 +2181,9 @@
   }
   
   .collaboration-list li {
-    font-size: 14px;
+    font-size: 12px;
     color: #555;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     line-height: 1.4;
   }
   
@@ -2191,15 +2192,15 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    margin-top: 25px;
+    margin-top: 15px;
   }
   
   .welcome-modal-button {
     width: 100%;
-    padding: 15px;
+    padding: 11px;
     border-radius: 12px;
     font-weight: 600;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -2558,21 +2559,105 @@
 
     /* Modal overlay */
     .welcome-modal-content {
-        max-width: 650px;
-      }
+        max-width: 700px;
+    }
       
-      .welcome-modal-benefits {
+    .welcome-modal-benefits {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
-      }
+    }
       
-      .welcome-modal-benefit {
+    .welcome-modal-benefit {
         width: calc(50% - 10px);
+    }
+      
+    .welcome-modal-cta {
+      flex-direction: row;
+    }
+      
+      /* Reduce padding en la cabecera */
+    .welcome-modal-header {
+        padding: 25px 30px 5px; 
+    }
+      
+      /* Reduce el tamaño del logo */
+    .welcome-modal-logo h2 {
+        font-size: 28px; 
+    }
+      
+      /* Reduce padding en cuerpo del modal */
+      .welcome-modal-body {
+        padding: 0 30px 30px; 
       }
       
+      /* Título más pequeño */
+      .welcome-modal-title {
+        font-size: 22px; 
+        margin-bottom: 20px; 
+      }
+      
+      /* Parrafos más pequeños */
+      .welcome-modal-mission p {
+        font-size: 16px; 
+        margin-bottom: 15px; 
+      }
+      
+      /* Reduce el espacio en los beneficios */
+      .welcome-modal-benefits {
+        gap: 12px; 
+        margin: 20px 0; 
+      }
+      
+      /* Beneficios más compactos */
+      .welcome-modal-benefit {
+        padding: 10px 15px;
+        gap: 12px; 
+      }
+      
+      /* Íconos de beneficios más pequeños */
+      .benefit-icon {
+        width: 36px; 
+        height: 36px;
+      }
+      
+      /* Texto de beneficios más pequeño */
+      .welcome-modal-benefit span {
+        font-size: 15px; 
+      }
+      
+      /* Sección de colaboración más compacta */
+      .welcome-modal-collaboration {
+        padding: 20px; 
+        margin: 25px 0; 
+      }
+      
+      .collaboration-header {
+        gap: 12px; 
+        margin-bottom: 15px; 
+      }
+      
+      .welcome-modal-collaboration h4 {
+        font-size: 18px;
+      }
+      
+      .welcome-modal-collaboration p {
+        font-size: 15px; 
+      }
+      
+      .collaboration-list li {
+        font-size: 14px; 
+        margin-bottom: 8px; 
+      }
+      
+      /* Botones más pequeños */
       .welcome-modal-cta {
-        flex-direction: row;
+        margin-top: 25px; 
+      }
+      
+      .welcome-modal-button {
+        padding: 15px; 
+        font-size: 16px; 
       }
 }
 

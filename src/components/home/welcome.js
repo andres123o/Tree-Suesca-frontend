@@ -9,7 +9,7 @@ const WelcomeModal = ({ onClose }) => {
     // Cerrar automáticamente después de 7 segundos
     const autoCloseTimer = setTimeout(() => {
       handleClose();
-    }, 15000);
+    }, 300000);
     
     return () => {
       clearTimeout(autoCloseTimer);
