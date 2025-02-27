@@ -17,7 +17,7 @@ const ViewpointsSection = ({ imagenes = [], destino_id, municipio }) => {
     <>
       <div className="container-landing">
         <div className="overview-header">
-          <h2 className="overview-title">Paisajes épicos para explorar</h2>
+          <h2 className="overview-title">Paisajes para explorar</h2>
           <button className="see-more-btn" onClick={handleClick}>
             Ver todos
             <ChevronRight size={16} />

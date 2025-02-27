@@ -6,11 +6,16 @@ const FeedbackSection = () => {
     const [feedback, setFeedback] = useState('');
     const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const whatsappNumber = '+573015081517';
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Aquí puedes agregar la lógica para enviar el feedback a tu backend
-        console.log('Feedback enviado:', feedback);
-        
+        const message = `Feedback desde la plataforma Travel Tech: ${feedback}`;
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+        setIsSubmitted(true);
+
         // Simular envío exitoso
         setIsSubmitted(true);
         setTimeout(() => {
