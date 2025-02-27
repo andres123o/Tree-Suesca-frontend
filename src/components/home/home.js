@@ -12,6 +12,7 @@ import { consultarOpenAI } from "../../service/openIAService";
 import { Helmet } from 'react-helmet-async';
 import { ChevronDown } from 'lucide-react';
 import FeedbackSection from './feedback';
+import WelcomeModal from "./welcome";
 
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
@@ -70,6 +71,23 @@ const Home = () => {
     const [activeFilters, setActiveFilters] = useState({});
     const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
+    const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+
+    const handleCloseWelcomeModal = () => {
+        console.log("Modal cerrado"); // Para depuración
+        setShowWelcomeModal(false);
+        // Opcionalmente, guardar en localStorage para no mostrar el modal en futuras visitas
+        localStorage.setItem('destiplus_welcome_shown', 'true');
+    };
+
+    useEffect(() => {
+        // Verificar si el usuario ya ha visto el modal anteriormente
+        const hasSeenWelcome = localStorage.getItem('destiplus_welcome_shown');
+        
+        if (hasSeenWelcome === 'true') {
+          setShowWelcomeModal(false);
+        }
+    }, []);
 
     // Estados para la integración de IA
     const [aiResponse, setAiResponse] = useState('');
@@ -405,6 +423,11 @@ const Home = () => {
                 ))}
             </div>
             <FeedbackSection/>
+            {showWelcomeModal && (
+            <WelcomeModal 
+                onClose={handleCloseWelcomeModal} 
+            />
+            )}
         </>
     );
 };

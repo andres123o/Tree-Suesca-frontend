@@ -58,6 +58,7 @@
 }
 
 .categoria-burbuja {
+    all: unset; /* Elimina todos los estilos por defecto del botón */
     padding: 8px 16px;
     background-color: white;
     border-radius: 50px;
@@ -1966,6 +1967,274 @@
     opacity: 0.8;
 }
 
+
+/* Overlay del modal */
+/* Estilos CSS para el Modal de Bienvenida */
+.welcome-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: opacity 0.4s ease-in-out;
+    opacity: 1;
+  }
+  
+  .modal-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .modal-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  /* Contenido del modal */
+  .welcome-modal-content {
+    background-color: white;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation: modal-appear 0.5s forwards;
+  }
+  
+  @keyframes modal-appear {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Botón para cerrar */
+  .welcome-modal-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 10;
+    color: #666;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcome-modal-close:hover {
+    background: white;
+    color: #333;
+    transform: rotate(90deg);
+  }
+  
+  /* Cabecera del modal */
+  .welcome-modal-header {
+    padding: 25px 30px 5px;
+    position: relative;
+  }
+  
+  .welcome-modal-logo h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+  }
+  
+  .welcome-modal-plus {
+    color: #00cd70;
+    font-weight: 800;
+  }
+  
+  /* Cuerpo del modal */
+  .welcome-modal-body {
+    padding: 0 30px 30px;
+  }
+  
+  .welcome-modal-title {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.3;
+  }
+  
+  .welcome-modal-mission p {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  
+  /* Beneficios */
+  .welcome-modal-benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+  }
+  
+  .welcome-modal-benefit {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    transition: transform 0.2s;
+  }
+  
+  .welcome-modal-benefit:hover {
+    transform: translateX(5px);
+    background-color: #f5f5f5;
+  }
+  
+  .benefit-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .benefit-icon.green {
+    background-color: rgba(0, 205, 112, 0.1);
+    color: #00cd70;
+  }
+  
+  .benefit-icon.blue {
+    background-color: rgba(66, 133, 244, 0.1);
+    color: #4285F4;
+  }
+  
+  .benefit-icon.orange {
+    background-color: rgba(255, 184, 0, 0.1);
+    color: #FFB800;
+  }
+  
+  .welcome-modal-benefit span {
+    font-size: 15px;
+    font-weight: 500;
+    color: #444;
+  }
+  
+  /* Sección de colaboración */
+  .welcome-modal-collaboration {
+    background-color: #f8fafb;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 25px 0;
+    border-left: 4px solid #00cd70;
+  }
+  
+  .collaboration-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+  }
+  
+  .collaboration-icon {
+    color: #00cd70;
+  }
+  
+  .welcome-modal-collaboration h4 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
+  
+  .welcome-modal-collaboration p {
+    font-size: 15px;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .collaboration-list {
+    padding-left: 18px;
+    margin: 10px 0;
+  }
+  
+  .collaboration-list li {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  /* Botones CTA */
+  .welcome-modal-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 25px;
+  }
+  
+  .welcome-modal-button {
+    width: 100%;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+  }
+  
+  .welcome-modal-button.primary {
+    background-color: #00cd70;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 205, 112, 0.25);
+  }
+  
+  .welcome-modal-button.primary:hover {
+    background-color: #00b964;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 205, 112, 0.3);
+  }
+  
+  .welcome-modal-button.secondary {
+    background-color: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+  }
+  
+  .welcome-modal-button.secondary:hover {
+    background-color: #f9f9f9;
+    border-color: #00cd70;
+    color: #00cd70;
+  }
+  
+
+
 /* Destok home*/
 @media (min-width: 768px) {
     /* Container for destination cards */
@@ -2286,6 +2555,25 @@
         transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
         margin: 0 auto;
     }
+
+    /* Modal overlay */
+    .welcome-modal-content {
+        max-width: 650px;
+      }
+      
+      .welcome-modal-benefits {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      
+      .welcome-modal-benefit {
+        width: calc(50% - 10px);
+      }
+      
+      .welcome-modal-cta {
+        flex-direction: row;
+      }
 }
 
 /* Estilos para el componente de respuesta de IA */
