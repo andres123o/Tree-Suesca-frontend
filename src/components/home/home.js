@@ -35,14 +35,62 @@ const CategoriasBurbujas = () => {
     );
 };
 
-// Nuevo componente de chat IA
-const ChatAI = ({ messages, isLoading, onClose }) => {
+const formatMarkdownText = (text) => {
+    if (!text) return '';
+    
+    // Paso 1: Escapar caracteres HTML para evitar inyección
+    let formattedText = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+    
+    // Paso 2: Formatear enlaces markdown [texto](url)
+    formattedText = formattedText.replace(
+      /\[([^\]]+)\]\(([^)]+)\)/g, 
+      (match, text, url) => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="chat-link">${text}</a>`;
+      }
+    );
+    
+    // Paso 3: Formatear texto en negrita con **
+    formattedText = formattedText.replace(
+      /\*\*([^*]+)\*\*/g, 
+      (match, text) => {
+        return `<strong>${text}</strong>`;
+      }
+    );
+    
+    // Paso 4: Formatear texto en cursiva con *
+    formattedText = formattedText.replace(
+      /(?<!\*)\*(?!\*)([^*]+)(?<!\*)\*(?!\*)/g, 
+      (match, text) => {
+        return `<em>${text}</em>`;
+      }
+    );
+    
+    // Paso 5: Preservar saltos de línea
+    formattedText = formattedText.replace(/\n/g, '<br>');
+    
+    return formattedText;
+};
+  
+  // Versión actualizada del componente ChatAI usando la función de formateo completa
+  const ChatAI = ({ messages, isLoading, onClose }) => {
     return (
         <div className="chat-ai-container">
             <div className="chat-ai-messages">
                 {messages.map((msg, index) => (
                     <div key={index} className={`chat-message ${msg.sender}`}>
-                        <div className="message-content">{msg.text}</div>
+                        {msg.sender === 'ai' ? (
+                            <div 
+                                className="message-content"
+                                dangerouslySetInnerHTML={{ 
+                                    __html: formatMarkdownText(msg.text)
+                                }}
+                            />
+                        ) : (
+                            <div className="message-content">{msg.text}</div>
+                        )}
                     </div>
                 ))}
                 {isLoading && (

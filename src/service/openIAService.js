@@ -31,13 +31,13 @@ const comprimirDatosFiltrados = (datosFiltrados) => {
           i: aloj.id,
           n: aloj.name,
           o: aloj.oferente,
-          d: aloj.description ? aloj.description.substring(0, 400) : '',
+          d: aloj.description ? aloj.description.substring(0, 100) : '',
           p: aloj.precio_min || (aloj.alojamiento && aloj.alojamiento[0] ? aloj.alojamiento[0].precio : null),
           sa: aloj.alojamiento ? aloj.alojamiento.map(h => ({
             n: h.name, // Nombre de la habitación
             p: h.precio
-          })).slice(0, 3) : [] 
-        })).slice(0, 3); // Limitar a 2 opciones
+          })).slice(0, 2) : [] 
+        })).slice(0, 2); // Limitar a 2 opciones
       }
       
       // Restaurantes (comprimidos)
@@ -48,7 +48,7 @@ const comprimirDatosFiltrados = (datosFiltrados) => {
           c: rest.concepto ? rest.concepto.substring(0, 100) : '',
           p: rest.precio_promedio,
           img: rest.imagen_principal || ''
-        })).slice(0, 4);
+        })).slice(0, 2);
       }
       
       // Actividades (muy comprimidas)
@@ -59,14 +59,14 @@ const comprimirDatosFiltrados = (datosFiltrados) => {
             actGroup.actividad.map(act => ({
               n: act.name,
               p: act.precio
-            })).slice(0, 10) : [];
+            })).slice(0, 2) : [];
             
           return {
             i: actGroup.id,
             n: actGroup.name,
             sa: subActividades
           };
-        }).slice(0, 10);
+        }).slice(0, 2);
       }
       
       // Bares (ultra comprimidos)
@@ -75,7 +75,7 @@ const comprimirDatosFiltrados = (datosFiltrados) => {
           i: bar.id,
           n: bar.name,
           t: bar.items && bar.items.Tipo ? bar.items.Tipo : ''
-        })).slice(0, 5);
+        })).slice(0, 2);
       }
     }
     
@@ -89,7 +89,7 @@ const comprimirDatosFiltrados = (datosFiltrados) => {
       n: ruta.nombre,
       d: ruta.dificultad,
       i: ruta.descripcion
-    })).slice(0, 5);
+    })).slice(0, 2);
   }
   
   return datosComprimidos;
@@ -557,8 +557,11 @@ const filtrarDatosPorConsulta = (query) => {
  * @param {Object} datosFiltrados - Datos filtrados según la consulta
  * @returns {String} - String con el contexto formateado
  */
-export const crearContextWindow = (datosFiltrados) => {
+export const crearContextWindow = (datosFiltrados, query) => {
   const datosComprimidos = comprimirDatosFiltrados(datosFiltrados);
+
+  const enlaces = determinarEnlaces(query, datosFiltrados);
+
 
   // Crear un contexto minimalista
     return `CONTEXTO:Asistente de Destiplus (plataforma turística). Tono: colombiano coloquial. Cobertura: Suesca y Sesquilé. Ayudas descubrir experiencias auténticas.
@@ -567,9 +570,9 @@ export const crearContextWindow = (datosFiltrados) => {
   -Solo recomienda lugares en la base de datos
   -Si preguntan por otro destino: "Pronto tendremos más destinos"
   -Sé breve y conversacional (máx 200 palabras)
-  -SIEMPRE termina diciendo: "Para más info, entra al destino, selecciona la sección y dale a 'Reservar' (alojamientos, restaurantes, actividades) o 'Iniciar ruta' (rutas)."
   -Promueve opciones específicas por nombre: "Te encantará [nombre-lugar] donde puedes [actividad]"
   -Cuando sugieras opciones, enfatiza la relación calidad-precio: "excelente opción por [precio]"
+  -INCLUYE LOS ENLACES relevantes en tu respuesta: ${JSON.stringify(enlaces)}
 
   DATOS:${JSON.stringify(datosComprimidos)}
 
@@ -579,6 +582,144 @@ export const crearContextWindow = (datosFiltrados) => {
   ac=actividades, b=bares, sa=subactividades
   n=nombre, p=precio, c=concepto, t=tipo,`;
 };
+
+/**
+ * Determina los enlaces relevantes basados en la consulta del usuario
+ * @param {String} query - Consulta del usuario
+ * @param {Object} datosFiltrados - Datos filtrados según la consulta
+ * @returns {Object} - Objeto con los enlaces relevantes
+ */
+const determinarEnlaces = (query, datosFiltrados) => {
+  const queryLower = query.toLowerCase();
+  const enlaces = {};
+  
+  // Array de destinos mencionados en la consulta
+  const destinos = [];
+  
+  // Detectar Suesca
+  if (queryLower.includes('suesca') || 
+      queryLower.includes('rocas') || 
+      queryLower.includes('escalada')) {
+    destinos.push({id: 1, nombre: 'Suesca'});
+  }
+  
+  // Detectar Sesquilé
+  if (queryLower.includes('sesquile') || 
+      queryLower.includes('sesquilé') || 
+      queryLower.includes('laguna') || 
+      queryLower.includes('guatavita') || 
+      queryLower.includes('tunjo')) {
+    destinos.push({id: 2, nombre: 'Sesquilé'});
+  }
+  
+  // Si no se mencionó ningún destino específico pero hay destinos en los datos filtrados
+  if (destinos.length === 0 && datosFiltrados.destinos && datosFiltrados.destinos.length > 0) {
+    datosFiltrados.destinos.forEach(destino => {
+      destinos.push({id: destino.id, nombre: destino.municipio});
+    });
+  }
+  
+  // Por cada destino detectado, agregar sólo los enlaces relevantes a la consulta
+  destinos.forEach(destino => {
+    const destinoId = destino.id;
+    const destinoNombre = destino.nombre;
+    
+    // Verificar qué categoría se está consultando
+    const buscarAlojamiento = queryLower.includes('alojamiento') || 
+                              queryLower.includes('hotel') || 
+                              queryLower.includes('hostal') || 
+                              queryLower.includes('cabaña') || 
+                              queryLower.includes('dormir') || 
+                              queryLower.includes('hospedaje') ||
+                              queryLower.includes('glamping') ||
+                              queryLower.includes('camping');
+    
+    const buscarComida = queryLower.includes('restaurante') || 
+                         queryLower.includes('comer') || 
+                         queryLower.includes('comida') || 
+                         queryLower.includes('almorzar') || 
+                         queryLower.includes('cenar') || 
+                         queryLower.includes('desayunar') ||
+                         queryLower.includes('gastronomía');
+    
+    const buscarActividad = queryLower.includes('actividad') || 
+                            queryLower.includes('hacer') || 
+                            queryLower.includes('tour') || 
+                            queryLower.includes('aventura') || 
+                            queryLower.includes('deporte') || 
+                            queryLower.includes('extremo') ||
+                            queryLower.includes('escalada') ||
+                            queryLower.includes('senderismo') ||
+                            queryLower.includes('experiencia');
+    
+    const buscarBar = queryLower.includes('bar') || 
+                      queryLower.includes('café') || 
+                      queryLower.includes('cafetería') || 
+                      queryLower.includes('tomar') || 
+                      queryLower.includes('cerveza') || 
+                      queryLower.includes('trago') ||
+                      queryLower.includes('discoteca') ||
+                      queryLower.includes('fiesta') ||
+                      queryLower.includes('vida nocturna');
+    
+    const buscarRuta = queryLower.includes('ruta') || 
+                       queryLower.includes('mirador') || 
+                       queryLower.includes('spot') || 
+                       queryLower.includes('senderismo') || 
+                       queryLower.includes('recorrido') || 
+                       queryLower.includes('camino') ||
+                       queryLower.includes('sendero') ||
+                       queryLower.includes('paisaje') ||
+                       queryLower.includes('vista');
+    
+    const buscarEvento = queryLower.includes('evento') || 
+                        queryLower.includes('festival') || 
+                        queryLower.includes('concierto') || 
+                        queryLower.includes('actividad cultural') || 
+                        queryLower.includes('feria');
+    
+    // Siempre incluir enlace a home del destino
+    enlaces[`${destinoNombre}_home`] = `https://www.destiplus.com/home/destino/${destinoId}`;
+    
+    // Incluir enlaces específicos según lo que se está buscando
+    if (buscarAlojamiento) {
+      enlaces[`${destinoNombre}_alojamientos`] = `https://www.destiplus.com/alojamientos/${destinoId}`;
+    }
+    
+    if (buscarComida) {
+      enlaces[`${destinoNombre}_restaurantes`] = `https://www.destiplus.com/restaurantes/${destinoId}`;
+    }
+    
+    if (buscarActividad) {
+      enlaces[`${destinoNombre}_actividades`] = `https://www.destiplus.com/actividades/${destinoId}`;
+    }
+    
+    if (buscarBar) {
+      enlaces[`${destinoNombre}_bares_cafes`] = `https://www.destiplus.com/fiesta-amigos/${destinoId}`;
+    }
+    
+    if (buscarRuta) {
+      enlaces[`${destinoNombre}_rutas`] = `https://www.destiplus.com/rutas/Senderismo/${destinoId}`;
+    }
+    
+    if (buscarEvento) {
+      enlaces[`${destinoNombre}_eventos`] = `https://www.destiplus.com/eventos/${destinoId}`;
+    }
+    
+    // Si no se detectó ninguna categoría específica, incluir todos los enlaces
+    if (!buscarAlojamiento && !buscarComida && !buscarActividad && !buscarBar && !buscarRuta && !buscarEvento) {
+      enlaces[`${destinoNombre}_alojamientos`] = `https://www.destiplus.com/alojamientos/${destinoId}`;
+      enlaces[`${destinoNombre}_restaurantes`] = `https://www.destiplus.com/restaurantes/${destinoId}`;
+      enlaces[`${destinoNombre}_actividades`] = `https://www.destiplus.com/actividades/${destinoId}`;
+      enlaces[`${destinoNombre}_bares_cafes`] = `https://www.destiplus.com/fiesta-amigos/${destinoId}`;
+      enlaces[`${destinoNombre}_rutas`] = `https://www.destiplus.com/rutas/Senderismo/${destinoId}`;
+      enlaces[`${destinoNombre}_eventos`] = `https://www.destiplus.com/eventos/${destinoId}`;
+    }
+  });
+  
+  return enlaces;
+};
+
 
 /**
  * Realiza una llamada a la API de OpenAI
@@ -596,7 +737,7 @@ export const consultarOpenAI = async (query) => {
 
   // Paso 2: Crear contexto optimizado con los datos filtrados
   // Calcular tamaño aproximado
-  const context = crearContextWindow(datosFiltrados);
+  const context = crearContextWindow(datosFiltrados, query);
   const tamanoBytesC = new TextEncoder().encode(JSON.stringify(context)).length;
   const tamanoKBC = (tamanoBytesC / 1024).toFixed(2);
   const tokensAproxC = Math.ceil(tamanoBytesC / 4);
@@ -623,7 +764,7 @@ export const consultarOpenAI = async (query) => {
         content: query
       }
     ],
-    max_tokens: 200,
+    max_tokens: 300,
     temperature: 0.7, // Controla la creatividad (0 = más preciso, 1 = más creativo)
     top_p: 1
   };
