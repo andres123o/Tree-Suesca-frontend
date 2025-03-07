@@ -162,7 +162,7 @@ const Homedestino = () => {
                 destino_id={destino_id}
             />
             <div className='banner-ads'>
-                <img src='https://res.cloudinary.com/destinoplus/image/upload/v1741325043/zs271sk0d9920tiwjlnm.jpg'/>
+                <img src='https://res.cloudinary.com/destinoplus/image/upload/v1741362492/dpfn8tgfx4yyjshcso9u.jpg'/>
             </div>
             <AccommodationsSection 
                 alojamientos={alojamientos} 
