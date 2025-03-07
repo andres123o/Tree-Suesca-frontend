@@ -503,8 +503,36 @@ body {
     margin-top: 10%;
     margin-bottom: 3%;
 }
+
+.banner-ads {
+    width: 100%;
+    margin: 24px 0;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .banner-ads:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .banner-ads img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  .banner-ads a {
+    display: block;
+    line-height: 0;
+  }
+  
 /* Destok home*/
 @media (min-width: 768px) {
+    .banner-ads {
+        display: none;
+    }
     .container-mas-populares {
         width: 55%;
         height: 100%;

@@ -9,7 +9,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 
-const DiscoverSection = ({destino_id}) => {
+const DiscoverSection = ({destino_id, pueblo}) => {
   const navigate = useNavigate();
 
   const categories = [
@@ -69,7 +69,7 @@ const DiscoverSection = ({destino_id}) => {
   return (
     <div className="discover-section">
       <div className="overview-header">
-        <h2 className="overview-title">Todo lo que este lugar tiene para ti</h2>
+        <h2 className="overview-title">Disfruta en {pueblo}</h2>
       </div>
       <div className="discover-grid">
         {categories.map((category) => (

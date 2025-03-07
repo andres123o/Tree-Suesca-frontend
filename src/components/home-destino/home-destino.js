@@ -161,9 +161,15 @@ const Homedestino = () => {
                 destino={infoDes}
                 destino_id={destino_id}
             />
-
+            <div className='banner-ads'>
+                <img src='https://res.cloudinary.com/destinoplus/image/upload/v1741325043/zs271sk0d9920tiwjlnm.jpg'/>
+            </div>
+            <AccommodationsSection 
+                alojamientos={alojamientos} 
+                destino_id={destino_id} 
+            />
             <div className='separador'></div>
-            <DiscoverSection destino_id={destino_id}/>
+            <DiscoverSection destino_id={destino_id} pueblo={municipio}/>
             <div className='container-tendencias-miradores'>
                 <PopularActivities contenido = { tendencias } />
                 <ViewpointsSection 
@@ -172,10 +178,7 @@ const Homedestino = () => {
                     municipio={municipio}
                 />
             </div>
-            <AccommodationsSection 
-                alojamientos={alojamientos} 
-                destino_id={destino_id} 
-            />
+
             <DestinationInfo 
                 destino={infoDes} 
             />
