@@ -508,19 +508,22 @@ body {
     width: 100%;
     margin: 24px 0;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
     transition: transform 0.3s ease;
   }
   
   .banner-ads:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
   .banner-ads img {
-    width: 100%;
+    width: 86%;
     height: auto;
     display: block;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+
   }
   
   .banner-ads a {
