@@ -95,6 +95,9 @@ body {
     outline: none;
     resize: none;
 }
+.search-input::placeholder {
+    opacity: 0.7; /* Ajusta la opacidad según prefieras */
+}
 .container-btn-arrow {
     width: 95%;
     display: flex;

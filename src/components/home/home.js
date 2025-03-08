@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { MdExplore } from "react-icons/md";
@@ -13,27 +13,138 @@ import { Helmet } from 'react-helmet-async';
 import { ChevronDown } from 'lucide-react';
 import FeedbackSection from './feedback';
 import WelcomeModal from "./welcome";
+import { X } from 'lucide-react';
 
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
 
-const CategoriasBurbujas = () => {
+const DemoModal = ({ isOpen, onClose }) => {
+    const inputRef = useRef(null);
+
+    // Efecto para enfocar el campo de búsqueda al cerrar
+    useEffect(() => {
+        if (!isOpen) {
+        setTimeout(() => {
+            const searchInput = document.querySelector('.container-box-filter textarea');
+            if (searchInput) {
+            searchInput.focus();
+            }
+        }, 300);
+        }
+    }, [isOpen]);
+
+    if (!isOpen) return null;
+
+    const handleUnderstandClick = () => {
+        onClose();
+    };
+
+    return (
+        <div className="demo-modal-overlay">
+        <div className="demo-modal-content">
+            <button className="demo-modal-close" onClick={onClose}>
+            <X size={18} />
+            </button>
+            
+            <div className="demo-modal-header">
+            <div className="demo-modal-logo">
+                <h2>Desti <span className="demo-modal-plus">plus</span></h2>
+            </div>
+            </div>
+            
+            <div className="demo-modal-body">
+            <h3 className="demo-modal-title">¡Bienvenido a Destiplus!</h3>
+            
+            <p className="demo-modal-intro">
+                Aquí puedes encontrar TODO sobre Suesca y Sesquilé:
+            </p>
+            
+            <div className="demo-modal-categories">
+                <div className="demo-category">
+                <h4>ALOJAMIENTOS</h4>
+                <p>Pregunta por precio, tipo, ubicación o comodidades específicas</p>
+                <span className="demo-example">Ej: "¿Hay cabañas en Suesca por menos de 200.000?"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>ACTIVIDADES</h4>
+                <p>Desde escalada hasta tours guiados, te decimos dónde y cuánto cuestan</p>
+                <span className="demo-example">Ej: "¿Dónde puedo hacer escalada en Suesca?"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>GASTRONOMÍA</h4>
+                <p>Restaurantes por tipo de comida, precio o ubicación</p>
+                <span className="demo-example">Ej: "Restaurantes con buena vista en Sesquilé"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>VIDA NOCTURNA</h4>
+                <p>Bares, discotecas y lugares para tomar</p>
+                <span className="demo-example">Ej: "¿Dónde puedo tomarme unas cervezas en Suesca?"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>EVENTOS</h4>
+                <p>Conciertos, festivales y actividades especiales</p>
+                <span className="demo-example">Ej: "¿Hay algún evento este fin de semana en Suesca?"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>SPOTS SECRETOS</h4>
+                <p>Lugares escondidos que solo conocen los locales</p>
+                <span className="demo-example">Ej: "¿Hay algún mirador poco conocido en Sesquilé?"</span>
+                </div>
+                
+                <div className="demo-category">
+                <h4>PAISAJES ÚNICOS</h4>
+                <p>Miradores y rutas no turísticas</p>
+                <span className="demo-example">Ej: "Rutas de senderismo tranquilas en Suesca"</span>
+                </div>
+            </div>
+            
+            <p className="demo-modal-footer">
+                ¡Solo pregunta lo que necesites y te responderemos al instante!
+            </p>
+            
+            <button className="demo-modal-button" onClick={handleUnderstandClick}>
+                ¡Entendido! Quiero preguntar algo
+            </button>
+            </div>
+        </div>
+        </div>
+    );
+};
+
+
+const CategoriasBurbujas = ({ onDemoClick }) => {
+    const handleDemoClick = () => {
+      // Trackear el evento de demo
+      if (window && window.gtag) {
+        window.gtag('event', 'demo_click', {
+          event_category: 'Onboarding',
+          event_label: 'Ver cómo funciona (demo rápido)',
+          app_name: 'Home busqueda',
+          screen_name: 'Home',
+          timestamp: new Date().toISOString(),
+          interaction_type: 'click'
+        });
+      }
+      
+      // Llamar a la función original
+      onDemoClick();
+    };
+  
     return (
       <div className="categorias-burbujas-container">
         <div className="categorias-burbujas-wrapper">
-          <button className="categoria-burbuja">
-            No sé a dónde ir, ¡sorpréndeme! 🌍
-          </button>
-          <button className="categoria-burbuja">
-            Quiero comer rico, ¿dónde voy? 🍽️ 
-          </button>
-          <button className="categoria-burbuja">
-            Quiero un mirador con la mejor vista 🌄
+          <button className="categoria-burbuja" onClick={handleDemoClick}>
+            Ver cómo funciona (demo rápido) 🌍
           </button>
         </div>
       </div>
     );
-};
+  };
 
 const formatMarkdownText = (text) => {
     if (!text) return '';
@@ -74,8 +185,8 @@ const formatMarkdownText = (text) => {
     return formattedText;
 };
   
-  // Versión actualizada del componente ChatAI usando la función de formateo completa
-  const ChatAI = ({ messages, isLoading, onClose }) => {
+// Versión actualizada del componente ChatAI usando la función de formateo completa
+const ChatAI = ({ messages, isLoading, onClose }) => {
     return (
         <div className="chat-ai-container">
             <div className="chat-ai-messages">
@@ -120,6 +231,7 @@ const Home = () => {
     const [searchResults, setSearchResults] = useState([]);
     const [filteredResults, setFilteredResults] = useState([]);
     const [showWelcomeModal, setShowWelcomeModal] = useState(true);
+    const [showDemoModal, setShowDemoModal] = useState(false);
 
     const handleCloseWelcomeModal = () => {
         console.log("Modal cerrado"); // Para depuración
@@ -198,6 +310,15 @@ const Home = () => {
             });
         });
         setFiltros(nuevosFiltros);
+    };
+
+    const handleDemoClick = () => {
+        setShowDemoModal(true);
+    };
+
+    // Función para cerrar el modal de demo
+    const handleCloseDemoModal = () => {
+        setShowDemoModal(false);
     };
 
 
@@ -375,7 +496,11 @@ const Home = () => {
             <div className='container-landing-2'>
                 {titleVisible ? (
                     <div className={`titulo-landing ${showChat ? 'fade-out' : ''}`}>
-                        <h2>Descubre tu próximo destino sin perder tiempo. Explora más, planea menos.</h2>
+                        <h2>¿Plan en Suesca o Sesquilé?</h2>
+                        <h3 className="subtitulo">
+                            Pregúntame lo que necesites: alojamientos, actividades, comida, miradores... 
+                            ¡toda la info en un <span className="highlight">solo lugar</span>!
+                        </h3>
                     </div>
                 ) : (
                     <div className={`chat-container ${showChat ? 'fade-in' : ''}`}>
@@ -400,12 +525,16 @@ const Home = () => {
                 />
             </div>
 
-            <CategoriasBurbujas/>
+            <CategoriasBurbujas onDemoClick={handleDemoClick} />
+
+            <div className='banner-ads'>
+                <img src='https://res.cloudinary.com/destinoplus/image/upload/v1741362727/pptjxoehzinr0ciqxjyy.jpg'/>
+            </div>
 
             {/* Encabezado atractivo con llamado a la acción */}
             <div className="destinations-header">
                 <div className="destinations-title-container">
-                    <h2 className="destinations-title">Destinos recomendados para ti</h2>
+                    <h2 className="destinations-title">Destinos para este fin de semana</h2>
                     <p className="destinations-subtitle">
                         <ChevronDown size={18} className="arrow-down" />
                         Da click en alguno y empieza a explorar
@@ -476,6 +605,10 @@ const Home = () => {
                 onClose={handleCloseWelcomeModal} 
             />
             )}
+            <DemoModal 
+                isOpen={showDemoModal} 
+                onClose={handleCloseDemoModal} 
+            />
         </>
     );
 };

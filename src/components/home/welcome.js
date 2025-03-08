@@ -9,7 +9,7 @@ const WelcomeModal = ({ onClose }) => {
     // Cerrar automáticamente después de 7 segundos
     const autoCloseTimer = setTimeout(() => {
       handleClose();
-    }, 15000);
+    }, 10000);
     
     return () => {
       clearTimeout(autoCloseTimer);
@@ -78,20 +78,6 @@ const WelcomeModal = ({ onClose }) => {
                 <span>Obtener recomendaciones personalizadas</span>
               </div>
             </div>
-          </div>
-          
-          <div className="welcome-modal-collaboration">
-            <div className="collaboration-header">
-              <Users size={24} className="collaboration-icon" />
-              <h4>¡Tu apoyo es clave para crecer!</h4>
-            </div>
-            
-            <h5>Con cada ruta completada y reserva generada, nos ayudas a</h5>
-            <ul className="collaboration-list">
-              <li>Descubrir nuevos destinos más auténticos y menos masificados</li>
-              <li>Mejorar nuestras recomendaciones personalizadas</li>
-              <li>Construir una comunidad de viajeros auténticos</li>
-            </ul>
           </div>
           
           <div className="welcome-modal-cta">
