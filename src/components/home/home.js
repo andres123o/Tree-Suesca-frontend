@@ -496,7 +496,7 @@ const Home = () => {
             <div className='container-landing-2'>
                 {titleVisible ? (
                     <div className={`titulo-landing ${showChat ? 'fade-out' : ''}`}>
-                        <h2>¿Plan en Suesca o Sesquilé?</h2>
+                        <h2>¿Planes cerca a Bogotá?</h2>
                         <h3 className="subtitulo">
                             Pregúntame lo que necesites: alojamientos, actividades, comida, miradores... 
                             ¡toda la info en un <span className="highlight">solo lugar</span>!
