@@ -8,8 +8,170 @@ import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { useNavigate } from "react-router-dom"
 // import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
+import {ThumbsUp, MessageCircle, Share2 } from 'lucide-react';
 
+const ComentariosRuta = ({ rutaId }) => {
+  const [comentarios, setComentarios] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+  const [mostrarTodos, setMostrarTodos] = useState(false);
+  const [reaccion, setReaccion] = useState({});
 
+  useEffect(() => {
+    const obtenerComentarios = async () => {
+      try {
+        setCargando(true);
+        // Reemplazar con tu endpoint real
+        const response = await fetch(`https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/4/`);
+        
+        if (!response.ok) {
+          throw new Error('No se pudieron cargar los comentarios');
+        }
+        
+        const data = await response.json();
+        setComentarios(data);
+        
+        // Inicializar el estado de reacciones
+        const reaccionesIniciales = {};
+        data.forEach(comentario => {
+          reaccionesIniciales[comentario.id] = false;
+        });
+        setReaccion(reaccionesIniciales);
+        
+      } catch (err) {
+        setError(err.message);
+        console.error('Error al cargar comentarios:', err);
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    if (rutaId) {
+      obtenerComentarios();
+    }
+  }, [rutaId]);
+
+  const toggleMostrarTodos = () => {
+    setMostrarTodos(!mostrarTodos);
+  };
+
+  const toggleReaccion = (comentarioId) => {
+    setReaccion(prev => ({
+      ...prev,
+      [comentarioId]: !prev[comentarioId]
+    }));
+  };
+
+  const comentariosAMostrar = mostrarTodos ? comentarios : comentarios.slice(0, 3);
+  
+  if (cargando) {
+    return (
+      <div className="comentarios-cargando">
+        <div className="pulso-cargando"></div>
+        <p>Cargando experiencias de otros aventureros...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="comentarios-error">
+        <p>No pudimos cargar las experiencias. ¡Sé el primero en compartir la tuya!</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="comentarios-contenedor">
+      <div className="comentarios-encabezado">
+        <h3><MessageCircle size={20} /> Experiencias de la comunidad</h3>
+      </div>
+      
+      {comentarios.length === 0 ? (
+        <div className="sin-comentarios">
+          <p>¡Sé el primero en compartir tu experiencia en esta ruta!</p>
+          <button className="boton-compartir-experiencia">
+            Compartir mi experiencia
+          </button>
+        </div>
+      ) : (
+        <>
+          <div className="lista-comentarios">
+            {comentariosAMostrar.map((comentario) => (
+              <div key={comentario.id} className="tarjeta-comentario">
+                <div className="comentario-cabecera">
+                  <div className="comentario-usuario">
+                    <img 
+                      src={comentario.foto_usuario || 'https://via.placeholder.com/40'} 
+                      alt={comentario.nombre_usuario} 
+                      className="avatar-usuario"
+                    />
+                    <div className="info-usuario">
+                      <h4>{comentario.nombre_usuario}</h4>
+                      <div className="estrellas-calificacion">
+                        {[...Array(5)].map((_, i) => (
+                          <Star 
+                            key={i} 
+                            size={16} 
+                            fill={i < comentario.calificacion ? "#FFB800" : "none"}
+                            color={i < comentario.calificacion ? "#FFB800" : "#e0e0e0"}
+                          />
+                        ))}
+                        <span className="fecha-comentario">
+                          {new Date(comentario.fecha_creacion).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="comentario-contenido">
+                  <p>{comentario.comentario}</p>
+                  
+                  {/* Mostrar imagen del comentario si existe */}
+                  {comentario.imagen && (
+                    <div className="comentario-imagen-container">
+                      <img 
+                        src={comentario.imagen} 
+                        alt="Fotografía del usuario" 
+                        className="comentario-imagen"
+                        onClick={() => window.open(comentario.imagen, '_blank')}
+                      />
+                    </div>
+                  )}
+                </div>
+                
+                <div className="comentario-acciones">
+                  <button 
+                    className={`accion-boton ${reaccion[comentario.id] ? 'activo' : ''}`}
+                    onClick={() => toggleReaccion(comentario.id)}
+                  >
+                    <ThumbsUp size={16} /> 
+                    <span>{reaccion[comentario.id] ? 'Útil' : '¿Te fue útil?'}</span>
+                  </button>
+                  
+                  <button className="accion-boton">
+                    <Share2 size={16} /> 
+                    <span>Compartir</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {comentarios.length > 3 && (
+            <button 
+              className="boton-ver-mas" 
+              onClick={toggleMostrarTodos}
+            >
+              {mostrarTodos ? 'Ver menos experiencias' : `Ver todas las experiencias (${comentarios.length})`}
+            </button>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) => {
   const navigate = useNavigate()
@@ -18,6 +180,7 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) =
   const [isExpanded, setIsExpanded] = useState(false);
   const isNewRoute = !ruta.calificacion || ruta.calificacion === 0;
   const [maxTextLength, setMaxTextLength] = useState(100); // Estado dinámico
+  console.log(ruta.id)
   
   // const [user, setUser] = useState(null);
   // const [error, setError] = useState(null);
@@ -621,88 +784,87 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) =
         <div className='separador'></div>
 
         {/* Nueva sección de estadísticas */}
-          {isNewRoute ? (
-            <div className='new-route-banner'>
-              <div className='new-route-header'>
-                <Award className="award-icon" />
-                <h3>¡Nueva Ruta Descubierta!</h3>
+        {isNewRoute ? (
+          <div className='new-route-banner'>
+            <div className='new-route-header'>
+              <Award className="award-icon" />
+              <h3>¡Nueva Ruta Descubierta!</h3>
+            </div>
+            <div className='container-pioneros-nuevos'>
+              <div className='p-del-pionero-nueva-ruta'>
+                <p>Sé el primero en explorar este emocionante sendero</p>
               </div>
-              <div className='container-pioneros-nuevos'>
-                <div className='p-del-pionero-nueva-ruta'>
-                  <p>Sé el primero en explorar este emocionante sendero</p>
-                </div>
-                <div className='pioneer-badge'>
-                  <Users className="users-icon" />
-                  <span>¡Conviértete en pionero de esta aventura!</span>
-                </div>
+              <div className='pioneer-badge'>
+                <Users className="users-icon" />
+                <span>¡Conviértete en pionero de esta aventura!</span>
               </div>
             </div>
-          ) : (
-            <>
-              <div className="sub-stats-container">
-                <div className="calificacion">
-                  <span className="rating-number">{ruta.calificacion}</span>
-                  <div className="rating-stars">
-                    {[...Array(5)].map((_, index) => (
-                      <Star
-                        key={index}
-                        size={20}
-                        fill={index < Math.floor(ruta.calificacion) ? "#FFB800" : "none"}
-                        color={index < Math.floor(ruta.calificacion) ? "#FFB800" : "#e0e0e0"}
-                      />
-                    ))}
-                  </div>
-                  <div className="recomendacion">
-                    <p>Recomendada: <strong>{ruta.veces_recomendada}</strong> veces</p>
-                    <p>Completada: <strong>{ruta.completaron_ruta}</strong> veces</p>
-                  </div>
+          </div>
+        ) : (
+          <>
+            <div className="sub-stats-container">
+              <div className="calificacion">
+                <span className="rating-number">{ruta.calificacion}</span>
+                <div className="rating-stars">
+                  {[...Array(5)].map((_, index) => (
+                    <Star
+                      key={index}
+                      size={20}
+                      fill={index < Math.floor(ruta.calificacion) ? "#FFB800" : "none"}
+                      color={index < Math.floor(ruta.calificacion) ? "#FFB800" : "#e0e0e0"}
+                    />
+                  ))}
                 </div>
-                <div className="testimonial-preview">
-                  "Una experiencia única en la ruta. El recorrido superó mis expectativas, los puntos de descanso están perfectamente ubicados y las vistas son espectaculares..."
+                <div className="recomendacion">
+                  <p>Recomendada: <strong>{ruta.veces_recomendada}</strong> veces</p>
+                  <p>Completada: <strong>{ruta.completaron_ruta}</strong> veces</p>
                 </div>
               </div>
-            </>
-          )}
+              <ComentariosRuta rutaId={ruta.id} />
+            </div>
+          </>
+        )}
 
-        {/* Botón CTA mejorado */}
-        <div className='container-boton'>
-          <button 
-            className="adventure-button"
-            onClick={handleStartAdventure}
-          >
-            <span className="button-main-text">¡Iniciar Aventura!</span>
-            <span className="button-sub-text">
-              {isNewRoute ? '¡Sé el primero en explorar!' : '¡Únete a la aventura!'}
-            </span>
-          </button>
-        </div>
+        <div className='container-cta-accordion-mas'>
+          {/* Botón CTA mejorado */}
+          <div className='container-boton'>
+            <button 
+              className="adventure-button"
+              onClick={handleStartAdventure}
+            >
+              <span className="button-main-text">¡Iniciar Aventura!</span>
+              <span className="button-sub-text">
+                {isNewRoute ? '¡Sé el primero en explorar!' : '¡Únete a la aventura!'}
+              </span>
+            </button>
+          </div>
 
-        <div className='separador'></div>
+          <div className='separador'></div>
 
-        <div className='accordion'>
-          {Object.entries(ruta.instrucciones[0]).map(([key, value], index) => {
-            if (key === 'id') return null;
-            
-            return (
-              <div key={key} className='accordion-item1'>
-                <button 
-                  className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
-                  onClick={() => toggleSection(index)}
-                >
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                  <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
-                </button>
-                <div 
-                  className='accordion-content'
-                  style={{ display: expandedSection === index ? 'block' : 'none' }}
-                >
-                  <p>{value}</p>
+          <div className='accordion'>
+            {Object.entries(ruta.instrucciones[0]).map(([key, value], index) => {
+              if (key === 'id') return null;
+              
+              return (
+                <div key={key} className='accordion-item1'>
+                  <button 
+                    className={`accordion-header ${expandedSection === index ? 'active' : ''}`}
+                    onClick={() => toggleSection(index)}
+                  >
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                    <IoIosArrowForward className={`icon ${expandedSection === index ? 'rotated' : ''}`} />
+                  </button>
+                  <div 
+                    className='accordion-content'
+                    style={{ display: expandedSection === index ? 'block' : 'none' }}
+                  >
+                    <p>{value}</p>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-
       </div>
     </>
   );
