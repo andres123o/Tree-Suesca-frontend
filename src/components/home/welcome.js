@@ -1,90 +1,78 @@
 import React, { useState, useEffect } from 'react';
-import { X, Heart, MapPin, Map, Users, Star } from 'lucide-react';
+import { X } from 'lucide-react';
 
 const WelcomeModal = ({ onClose }) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
   
   useEffect(() => {
-    // Cerrar automáticamente después de 7 segundos
-    const autoCloseTimer = setTimeout(() => {
-      handleClose();
-    }, 10000);
-    
-    return () => {
-      clearTimeout(autoCloseTimer);
+    // Verificar si el banner debe mostrarse basado en la última vez que se mostró
+    const checkLastShown = () => {
+      const lastShown = localStorage.getItem('destiplus_banner_last_shown');
+      
+      if (!lastShown) {
+        // Primera visita, mostrar banner
+        showBanner();
+        return;
+      }
+      
+      const lastShownDate = new Date(lastShown);
+      const now = new Date();
+      const daysDifference = Math.floor((now - lastShownDate) / (1000 * 60 * 60));
+      
+      // Mostrar banner si han pasado al menos 2 días desde la última vez
+      if (daysDifference >= 2) {
+        showBanner();
+      } else {
+        // No mostrar banner
+        setShouldRender(false);
+      }
     };
+    
+    // Pequeño delay para que la página cargue primero
+    setTimeout(checkLastShown, 1000);
   }, []);
   
-  // Efecto para manejar la animación de salida
-  useEffect(() => {
-    if (!isVisible) {
-      // Esperar a que termine la animación antes de remover del DOM
-      const timer = setTimeout(() => {
-        setShouldRender(false);
-        if (onClose) onClose();
-      }, 400);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isVisible, onClose]);
+  const showBanner = () => {
+    // Mostrar el banner
+    setIsVisible(true);
+    
+    // Registrar cuándo se mostró
+    localStorage.setItem('destiplus_banner_last_shown', new Date().toISOString());
+    
+    // Configurar temporizador para ocultar automáticamente
+    setTimeout(() => {
+      handleClose();
+    }, 10000); // 8 segundos de visualización
+  };
   
   const handleClose = () => {
-    // Solo iniciar la animación de salida
     setIsVisible(false);
+    
+    // Esperar a que termine la animación antes de remover del DOM
+    setTimeout(() => {
+      setShouldRender(false);
+      if (onClose) onClose();
+    }, 400);
   };
   
   // Si no debe renderizarse, retornar null
   if (!shouldRender) return null;
   
   return (
-    <div className={`welcome-modal-overlay ${isVisible ? 'modal-visible' : 'modal-hidden'}`}>
-      <div className="welcome-modal-content">
-        <button className="welcome-modal-close" onClick={handleClose}>
+    <div className={`banner-publicitario-vertical ${isVisible ? 'banner-visible' : 'banner-hidden'}`}>
+      <div className="banner-overlay"></div>
+      <div className="banner-container">
+        <button className="banner-close" onClick={handleClose} aria-label="Cerrar publicidad">
           <X size={20} />
         </button>
         
-        <div className="welcome-modal-header">
-          <div className="welcome-modal-logo">
-            <h2>Desti<span className="welcome-modal-plus">plus</span></h2>
-          </div>
-        </div>
-        
-        <div className="welcome-modal-body">
-          <h3 className="welcome-modal-title">¡Encontrar lo que buscas debería ser fácil!</h3>
-          
-          <div className="welcome-modal-mission">
-            <p>Estamos resolviendo la fragmentación en la información turística, para que puedas:</p>
-            
-            <div className="welcome-modal-benefits">
-              <div className="welcome-modal-benefit">
-                <div className="benefit-icon green">
-                  <MapPin size={20} />
-                </div>
-                <span>Descubrir lugares auténticos</span>
-              </div>
-              
-              <div className="welcome-modal-benefit">
-                <div className="benefit-icon blue">
-                  <Map size={20} />
-                </div>
-                <span>Planificar en minutos, no horas</span>
-              </div>
-              
-              <div className="welcome-modal-benefit">
-                <div className="benefit-icon orange">
-                  <Heart size={20} />
-                </div>
-                <span>Obtener recomendaciones personalizadas</span>
-              </div>
-            </div>
-          </div>
-          
-          <div className="welcome-modal-cta">
-            <button className="welcome-modal-button primary" onClick={handleClose}>
-              ¡Explorar ahora!
-            </button>
-          </div>
+        <div className="banner-content">
+          <img 
+            src="https://res.cloudinary.com/destinoplus/image/upload/v1742323212/hxl0wluoczaqbjbb0xoo.jpg" 
+            alt="¡Atención! Solo hoy 2x1. Reserva y deja huella" 
+            className="banner-image"
+          />
         </div>
       </div>
     </div>

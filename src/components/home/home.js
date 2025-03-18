@@ -14,6 +14,7 @@ import { ChevronDown } from 'lucide-react';
 import FeedbackSection from './feedback';
 import WelcomeModal from "./welcome";
 import { X } from 'lucide-react';
+import { IoIosArrowForward } from "react-icons/io";
 
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
@@ -56,7 +57,7 @@ const DemoModal = ({ isOpen, onClose }) => {
             <h3 className="demo-modal-title">¡Bienvenido a Destiplus!</h3>
             
             <p className="demo-modal-intro">
-                Aquí puedes encontrar TODO sobre Suesca y Sesquilé:
+                Aquí puedes encontrar TODO para puebliar tranquilo y comodo:
             </p>
             
             <div className="demo-modal-categories">
@@ -184,7 +185,64 @@ const formatMarkdownText = (text) => {
     
     return formattedText;
 };
-  
+
+const ImpactoAmbientalCard = () => {
+    const navigate = useNavigate();
+      
+    const handleNavigateToImpacto = () => {
+      if (typeof window !== "undefined" && window.gtag) {
+        window.gtag('event', 'impacto_ambiental_click', {
+          event_category: 'Engagement',
+          event_label: 'Reserva árbol',
+          app_name: 'Home busqueda',
+          timestamp: new Date().toISOString(),
+          interaction_type: 'click'
+        });
+      }
+      navigate('/impacto/ambiental');
+    };
+    
+    return (
+      <div className="impacto-card-container">
+        <div 
+          className="impacto-card"
+          onClick={handleNavigateToImpacto}
+          role="button"
+          tabIndex="0"
+          aria-label="Haz click para conocer más sobre el impacto ambiental"
+        >
+          <div className="impacto-card-backdrop"></div>
+            <div className="impacto-content">
+                <div className="impacto-left-content">
+                    <div className="impacto-badge">
+                    <div className="impacto-badge-pulse"></div>
+                    <div className="impacto-icon">🌱</div>
+                    <span>EXCLUSIVO</span>
+                    </div>
+                    
+                    <h3 className="impacto-title">¡Tu Viaje Salva el Planeta!</h3>
+                </div>
+                
+                <div className="impacto-middle-content">
+                    <div className="impacto-social-proof">
+                    <div className="tree-icon">🌳</div>
+                    <p>Únete al selecto 2% que viaja con propósito. Impacto real y verificable</p>
+                    </div>
+                </div>
+                
+                <div className="impacto-right-content">
+                    <button className="impacto-button" aria-label="Ver nuestro impacto ambiental">
+                    Ver Impacto
+                    <span className="arrow-icon"><IoIosArrowForward /></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+      </div>
+    );
+};
+
+
 // Versión actualizada del componente ChatAI usando la función de formateo completa
 const ChatAI = ({ messages, isLoading, onClose }) => {
     return (
@@ -527,9 +585,8 @@ const Home = () => {
 
             <CategoriasBurbujas onDemoClick={handleDemoClick} />
 
-            <div className='banner-ads'>
-                <img src='https://res.cloudinary.com/destinoplus/image/upload/v1741362727/pptjxoehzinr0ciqxjyy.jpg'/>
-            </div>
+            
+            <ImpactoAmbientalCard />
 
             {/* Encabezado atractivo con llamado a la acción */}
             <div className="destinations-header">
@@ -599,6 +656,8 @@ const Home = () => {
                     </div>
                 ))}
             </div>
+
+
             <FeedbackSection/>
             {showWelcomeModal && (
             <WelcomeModal 
