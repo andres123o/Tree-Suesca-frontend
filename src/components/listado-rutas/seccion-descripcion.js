@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom"
 // import { Chrome, ArrowRight, ShieldCheck } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import {ThumbsUp, MessageCircle, Share2 } from 'lucide-react';
+import axios from 'axios';
 
 const ComentariosRuta = ({ rutaId }) => {
   const [comentarios, setComentarios] = useState([]);
@@ -21,14 +22,24 @@ const ComentariosRuta = ({ rutaId }) => {
     const obtenerComentarios = async () => {
       try {
         setCargando(true);
-        // Reemplazar con tu endpoint real
-        const response = await fetch(`https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/4/`);
+        console.log('Intentando obtener comentarios para la ruta:', rutaId || 4);
         
-        if (!response.ok) {
-          throw new Error('No se pudieron cargar los comentarios');
-        }
+        // Usar axios correctamente
+        const response = await axios.get(`https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/4`, {
+          // Agregar estas opciones para evitar la caché y asegurar que se use HTTPS
+          headers: {
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache',
+            'Expires': '0'
+          }
+        });
         
-        const data = await response.json();
+        console.log('Respuesta recibida:', response.status);
+        
+        // Obtener los datos directamente de response.data
+        const data = response.data;
+        console.log('Comentarios cargados:', data.length);
+        
         setComentarios(data);
         
         // Inicializar el estado de reacciones
@@ -39,8 +50,8 @@ const ComentariosRuta = ({ rutaId }) => {
         setReaccion(reaccionesIniciales);
         
       } catch (err) {
-        setError(err.message);
-        console.error('Error al cargar comentarios:', err);
+        console.error('Error completo al cargar comentarios:', err);
+        setError(err.message || 'Error al cargar comentarios');
       } finally {
         setCargando(false);
       }
