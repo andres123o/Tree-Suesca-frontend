@@ -37,6 +37,37 @@ const useDestinoContent = () => {
   return { content, loading, error };
 };
 
+// Nuevo hook personalizado para obtener comentarios y avatares de usuarios
+const useRutaComentarios = (rutaId) => {
+  const [comentarios, setComentarios] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const obtenerComentarios = async () => {
+      if (!rutaId) return;
+      
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/${rutaId}/`
+        );
+        
+        setComentarios(response.data);
+      } catch (err) {
+        console.error(`Error al cargar comentarios para ruta ${rutaId}:`, err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    obtenerComentarios();
+  }, [rutaId]);
+
+  return { comentarios, loading, error };
+};
+
 const MainComponentListadoRutas = ({iconos, route}) => {
   const { content, loading, error } = useDestinoContent();
   
@@ -73,6 +104,51 @@ const MainComponentListadoRutas = ({iconos, route}) => {
   return <ListaRutas rutas={content} iconos={iconos} route={route}/>;
 };
 
+// Componente de avatar de usuario
+const UserAvatar = ({ imageSrc, alt, index }) => {
+  return (
+    <div 
+      className="avatar" 
+      style={{ 
+        backgroundImage: `url(${imageSrc || 'https://via.placeholder.com/40'})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        marginLeft: index > 0 ? '-8px' : '0' // Superposición de avatares
+      }}
+      title={alt || 'Usuario'}
+    ></div>
+  );
+};
+
+// Componente para mostrar los avatares de usuarios
+const UserAvatars = ({ rutaId }) => {
+  const { comentarios, loading, error } = useRutaComentarios(rutaId);
+  
+  // Si está cargando o hay error, mostrar los avatares de placeholder
+  if (loading || error || comentarios.length === 0) {
+    return (
+      <div className="avatar-group">
+        <div className="avatar"></div>
+        <div className="avatar"></div>
+      </div>
+    );
+  }
+  
+  // Mostrar hasta 3 avatares de usuarios que han comentado
+  return (
+    <div className="avatar-group">
+      {comentarios.slice(0, 3).map((comentario, index) => (
+        <UserAvatar 
+          key={comentario.id}
+          imageSrc={comentario.foto_usuario}
+          alt={comentario.nombre_usuario}
+          index={index}
+        />
+      ))}
+    </div>
+  );
+};
+
 const ListaRutas = ({ rutas, iconos, route}) => {
   const navigate = useNavigate();
   const [filtros, setFiltros] = useState({});
@@ -104,6 +180,17 @@ const ListaRutas = ({ rutas, iconos, route}) => {
     setRutasFiltradas(nuevasRutas);
   };
 
+  // Función para determinar el texto a mostrar junto a los avatares
+  const getUserCountText = (ruta) => {
+    if (parseFloat(ruta.calificacion) === 0) {
+      return "¡Recién agregada!";
+    } else if (ruta.completaron_ruta > 0) {
+      return `${ruta.completaron_ruta} personas completaron esta ruta`;
+    } else {
+      return "¡Visitada recientemente!";
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -119,7 +206,7 @@ const ListaRutas = ({ rutas, iconos, route}) => {
         />
         <div className="container-seccion-lista-rutas">
           {rutasFiltradas.map((item) => (
-            <div key={item.id}  onClick={() => handle(item.nombre)} className="container-item-lista-rutas">
+            <div key={item.id} onClick={() => handle(item.nombre)} className="container-item-lista-rutas">
               <div className="route-social">
                 <button className="interaction-button">
                   <Heart className="icon2" size={14}/>
@@ -163,11 +250,9 @@ const ListaRutas = ({ rutas, iconos, route}) => {
 
                 <div className="route-footer">
                   <div className="user-count">
-                    <div className="avatar-group">
-                      <div className="avatar"></div>
-                      <div className="avatar"></div>
-                    </div>
-                    <span>¡Recién agregada!</span>
+                    {/* Reemplazamos la versión anterior estática por el componente dinámico */}
+                    <UserAvatars rutaId={item.id} />
+                    <span>{getUserCountText(item)}</span>
                   </div>
                   <button 
                     className="ver-ruta-btn"

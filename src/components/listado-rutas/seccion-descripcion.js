@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom"
 import { Helmet } from 'react-helmet-async';
 import {ThumbsUp, MessageCircle, Share2 } from 'lucide-react';
 import axios from 'axios';
+import { Leaf, TreePine, ChevronRight } from 'lucide-react';
+
 
 const ComentariosRuta = ({ rutaId }) => {
   const [comentarios, setComentarios] = useState([]);
@@ -25,7 +27,7 @@ const ComentariosRuta = ({ rutaId }) => {
         console.log('Intentando obtener comentarios para la ruta:', rutaId || 4);
         
         // Usar axios correctamente
-        const response = await axios.get(`https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/4`, {
+        const response = await axios.get(`https://tree-suesca-backend-production.up.railway.app/api/v1/ruta/comentarios/${rutaId}`, {
           // Agregar estas opciones para evitar la caché y asegurar que se use HTTPS
           headers: {
             'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -183,6 +185,224 @@ const ComentariosRuta = ({ rutaId }) => {
     </div>
   );
 };
+
+const TreeCounter = ({ rutaId, ruta }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const [animateCount, setAnimateCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [arbolesData, setArbolesData] = useState({
+    totalArboles: 0,
+    co2Ahorrado: 0,
+    ultimosPlantadores: []
+  });
+  
+  // Efecto para cargar los datos reales de la API
+  useEffect(() => {
+    const fetchArbolesData = async () => {
+      try {
+        setLoading(true);
+        
+        // Llamada real a la API usando axios
+        const response = await axios.get(`https://tree-suesca-backend-production.up.railway.app/api/v1/contador/arboles/${rutaId}`);
+        
+        // Transformamos la respuesta al formato que espera nuestro componente
+        const data = {
+          totalArboles: response.data.total_arboles,
+          co2Ahorrado: response.data.co2_ahorrado_kg,
+          ultimosPlantadores: response.data.ultimos_plantadores.map(plantador => ({
+            id: plantador.id,
+            nombre: plantador.nombre,
+            foto: plantador.foto_perfil,
+            fecha: plantador.fecha
+          }))
+        };
+        
+        setArbolesData(data);
+        setError(null);
+      } catch (err) {
+        console.error('Error al cargar datos de árboles:', err);
+        setError('No pudimos cargar la información de árboles plantados');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    if (rutaId) {
+      fetchArbolesData();
+    }
+  }, [rutaId]);
+  
+  // Efecto para animar el contador
+  useEffect(() => {
+    if (arbolesData.totalArboles > 0) {
+      const duration = 1500; // duración de la animación en ms
+      const framesPerSecond = 60;
+      const incrementPerFrame = arbolesData.totalArboles / (duration / 1000 * framesPerSecond);
+      
+      let currentCount = 0;
+      const timer = setInterval(() => {
+        currentCount += incrementPerFrame;
+        if (currentCount >= arbolesData.totalArboles) {
+          setAnimateCount(arbolesData.totalArboles);
+          clearInterval(timer);
+        } else {
+          setAnimateCount(Math.floor(currentCount));
+        }
+      }, 1000 / framesPerSecond);
+      
+      return () => clearInterval(timer);
+    }
+  }, [arbolesData.totalArboles]);
+
+  if (loading) {
+    return (
+      <div className="tree-counter-loading">
+        <div className="tree-counter-loading-animation">
+          <TreePine color="#00cd70" size={24} />
+        </div>
+        <span>Cargando datos ambientales...</span>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="tree-counter-error">
+        <TreePine color="#aaa" size={24} />
+        <span>{error}</span>
+      </div>
+    );
+  }
+
+  // Si no hay árboles plantados, mostramos un mensaje diferente
+  if (arbolesData.totalArboles === 0) {
+    return (
+      <div className="tree-counter-container">
+        <div className="tree-counter-main empty">
+          <div className="tree-counter-icon">
+            <TreePine color="#aaa" size={24} />
+          </div>
+          <div className="tree-counter-info">
+            <div className="tree-counter-title">
+              <span className="tree-counter-text">Sin árboles plantados aún</span>
+            </div>
+            <div className="tree-counter-subtitle">
+              ¡Sé el primero en contribuir!
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="tree-counter-container">
+      {/* Contador Principal */}
+      <div className="tree-counter-main" onClick={() => setShowDetails(!showDetails)}>
+        <div className="tree-counter-icon">
+          <TreePine color="#00cd70" size={24} />
+        </div>
+        <div className="tree-counter-info">
+          <div className="tree-counter-title">
+            <span className="tree-counter-number">{animateCount}</span>
+            <span className="tree-counter-text">árboles plantados</span>
+          </div>
+          <div className="tree-counter-subtitle">
+            ¡Sé parte del cambio!
+          </div>
+        </div>
+        <ChevronRight 
+          className={`tree-counter-chevron ${showDetails ? 'rotated' : ''}`} 
+          size={20} 
+        />
+      </div>
+      
+      {/* Panel Expandible */}
+      {showDetails && (
+        <div className="tree-counter-details">
+          {/* Plantadores recientes */}
+          {arbolesData.ultimosPlantadores.length > 0 && (
+            <div className="tree-planters">
+              <h4>
+                <Users size={16} /> 
+                Últimos plantadores
+              </h4>
+              <div className="planters-list">
+                {arbolesData.ultimosPlantadores.map((plantador) => (
+                  <div key={plantador.id} className="planter-item">
+                    <img 
+                      src={plantador.foto} 
+                      alt={plantador.nombre} 
+                      className="planter-avatar"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.src = "https://via.placeholder.com/40";
+                      }}
+                    />
+                    <div className="planter-info">
+                      <span className="planter-name">{plantador.nombre}</span>
+                      <span className="planter-date">{new Date(plantador.fecha).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Impacto Ambiental */}
+          <div className="environmental-impact">
+            <h4>
+              <Leaf size={16} /> 
+              Impacto Ambiental
+            </h4>
+            <div className="impact-stats">
+              <div className="impact-stat">
+                <span className="impact-value">{(arbolesData.co2Ahorrado / 1000).toFixed(2)}</span>
+                <span className="impact-label">toneladas de CO₂</span>
+              </div>
+              <div className="impact-stat">
+                <span className="impact-value">{arbolesData.totalArboles * 2}</span>
+                <span className="impact-label">m² reforestados</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Botón CTA */}
+          <button 
+            className="plant-tree-button"
+            onClick={() => {
+              // Construir la URL de WhatsApp con el número y mensaje
+              const phoneNumber = "3015081517";
+              const message = `Hola, quiero plantar un árbol en la ruta: ${ruta.nombre}`;
+              const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+              
+              // Abrir en una nueva pestaña
+              window.open(whatsappUrl, '_blank');
+              
+              // Evento de analytics (opcional)
+              if (window.gtag) {
+                window.gtag('event', 'plantar_arbol_click', {
+                  ruta_id: rutaId,
+                  nombre_ruta: ruta.nombre || 'Ruta sin nombre'
+                });
+              }
+            }}
+          >
+            Plantar un árbol en esta ruta
+          </button>
+          
+          {/* Enlace a sección completa */}
+          <a href="/impacto/ambiental" className="view-all-link">
+            Ver todos los árboles plantados
+            <ChevronRight size={16} />
+          </a>
+        </div>
+      )}
+    </div>
+  );
+};
+
 
 const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) => {
   const navigate = useNavigate()
@@ -835,6 +1055,8 @@ const InfoDescripcion = ({ ruta, onImageSelect, startMap, currentImageIndex }) =
             </div>
           </>
         )}
+
+        <TreeCounter rutaId={ruta.id} ruta={ruta}/>
 
         <div className='container-cta-accordion-mas'>
           {/* Botón CTA mejorado */}

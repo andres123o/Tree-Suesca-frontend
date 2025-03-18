@@ -32,6 +32,9 @@ import MainComponentEvent from './components/eventos/descripcion-evento';
 import ListadoAlojamiewnto from './components/alojamiento/alojamientos-destino'
 import MainComponentAlojamiento from './components/alojamiento/alojamiento-descripcion'
 
+// Componete impacto ambiental
+import ImpactoAmbiental from './components/home/impactoAmbiental';
+
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
 import { FaWineBottle } from "react-icons/fa";
@@ -50,7 +53,7 @@ import './style/actividades/actividades.css'
 import './style/alojamiento/alojamiento.css'
 import './style/destino-home/destino.css'
 import './style/rutas/mapaUbicacion.css'
-
+import './style/destino-home/impactoAmbiental.css'
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";
@@ -160,7 +163,12 @@ function App() {
                             noche='noche'
                         />
                     } />
-        
+
+                    {/* Impacto Ambiental */}
+                    <Route path='/impacto/ambiental' element={
+                        <ImpactoAmbiental/>
+                    } />
+
                     {/* Rutas para vistas detalladas */}
                     <Route path='/establecimiento/:tipo/:nombre' element={<MainComponent />} />
                     <Route path='/actividad/:description' element={<MainComponentActivity />} />
