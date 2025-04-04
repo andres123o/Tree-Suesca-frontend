@@ -295,7 +295,7 @@ const Home = () => {
         console.log("Modal cerrado"); // Para depuración
         setShowWelcomeModal(false);
         // Opcionalmente, guardar en localStorage para no mostrar el modal en futuras visitas
-        localStorage.setItem('destiplus_welcome_shown', 'true');
+        // localStorage.setItem('destiplus_welcome_shown', 'true');
     };
 
     useEffect(() => {

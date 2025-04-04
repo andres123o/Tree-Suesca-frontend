@@ -1,0 +1,590 @@
+/* Main container styles */
+.app-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow-x: hidden;
+  }
+  
+  /* Reusing your provided CSS */
+  .container-landing-2 {
+      width: 100%;
+      height: auto;
+      margin-top: 5%;
+      margin-bottom: 3%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+  }
+  
+  .mas {
+      color: #00cd70;
+      font-size: 24px;
+  }
+  
+  .mas-home {
+      color: #00cd70;
+      font-size: 24px;
+      font-weight: 800;
+  }
+  
+  .titulo-landing {
+      margin-top: 7%;
+      margin-bottom: 7%;
+      width: 95%;
+      padding: 0% 0%;
+      height: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  
+  .titulo-landing h2 {
+      font-size: 28px;
+      margin-bottom: 2%;
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      color: #333;
+  }
+  
+  .titulo-landing .subtitulo {
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.5;
+      margin-top: 0;
+      text-align: center;
+      color: #333;
+      max-width: 90%;
+      margin-bottom: 2%;
+  }
+  
+  .titulo-landing .highlight {
+      font-weight: 600;
+      color: #00cd70;
+  }
+  
+  .titulo-landing h5 {
+      font-size: 20px;
+      font-weight: 400;
+      margin-top: 10%;
+      opacity: 0.8;
+  }
+  
+  .img-landing {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60vh;
+      overflow: hidden;
+      margin-bottom: 20px;
+  }
+  
+  .img-landing video {
+      width: 85%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 15px;
+  }
+  
+  /* Estilos para el contenedor de categorías en burbujas */
+  .categorias-burbujas-container {
+      width: 100%;
+      height: auto;
+      padding: 0 5%;
+      margin-top: 10px;
+      margin-bottom: 15px;
+  }
+  
+  .categorias-burbujas-wrapper {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding-bottom: 10px;
+  }
+  
+  .categoria-burbuja {
+      all: unset; /* Elimina todos los estilos por defecto del botón */
+      padding: 8px 16px;
+      background-color: white;
+      border-radius: 50px;
+      font-size: 14px;
+      border: 1px solid #e0e0e0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      cursor: pointer;
+      transition: all 0.2s ease;
+  }
+  
+  .categoria-burbuja:hover {
+      background-color: #f9f9f9;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  /* Filtros */
+  .filtros-dropdown {
+      width: 100%;
+      height: auto;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      margin-top: 5%;
+  }
+    
+  .filtro-item {
+      position: relative;
+  }
+    
+  .filtro-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      background-color: #f5f5f5;
+      transition: background-color 0.2s;
+  }
+  
+  .filtro-button:hover {
+      background-color: #e0e0e0;
+  }
+  
+  .filtro-opciones {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: white;
+      border: 1px solid #dfdfdf;
+      border-radius: 7px;
+      min-width: 150px;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+    
+  .filtro-opciones div {
+      padding: 8px 16px;
+      cursor: pointer;
+  }
+    
+  .filtro-opciones div:hover {
+      background: #f5f5f5;
+  }
+    
+  .opcion-seleccionada {
+      background: #e0e0e0;
+  }
+  
+  .icono-arrow-down {
+      width: 26px;
+      height: 26px;
+  }
+  
+  .descripcionDestino1 {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px 0;
+    overflow-x: hidden; 
+  }
+  
+  /* Carrusel */
+  .container-carr-des {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .container-mas-populares-3 {
+    width: 100%;
+    height: auto;
+    margin-top: 4%;
+    position: relative;
+  }
+  
+  .container-carrusel-actividades-populares-3 {
+    width: 100%;
+    height: 48vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 0% 5%;
+  }
+  
+  .container-carrusel-categorias-actividades-3 {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    width: 100%;
+    height: 100%;
+    /* Importante para que puedas desplazar horizontalmente con scrollToItem() */
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    /* Opcional: padding lateral para que el ítem activo quede más centrado */
+    padding: 0 5%;
+  }
+  
+  .container-carrusel-categorias-actividades-3::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .carousel-item {
+    flex: 0 0 auto; /* Para que no se reduzcan */
+    width: 60%; /* Ajusta este valor para ver más o menos el siguiente ítem */
+    transition: all 0.5s ease;
+    opacity: 0.6;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .carousel-item.active-img {
+    opacity: 1;
+    z-index: 2;
+    transform: scale(1);
+  }
+  
+  .contenidoDestino {
+    width: 100%;
+    height: 40vh; /* Puedes ajustar la altura según tus necesidades */
+    border-radius: 1.5em;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transform: scale(0.9);
+    transition: all 0.5s ease;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 20px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  }
+  
+  .contenidoDestino::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+    border-radius: 0 0 1.5em 1.5em;
+    z-index: 1;
+  }
+  
+  .contenidoDestino.active {
+    transform: scale(1.1);
+    opacity: 1;
+    z-index: 2;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease;
+  }
+  
+  .carousel-arrow:hover {
+    background: #f9f9f9;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  
+  .carousel-arrow.left {
+    left: 20px;
+  }
+  
+  .carousel-arrow.right {
+    right: 20px;
+  }
+  
+  
+  /* Titulo de las cards de destino */
+  .destinations-header {
+      margin: 30px 0 16px;
+      position: relative;
+      width: 100%;
+      padding: 0 5%;
+  }
+    
+  .destinations-title-container {
+      margin-bottom: 12px;
+      text-align: center;
+  }
+    
+  .destinations-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #333;
+      margin: 0;
+      line-height: 1.2;
+  }
+    
+  .destinations-subtitle {
+      font-size: 16px;
+      color: #666;
+      margin: 4px 0 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+  }
+    
+  .destinations-line-decoration {
+      position: relative;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+  }
+    
+  .destinations-line {
+      height: 4px;
+      width: 100%;
+      border-radius: 2px;
+      background-color: #f0f0f0;
+  }
+    
+  .destinations-arrow-down {
+      position: absolute;
+      background-color: #fff;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      animation: pulse 2s infinite;
+  }
+    
+  .arrow-down {
+      color: #10B981;
+  }
+  
+  .discover-heading {
+      font-size: 20px;
+      font-weight: 600;
+      color: #222;
+  }
+    
+  .discover-subheading {
+      text-align: center;
+      color: white;
+      z-index: 2;
+      width: 100%;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      padding: 0 10px;
+      position: relative;
+  }
+    
+  /* Animación suave de pulso para llamar la atención */
+  @keyframes pulse {
+      0% {
+          transform: scale(1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+      50% {
+          transform: scale(1.05);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+      100% {
+          transform: scale(1);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+  }
+    
+  .destinations-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 16px;
+  }
+  
+  .feedback-container {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 5%;
+      padding: 0 5%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-radius: 16px;
+      overflow: hidden;
+  }
+    
+  .feedback-header {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      cursor: pointer;
+      gap: 12px;
+      transition: all 0.3s ease;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+  }
+  
+  .feedback-header:hover {
+      background-color: #f0f0f0;
+  }
+    
+  .feedback-header h3 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+  }
+    
+  .feedback-icon {
+      font-size: 24px;
+      color: #00cd70;
+  }
+    
+  .feedback-content {
+      width: 100%;
+      transition: max-height 0.5s cubic-bezier(0, 1, 0, 1);
+  }
+    
+  .feedback-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 20px 0;
+  }
+    
+  .feedback-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      resize: none;
+      margin-bottom: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+  }
+    
+  .feedback-input:focus {
+      outline: none;
+      border-color: #00cd70;
+      box-shadow: 0 0 0 2px rgba(0, 205, 112, 0.2);
+  }
+    
+  .feedback-submit-btn {
+      width: 50%;
+      align-self: center;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      background-color: #00cd70;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s;
+  }
+  
+  .feedback-submit-btn:hover {
+      background-color: #00b563;
+  }
+    
+  .feedback-success {
+      text-align: center;
+      padding: 20px;
+      color: #00cd70;
+      font-weight: 500;
+      animation: fadeIn 0.5s;
+  }
+  
+  @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+  }
+
+
+  .testimonios-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    padding: 0 20px;
+    width: 100%;
+    max-width: 900px;
+  }
+  
+  .testimonio-card {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: relative;
+  }
+  
+  .imagen-testimonio {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  .texto-testimonio {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+  }
+  
+  .usuario-testimonio {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .foto-perfil-testimonio {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #00cd70;
+  }
+  
+  .nombre-testimonio {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+  }
+  

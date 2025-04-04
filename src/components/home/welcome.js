@@ -6,26 +6,36 @@ const WelcomeModal = ({ onClose }) => {
   const [shouldRender, setShouldRender] = useState(true);
   
   useEffect(() => {
-    // Verificar si el banner debe mostrarse basado en la última vez que se mostró
+    // Verificar si el banner debe mostrarse
     const checkLastShown = () => {
-      const lastShown = localStorage.getItem('destiplus_banner_last_shown');
-      
-      if (!lastShown) {
-        // Primera visita, mostrar banner
+      try {
+        const lastShown = localStorage.getItem('destiplus_banner_last_shown');
+        const now = new Date().getTime(); // Timestamp actual en milisegundos
+        
+        // Si nunca se ha mostrado o si el valor no es válido
+        if (!lastShown) {
+          console.log("Primera vez mostrando el banner");
+          showBanner();
+          return;
+        }
+        
+        const lastShownTime = parseInt(lastShown, 10); // Convertir a número
+        const hoursDifference = (now - lastShownTime) / (1000 * 60 * 60);
+        
+        console.log("Horas desde última visualización:", hoursDifference);
+        
+        // Mostrar banner si ha pasado al menos 0.01 horas (36 segundos)
+        if (hoursDifference >= 0.01) {
+          console.log("Ha pasado 36 segundos o más, mostrando banner");
+          showBanner();
+        } else {
+          console.log("No ha pasado suficiente tiempo, ocultando banner");
+          setShouldRender(false);
+        }
+      } catch (error) {
+        console.error("Error al verificar el tiempo:", error);
+        // En caso de error, mostrar el banner de todos modos
         showBanner();
-        return;
-      }
-      
-      const lastShownDate = new Date(lastShown);
-      const now = new Date();
-      const daysDifference = Math.floor((now - lastShownDate) / (1000 * 60 * 60));
-      
-      // Mostrar banner si han pasado al menos 2 días desde la última vez
-      if (daysDifference >= 2) {
-        showBanner();
-      } else {
-        // No mostrar banner
-        setShouldRender(false);
       }
     };
     
@@ -37,13 +47,15 @@ const WelcomeModal = ({ onClose }) => {
     // Mostrar el banner
     setIsVisible(true);
     
-    // Registrar cuándo se mostró
-    localStorage.setItem('destiplus_banner_last_shown', new Date().toISOString());
+    // Guardar el timestamp actual en milisegundos
+    const now = new Date().getTime();
+    localStorage.setItem('destiplus_banner_last_shown', now.toString());
+    console.log("Banner mostrado y timestamp guardado:", now);
     
     // Configurar temporizador para ocultar automáticamente
     setTimeout(() => {
       handleClose();
-    }, 10000); // 8 segundos de visualización
+    }, 10000); // 10 segundos de visualización
   };
   
   const handleClose = () => {
@@ -68,9 +80,9 @@ const WelcomeModal = ({ onClose }) => {
         </button>
         
         <div className="banner-content">
-          <img 
-            src="https://res.cloudinary.com/destinoplus/image/upload/v1742323212/hxl0wluoczaqbjbb0xoo.jpg" 
-            alt="¡Atención! Solo hoy 2x1. Reserva y deja huella" 
+          <img
+            src="https://res.cloudinary.com/destinoplus/image/upload/v1743744434/hxl0wluoczaqbjbb0xoo.jpg"
+            alt="¡Atención! Solo hoy 2x1. Reserva y deja huella"
             className="banner-image"
           />
         </div>
