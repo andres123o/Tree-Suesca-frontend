@@ -35,8 +35,6 @@ import MainComponentAlojamiento from './components/alojamiento/alojamiento-descr
 // Componete impacto ambiental
 import ImpactoAmbiental from './components/home/impactoAmbiental';
 
-// Componentes no fijos
-import ValidacionPromo from './components/components-no-fijos/landing/validacion';
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -57,7 +55,6 @@ import './style/alojamiento/alojamiento.css'
 import './style/destino-home/destino.css'
 import './style/rutas/mapaUbicacion.css'
 import './style/destino-home/impactoAmbiental.css'
-import './style/componentes-no-fijos/landing/validacion.css'
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";
@@ -179,8 +176,6 @@ function App() {
                     <Route path='/evento/:description' element={<MainComponentEvent />} />
                     <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
 
-                    {/* Componentes no fijos */}
-                    <Route path='/langind/valid/model' element = {<ValidacionPromo/>} />
                 </Routes>
             </HelmetProvider>
             
