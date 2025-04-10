@@ -140,7 +140,14 @@ const BurgerBattle = () => {
       {/* Hero Section with Countdown */}
       <div className="burger-battle-hero">
         <div className="burger-battle-hero-image">
-          <img src="https://res.cloudinary.com/destinoplus/image/upload/v1744240068/j1s0yhzjdcjqrfc6btsb.jpg" alt="Person enjoying burger" />
+          <video 
+            src="https://res.cloudinary.com/destinoplus/video/upload/v1744310054/p1ilfxzqdkqtpyox9bhk.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+          />
         </div>
         <div className="burger-battle-hero-title">
           <h2>PROXIMAMENTE</h2>
