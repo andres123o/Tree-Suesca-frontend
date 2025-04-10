@@ -9,8 +9,8 @@ const BurgerBattle = () => {
       id: 1,
       name: "Egg Surfer",
       restaurant: "The Burger Joint",
-      image: "https://i.pinimg.com/736x/93/dc/b4/93dcb497dd917ef9374199ff5eea768b.jpg",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1744304164/cweikwa2z6sogbmrqfrn.jpg",
+      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
+      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
       visitors: 46,
       price: "4.99"
     },
@@ -18,8 +18,8 @@ const BurgerBattle = () => {
       id: 2,
       name: "Classic Deluxe",
       restaurant: "Burger Palace",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744303986/wn4tsajegicqmozbzzs7.jpg",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1744304164/cweikwa2z6sogbmrqfrn.jpg",
+      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
+      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
       visitors: 38,
       price: "5.99"
     },
@@ -27,8 +27,8 @@ const BurgerBattle = () => {
       id: 3,
       name: "Spicy Avocado",
       restaurant: "Fire Grill",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744303986/wn4tsajegicqmozbzzs7.jpg",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1744304164/cweikwa2z6sogbmrqfrn.jpg",
+      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
+      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
       visitors: 52,
       price: "6.49"
     },
@@ -36,8 +36,8 @@ const BurgerBattle = () => {
       id: 4,
       name: "BBQ Bacon",
       restaurant: "Smokey's",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744303986/wn4tsajegicqmozbzzs7.jpg",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1744304164/cweikwa2z6sogbmrqfrn.jpg",
+      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
+      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
       visitors: 61,
       price: "7.29"
     }
@@ -216,14 +216,18 @@ const BurgerBattle = () => {
           </button>
         </div>
         <div className="burger-battle-categories-dots">
-          {['ajicrema', 'guacamango', 'costillao', 'chocorico', 'cebechada'].map((category, index) => (
-            <div
+          {['ajicrema', 'guacamango', 'costillao', 'chocorico', 'cebechada'].map((category) => (
+            <button
               key={category}
               className={`burger-battle-categories-dot ${activeCategory === category ? 'active-b' : ''}`}
               onClick={() => handleCategoryClick(category)}
             />
           ))}
         </div>
+      </div>
+
+      <div className="burger-battle-info-box">
+          <p>Cada restaurante deberá cocinar con un ingrediente que se le será asignado aleatoriamente</p>
       </div>
 
       {/* Carousel Section - Main Content */}
@@ -313,10 +317,10 @@ const BurgerBattle = () => {
 
       {/* CTA Section */}
       <div className="burger-battle-cta">
-        <h2>¿Quieres conocer más experiencias gastronómicas?</h2>
+        <h2>¿Quieres conocer más sobre Suesca?</h2>
         <button 
           className="burger-battle-cta-button"
-          onClick={() => window.location.href = 'https://www.destiplus.com/restaurantes/1'}
+          onClick={() => window.location.href = 'https://www.destiplus.com/home/destino/1'}
         >
           Explorar Más
         </button>

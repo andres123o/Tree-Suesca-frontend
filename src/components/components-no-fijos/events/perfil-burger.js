@@ -9,9 +9,9 @@ const BurgerProfile = ({ burger }) => {
     location: "Ingrediente secreto",
     restaurant: {
       name: "Burger House",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1732811972/utils/qc4wozfzxhgdm6fztb6a.webp"
+      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg"
     },
-    image: "https://i.pinimg.com/736x/93/dc/b4/93dcb497dd917ef9374199ff5eea768b.jpg",
+    image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
     description: "Burger with patty filled with macaroni & cheese and real beef, Stroganoff sauce, topped with onions, served on a soft black sesame burger bun with patty filling.",
     specialIngredient: "macaroni & cheese",
     votes: 234
