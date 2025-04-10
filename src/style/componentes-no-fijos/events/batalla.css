@@ -106,7 +106,7 @@ body {
 .burger-battle-hero-title h2 {
   font-size: 45px;
   font-weight: bold;
-  color: #FFA500;
+  color: #00cd70;
   font-family: "Bebas Neue", sans-serif;
   letter-spacing: 2px;
 }
@@ -134,23 +134,23 @@ body {
 }
 
 .burger-battle-desc-title {
-  font-size: 60px;
+  font-size: 40px;
   font-weight: 300;
-  color: #5c5c5c;
+  color: #313131;
   margin-bottom: 10px;
   font-family: "Bebas Neue", sans-serif;
   padding: 0 5%;
 }
 
 .burger-battle-highlight {
-  color: #FFA500;
+  color: #00cd70;
   font-family: "Bebas Neue", sans-serif;
-  font-size: 60px;
+  font-size: 40px;
   font-weight: 400;
 }
 
 .burger-battle-desc-subtitle {
-  font-size: 20px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -250,7 +250,7 @@ body {
 }
 
 .burger-battle-categories-dot.active-b {
-  background-color: #FFA500;
+  background-color: #00cd70;
   width: 12px;
   height: 12px;
 }
@@ -297,7 +297,7 @@ body {
 
 .burger-battle-category.active-b i,
 .burger-battle-category.active-b span {
-  color: #FFA500;
+  color: #00cd70;
 }
 
 /* Participants Section */
@@ -479,7 +479,7 @@ body {
 }
 
 .burger-battle-visit-btn {
-  background-color: #FFA500;
+  background-color: #00cd70;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -487,13 +487,13 @@ body {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 205, 112, 0.3);
 }
 
 .burger-battle-visit-btn:hover {
-  background-color: #ff9100;
+  background-color: #00b863;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.4);
 }
 
 .burger-battle-carousel-arrow {
@@ -603,7 +603,7 @@ body {
 }
 
 .burger-battle-cta-button {
-  background-color: #FFA500;
+  background-color: #00cd70;
   color: white;
   border: none;
   padding: 12px 24px;
@@ -612,13 +612,13 @@ body {
   font-size: 16px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.3);
 }
 
 .burger-battle-cta-button:hover {
-  background-color: #ff9100;
+  background-color: #00b863;
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.4);
+  box-shadow: 0 6px 16px rgba(0, 205, 112, 0.4);
 }
 
 /* Footer */
@@ -799,14 +799,14 @@ body {
   gap: 8px;
   color: #666;
   font-size: 16px;
-  background-color: #fff5e6;
+  background-color: #e6fff2;
   padding: 8px 12px;
   border-radius: 20px;
   width: fit-content;
 }
 
 .burger-profile-location i {
-  color: #FFA500;
+  color: #00cd70;
   font-size: 18px;
 }
 
@@ -857,7 +857,7 @@ body {
   display: block;
   width: 4px;
   height: 20px;
-  background-color: #FFA500;
+  background-color: #00cd70;
   border-radius: 2px;
 }
 
@@ -868,9 +868,9 @@ body {
 }
 
 .burger-profile-highlight {
-  color: #FFA500;
+  color: #00cd70;
   font-weight: 600;
-  background-color: #fff5e6;
+  background-color: #e6fff2;
   padding: 2px 6px;
   border-radius: 4px;
 }
@@ -881,14 +881,14 @@ body {
   gap: 12px;
   margin-bottom: 30px;
   padding: 15px;
-  background-color: #fff5e6;
+  background-color: #e6fff2;
   border-radius: 16px;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .burger-profile-votes .star-icon {
-  color: #FFA500;
+  color: #00cd70;
   font-size: 24px;
 }
 
@@ -933,9 +933,9 @@ body {
 }
 
 .burger-profile-btn.vote {
-  background: linear-gradient(135deg, #FFA500 0%, #ff9100 100%);
+  background: linear-gradient(135deg, #00cd70 0%, #00b863 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 205, 112, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -956,11 +956,11 @@ body {
 }
 
 .burger-profile-btn.vote:hover {
-  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(0, 205, 112, 0.4);
 }
 
 .burger-profile-share {
-  background-color: #FFA500;
+  background-color: #00cd70;
   color: white;
   width: 40px;
   height: 40px;
@@ -968,7 +968,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.3);
 }
 
 .burger-profile-share i {
@@ -995,7 +995,7 @@ body {
 }
 
 .burger-battle-carousel-dot.active-b {
-  background-color: #FFA500;
+  background-color: #00cd70;
   width: 12px;
   height: 12px;
 }
