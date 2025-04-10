@@ -1,0 +1,1001 @@
+/* Import Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.burger-battle-container {
+  width: 100%;
+  position: relative;
+  padding-top: 60px;
+  overflow-x: hidden;
+}
+
+/* Header Styles */
+.burger-battle-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+  z-index: 1000;
+}
+
+.burger-battle-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.burger-battle-brand {
+  color: #00cd70;
+  font-weight: 800;
+}
+
+.burger-battle-home-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.burger-battle-home-icon {
+  font-size: 22px;
+  color: #00cd70;
+}
+
+/* Hero Section */
+.burger-battle-hero {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 5%;
+  position: relative;
+  overflow: hidden;
+}
+
+.burger-battle-hero-image {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  position: relative;
+  z-index: 2;
+}
+
+.burger-battle-hero-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.burger-battle-hero-title {
+  width: 85%;
+  height: 12vh;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  background-color: #ffffff;
+  margin-top: -2%;
+  padding: 0% 2%;
+}
+
+.burger-battle-hero-title h2 {
+  font-size: 45px;
+  font-weight: bold;
+  color: #FFA500;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 2px;
+}
+
+.burger-battle-hero-title p {
+  font-size: 20px;
+  color: #333;
+  font-family: "Bebas Neue", sans-serif;
+  letter-spacing: 3px;
+
+}
+
+/* Description Section */
+.burger-battle-description {
+  width: 100%;
+  padding: 0px 5%;
+  margin-bottom: 8%;
+  background-color: white;
+}
+
+.burger-battle-desc-header {
+  width: 100%;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.burger-battle-desc-title {
+  font-size: 60px;
+  font-weight: 300;
+  color: #5c5c5c;
+  margin-bottom: 10px;
+  font-family: "Bebas Neue", sans-serif;
+  padding: 0 5%;
+}
+
+.burger-battle-highlight {
+  color: #FFA500;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 60px;
+  font-weight: 400;
+}
+
+.burger-battle-desc-subtitle {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #666;
+}
+
+.burger-battle-arrow-down {
+  color: #00cd70;
+}
+
+.burger-battle-line-decor {
+  position: relative;
+  height: 24px;
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.burger-battle-line {
+  height: 4px;
+  width: 80px;
+  border-radius: 2px;
+  background-color: #00cd70;
+}
+
+.burger-battle-arrow-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  animation: pulse 2s infinite;
+}
+
+.burger-battle-desc-text {
+  text-align: center;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #666;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Categories Section */
+.burger-battle-categories {
+  width: 100%;
+  padding: 0px 20px 30px 20px;
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+}
+
+.burger-battle-categories-wrapper {
+  display: flex;
+  gap: 20px;
+  padding: 20px 20px 20px 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+  background-color: white;
+}
+
+.burger-battle-categories-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.burger-battle-categories-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+  background-color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.burger-battle-categories-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.burger-battle-categories-dot.active-b {
+  background-color: #FFA500;
+  width: 12px;
+  height: 12px;
+}
+
+.burger-battle-category {
+  min-width: 100px;
+  height: 100px;
+  padding: 20px;
+  background: white;
+  border-radius: 24px;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  scroll-snap-align: start;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.burger-battle-category i {
+  font-size: 32px;
+  color: #333;
+  position: relative;
+  z-index: 2;
+}
+
+.burger-battle-category span {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  position: relative;
+  z-index: 2;
+}
+
+.burger-battle-category.active-b {
+  background: white;
+  border: none;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.burger-battle-category.active-b i,
+.burger-battle-category.active-b span {
+  color: #FFA500;
+}
+
+/* Participants Section */
+.burger-battle-participants {
+  width: 100%;
+  padding: 40px 0;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.burger-battle-section-title {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  color: #333;
+}
+
+.burger-battle-carousel {
+  width: 100%;
+  position: relative;
+  padding: 40px 0;
+  min-height: 500px;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.burger-battle-carousel-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  height: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  padding: 0 20px;
+  background-color: transparent;
+}
+
+.burger-battle-carousel-wrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 60px;
+  transform-style: preserve-3d;
+  will-change: transform;
+  background-color: transparent;
+}
+
+.burger-battle-carousel-item {
+  position: absolute;
+  width: 280px;
+  height: 400px;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.6) translateX(-50%);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+.burger-battle-carousel-item.prev {
+  opacity: 0.4;
+  transform: scale(0.8) translateX(-120%);
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.burger-battle-carousel-item.active-b {
+  opacity: 1;
+  transform: scale(1) translateX(0);
+  z-index: 3;
+  pointer-events: auto;
+}
+
+.burger-battle-carousel-item.next {
+  opacity: 0.4;
+  transform: scale(0.8) translateX(120%);
+  z-index: 2;
+  pointer-events: auto;
+}
+
+.burger-battle-card {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  background: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.burger-battle-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.burger-battle-card-image {
+  width: 100%;
+  height: 70%;
+  position: relative;
+  overflow: hidden;
+  background-color: transparent;
+}
+
+.burger-battle-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 20px 20px 0 0;
+}
+
+.burger-battle-card:hover .burger-battle-card-image img {
+  transform: scale(1.05);
+}
+
+.burger-battle-card-details {
+  padding: 15px 20px;
+  position: relative;
+  background: white;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0 0 20px 20px;
+}
+
+.burger-battle-restaurant-logo {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  margin-right: 12px;
+}
+
+.burger-battle-info-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.burger-battle-text-container {
+  flex: 1;
+}
+
+.burger-battle-burger-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.burger-battle-restaurant-name {
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0 0 0;
+}
+
+.burger-battle-stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.burger-battle-visitors {
+  background-color: #f5f5f5;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #666;
+}
+
+.burger-battle-visit-btn {
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(255, 165, 0, 0.3);
+}
+
+.burger-battle-visit-btn:hover {
+  background-color: #ff9100;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.4);
+}
+
+.burger-battle-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.burger-battle-carousel-arrow:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.burger-battle-carousel-arrow.left {
+  left: 20px;
+}
+
+.burger-battle-carousel-arrow.right {
+  right: 20px;
+}
+
+/* Steps Section */
+.burger-battle-steps {
+  width: 100%;
+  padding: 20px 40px 20px 20px;
+  margin-bottom: 8%;
+  background-color: #fff;
+  text-align: center;
+}
+
+.burger-battle-steps-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.burger-battle-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 280px;
+  padding: 20px;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.burger-battle-step:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.burger-battle-step-number {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #00cd70;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.3);
+}
+
+/* CTA Section */
+.burger-battle-cta {
+  width: 100%;
+  padding: 60px 5%;
+  background-color: #333;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.burger-battle-cta h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: white;
+  background-color: transparent;
+}
+
+.burger-battle-cta p {
+  font-size: 16px;
+  margin-bottom: 30px;
+  opacity: 0.8;
+  color: white;
+  background-color: transparent;
+}
+
+.burger-battle-cta-button {
+  background-color: #FFA500;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.burger-battle-cta-button:hover {
+  background-color: #ff9100;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 165, 0, 0.4);
+}
+
+/* Footer */
+.burger-battle-footer {
+  width: 100%;
+  padding: 40px 5%;
+  background-color: #222;
+  color: white;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.burger-battle-footer * {
+  background-color: transparent;
+}
+
+.burger-battle-social-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  background-color: transparent;
+}
+
+.burger-battle-social-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.burger-battle-social-link i {
+  color: white;
+  background-color: transparent;
+}
+
+.burger-battle-quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  background-color: transparent;
+}
+
+.burger-battle-quick-link {
+  color: white;
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.2s;
+  background-color: transparent;
+}
+
+.burger-battle-quick-link:hover {
+  opacity: 1;
+}
+
+.burger-battle-contact {
+  text-align: center;
+  background-color: transparent;
+}
+
+.burger-battle-contact p {
+  margin-bottom: 10px;
+  opacity: 0.7;
+  color: white;
+  background-color: transparent;
+}
+
+/* Animation */
+@keyframes pulse {
+  0% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Burger Profile Styles - Enhanced */
+.burger-profile-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #fff;
+  position: relative;
+}
+
+.burger-profile-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 10;
+}
+
+.burger-profile-back,
+.burger-profile-share {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.burger-profile-header h1 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.burger-profile-hero {
+  width: 100%;
+  height: 60vh;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.burger-profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.burger-profile-content {
+  position: relative;
+  margin-top: -40px;
+  background-color: #fff;
+  border-radius: 30px 30px 0 0;
+  padding: 30px 20px;
+  padding-bottom: 100px;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.burger-profile-title-section {
+  margin-bottom: 25px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 20px;
+}
+
+.burger-profile-title-section h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1px;
+}
+
+.burger-profile-location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+  font-size: 16px;
+  background-color: #fff5e6;
+  padding: 8px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.burger-profile-location i {
+  color: #FFA500;
+  font-size: 18px;
+}
+
+.burger-profile-restaurant {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.burger-profile-restaurant-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.burger-profile-restaurant-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.burger-profile-description {
+  margin-bottom: 30px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}
+
+.burger-profile-description h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.burger-profile-description h3:before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 20px;
+  background-color: #FFA500;
+  border-radius: 2px;
+}
+
+.burger-profile-description p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+.burger-profile-highlight {
+  color: #FFA500;
+  font-weight: 600;
+  background-color: #fff5e6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.burger-profile-votes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #fff5e6;
+  border-radius: 16px;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.burger-profile-votes .star-icon {
+  color: #FFA500;
+  font-size: 24px;
+}
+
+.burger-profile-votes span {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.burger-profile-actions {
+  display: flex;
+  gap: 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.burger-profile-btn {
+  flex: 1;
+  height: 56px;
+  border-radius: 28px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.burger-profile-btn.directions {
+  background-color: #f8f8f8;
+  color: #666;
+  flex: 0.7;
+}
+
+.burger-profile-btn.vote {
+  background: linear-gradient(135deg, #FFA500 0%, #ff9100 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.burger-profile-btn.vote:after {
+  content: '¡Apoya esta delicia!';
+  position: absolute;
+  bottom: -20px;
+  left: 0;
+  right: 0;
+  font-size: 12px;
+  color: #fff;
+  opacity: 0.8;
+}
+
+.burger-profile-btn:hover {
+  transform: translateY(-2px);
+}
+
+.burger-profile-btn.vote:hover {
+  box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
+}
+
+.burger-profile-share {
+  background-color: #FFA500;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(255, 165, 0, 0.3);
+}
+
+.burger-profile-share i {
+  font-size: 18px;
+}
+
+.burger-battle-carousel-dots {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 5;
+}
+
+.burger-battle-carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.burger-battle-carousel-dot.active-b {
+  background-color: #FFA500;
+  width: 12px;
+  height: 12px;
+}

@@ -35,6 +35,9 @@ import MainComponentAlojamiento from './components/alojamiento/alojamiento-descr
 // Componete impacto ambiental
 import ImpactoAmbiental from './components/home/impactoAmbiental';
 
+// Componente de eventos de batalla
+import Batalla from './components/components-no-fijos/events/batalla';
+import BurgerProfile from './components/components-no-fijos/events/perfil-burger';
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";
@@ -54,7 +57,7 @@ import './style/actividades/actividades.css'
 import './style/alojamiento/alojamiento.css'
 import './style/destino-home/destino.css'
 import './style/rutas/mapaUbicacion.css'
-import './style/destino-home/impactoAmbiental.css'
+
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";
@@ -176,6 +179,9 @@ function App() {
                     <Route path='/evento/:description' element={<MainComponentEvent />} />
                     <Route path='/alojamiento/:description' element={<MainComponentAlojamiento />} />
 
+                    {/* Eventos de batalla */}
+                    <Route path='/batalla' element={<Batalla />} />
+                    <Route path='/burger-profile/:burgerId' element={<BurgerProfile />} />
                 </Routes>
             </HelmetProvider>
             
