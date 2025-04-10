@@ -158,7 +158,7 @@ const BurgerBattle = () => {
       {/* Description Title Section */}
       <div className="burger-battle-desc-header">
         <div className="burger-battle-desc-title">
-          LA MEJOR BATALLA DE <span className="burger-battle-highlight">HAMBURGUESAS</span> SOLO EN SUESCA
+          LA MEJOR BATALLA DE <span className="burger-battle-highlight">HAMBURGUESAS</span> VUELVE A SUESCA
         </div>
         <p className="burger-battle-desc-subtitle">
           <span>Disfruta y vota</span>
