@@ -218,9 +218,28 @@ const ImpactoAmbiental = () => {
       </div>
 
       <div className="impacto-cta">
-        <h3>¿Quieres contribuir al planeta con tu próximo viaje?</h3>
-        <button className="impacto-cta-button" onClick={() => navigate('/')}>RESERVA TU HOSPEDAJE Y PLANTA TU PROPIO ÁRBOL</button>
-        <p className="impacto-cta-note">SOLO PARA LOS PRIMEROS 50 REGISTROS</p>
+        <h3>¿Quieres contribuir al planeta?</h3>
+        <div className="impacto-cta-buttons">
+          <div className="impacto-cta-option">
+            <h4>Viaje con Propósito</h4>
+            <button 
+              className="impacto-cta-button" 
+              onClick={() => window.open('https://wa.me/573227879811?text=Hola,%20quiero%20reservar%20mi%20viaje%20y%20aportar%20al%20planeta', '_blank')}
+            >
+              ¡RESERVA Y SIEMBRA!
+            </button>
+          </div>
+          <div className="impacto-cta-option">
+            <h4>Siembra Directa</h4>
+            <button 
+              className="impacto-cta-button whatsapp"
+              onClick={() => window.open('https://wa.me/573227879811?text=Hola,%20quiero%20dejar%20mi%20huella%20verde%20en%20Suesca', '_blank')}
+            >
+              <i className="fab fa-whatsapp"></i> ¡SIEMBRA YA!
+            </button>
+          </div>
+        </div>
+        <p className="impacto-cta-note">Cada árbol cuenta para un planeta más verde</p>
       </div>
     </div>
   );

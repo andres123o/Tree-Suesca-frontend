@@ -9,9 +9,9 @@ const BurgerProfile = ({ burger }) => {
     location: "Ingrediente secreto",
     restaurant: {
       name: "Burger House",
-      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg"
+      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1732811972/utils/qc4wozfzxhgdm6fztb6a.webp"
     },
-    image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
+    image: "https://i.pinimg.com/736x/93/dc/b4/93dcb497dd917ef9374199ff5eea768b.jpg",
     description: "Burger with patty filled with macaroni & cheese and real beef, Stroganoff sauce, topped with onions, served on a soft black sesame burger bun with patty filling.",
     specialIngredient: "macaroni & cheese",
     votes: 234
@@ -24,6 +24,7 @@ const BurgerProfile = ({ burger }) => {
         <button className="burger-profile-back">
           <i className="fas fa-arrow-left"></i>
         </button>
+        <h1>Details</h1>
         <button className="burger-profile-share">
           <i className="fas fa-share-alt"></i>
         </button>
@@ -40,8 +41,8 @@ const BurgerProfile = ({ burger }) => {
         <div className="burger-profile-title-section">
           <h2>{burgerData.name}</h2>
           <div className="burger-profile-location">
-            <i className="fas fa-hamburger"></i>
-            <span>Ingrediente sorpresa</span>
+            <MapPin size={16} />
+            <span>{burgerData.location}</span>
           </div>
         </div>
 
@@ -77,7 +78,7 @@ const BurgerProfile = ({ burger }) => {
             Cómo llegar
           </button>
           <button className="burger-profile-btn vote">
-            <i className="fas fa-trophy"></i>
+            <Star />
             Votar
           </button>
         </div>

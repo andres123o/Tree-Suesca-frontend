@@ -136,7 +136,7 @@ const BurgerBattle = () => {
           <i className="fas fa-home burger-battle-home-icon"></i>
         </div>
       </div>
-
+      
       {/* Hero Section with Countdown */}
       <div className="burger-battle-hero">
         <div className="burger-battle-hero-image">
@@ -151,7 +151,7 @@ const BurgerBattle = () => {
         </div>
         <div className="burger-battle-hero-title">
           <h2>PROXIMAMENTE</h2>
-          <p>15 de Julio de 2025</p>
+            <p>15 de Julio de 2025</p>
         </div>
       </div>
 
@@ -161,12 +161,12 @@ const BurgerBattle = () => {
           LA MEJOR BATALLA DE <span className="burger-battle-highlight">HAMBURGUESAS</span> VUELVE A SUESCA
         </div>
         <p className="burger-battle-desc-subtitle">
-          <span>Disfruta y vota</span>
+              <span>Disfruta y vota</span>
         </p>
         <div className="burger-battle-line-decor">
           <div className="burger-battle-line"></div>
           <div className="burger-battle-arrow-circle">
-            <i className="fas fa-chevron-down"></i>
+              <i className="fas fa-chevron-down"></i>
           </div>
         </div>
       </div>
@@ -176,7 +176,7 @@ const BurgerBattle = () => {
             <p className="burger-battle-desc-text">
                 El evento gastronómico más emocionante llega a Suesca. Disfruta <strong>hamburguesas únicas</strong>, vota por tu <strong>favorita</strong> y apoya a <strong>chefs locales</strong> en esta <strong>batalla de sabor</strong>.
             </p>
-        </div>
+      </div>
 
       {/* Categories Section */}
       <div className="burger-battle-categories">
@@ -251,7 +251,7 @@ const BurgerBattle = () => {
                 <div className="burger-battle-card">
                   <div className="burger-battle-card-image">
                     <img src={participant.image} alt={participant.name} />
-                  </div>
+                    </div>
                   <div className="burger-battle-card-details">
                     <div className="burger-battle-info-container">
                       <div className="burger-battle-restaurant-logo">
@@ -272,18 +272,18 @@ const BurgerBattle = () => {
                       >
                         Visitar
                       </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
           <button className="burger-battle-carousel-arrow left" onClick={prevSlide}>
-            <i className="fas fa-chevron-left"></i>
-          </button>
+              <i className="fas fa-chevron-left"></i>
+            </button>
           <button className="burger-battle-carousel-arrow right" onClick={nextSlide}>
-            <i className="fas fa-chevron-right"></i>
-          </button>
+              <i className="fas fa-chevron-right"></i>
+            </button>
           <div className="burger-battle-carousel-dots">
             {participants.map((_, index) => (
               <div
