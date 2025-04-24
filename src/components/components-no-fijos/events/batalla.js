@@ -7,39 +7,129 @@ const BurgerBattle = () => {
   const [participants, setParticipants] = useState([
     {
       id: 1,
-      name: "Egg Surfer",
-      restaurant: "The Burger Joint",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
-      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
+      name: "En preparación...",
+      restaurant: "Terraza",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461759/WhatsApp_Image_2025-04-15_at_9.44.04_AM_oto9bz.jpg",
       visitors: 46,
       price: "4.99"
     },
     {
       id: 2,
-      name: "Classic Deluxe",
-      restaurant: "Burger Palace",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
-      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
+      name: "En preparación...",
+      restaurant: "Cacique Burguer",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461757/WhatsApp_Image_2025-04-11_at_4.24.15_PM_snn161.jpg",
       visitors: 38,
       price: "5.99"
     },
     {
       id: 3,
-      name: "Spicy Avocado",
-      restaurant: "Fire Grill",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
-      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
+      name: "En preparación...",
+      restaurant: "Arca Rock",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461757/WhatsApp_Image_2025-04-11_at_4.31.51_PM_p8xlds.jpg",
       visitors: 52,
       price: "6.49"
     },
     {
       id: 4,
-      name: "BBQ Bacon",
-      restaurant: "Smokey's",
-      image: "https://res.cloudinary.com/destinoplus/image/upload/v1744317960/r26tvjcymbxgprb9m51e.jpg",
-      logo: "https://i.pinimg.com/736x/4e/bf/8b/4ebf8b1f2d4b52c7a5776271aa8e4366.jpg",
+      name: "En preparación...",
+      restaurant: "Lo Nuestro",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461756/Coffee_Drinks_Food_banx4d.jpg",
       visitors: 61,
       price: "7.29"
+    },
+    {
+      id: 5,
+      name: "En preparación...",
+      restaurant: "Texas Burguer",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461756/LOGO_-_TEXAS_page-0001_ozhvzn.jpg",
+      visitors: 46,
+      price: "4.99"
+    },
+    {
+      id: 6,
+      name: "En preparación...",
+      restaurant: "Crucero",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461755/WhatsApp_Image_2025-04-13_at_5.43.41_PM_uzdwoh.jpg",
+      visitors: 38,
+      price: "5.99"
+    },
+    {
+      id: 7,
+      name: "En preparación...",
+      restaurant: "Villa Hamburguesa",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461754/WhatsApp_Image_2025-04-14_at_8.48.49_AM_knawj3.jpg",
+      visitors: 52,
+      price: "6.49"
+    },
+    {
+      id: 8,
+      name: "En preparación...",
+      restaurant: "Don Toño",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461754/WhatsApp_Image_2025-04-14_at_8.56.23_AM_lbqbal.jpg",
+      visitors: 61, 
+      price: "7.29"
+    },
+    {
+      id: 9,
+      name: "En preparación...",
+      restaurant: "Palo Santo",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461753/WhatsApp_Image_2025-04-14_at_9.16.35_AM_um1uur.jpg",
+      visitors: 46,
+      price: "4.99"
+    },
+    {
+      id: 10,
+      name: "En preparación...",
+      restaurant: "Amore Pizza",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461753/LOGO_AMORE_PIZZA_page-0001_ezbtvu.jpg",
+      visitors: 38,
+      price: "5.99"
+    },
+    {
+      id: 11,
+      name: "En preparación...",
+      restaurant: "La Parrilla de Juancho",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461752/WhatsApp_Image_2025-04-14_at_12.42.09_PM_ughpvt.jpg",
+      visitors: 52,
+      price: "6.49"
+    },
+    {
+      id: 12,
+      name: "En preparación...",
+      restaurant: "Dorilocos La Roca",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461752/WhatsApp_Image_2025-04-14_at_2.00.32_PM_clg2pu.jpg",
+      visitors: 61,
+      price: "7.29"
+    },
+    {
+      id: 13,
+      name: "En preparación...",
+      restaurant: "Cumbamba",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461752/WhatsApp_Image_2025-04-14_at_2.05.28_PM_lwikzf.jpg",
+      visitors: 46,
+      price: "4.99"
+    },
+    {
+      id: 14,
+      name: "En preparación...",
+      restaurant: "Monopizza Gourmet",
+      image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461752/LOGO_-_MONOPIZZA2_page-0001_m6ytz5.jpg",
+      visitors: 38,
+      price: "5.99"
     }
   ]);
 
@@ -148,6 +238,7 @@ const BurgerBattle = () => {
             playsInline
             style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
           />
+          <img src='https://res.cloudinary.com/dmyq0gr14/image/upload/v1745463150/WhatsApp_Image_2025-04-04_at_3.33.44_PM-removebg-preview_ajhwmw.png' alt='Logo Batalla de Hamburguesa Suesca' />
         </div>
         <div className="burger-battle-hero-title">
           <h2>PROXIMAMENTE</h2>
@@ -167,15 +258,15 @@ const BurgerBattle = () => {
           <div className="burger-battle-line"></div>
           <div className="burger-battle-arrow-circle">
               <i className="fas fa-chevron-down"></i>
+            </div>
           </div>
         </div>
-      </div>
 
         {/* Description Section */}
         <div className="burger-battle-description">
             <p className="burger-battle-desc-text">
                 El evento gastronómico más emocionante llega a Suesca. Disfruta <strong>hamburguesas únicas</strong>, vota por tu <strong>favorita</strong> y apoya a <strong>chefs locales</strong> en esta <strong>batalla de sabor</strong>.
-            </p>
+        </p>
       </div>
 
       {/* Categories Section */}

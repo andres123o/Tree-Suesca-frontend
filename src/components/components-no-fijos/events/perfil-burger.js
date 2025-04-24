@@ -5,13 +5,13 @@ import '../../../style/componentes-no-fijos/events/batalla.css';
 const BurgerProfile = ({ burger }) => {
   // Mock data - replace with actual data from props
   const burgerData = {
-    name: "Double Beef Cheese Burger",
+    name: "Hamburguesa en preparación...",
     location: "Ingrediente secreto",
     restaurant: {
-      name: "Burger House",
-      logo: "https://res.cloudinary.com/destinoplus/image/upload/v1732811972/utils/qc4wozfzxhgdm6fztb6a.webp"
+      name: "La Parrilla de Juancho",
+      logo: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745461752/WhatsApp_Image_2025-04-14_at_12.42.09_PM_ughpvt.jpg"
     },
-    image: "https://i.pinimg.com/736x/93/dc/b4/93dcb497dd917ef9374199ff5eea768b.jpg",
+    image: "https://res.cloudinary.com/dmyq0gr14/image/upload/v1745465611/WhatsApp_Image_2025-04-23_at_10.30.39_PM_mmypuh.jpg",
     description: "Burger with patty filled with macaroni & cheese and real beef, Stroganoff sauce, topped with onions, served on a soft black sesame burger bun with patty filling.",
     specialIngredient: "macaroni & cheese",
     votes: 234
