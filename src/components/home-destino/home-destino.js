@@ -64,11 +64,13 @@ const Analytics = {
 
 const Homedestino = () => {
     const navigate = useNavigate()
-    const { destino_id } = useParams()
     const location = useLocation();
+    const destino_id = location.state?.destino_id;
+    const municipio = location.state?.municipio;
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    console.log(municipio)
 
     useEffect(() => {
         if (!content?.municipio) return; // Evitar tracking sin municipio
@@ -85,7 +87,7 @@ const Homedestino = () => {
             try {
                 setLoading(true);
                 const response = await axios.get(
-                    `https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/${destino_id}/content`
+                    `https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/${municipio}/content`
                 );
                 setContent(response.data);
             } catch (err) {
@@ -134,7 +136,7 @@ const Homedestino = () => {
 
     const { 
         restaurantes, bares, tendencias, actividades, 
-        eventos, alojamientos, municipio
+        eventos, alojamientos
     } = content;
 
     const infoDes = {

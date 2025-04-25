@@ -491,8 +491,8 @@ const Home = () => {
             console.warn('Google Analytics no está disponible');
         }
 
-        navigate(`/home/destino/${destino_id}`, {
-            state: { destino_id }
+        navigate(`/home/destino/${municipio}`, {
+            state: { municipio, destino_id }
         });
     };
 
