@@ -63,14 +63,14 @@ const Analytics = {
 };
 
 const Homedestino = () => {
+    const { municipio } = useParams()
+    console.log(municipio)
     const navigate = useNavigate()
     const location = useLocation();
     const destino_id = location.state?.destino_id;
-    const municipio = location.state?.municipio;
     const [content, setContent] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log(municipio)
 
     useEffect(() => {
         if (!content?.municipio) return; // Evitar tracking sin municipio
@@ -93,16 +93,17 @@ const Homedestino = () => {
             } catch (err) {
                 setError(err.message);
 
-                Analytics.trackError(destino_id, 'error_fetch_contenido');
+                Analytics.trackError(municipio, 'error_fetch_contenido');
             } finally {
                 setLoading(false);
+                console.log(content)
             }
         };
 
-        if (destino_id) {
+        if (municipio) {
             fetchDestinoContent();
         }
-    }, [destino_id]);
+    }, [municipio]);
 
     if (loading) return (
         <div className="loading-container">

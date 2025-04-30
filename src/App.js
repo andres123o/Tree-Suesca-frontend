@@ -109,7 +109,7 @@ function App() {
                 <ScrollToTop />
                 <Routes>
                     <Route path='/' element={<Home />} />
-                    <Route path="/home/destino/:destino_id" element={<Homedestino />} />
+                    <Route path="/home/destino/:municipio" element={<Homedestino />} />
         
                     {/* Rutas */}
                     <Route path='/rutas/Senderismo/:destino_id' element={
