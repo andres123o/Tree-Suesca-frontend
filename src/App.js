@@ -36,8 +36,8 @@ import MainComponentAlojamiento from './components/alojamiento/alojamiento-descr
 import ImpactoAmbiental from './components/home/impactoAmbiental';
 
 // Componente de eventos de batalla
-import Batalla from './components/components-no-fijos/events/batalla';
-import BurgerProfile from './components/components-no-fijos/events/perfil-burger';
+import Batalla from './components/components-no-fijos/events/batalla-Haburguesas/batalla';
+import BurgerProfile from './components/components-no-fijos/events/batalla-Haburguesas/perfil-burger';
 
 //  Iconos pagina principal
 import { IoFastFoodOutline } from "react-icons/io5";

@@ -45,7 +45,7 @@ body {
 }
 
 .burger-battle-brand {
-  color: #689F38;
+  color: #00cd70;
   font-weight: 800;
 }
 
@@ -60,7 +60,7 @@ body {
 
 .burger-battle-home-icon {
   font-size: 22px;
-  color: #689F38;
+  color: #00cd70;
 }
 
 /* Hero Section */
@@ -78,7 +78,7 @@ body {
 .burger-battle-hero-image {
   width: 100%;
   max-width: 400px;
-  height: 400px;
+  height: 500px;
   position: relative;
   z-index: 2;
   border-radius: 20px;
@@ -154,7 +154,7 @@ body {
 }
 
 .burger-battle-desc-title {
-  font-size: 40px;
+  font-size: 35px;
   font-weight: 300;
   color: #313131;
   margin-bottom: 10px;
@@ -287,7 +287,6 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
   cursor: pointer;
   scroll-snap-align: start;
   position: relative;
@@ -303,7 +302,7 @@ body {
 }
 
 .burger-battle-category span {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: #333;
   position: relative;
@@ -334,6 +333,7 @@ body {
   font-weight: 700;
   text-align: center;
   color: #333;
+  margin-bottom: 5%;
 }
 
 .burger-battle-carousel {
@@ -375,7 +375,7 @@ body {
 .burger-battle-carousel-item {
   position: absolute;
   width: 280px;
-  height: 400px;
+  height: 450px;
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   pointer-events: none;
@@ -408,30 +408,39 @@ body {
 .burger-battle-card {
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 20px; /* Mantenemos borde redondeado */
   overflow: hidden;
-  background: white;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  display: flex; /* Usar flex para controlar mejor imagen/detalles si es necesario */
+  flex-direction: column; /* Imagen arriba, detalles abajo */
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .burger-battle-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px); /* Mantenemos hover sutil */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.burger-battle-carousel-item.active-b .burger-battle-card {
+  /* Sombra más intensa y con color del tema */
+  box-shadow: 0 12px 45px rgba(183, 28, 28, 0.25); /* Sombra roja B71C1C */
+  border-color: #B71C1C; /* Borde rojo */
+  /* Opcional: Escala ligera si no interfiere con el layout del carrusel */
+  /* transform: scale(1.03); */
 }
 
 .burger-battle-card-image {
   width: 100%;
-  height: 70%;
+  height: 65%; /* Ajustar si prefieres más o menos imagen */
   position: relative;
   overflow: hidden;
-  background-color: transparent;
 }
 
 .burger-battle-card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 20px 20px 0 0;
 }
 
 .burger-battle-card:hover .burger-battle-card-image img {
@@ -439,29 +448,20 @@ body {
 }
 
 .burger-battle-card-details {
-  padding: 15px 20px;
-  position: relative;
+  padding: 15px 18px; /* Ajustar padding */
   background: white;
-  height: 30%;
+  flex-grow: 1; /* Ocupa el espacio restante */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  border-radius: 0 0 20px 20px;
+  justify-content: space-between; /* Empuja stats/cta hacia abajo */
+  height: 35%; /* Ajustar si cambiaste altura de imagen */
 }
 
 
 .burger-battle-restaurant-logo {
-  position: relative;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid white;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  margin-right: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 38px;
+  height: 38px;
+  margin-right: 10px;
 }
 
 .burger-battle-restaurant-logo img {
@@ -469,12 +469,13 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  border-radius: 50%;
 }
 
 .burger-battle-info-container {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Reducir espacio inferior */
 }
 
 .burger-battle-text-container {
@@ -482,50 +483,89 @@ body {
 }
 
 .burger-battle-burger-name {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-  margin: 0;
-  line-height: 1.2;
+  font-size: 19px; /* Ligeramente más grande */
+  font-weight: 700; /* Más Bold */
+  color: #1a1a1a; /* Casi negro */
+  margin: 0 0 2px 0; /* Ajustar margen */
+  line-height: 1.25;
 }
 
 .burger-battle-restaurant-name {
-  font-size: 14px;
+  font-size: 13px; /* Ligeramente más pequeño */
   color: #666;
-  margin: 4px 0 0 0;
+  margin: 0;
 }
+
+/* --- Área del Precio (Nueva) --- */
+.burger-battle-price-area {
+  text-align: right; /* Alinear precio a la derecha */
+  margin-bottom: 10px; /* Espacio antes de stats/cta */
+}
+.burger-battle-card-price {
+  font-size: 20px; /* Más grande */
+  font-weight: 700;
+  color: #B71C1C; /* Color principal */
+  margin: 0;
+  line-height: 1;
+}
+.burger-battle-card-price strong {
+    font-weight: 700; /* Asegurar bold */
+}
+
 
 .burger-battle-stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 5px;
+  margin-top: auto; /* Empujar al fondo si es necesario por flex */
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0; /* Línea divisoria */
 }
 
 .burger-battle-visitors {
   background-color: #f5f5f5;
   padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 14px;
-  color: #666;
+  border-radius: 15px;
+  font-size: 13px;
+  color: #555;
+  display: inline-flex; /* Alinear icono y texto */
+  align-items: center;
+  gap: 5px;
 }
 
-.burger-battle-visit-btn {
-  background-color: #B71C1C;
+.burger-battle-visitors i {
+  font-size: 12px; /* Ajustar tamaño icono */
+  color: #888;
+}
+
+.burger-battle-cta-btn {
+  background: linear-gradient(135deg, #B71C1C 30%, #fd5959 100%);
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 10px 18px; /* Buen tamaño */
+  border-radius: 8px; /* Esquinas redondeadas */
   font-weight: 600;
+  font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(0, 205, 112, 0.3);
+  transition: all 0.25s ease-out;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 3px 8px rgba(183, 28, 28, 0.2); /* Sombra sutil */
 }
 
-.burger-battle-visit-btn:hover {
-  background-color: #B71C1C;
+.burger-battle-cta-btn:hover {
+  background-color: #9f1818; /* Rojo más oscuro */
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.4);
+  box-shadow: 0 5px 15px rgba(183, 28, 28, 0.35); /* Sombra más pronunciada */
+}
+
+.burger-battle-cta-btn i {
+  transition: transform 0.25s ease-out;
+}
+
+.burger-battle-cta-btn:hover i {
+  transform: translateX(4px); /* Mover flecha */
 }
 
 .burger-battle-carousel-arrow {
@@ -801,55 +841,143 @@ body {
 
 .burger-profile-content {
   position: relative;
-  margin-top: -40px;
+  margin-top: -50px; 
   background-color: #fff;
-  border-radius: 30px 30px 0 0;
-  padding: 30px 20px;
-  padding-bottom: 100px;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 30px 30px 0 0; 
+  padding: 25px 20px 20px 20px; 
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
   z-index: 2;
 }
 
-.burger-profile-title-section {
-  margin-bottom: 25px;
-  border-bottom: 1px solid #f0f0f0;
-  padding-bottom: 20px;
+.burger-profile-main-info {
+  padding-bottom: 15px; /* Espacio antes de la descripción */
+  border-bottom: 1px solid #f0f0f0; /* Separador sutil */
+  margin-bottom: 15px;
 }
 
-.burger-profile-title-section h2 {
-  font-size: 32px;
+.burger-profile-name { /* Nombre de la hamburguesa */
+  font-size: 28px; /* Más grande */
   font-weight: 700;
-  color: #333;
-  margin-bottom: 12px;
-  font-family: 'Bebas Neue', sans-serif;
-  letter-spacing: 1px;
+  color: #222;
+  line-height: 1.2;
+  margin-bottom: 8px; /* Espacio antes del restaurante */
+  font-family: 'Poppins', sans-serif; /* O 'Bebas Neue' si prefieres */
 }
 
-.burger-profile-location {
+/* Info Restaurante Inline */
+.burger-profile-restaurant-info-inline {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #666;
-  font-size: 16px;
-  background-color: #e6fff2;
-  padding: 8px 12px;
-  border-radius: 20px;
-  width: fit-content;
+  margin-bottom: 12px; /* Espacio antes del tag especial */
 }
 
-.burger-profile-location i {
-  color: #B71C1C;
-  font-size: 18px;
+.burger-profile-restaurant-logo-inline { /* Logo más pequeño */
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #eee;
 }
 
-.burger-profile-restaurant {
+.burger-profile-restaurant-name-inline { /* Nombre restaurante */
+  font-size: 15px;
+  font-weight: 500;
+  color: #555;
+}
+
+/* --- 2. Área del Precio --- */
+.burger-profile-price-area {
+  /* Contenedor solo para el precio ahora */
+  text-align: left; /* O 'center' o 'right' según prefieras */
+  margin-bottom: 25px; /* Espacio ANTES de la descripción */
+  padding: 5px 0; /* Añadir padding vertical si es necesario */
+}
+
+.burger-profile-special-tag {
+  display: inline-flex; /* Para alinear icono y texto */
+  align-items: center;
+  gap: 6px;
+  background-color: #fff5e6; /* Fondo naranja pálido (o #e6fff2 verde) */
+  color: #ff8c00; /* Color naranja (o #00cd70 verde) */
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 15px; /* Espacio antes de precio/votos */
+}
+.burger-profile-special-tag .sparkle-icon { /* Icono del tag */
+  opacity: 0.8;
+}
+
+/* Area Precio y Votos */
+.burger-profile-price-votes-area {
   display: flex;
+  justify-content: space-between; /* Precio a la izq, votos a la der */
   align-items: center;
   gap: 15px;
-  margin-bottom: 30px;
-  padding: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
+  padding: 10px 0; /* Espacio vertical ligero */
+}
+
+/* Precio Prominente */
+.burger-profile-card-price.prominent {
+  font-size: 26px; /* Hacerlo incluso un poco más grande */
+  font-weight: 700;
+  color: #B71C1C;
+  margin: 0;
+  line-height: 1;
+}
+.burger-profile-card-price.prominent strong {
+  font-weight: 700;
+}
+
+/* Votos Integrados */
+.burger-profile-vote-count-inline {
+  display: inline-flex; /* Sigue siendo inline-flex */
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+  background-color: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 15px;
+  margin-bottom: 12px; /* Espacio antes del tag especial */
+}
+.star-icon-inline {
+  color: #fabb05; /* Color estrella amarillo */
+  margin-bottom: -2px; /* Ajuste vertical */
+}
+
+/* --- 2. Sección Descripción (Sin Caja) --- */
+.burger-profile-description-section {
+  margin-bottom: 30px; /* Espacio antes de mensajes/footer */
+}
+
+/* Título de Sección Genérico */
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  /* Quitar el :before si ya no quieres la línea vertical */
+}
+
+.description-text { /* Texto de descripción */
+  font-size: 15px;
+  line-height: 1.7;
+  color: #555;
+}
+.burger-profile-highlight { /* Resaltado (sin cambios) */
+  color: #B71C1C;
+  font-weight: 600;
+  background-color: #fdecea; /* Rojo pálido */
+  padding: 1px 5px;
+  border-radius: 4px;
+  margin: 0 2px;
 }
 
 .burger-profile-restaurant-logo {
@@ -867,38 +995,6 @@ body {
   color: #333;
 }
 
-.burger-profile-description {
-  margin-bottom: 30px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
-}
-
-.burger-profile-description h3 {
-  font-size: 20px;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 15px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.burger-profile-description h3:before {
-  content: '';
-  display: block;
-  width: 4px;
-  height: 20px;
-  background-color: #B71C1C;
-  border-radius: 2px;
-}
-
-.burger-profile-description p {
-  font-size: 16px;
-  line-height: 1.6;
-  color: #444;
-}
-
 .burger-profile-highlight {
   color: #B71C1C;
   font-weight: 600;
@@ -907,69 +1003,72 @@ body {
   border-radius: 4px;
 }
 
-.burger-profile-votes {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 30px;
-  padding: 15px;
-  background-color: #e6fff2;
-  border-radius: 16px;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.burger-profile-votes .star-icon {
-  color: #B71C1C;
-  font-size: 24px;
-}
-
-.burger-profile-votes span {
-  font-size: 18px;
-  font-weight: 600;
-  color: #333;
-}
-
 .burger-profile-actions {
   display: flex;
-  gap: 15px;
+  gap: 12px; /* Ajustar espacio */
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 20px;
+  padding: 15px; /* Ajustar padding */
   background-color: white;
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.08); /* Sombra superior */
   z-index: 1000;
 }
 
 .burger-profile-btn {
-  flex: 1;
-  height: 56px;
-  border-radius: 28px;
+  flex: 1; /* Ocupan espacio disponible */
+  height: 50px; /* Altura estándar */
+  border-radius: 12px; /* Bordes más estándar */
   border: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  font-size: 16px;
+  gap: 8px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.25s ease;
+  padding: 0 15px; /* Padding horizontal */
+}
+
+.burger-profile-btn span { /* Para asegurar que el texto se alinee bien con el icono */
+  line-height: 1;
 }
 
 .burger-profile-btn.directions {
-  background-color: #f8f8f8;
-  color: #666;
-  flex: 0.7;
+  background-color: #f0f0f0; /* Gris claro */
+  color: #444;
+  flex-basis: 40%; /* Que ocupe un poco menos que votar */
+  flex-grow: 0;
+}
+
+.burger-profile-btn.directions:hover {
+  background-color: #e5e5e5;
 }
 
 .burger-profile-btn.vote {
-  background: linear-gradient(135deg, #B71C1C 0%, #689F38 100%);
+  background: linear-gradient(135deg, #B71C1C 0%, #d64040 100%); /* Gradiente Rojo */
   color: white;
-  box-shadow: 0 4px 15px rgba(0, 205, 112, 0.3);
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(183, 28, 28, 0.25);
+}
+
+.burger-profile-btn.vote:hover:not(:disabled) {
+  background: linear-gradient(135deg, #9f1818 0%, #b71c1c 100%);
+  box-shadow: 0 6px 16px rgba(183, 28, 28, 0.35);
+  transform: translateY(-2px);
+}
+.burger-profile-btn:disabled { /* Estilo deshabilitado general */
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc !important; /* Fondo gris claro deshabilitado */
+  background-image: none !important; /* Quitar gradiente */
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.burger-profile-btn .animate-spin { /* Icono de carga */
+    margin-right: 6px;
 }
 
 .burger-profile-btn.vote:after {
@@ -1009,7 +1108,7 @@ body {
 
 .burger-battle-carousel-dots {
   position: absolute;
-  bottom: -10px;
+  bottom: -40px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -1065,4 +1164,434 @@ body {
   z-index: 2;
   font-weight: 500;
   text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+
+/* Estilos para el Modal de Votación */
+
+.voting-modal-overlay {
+  position: fixed;
+  /* Inset es un atajo para top, right, bottom, left */
+  inset: 0; 
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1100; /* Asegurar que esté por encima de otros elementos fijos */
+  padding: 20px; /* Espacio por si el modal es muy alto en pantallas pequeñas */
+  overflow-y: auto; /* Permitir scroll si el contenido es muy largo */
+}
+
+.voting-modal-content {
+  background-color: white;
+  padding: 30px 35px;
+  border-radius: 16px; /* Consistente con otros elementos */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* Ancho máximo del modal */
+  animation: modal-fade-in 0.3s ease-out; /* Animación sutil */
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 28px; /* Tamaño del icono 'X' */
+  line-height: 1;
+  color: #888;
+  cursor: pointer;
+  padding: 5px;
+  transition: color 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: #333;
+}
+
+.modal-close-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.modal-title {
+  font-family: 'Bebas Neue', sans-serif; /* Usar fuente destacada si aplica */
+  font-size: 28px; /* Tamaño del título */
+  font-weight: 400; /* Bebas Neue suele ser bold por defecto */
+  color: #333;
+  margin-bottom: 25px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.modal-burger-name {
+  color: #B71C1C; /* Color rojo del tema */
+  display: block; /* Para que aparezca debajo */
+  font-size: 24px; /* Ligeramente más pequeño */
+}
+
+.modal-restaurant-name {
+  font-family: 'Poppins', sans-serif; /* Fuente normal para el restaurante */
+  font-size: 16px;
+  color: #666;
+  display: block;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* Espacio entre grupos de formulario */
+}
+
+.modal-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 6px; /* Espacio entre label e input */
+}
+
+.modal-input,
+.modal-textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* Bordes redondeados */
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.modal-input:focus,
+.modal-textarea:focus {
+  outline: none;
+  border-color: #689F38; /* Color verde del tema al enfocar */
+  box-shadow: 0 0 0 3px rgba(104, 159, 56, 0.2); /* Sombra sutil al enfocar */
+}
+
+.modal-textarea {
+  resize: vertical; /* Permitir redimensionar solo verticalmente */
+  min-height: 80px;
+}
+
+/* Estilo específico para el botón de envío del modal */
+.modal-submit-btn {
+  /* Copiamos y adaptamos de .burger-profile-btn.vote */
+  height: 52px;
+  border-radius: 26px; /* Mitad de la altura */
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: linear-gradient(135deg, #B71C1C 0%, #689F38 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra un poco más genérica */
+  width: 100%;
+  margin-top: 10px; /* Espacio extra antes del botón */
+}
+
+.modal-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.modal-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: #ccc; /* Cambiar fondo cuando está deshabilitado */
+}
+
+
+/* Animación de entrada */
+@keyframes modal-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.spinner-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.form-message {
+  padding: 10px 15px;
+  margin: 15px 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+}
+.form-message.error {
+  background-color: #fdecea;
+  color: #B71C1C;
+  border: 1px solid #f5c6cb;
+}
+.form-message.success {
+  background-color: #e6fff2;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+.animate-spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+
+.notification-modal-content {
+  /* Hereda estilos de .voting-modal-content pero puedes sobreescribir */
+  padding: 20px 25px;
+  max-width: 350px; /* Más pequeño quizás */
+  text-align: center;
+  border-left: 5px solid #B71C1C; /* Ejemplo: Borde rojo de error */
+}
+
+/* Estilos específicos para el tipo error */
+.notification-modal-content.notification-modal-error {
+   background-color: #fdecea; /* Fondo rojo claro */
+   border-color: #B71C1C; /* Borde rojo oscuro */
+}
+
+.notification-modal-message {
+  font-size: 16px;
+  font-weight: 500;
+  color: #58151c; /* Color de texto oscuro para contraste */
+  margin: 0;
+}
+
+
+/* Estilo del botón de Play personalizado */
+.hero-play-button {
+  position: absolute; /* Posición absoluta respecto a .burger-battle-hero-image */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centrado perfecto */
+  z-index: 10; /* Encima del video pero debajo de otros elementos si es necesario */
+
+  background-color: rgba(0, 0, 0, 0.6); /* Fondo semitransparente */
+  border: none;
+  border-radius: 50%; /* Botón circular */
+  cursor: pointer;
+  padding: 15px; /* Ajusta el padding según el tamaño del icono */
+  display: flex; /* Para centrar el SVG dentro */
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+  color: white; /* Color del icono SVG si usas 'currentColor' */
+}
+
+/* Ajusta el tamaño del SVG si es necesario */
+.hero-play-button svg {
+    width: 40px;  /* Tamaño del icono */
+    height: 40px; /* Tamaño del icono */
+    fill: #ffffff; /* Color del icono */
+    display: block; /* Asegura que no tenga espacio extra */
+    /* Añade un pequeño margen si el padding no centra bien el icono */
+    /* margin-left: 4px; */
+}
+/* Efecto al pasar el ratón por encima */
+.hero-play-button:hover {
+  background-color: rgba(220, 50, 50, 0.8); /* Rojo semitransparente */
+}
+
+
+
+
+/* ============================================= */
+/* === Estilos REFINADOS Sección Promo Suesca === */
+/* ============================================= */
+
+/* Contenedor Principal (Sin cambios respecto al anterior) */
+.suesca-promo-section {
+  width: 100%;
+  padding: 0 7%;
+  margin: 40px 0;
+  background-color: #ffffff;
+  text-align: center;
+}
+
+/* Cabecera (Título y Subtítulo - Sin cambios respecto al anterior) */
+.promo-section-header {
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+}
+.promo-section-title {
+  font-size: 24px; /* Ajusta si es necesario */
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.highlight-promo {
+  color: #00cd70;
+}
+.promo-section-subtitle {
+  font-size: 16px;
+  color: #666;
+  line-height: 1.6;
+  margin: 0;
+}
+.destiplus-brand {
+  font-weight: 600;
+  color: #333;
+}
+.mas-promo {
+  color: #00cd70;
+  font-weight: 800;
+}
+
+/* Grid de Tarjetas (Sin cambios respecto al anterior) */
+.inspiration-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas por defecto */
+  gap: 15px;
+  max-width: 800px;
+  margin: 0 auto 35px auto;
+}
+
+/* Tarjeta de Inspiración - Estilos Principales */
+.inspiration-card {
+  position: relative;
+  border-radius: 16px; /* Coincide bien con la imagen */
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  aspect-ratio: 1 / 1; /* Mantenemos cuadrado por defecto */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background-color: #eee; /* Color de fondo mientras carga la imagen */
+}
+.inspiration-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Imagen de fondo */
+.inspiration-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.4s ease;
+}
+.inspiration-card:hover .inspiration-card-image {
+   transform: scale(1.1);
+}
+
+/* Overlay Oscuro */
+.inspiration-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Gradiente más pronunciado abajo, como en la imagen */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.589) 0%, rgba(0, 0, 0, 0.11) 50%, transparent 100%);
+  z-index: 1;
+  transition: background 0.3s ease;
+}
+/* Opcional: intensificar overlay al hover */
+/* .inspiration-card:hover .inspiration-card-overlay {
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+} */
+
+
+/* Contenido (Icono + Título) - AJUSTADO */
+.inspiration-card-content {
+  position: absolute;
+  bottom: 10px; /* Un poco más arriba */
+  left: 15px; /* Mantenemos a la izquierda */
+  right: 15px; /* Añadimos right para evitar desbordamiento */
+  z-index: 2;
+  color: white;
+  display: flex; /* Usamos flex para alinear icono y texto */
+  align-items: center; /* Centrado vertical del icono y texto */
+  gap: 6px; /* Espacio entre icono y texto */
+}
+
+.inspiration-card-content i {
+  font-size: 16px; /* Icono un poco más pequeño */
+  opacity: 1; /* Opacidad normal */
+  flex-shrink: 0; /* Evita que el icono se encoja */
+}
+
+.inspiration-card-content h4 {
+  font-size: 12px;
+  font-weight: 600; /* O 700 si quieres más negrita */
+  margin-left: 4%;
+  line-height: 1.3;
+  text-align: left;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6); /* Sombra más marcada */
+  /* No necesita ser inline si usamos flex en el contenedor */
+}
+
+/* Botón CTA - Asegurando Estilo Verde */
+.promo-cta-button {
+  /* Manteniendo los estilos del botón verde definidos previamente */
+  background: linear-gradient(135deg, #B71C1C 30%, #fd5959 100%);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 14px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex; /* Clave para centrar si el contenedor tiene text-align: center */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 205, 112, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-decoration: none; /* Asegurar que no parezca un link simple */
+  margin: 0 auto; /* Centrado horizontal si es display: block o inline-block */
+}
+
+.promo-cta-button:hover {
+  box-shadow: 0 6px 15px rgba(0, 205, 112, 0.4);
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #B71C1C 30%, #fd5959 100%);
+}
+
+.promo-cta-button .arrow-icon {
+  transition: transform 0.3s ease;
+  font-size: 16px;
+}
+
+.promo-cta-button:hover .arrow-icon {
+  transform: translateX(5px);
+}
+
+.img-ingredientes {
+  width: 10vh;
 }
