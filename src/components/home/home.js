@@ -546,7 +546,7 @@ const Home = () => {
                     <h5>Desti <span className="mas-home"><strong>plus</strong></span></h5>
                 </div>
                 <div className="back-home">   
-                    <img src="https://res.cloudinary.com/destinoplus/image/upload/v1732547115/tree_suesca_bdaba9.png" alt="destiplus home" />
+                <img src="https://res.cloudinary.com/destinoplus/image/upload/f_auto,q_auto,w_800/v1732547115/tree_suesca_bdaba9.png" />
                 </div>
             </div>
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import OptimizedImage from '../common/optimzarImg'
 
 const ImpactoAmbiental = () => {
   const navigate = useNavigate();
@@ -143,7 +144,11 @@ const ImpactoAmbiental = () => {
                 {impactoData.arboles.map((arbol) => (
                   <div key={arbol.id} className="impacto-arbol-card">
                     <div className="impacto-arbol-image">
-                      <img src={arbol.imagen_url} alt="Árbol plantado" />
+                      <OptimizedImage
+                          imageUrl={arbol.imagen_url}
+                          alt={"Árbol plantado"}
+                          className={"impacto-arbol-image-persona"}
+                      />
                       <div className="impacto-arbol-tag">{arbol.especie}</div>
                     </div>
                     <div className="impacto-arbol-content">
@@ -153,6 +158,10 @@ const ImpactoAmbiental = () => {
                       </div>
                       <div className="impacto-arbol-planter">
                         <img src={arbol.plantador.foto_perfil} alt={arbol.plantador.nombre} />
+                        <OptimizedImage
+                          imageUrl={arbol.plantador.foto_perfil}
+                          alt={arbol.plantador.nombre}
+                        />
                         <span>Plantado por {arbol.plantador.nombre}</span>
                       </div>
                       <div className="impacto-arbol-date">

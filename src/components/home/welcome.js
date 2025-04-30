@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import OptimizedImage from '../common/optimzarImg'
 
 const WelcomeModal = ({ onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -80,10 +81,10 @@ const WelcomeModal = ({ onClose }) => {
         </button>
         
         <div className="banner-content">
-          <img
-            src="https://res.cloudinary.com/destinoplus/image/upload/v1743744434/hxl0wluoczaqbjbb0xoo.jpg"
-            alt="¡Atención! Solo hoy 2x1. Reserva y deja huella"
-            className="banner-image"
+          <OptimizedImage
+            imageUrl={"https://res.cloudinary.com/destinoplus/image/upload/v1743744434/hxl0wluoczaqbjbb0xoo.jpg"}
+            alt={"¡Atención! Solo hoy 2x1. Reserva y deja huella"}
+            className={"banner-image"}
           />
         </div>
       </div>

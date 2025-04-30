@@ -3,7 +3,7 @@ import React from 'react';
 const OptimizedImage = ({ imageUrl, alt, className }) => {
   const optimizeCloudinaryUrl = (url) => {
     if (!url.includes('cloudinary')) return url;
-    return url.replace('/upload/v', '/upload/w_800,f_auto,q_auto,c_scale/v');
+    return url.replace('/upload/v', '/upload/w_500,f_auto,q_auto,c_scale/v');
   };
 
   return (
