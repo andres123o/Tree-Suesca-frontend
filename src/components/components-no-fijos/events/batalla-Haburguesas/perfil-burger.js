@@ -71,8 +71,8 @@ const participants = [
     specialIngredient: "Mermelada de tocineta",
     votes: 0,
     location: {
-      "lat": 5.100817,
-      "lng": -73.799823
+      "lat": 5.101144,
+      "lng": -73.799512
     }
   },
   {
