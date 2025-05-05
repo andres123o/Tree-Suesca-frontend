@@ -252,6 +252,8 @@ const BurgerBattle = () => {
 
   const videoRef = useRef(null);
   const [showPlayButton, setShowPlayButton] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalVideoRef = useRef(null); // Ref para el video DENTRO del modal
 
 
   const nextSlide = () => {
@@ -404,28 +406,38 @@ const BurgerBattle = () => {
   }, []);
 
   // useEffect para carrusel PARTICIPANTES (Autoplay) - ¡RE-AÑADIDO!
-useEffect(() => {
-  // Verifica que haya participantes antes de iniciar el intervalo
-  if (participants.length > 0) {
-      const participantsInterval = setInterval(() => {
-          // Llama a la función que actualiza el índice de participante
-          nextSlide();
-      }, 5000); // Intervalo de 5 segundos (ajústalo si quieres)
+  useEffect(() => {
+    // Verifica que haya participantes antes de iniciar el intervalo
+    if (participants.length > 0) {
+        const participantsInterval = setInterval(() => {
+            // Llama a la función que actualiza el índice de participante
+            nextSlide();
+        }, 5000); // Intervalo de 5 segundos (ajústalo si quieres)
 
-      // Limpieza: Detiene el intervalo cuando el componente se desmonta
-      return () => clearInterval(participantsInterval);
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [participants.length]); 
+        // Limpieza: Detiene el intervalo cuando el componente se desmonta
+        return () => clearInterval(participantsInterval);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [participants.length]); 
 
   const redirectToHome = () => {
     window.location.href = "https://www.destiplus.com/";
   };
 
-  const handlePlayVideo = () => {
+  const handleOpenVideoModal = () => {
+    setIsModalOpen(true);
+    // Opcional: Pausar el video de fondo si estuviera reproduciéndose por alguna razón
     if (videoRef.current) {
-      videoRef.current.play(); // Inicia la reproducción
-      setShowPlayButton(false); // Oculta el botón de play y muestra controles
+       videoRef.current.pause();
+    }
+    // Ya no necesitas cambiar showPlayButton aquí, el botón original desaparece al abrir el modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // Pausar el video del modal cuando se cierra
+    if (modalVideoRef.current) {
+        modalVideoRef.current.pause();
     }
   };
 
@@ -447,16 +459,15 @@ useEffect(() => {
           <video 
             ref={videoRef}
             src="https://res.cloudinary.com/dmyq0gr14/video/upload/v1745900948/La_batalla_est%C3%A1_por_comenzar_14_establecimientos_15_d%C3%ADas_de_pura_competencia_gastron%C3%B3mica_y_m%C3%A1s_de_8.000_personas_dispuestas_a_vivir_la_experiencia._Desde_el_19_de_junio_hasta_el_3_de_julio_en_Sues_siwnwj.mp4"
-            loop
-            playsInline
             controls={!showPlayButton}
-            style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            poster="https://res.cloudinary.com/dmyq0gr14/image/upload/v1746484651/Post_De_Instagram_Promo_Hamburguesa_Fotogr%C3%A1fico_Blanco_Y_Naranja_bxdq5c.png" 
           />
           {showPlayButton && (
             <button
               className="hero-play-button" // Nueva clase CSS para el botón
-              onClick={handlePlayVideo} // Llama a la función al hacer clic
-              aria-label="Reproducir video" // Accesibilidad
+              onClick={handleOpenVideoModal} // Llama a la función al hacer clic
+              aria-label="Reproducir video en modal" // Accesibilidad
             >
               <PlayIcon /> {/* Usa el componente SVG o un <i> */}
             </button>
@@ -789,6 +800,34 @@ useEffect(() => {
           </p>
         </div>
       </footer>
+
+      {/* --- MODAL DEL VIDEO --- */}
+      {isModalOpen && (
+        <div className="video-modal-overlay" onClick={handleCloseModal}> {/* Overlay que cierra al hacer clic */}
+          <div
+            className="video-modal-content"
+            onClick={(e) => e.stopPropagation()} // Evita que el clic DENTRO del modal lo cierre
+          >
+            <button
+              className="video-modal-close-btn"
+              onClick={handleCloseModal}
+              aria-label="Cerrar"
+            >
+              &times; {/* Icono simple de 'X' para cerrar */}
+            </button>
+            <video
+              ref={modalVideoRef} // Ref para el video del modal
+              src="https://res.cloudinary.com/dmyq0gr14/video/upload/v1745900948/La_batalla_est%C3%A1_por_comenzar_14_establecimientos_15_d%C3%ADas_de_pura_competencia_gastron%C3%B3mica_y_m%C3%A1s_de_8.000_personas_dispuestas_a_vivir_la_experiencia._Desde_el_19_de_junio_hasta_el_3_de_julio_en_Sues_siwnwj.mp4" // MISMA URL del video
+              controls // <-- ¡IMPORTANTE! Añade los controles nativos
+              autoPlay // <-- Para que empiece al abrir el modal
+              playsInline // Buena práctica
+             // loop // Decide si quieres que haga loop en el modal o no
+              className="video-in-modal" // Clase para estilos específicos del video modal
+            />
+          </div>
+        </div>
+      )}
+      {/* --- FIN MODAL DEL VIDEO --- */}
     </div>
   );
 };

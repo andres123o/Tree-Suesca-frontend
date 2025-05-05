@@ -151,27 +151,8 @@ const PopularSection = ({ title, items }) => (
     </div>
 );
 
-const ContactButtons = ({ establecimiento }) => (
-    <div className='container-contacto'>
-        <button 
-            className='como-llegar'
-            onClick={() => window.open(establecimiento.address, '_blank')}  
-        >
-            ¿Como llegar?
-            <img src="/utils/icons8-gps-50.png" />
-        </button>
-        <button 
-            className='contacto'
-            onClick={() => window.open(`https://wa.me/${establecimiento.contacto}`, '_blank')}    
-        >
-            Escribe por Whats
-            <img src="/utils/icons8-whatsapp-48.png" />
-        </button>
-    </div>
-);
-
 // Obtener datos
-const useDestinoContent = (destinoId = 1) => {
+const useDestinoContent = (destinoId) => {
     const { tipo, nombre } = useParams();
 
     const [loading, setLoading] = useState(true);
