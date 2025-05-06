@@ -58,6 +58,7 @@ import './style/alojamiento/alojamiento.css'
 import './style/destino-home/destino.css'
 import './style/rutas/mapaUbicacion.css'
 import './style/destino-home/impactoAmbiental.css'
+import './style/destino-home/ads.css'
 
 // Iconos de la Lista de rutas
 import { RiPinDistanceFill,  } from "react-icons/ri";

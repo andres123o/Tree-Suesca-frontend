@@ -1,0 +1,55 @@
+/* Estilos para el AdSlider */
+.ad-slider-container {
+    width: 95%; /* Ajusta el ancho máximo según tu diseño */
+    margin: 30px auto; /* Centra el slider y le da espacio vertical */
+    padding: 0 15px; /* Espacio lateral opcional */
+    box-sizing: border-box;
+}
+  
+.ad-swiper {
+    height: 20vh;
+    width: 100%;
+    border-radius: 12px; /* Bordes redondeados para el slider */
+    overflow: hidden; /* Asegura que el contenido no se salga */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+  
+.ad-slide {
+    /* Estilos para cada slide individual si necesitas */
+    background-color: #f0f0f0; /* Color de fondo mientras carga la imagen */
+}
+  
+.ad-slide-content {
+     cursor: pointer; /* Indica que es clickeable */
+     display: block; /* Asegura que ocupe el espacio */
+     outline: none; /* Quita el borde al enfocar (opcional) */
+}
+  
+  
+.ad-slide-image {
+    display: block; /* Evita espacio extra debajo de la imagen */
+    width: 100%; /* Hace la imagen responsiva */
+    height: 100%; /* Mantiene la proporción de la imagen */
+    /* Opcional: definir una altura o aspect-ratio si todas las imágenes deben tener el mismo tamaño */
+    /* aspect-ratio: 16 / 6; */ /* Ejemplo de proporción panorámica */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+}
+  
+  /* Estilos para la paginación de Swiper (puntos) */
+.ad-swiper .swiper-pagination-bullet {
+    background-color: rgba(0, 0, 0, 0.4); /* Color de los puntos inactivos */
+    opacity: 0.7;
+    width: 8px;
+    height: 8px;
+    transition: background-color 0.3s, opacity 0.3s;
+}
+  
+.ad-swiper .swiper-pagination-bullet-active {
+    background-color: #B71C1C; /* Color del punto activo (puedes usar tu color principal) */
+    opacity: 1;
+}
+  
+  /* Opcional: Espacio para la paginación si queda muy pegada */
+.ad-swiper .swiper-pagination {
+     bottom: 8px !important; /* Ajusta la posición vertical de los puntos */
+}

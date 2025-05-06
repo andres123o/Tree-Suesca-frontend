@@ -15,6 +15,7 @@ import FeedbackSection from './feedback';
 import WelcomeModal from "./welcome";
 import { X } from 'lucide-react';
 import { IoIosArrowForward } from "react-icons/io";
+import AdSlider from './advertasing-slider'
 
 
 const API_BASE_URL = 'https://tree-suesca-backend-production.up.railway.app/api/v1/destinos/filtros';
@@ -584,10 +585,9 @@ const Home = () => {
             </div>
 
             <CategoriasBurbujas onDemoClick={handleDemoClick} />
-
-            
-            <ImpactoAmbientalCard />
-
+                
+            <AdSlider />
+        
             {/* Encabezado atractivo con llamado a la acción */}
             <div className="destinations-header">
                 <div className="destinations-title-container">
@@ -657,6 +657,7 @@ const Home = () => {
                 ))}
             </div>
 
+            <ImpactoAmbientalCard />
 
             <FeedbackSection/>
             {showWelcomeModal && (
@@ -668,6 +669,8 @@ const Home = () => {
                 isOpen={showDemoModal} 
                 onClose={handleCloseDemoModal} 
             />
+
+            
         </>
     );
 };
