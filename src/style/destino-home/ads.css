@@ -1,15 +1,14 @@
 /* Estilos para el AdSlider */
 .ad-slider-container {
-    width: 95%; /* Ajusta el ancho máximo según tu diseño */
-    margin: 30px auto; /* Centra el slider y le da espacio vertical */
-    padding: 0 15px; /* Espacio lateral opcional */
+    width: 100%; /* Ajusta el ancho máximo según tu diseño */
+    margin-top: 30px;
+    margin-bottom: 30px; /* Centra el slider y le da espacio vertical */
     box-sizing: border-box;
 }
   
 .ad-swiper {
-    height: 20vh;
+    height: auto;
     width: 100%;
-    border-radius: 12px; /* Bordes redondeados para el slider */
     overflow: hidden; /* Asegura que el contenido no se salga */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
