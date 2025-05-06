@@ -14,13 +14,13 @@ import 'swiper/css/pagination'; // Estilos para paginación (opcional, pero úti
 const adsData = [
   {
     id: 1,
-    imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746505388/Descubrela_kkaxdo.png', // Reemplaza con tu URL de imagen 1
+    imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746510684/Dise%C3%B1o_sin_t%C3%ADtulo_1_nzsfxf.png', // Reemplaza con tu URL de imagen 1
     linkUrl: 'http://localhost:3000/batalla', // Reemplaza con tu URL de destino 1
     alt: 'Publicidad Evento Batalla de Hamburguesas',
   },
   {
     id: 2,
-    imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746507879/caba%C3%B1as_villa_ines_1_sum6rm.png', // Reemplaza con tu URL de imagen 2
+    imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746510330/Dise%C3%B1o_sin_t%C3%ADtulo_pmy0np.png', // Reemplaza con tu URL de imagen 2
     linkUrl: 'http://localhost:3000/batalla', // Reemplaza con tu URL de destino 2 (puede ser interna o externa)
     alt: 'Publicidad Impacto Ambiental Destiplus',
   },

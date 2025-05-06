@@ -1,9 +1,11 @@
 /* Estilos para el AdSlider */
 .ad-slider-container {
-    width: 100%; /* Ajusta el ancho máximo según tu diseño */
-    margin-top: 30px;
-    margin-bottom: 30px; /* Centra el slider y le da espacio vertical */
-    box-sizing: border-box;
+  /* === CAMBIADO === */
+  width: 90%; /* Ancho del 80% del contenedor padre */
+  /* max-width: 700px; */ /* Quitamos o comentamos el max-width si queremos que siempre sea 80% */
+  margin: 30px auto; /* Mantiene el centrado y espacio vertical */
+  padding: 0; /* Quitamos padding lateral si el 80% debe ser exacto */
+  box-sizing: border-box;
 }
   
 .ad-swiper {
@@ -11,6 +13,7 @@
     width: 100%;
     overflow: hidden; /* Asegura que el contenido no se salga */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    border-radius: 12px;
 }
   
 .ad-slide {
@@ -36,7 +39,7 @@
   
   /* Estilos para la paginación de Swiper (puntos) */
 .ad-swiper .swiper-pagination-bullet {
-    background-color: rgba(0, 0, 0, 0.4); /* Color de los puntos inactivos */
+    background-color: rgba(255, 255, 255, 0.781); /* Color de los puntos inactivos */
     opacity: 0.7;
     width: 8px;
     height: 8px;
@@ -44,7 +47,7 @@
 }
   
 .ad-swiper .swiper-pagination-bullet-active {
-    background-color: #B71C1C; /* Color del punto activo (puedes usar tu color principal) */
+    background-color: #ffffff; /* Color del punto activo (puedes usar tu color principal) */
     opacity: 1;
 }
   
