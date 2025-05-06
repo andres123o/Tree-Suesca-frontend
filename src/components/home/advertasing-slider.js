@@ -15,13 +15,13 @@ const adsData = [
   {
     id: 1,
     imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746510684/Dise%C3%B1o_sin_t%C3%ADtulo_1_nzsfxf.png', // Reemplaza con tu URL de imagen 1
-    linkUrl: 'http://localhost:3000/batalla', // Reemplaza con tu URL de destino 1
+    linkUrl: 'https://www.destiplus.com/batalla', // Reemplaza con tu URL de destino 1
     alt: 'Publicidad Evento Batalla de Hamburguesas',
   },
   {
     id: 2,
     imageUrl: 'https://res.cloudinary.com/dmyq0gr14/image/upload/v1746510330/Dise%C3%B1o_sin_t%C3%ADtulo_pmy0np.png', // Reemplaza con tu URL de imagen 2
-    linkUrl: 'http://localhost:3000/batalla', // Reemplaza con tu URL de destino 2 (puede ser interna o externa)
+    linkUrl: 'https://www.destiplus.com/alojamiento/Caba%C3%B1a%20con%20Jacuzzi', // Reemplaza con tu URL de destino 2 (puede ser interna o externa)
     alt: 'Publicidad Impacto Ambiental Destiplus',
   },
   // Puedes añadir más objetos aquí si necesitas más anuncios en el futuro
